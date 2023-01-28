@@ -6,7 +6,7 @@ echo Creating Opencore DMG images
 build_dmg() {
   msg_status "Building $1"
   
-  hdiutil attach ./DMG/opencore.dmg
+  hdiutil attach ./DMG/opencore.dmg -noverify -nobrowse -noautoopen
   diskutil eraseVolume FAT32 OPENCORE /Volumes/OPENCORE
   cp -r $3 /Volumes/OPENCORE
   cp -r $4 /Volumes/OPENCORE/EFI/OC
