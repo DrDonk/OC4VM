@@ -1,0 +1,78 @@
+[release_intel]
+AMD = "0"
+AVX2 = "0"
+BOOTARGS = 'keepsyms=1'
+DEBUG = "0"
+DESCRIPTION = "Release Intel"
+HIDEAUXILLARY = "true"
+RESOLUTION = "1440x900@32"
+TIMEOUT = "5"
+
+[release_intel_avx2]
+AMD = "0"
+AVX2 = "1"
+BOOTARGS = 'keepsyms=1 amfi_get_out_of_my_way=0x1 '
+DEBUG = "0"
+DESCRIPTION = "Release Intel AVX2 Fixes"
+HIDEAUXILLARY = "true"
+RESOLUTION = "1440x900@32"
+TIMEOUT = "5"
+
+[release_amd]
+AMD = "1"
+AVX2 = "0"
+BOOTARGS = 'keepsyms=1'
+DEBUG = "0"
+DESCRIPTION = "Release AMD"
+HIDEAUXILLARY = "true"
+RESOLUTION = "1440x900@32"
+TIMEOUT = "5"
+
+[release_amd_avx2]
+AMD = "1"
+AVX2 = "1"
+BOOTARGS = 'keepsyms=1 amfi_get_out_of_my_way=0x1 '
+DEBUG = "0"
+DESCRIPTION = "Release AMD AVX2 Fixes"
+HIDEAUXILLARY = "true"
+RESOLUTION = "1440x900@32"
+TIMEOUT = "5"
+
+[debug_intel]
+AMD = "0"
+AVX2 = "0"
+BOOTARGS = '-v keepsyms=1 serial=1 debug=0x100 amfi_get_out_of_my_way=0x1 -no_panic_dialog -lilubetaall -liludbgall'
+DEBUG = "1"
+DESCRIPTION = "Debug Intel"
+HIDEAUXILLARY = "false"
+RESOLUTION = "1440x900@32"
+TIMEOUT = "0"
+
+[debug_intel_avx2]
+AMD = "0"
+AVX2 = "1"
+BOOTARGS = '-v keepsyms=1 serial=1 debug=0x100 amfi_get_out_of_my_way=0x1 -no_panic_dialog -lilubetaall -liludbgall'
+DEBUG = "1"
+DESCRIPTION = "Debug Intel AVX2 Fixes"
+HIDEAUXILLARY = "false"
+RESOLUTION = "1440x900@32"
+TIMEOUT = "0"
+
+[debug_amd]
+AMD = "1"
+AVX2 = "0"
+BOOTARGS = '-v keepsyms=1 serial=1 debug=0x100 amfi_get_out_of_my_way=0x1 -no_panic_dialog -lilubetaall -liludbgall'
+DEBUG = "1"
+HIDEAUXILLARY = "false"
+RESOLUTION = "1440x900@32"
+TIMEOUT = "0"
+
+[debug_amd_avx2]
+AMD = "1"
+AVX2 = "1"
+BOOTARGS = '-v keepsyms=1 serial=1 debug=0x100 amfi_get_out_of_my_way=0x1 -no_panic_dialog -lilubetaall -liludbgall'
+DEBUG = "1"
+DESCRIPTION = "Debug AMD AVX2 Fixes"
+HIDEAUXILLARY = "false"
+RESOLUTION = "1440x900@32"
+TIMEOUT = "0"
