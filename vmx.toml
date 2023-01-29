@@ -1,0 +1,47 @@
+[intel_macos_10_15]
+AMD = "0"
+DISPLAYNAME = 'maOS 10.15 Catalina'
+ETHERNET_DEVICE = 'e1000e'
+GUESTOS = 'darwin19-64'
+
+[intel_macos_11]
+AMD = "0"
+DISPLAYNAME = 'maOS 11 Big Sur'
+ETHERNET_DEVICE = 'e1000e'
+GUESTOS = 'darwin20-64'
+
+[intel_macos_12]
+AMD = "0"
+DISPLAYNAME = 'maOS 12 Monterey'
+ETHERNET_DEVICE = 'e1000e'
+GUESTOS = 'darwin21-64'
+
+[intel_macos_13]
+AMD = "0"
+DISPLAYNAME = 'macOS 13 Ventura'
+ETHERNET_DEVICE = 'e1000e'
+GUESTOS = 'darwin22-64'
+
+[amd_macos_10_15]
+AMD = "1"
+DISPLAYNAME = 'maOS 10.15 Catalina'
+ETHERNET_DEVICE = 'e1000e'
+GUESTOS = 'darwin19-64'
+
+[amd_macos_11]
+AMD = "1"
+DISPLAYNAME = 'maOS 11 Big Sur'
+ETHERNET_DEVICE = 'e1000e'
+GUESTOS = 'darwin20-64'
+
+[amd_macos_12]
+AMD = "1"
+DISPLAYNAME = 'maOS 12 Monterey'
+ETHERNET_DEVICE = 'e1000e'
+GUESTOS = 'darwin21-64'
+
+[amd_macos_13]
+AMD = "1"
+DISPLAYNAME = 'macOS 13 Ventura'
+ETHERNET_DEVICE = 'e1000e'
+GUESTOS = 'darwin22-64'

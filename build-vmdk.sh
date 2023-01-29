@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
-#set -x
+set -x
 echo Creating Opencore DMG images
 
 # Build the DMG & VMDK
@@ -16,10 +16,11 @@ build_dmg() {
   hdiutil detach /Volumes/OPENCORE
   
   /Applications/VMware\ Fusion.app/Contents/Library/vmware-vdiskmanager -e ./DMG/opencore.vmdk
-  /Applications/VMware\ Fusion.app/Contents/Library/vmware-vdiskmanager -r ./DMG/opencore.vmdk -t 0 $2
 
-  if [[ -f "$2" ]]; then
-    msg_status "Built .vmdk file is available at $2"
+  cp -v ./DMG/opencore.* $2
+
+  if [[ -f "$2/opencore.vmdk" ]]; then
+    msg_status "Built .vmdk file is available at $2/opencore.vmdk"
   else
     msg_error "Build failure! Built .vmdk file not found!"
   fi
@@ -35,56 +36,71 @@ msg_error() {
   echo "\033[0;31m-- $1\033[0m"
 }
 
-rm -rf ./VMDK
-mkdir -p ./VMDK/locked
-mkdir -p ./VMDK/unlocked
 
-MSG="Release VMware"
-VMDK="./VMDK/unlocked/oc-rel-vmware.vmdk"
+# Clear previous build
+rm -rfv ./Config/*
+rm -rfv ./Templates/*
+rm -rfv ./VMDK/*
+
+# Create new output folders
+mkdir -p ./Config/release_intel
+mkdir -p ./Config/release_amd
+mkdir -p ./Config/debug_intel
+mkdir -p ./Config/debug_amd
+
+mkdir -p ./VMDK/release_intel
+mkdir -p ./VMDK/release_amd
+mkdir -p ./VMDK/debug_intel
+mkdir -p ./VMDK/debug_amd
+
+# Build config.plist files
+jinja2 --format=toml --section=release_intel --outfile=./Config/release_intel/config.plist config.j2 config.toml
+jinja2 --format=toml --section=release_amd --outfile=./Config/release_amd/config.plist config.j2 config.toml
+jinja2 --format=toml --section=debug_intel --outfile=./Config/debug_intel/config.plist config.j2 config.toml
+jinja2 --format=toml --section=debug_amd --outfile=./Config/debug_amd/config.plist config.j2 config.toml
+
+# Build the OpenCore DMG/VMDK files
+MSG="Intel Release"
+VMDK="./VMDK/release_intel/"
 BASE="./DiskContents/Release-Base/."
-CONFIG="./Release-VMWARE/config.plist"
+CONFIG="./Config/release_intel/config.plist"
 build_dmg "$MSG" $VMDK $BASE $CONFIG
 
-MSG="Debug VMware"
-VMDK="./VMDK/unlocked/oc-dbg-vmware.vmdk"
-BASE="./DiskContents/Debug-Base/."
-CONFIG="./Config/Debug-VMWARE/config.plist"
-build_dmg "$MSG" $VMDK $BASE $CONFIG
-
-MSG="Release VMware+AVX2Fix"
-VMDK="./VMDK/unlocked/oc-rel-vmware-avx2.vmdk"
+MSG="AMD Release"
+VMDK="./VMDK/release_amd/"
 BASE="./DiskContents/Release-Base/."
-CONFIG="./Config/Release-VMWARE-AVX2FIX/config.plist"
+CONFIG="./Config/release_amd/config.plist"
 build_dmg "$MSG" $VMDK $BASE $CONFIG
 
-MSG="Debug VMware+AVX2Fix"
-VMDK="./VMDK/unlocked/oc-dbg-vmware-avx2.vmdk"
-BASE="./DiskContents/Debug-Base/."
-CONFIG="./Config/Debug-VMWARE-AVX2FIX/config.plist"
-build_dmg "$MSG" $VMDK $BASE $CONFIG
-
-MSG="Release VirtualSMC"
-VMDK="./VMDK/locked/oc-rel-smc.vmdk"
+MSG="Intel Debug"
+VMDK="./VMDK/debug_intel/"
 BASE="./DiskContents/Release-Base/."
-CONFIG="./Config/Release-SMC/config.plist"
+CONFIG="./Config/debug_intel/config.plist"
 build_dmg "$MSG" $VMDK $BASE $CONFIG
 
-MSG="Debug VirtualSMC"
-VMDK="./VMDK/locked/oc-dbg-smc.vmdk"
-BASE="./DiskContents/Debug-Base/."
-CONFIG="./Config/Debug-SMC/config.plist"
-build_dmg "$MSG" $VMDK $BASE $CONFIG
-
-MSG="Release VirtualSMC+AVX2Fix"
-VMDK="./VMDK/locked/oc-rel-smc-avx2.vmdk"
+MSG="AMD Debug"
+VMDK="./VMDK/debug_amd/"
 BASE="./DiskContents/Release-Base/."
-CONFIG="./Config/Release-SMC-AVX2FIX/config.plist"
+CONFIG="./Config/debug_amd/config.plist"
 build_dmg "$MSG" $VMDK $BASE $CONFIG
 
-MSG="Debug VirtualSMC+AVX2Fix"
-VMDK="./VMDK/locked/oc-dbg-smc-avx2.vmdk"
-BASE="./DiskContents/Debug-Base/."
-CONFIG="./Config/Debug-SMC-AVX2FIX/config.plist"
-build_dmg "$MSG" $VMDK $BASE $CONFIG
+# Build VMX files
+mkdir -p ./Templates/intel
+cp -v macos.vmdk ./Templates/intel
+cp -v ./VMDK/release_intel/opencore.* ./Templates/intel
+
+mkdir -p ./Templates/amd
+cp -v macos.vmdk ./Templates/amd
+cp -v ./VMDK/release_amd/opencore.* ./Templates/amd
+
+jinja2 --format=toml --section=intel_macos_10_15 --outfile=./Templates/intel/macos1015.vmx vmx.j2 vmx.toml
+jinja2 --format=toml --section=intel_macos_11 --outfile=./Templates/intel/macos11.vmx vmx.j2 vmx.toml
+jinja2 --format=toml --section=intel_macos_12 --outfile=./Templates/intel/macos12.vmx vmx.j2 vmx.toml
+jinja2 --format=toml --section=intel_macos_13 --outfile=./Templates/intel/macos13.vmx vmx.j2 vmx.toml
+
+jinja2 --format=toml --section=amd_macos_10_15 --outfile=./Templates/amd/macos1015.vmx vmx.j2 vmx.toml
+jinja2 --format=toml --section=amd_macos_11 --outfile=./Templates/amd/macos11.vmx vmx.j2 vmx.toml
+jinja2 --format=toml --section=amd_macos_12 --outfile=./Templates/amd/macos12.vmx vmx.j2 vmx.toml
+jinja2 --format=toml --section=amd_macos_13 --outfile=./Templates/amd/macos13.vmx vmx.j2 vmx.toml
 
 exit
