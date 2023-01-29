@@ -129,5 +129,6 @@ dmypy.json
 .pyre/
 
 # Dave
+dist/
 Software/
 Research/
