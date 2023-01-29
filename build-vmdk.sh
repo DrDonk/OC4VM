@@ -5,8 +5,12 @@ echo Creating Opencore DMG images
 # Build the DMG & VMDK
 build_dmg() {
   msg_status "Building $1"
-  
-  hdiutil attach ./DMG/opencore.dmg -noverify -nobrowse -noautoopen
+
+  # Make a copy of base image
+  cp -v ./DMG/opencore.* $2
+
+  # Attach blank DMG and create OC setup
+  hdiutil attach $2/opencore.dmg -noverify -nobrowse -noautoopen
   diskutil eraseVolume FAT32 OPENCORE /Volumes/OPENCORE
   cp -r $3 /Volumes/OPENCORE
   cp -r $4 /Volumes/OPENCORE/EFI/OC
@@ -14,11 +18,11 @@ build_dmg() {
   dot_clean -m /Volumes/OPENCORE
   ls -a /Volumes/OPENCORE
   hdiutil detach /Volumes/OPENCORE
-  
-  /Applications/VMware\ Fusion.app/Contents/Library/vmware-vdiskmanager -e ./DMG/opencore.vmdk
 
-  cp -v ./DMG/opencore.* $2
+  # Validate VMDK is OK
+  /Applications/VMware\ Fusion.app/Contents/Library/vmware-vdiskmanager -e $2/opencore.vmdk
 
+  # Write a message
   if [[ -f "$2/opencore.vmdk" ]]; then
     msg_status "Built .vmdk file is available at $2/opencore.vmdk"
   else
@@ -35,7 +39,6 @@ msg_status() {
 msg_error() {
   echo "\033[0;31m-- $1\033[0m"
 }
-
 
 # Clear previous build
 rm -rfv ./Config/*
