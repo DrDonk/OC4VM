@@ -2,16 +2,26 @@
 
 # Sanity Checks #
 # Check CPU as OC4VM has Intel and AMD variants
-{%- if AMD == '0' -%}
+{% if AMD == '0' -%}
 featMask.vm.cpuid.INTEL = "Min:1"
-{%- elif AMD == '1' -%}
+{% elif AMD == '1' -%}
 featMask.vm.cpuid.AMD = "Min:1"
-{%- else -%}
+{% else -%}
 # Error no valid sanity check
-{%- endif -%}
+{% endif -%}
 
 # Check AVX 1.0 support in CPU (Sandy Bridge and Bulldozer or later)
 featMask.vm.cpuid.AVX = "Min:1"
+
+# Serial port for debugging
+answer.msg.serial.file.open = "Replace"
+serial0.fileName = "serial.log"
+serial0.fileType = "file"
+serial0.present = "FALSE"
+serial0.tryNoRxLoss = "FALSE"
+serial0.yieldOnMsrRead = "TRUE"
+
+vmx.buildType = "release"
 
 config.version = "8"
 cpuid.coresPerSocket = "2"

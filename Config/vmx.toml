@@ -19,7 +19,7 @@ GUESTOS = 'darwin21-64'
 [intel_macos_13]
 AMD = "0"
 DISPLAYNAME = 'macOS 13 Ventura'
-ETHERNET_DEVICE = 'vnxnet3'
+ETHERNET_DEVICE = 'e1000e'
 GUESTOS = 'darwin22-64'
 
 [amd_macos_10_15]
@@ -43,5 +43,5 @@ GUESTOS = 'darwin21-64'
 [amd_macos_13]
 AMD = "1"
 DISPLAYNAME = 'macOS 13 Ventura'
-ETHERNET_DEVICE = 'vnxnet3'
+ETHERNET_DEVICE = 'e1000e'
 GUESTOS = 'darwin22-64'

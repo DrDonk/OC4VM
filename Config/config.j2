@@ -102,9 +102,9 @@
 				<string>Contents/Info.plist</string>
 			</dict>
 		</array>
-        {%- if AMD == '1' -%}
-        {%- include 'amd.j2'-%}
-        {%- endif -%}
+        {% if AMD == '1' %}
+        {% include 'amd.j2' %}
+        {% endif %}
 	</dict>
 	<key>Misc</key>
 	<dict>
@@ -127,9 +127,9 @@
 			<key>Timeout</key>
 			<integer>{{TIMEOUT}}</integer>
 		</dict>
-        {%- if DEBUG == '1' -%}
-        {%- include 'debug.j2'-%}
-        {%- endif -%}
+        {% if DEBUG == '1' %}
+        {% include 'debug.j2' %}
+        {% endif %}
 		<key>Security</key>
 		<dict>
 			<key>AllowSetDefault</key>
@@ -257,13 +257,7 @@
 			<key>7C436110-AB2A-4BBB-A880-FE41995C9F82</key>
 			<dict>
 				<key>boot-args</key>
-				<string>-v keepsyms=1 serial=1 debug=0x100 amfi_get_out_of_my_way=0x1 -no_panic_dialog -lilubetaall -liludbgall</string>
-{#                {% if AVX2 == '1' %}#}
-{#				<key>csr-active-config</key>#}
-{#				<data>#}
-{#				/w8AAA==#}
-{#				</data#}
-{#                {% endif %}#}
+				<string>{{BOOTARGS}}</string>
 			</dict>
             <key>4D1EDE05-38C7-4A6A-9CC6-4BCCA8B38C14</key>
             <dict>
@@ -276,7 +270,6 @@
 			<key>7C436110-AB2A-4BBB-A880-FE41995C9F82</key>
 			<array>
 				<string>boot-args</string>
-{#				<string>csr-active-config</string>#}
 			</array>
             <key>4D1EDE05-38C7-4A6A-9CC6-4BCCA8B38C14</key>
             <array>
