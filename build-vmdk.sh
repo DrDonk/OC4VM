@@ -5,8 +5,10 @@ echo Creating Opencore DMG images
 # Build the DMG & VMDK
 build_dmg() {
   msg_status "Building $1"
-  
-  hdiutil attach ./DMG/opencore.dmg -noverify -nobrowse -noautoopen
+
+  cp -v ./DMG/opencore.* $2
+
+  hdiutil attach $2/opencore.dmg -noverify -nobrowse -noautoopen
   diskutil eraseVolume FAT32 OPENCORE /Volumes/OPENCORE
   cp -r $3 /Volumes/OPENCORE
   cp -r $4 /Volumes/OPENCORE/EFI/OC
@@ -15,9 +17,7 @@ build_dmg() {
   ls -a /Volumes/OPENCORE
   hdiutil detach /Volumes/OPENCORE
   
-  /Applications/VMware\ Fusion.app/Contents/Library/vmware-vdiskmanager -e ./DMG/opencore.vmdk
-
-  cp -v ./DMG/opencore.* $2
+  /Applications/VMware\ Fusion.app/Contents/Library/vmware-vdiskmanager -e $2/opencore.vmdk
 
   if [[ -f "$2/opencore.vmdk" ]]; then
     msg_status "Built .vmdk file is available at $2/opencore.vmdk"
