@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
-set -x
+#set -x
 echo Creating OC4VM Release
 if ! [ $# -eq 1 ] ; then
   echo "Product version not found: xyz (e.g. 1.2.3)" >&2

@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
-set -x
+#set -x
 echo Creating OpenCore VMware Templates
 
 # Clear previous build

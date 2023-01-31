@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
-set -x
+#set -x
 echo Creating OpenCore DMG/VMDK Images
 
 # Build the DMG & VMDK
