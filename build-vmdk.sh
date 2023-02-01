@@ -76,13 +76,13 @@ build_dmg "$MSG" $VMDK $BASE $CONFIG
 
 MSG="Intel Debug"
 VMDK="./VMDK/debug_intel/"
-BASE="./DiskContents/Release-Base/."
+BASE="./DiskContents/Debug-Base/."
 CONFIG="./Config/debug_intel/config.plist"
 build_dmg "$MSG" $VMDK $BASE $CONFIG
 
 MSG="AMD Debug"
 VMDK="./VMDK/debug_amd/"
-BASE="./DiskContents/Release-Base/."
+BASE="./DiskContents/Debug-Base/."
 CONFIG="./Config/debug_amd/config.plist"
 build_dmg "$MSG" $VMDK $BASE $CONFIG
 
