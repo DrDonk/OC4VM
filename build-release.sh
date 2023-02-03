@@ -12,6 +12,7 @@ cp -v LICENSE ./dist/
 cp -vr ./ISO ./dist/
 cp -vr ./VMDK ./dist/
 cp -vr ./Templates ./dist/
+cp -vr ./RecoveryMaker ./dist/
 7z a ./build/oc4vm-$1.zip ./dist/*
 
 exit 0
