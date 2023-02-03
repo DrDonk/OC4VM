@@ -2,6 +2,10 @@
 #set -x
 echo Creating OpenCore DMG/VMDK Images
 
+# Read current version
+VERSION=$(<VERSION)
+echo "$VERSION"
+q
 # Build the DMG & VMDK
 build_dmg() {
   msg_status "Building $1"
