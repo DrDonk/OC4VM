@@ -33,6 +33,7 @@ AMD = "1"
 AVX2 = "0"
 BOOTARGS = '-v keepsyms=1 serial=1 -no_panic_dialog -lilubetaall -liludbgall'
 DEBUG = "1"
+DESCRIPTION = "Debug AMD"
 HIDEAUXILLARY = "false"
 RESOLUTION = "1440x900@32"
 TIMEOUT = "0"
