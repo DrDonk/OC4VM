@@ -10,8 +10,26 @@ The only downside of not using the unlocker is the guest OS type cannot be chang
 be a problem as the OC4VM package provides template VMs for 10.15 (Catalina) through to 13 (Ventura). The "guestos"
 VMX file setting can be matched up to this table if the version of macOS needs to be changed.
 
-TODO:
-Insert Table Here
+| macOS                 | Name          | VMX guestOS Setting |
+|:----------------------|---------------|---------------------|
+| macOS 10.5 (32-bit)   | Leopard       | darwin              |
+| macOS 10.5 (64-bit)   | Leopard       | darwin-64           |
+| macOS 10.6 (32-bit)   | Snow Leopard  | darwin10            |
+| macOS 10.6 (64-bit)   | Snow Leopard  | darwin10-64         |
+| macOS 10.7 (32-bit)   | Lion          | darwin11            |
+| macOS 10.7 (64-bit)   | Lion          | darwin11-64         |
+| macOS 10.8            | Mountain Lion | darwin12-64         |
+| macOS 10.9            | Mavericks     | darwin13-64         |
+| macOS 10.10           | Yosemite      | darwin14-64         |
+| macOS 10.11           | El Capitan    | darwin15-64         |
+| macOS 10.12           | Sierra        | darwin16-64         |
+| macOS 10.13           | High Sierra   | darwin17-64         |
+| macOS 10.14           | Mojave        | darwin18-64         |
+| macOS 10.15           | Catalina      | darwin19-64         |
+| macOS 11              | Big Sur       | darwin20-64         |
+| macOS 12              | Monterey      | darwin21-64         |
+| macOS 13              | Ventura       | darwin22-64         |
+
 
 ## 3. Using OC4VM
 ### 3.1 Download Release
