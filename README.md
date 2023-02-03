@@ -1,20 +1,20 @@
 # OC4VM OpenCore for VMware
-## x. Introduction
+## 1. Introduction
 OpenCore 4 VMware provides a set of VMware macOS templates and boot disks to allow macOS to run on ESXi, Linux and 
-Windows. This system does not require patching VMware using the Unlocker, and also allows fixes to limitations which
-cannot be patched in VMware, for example, running Ventura on pre-Haswll CPUs without AVX2 support. It can also be used
+Windows. This system does not require patching VMware using the Unlocker and also allows fixes to limitations which
+cannot be patched in VMware. For example, running Ventura on pre-Haswell CPUs without AVX2 support. It can also be used
 with VMware Fusion to fix issues such as booting to Recovery mode which is not enabled in VMware UEFI firmware.
 
-## x. Limitations
+## 2. Limitations
 The only downside of not using the unlocker is the guest OS type cannot be changed in the VMware UI. This should not 
-be a problem as the OC4VM package provides template VMs for 10.15 (Catalina) through to 13 (Ventura). 
+be a problem as the OC4VM package provides template VMs for 10.15 (Catalina) through to 13 (Ventura). The "guestos"
+VMX file setting can be matched up to this table if the version of macOS needs to be changed.
 
-The OC4VM system cannot enable para-virtualised GPU as that reqiuores macOS specific libraries and support on a real
-macOS host system.
+TODO:
+Insert Table Here
 
-
-## x. Running the Unlocker
-### x.y Download Release
+## 3. Using OC4VM
+### 3.1 Download Release
 
 * Download a binary release from https://github.com/DrDonk/oc4vm/releases
 * Optionally check the sha256 checksum matches that published in the release
