@@ -45,37 +45,37 @@ msg_error() {
 }
 
 # Clear previous build
-rm -rfv ./VMDK/*
+rm -rfv ./build/VMDK/*
 
 # Create new output folders
-mkdir -p ./VMDK/release_intel
-mkdir -p ./VMDK/release_amd
-mkdir -p ./VMDK/debug_intel
-mkdir -p ./VMDK/debug_amd
+mkdir -p ./build/VMDK/release_intel
+mkdir -p ./build/VMDK/release_amd
+mkdir -p ./build/VMDK/debug_intel
+mkdir -p ./build/VMDK/debug_amd
 
 # Build the OpenCore DMG/VMDK files
 MSG="Intel Release"
-VMDK="./VMDK/release_intel/"
+VMDK="./build/VMDK/release_intel/"
 BASE="./DiskContents/Release-Base/."
-CONFIG="./Config/release_intel/config.plist"
+CONFIG="./build/Config/release_intel/config.plist"
 build_dmg "$MSG" $VMDK $BASE $CONFIG
 
 MSG="AMD Release"
-VMDK="./VMDK/release_amd/"
+VMDK="./build/VMDK/release_amd/"
 BASE="./DiskContents/Release-Base/."
-CONFIG="./Config/release_amd/config.plist"
+CONFIG="./build/Config/release_amd/config.plist"
 build_dmg "$MSG" $VMDK $BASE $CONFIG
 
 MSG="Intel Debug"
-VMDK="./VMDK/debug_intel/"
+VMDK="./build/VMDK/debug_intel/"
 BASE="./DiskContents/Debug-Base/."
-CONFIG="./Config/debug_intel/config.plist"
+CONFIG="./build/Config/debug_intel/config.plist"
 build_dmg "$MSG" $VMDK $BASE $CONFIG
 
 MSG="AMD Debug"
-VMDK="./VMDK/debug_amd/"
+VMDK="./build/VMDK/debug_amd/"
 BASE="./DiskContents/Debug-Base/."
-CONFIG="./Config/debug_amd/config.plist"
+CONFIG="./build/Config/debug_amd/config.plist"
 build_dmg "$MSG" $VMDK $BASE $CONFIG
 
 exit
