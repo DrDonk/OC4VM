@@ -18,8 +18,7 @@ def main():
     # Create full path to dmg2img utility for platform
     cwd = os.path.dirname(os.path.realpath(__file__))
     platform = sys.platform
-    dmg2img = None
-    qemu_img = None
+
     if platform == 'linux':
         dmg2img = 'dmg2img'
         qemu_img = 'qemu-img'

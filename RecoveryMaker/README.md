@@ -1,8 +1,7 @@
-# OC4VM macOS Recovery VMDK Maker
+# OC4VM  - macOS Recovery VMDK Maker
 
 ## Introduction
-This is port of the Tokamak utilities for VMware Fusion adapted to run on Linux and Windows. 
-It is designed to download the recovery image for macOS from Apple's servers and create a bootable 
+This is a utility  to download the recovery image for macOS from Apple's servers and create a bootable 
 VMDK file that can be used to start an Internet installtion of macOS.
 
 It also allows SIP and other recovery only mode commands to be used on an existing macOS guest. 
@@ -15,29 +14,37 @@ booted directly by using the CMD-R combination.
 The tool is written in Python 3 and so Python must be installed on the host computer. Python 3.10 was used for 
 the development of the tool.
 
-* macOS   - `brew install python3`
 * Linux   - Use your distro package manager
-* Windows - Recommended way is to install Python 3.10 from the Microosft App Store
+* macOS   - `brew install python3`
+* Windows - Recommended way is to install Python 3.10 from the Microsoft App Store
 
 ### dmg2img & qemu-img
 
-macOS and Linux users will need to have two utilities on the path:
+You will need to have two utilities on the path:
 1. dmg2img
 2. qemu-img
 
-These can be installed from Linux repos, for example Debian based distros:
+* Linux - These can be installed from Linux repos, for example Debian based distros:
 
-`sudo apt install -y dmg2img`
+    `sudo apt install -y dmg2img`
 
-`sudo apt install -y qemu-utils`
+    `sudo apt install -y qemu-utils`
 
-The brew package manager is the best way to install on macOS, but the full Qemu package must be installed:
 
-`brew install dmg2img`
+* macOS - The [brew](https://brew.sh) package manager is the best way to install on macOS, 
+but the full Qemu package must be installed:
 
-`brew install qemu`
+    `brew install dmg2img`
 
-Windows binaries are shipped as part of the zip file and so no additional downloads are required.
+  * `brew install qemu`
+
+
+* Windows - use [Chocolatey](https://chocolatey.org) or [Scoop](https://scoop.sh) to install the programs:
+
+    `choco/scoop install dmg2img`
+    
+    `choco/scoop install qemu`
+   
 
 ## Instructions
 1. Unzip the archive maintaining the folder strucutre
