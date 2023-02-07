@@ -8,8 +8,8 @@ echo "$VERSION"
 
 cp -v README.md ./build/
 cp -v LICENSE ./build/
-cp -vr ./ISO ./build/
-cp -vr ./RecoveryMaker ./build/
+cp -vr ./iso ./build/
+cp -vr ./recovery_maker ./build/
 7z a ./dist/oc4vm-$VERSION.zip ./build/*
 
 exit 0

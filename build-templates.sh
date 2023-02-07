@@ -1,31 +1,31 @@
 #!/usr/bin/env zsh
 set -x
-echo Creating OpenCore VMware Templates
+echo Creating OpenCore VMware templates
 
 # Read current version
 VERSION=$(<VERSION)
 echo "$VERSION"
 
 # Clear previous build
-rm -rfv ./build/Templates/*
+rm -rfv ./build/templates/*
 
 # Build VMX files
-mkdir -p ./build/Templates/intel
-cp -v macos.vmdk ./build/Templates/intel
-cp -v ./build/VMDK/release_intel/opencore.* ./build/Templates/intel
+mkdir -p ./build/templates/intel
+cp -v macos.vmdk ./build/templates/intel
+cp -v ./build/vmdk/release_intel/opencore.* ./build/templates/intel
 
-mkdir -p ./build/Templates/amd
-cp -v macos.vmdk ./build/Templates/amd
-cp -v ./build/VMDK/release_amd/opencore.* ./build/Templates/amd
+mkdir -p ./build/templates/amd
+cp -v macos.vmdk ./build/templates/amd
+cp -v ./build/vmdk/release_amd/opencore.* ./build/templates/amd
 
-jinja2 --format=toml --section=intel_macos_10_15 -D VERSION=$VERSION --outfile=./build/Templates/intel/macos1015.vmx vmx.j2 vmx.toml
-jinja2 --format=toml --section=intel_macos_11 -D VERSION=$VERSION --outfile=./build/Templates/intel/macos11.vmx vmx.j2 vmx.toml
-jinja2 --format=toml --section=intel_macos_12 -D VERSION=$VERSION --outfile=./build/Templates/intel/macos12.vmx vmx.j2 vmx.toml
-jinja2 --format=toml --section=intel_macos_13 -D VERSION=$VERSION --outfile=./build/Templates/intel/macos13.vmx vmx.j2 vmx.toml
+jinja2 --format=toml --section=intel_macos_10_15 -D VERSION=$VERSION --outfile=./build/templates/intel/macos1015.vmx vmx.j2 vmx.toml
+jinja2 --format=toml --section=intel_macos_11 -D VERSION=$VERSION --outfile=./build/templates/intel/macos11.vmx vmx.j2 vmx.toml
+jinja2 --format=toml --section=intel_macos_12 -D VERSION=$VERSION --outfile=./build/templates/intel/macos12.vmx vmx.j2 vmx.toml
+jinja2 --format=toml --section=intel_macos_13 -D VERSION=$VERSION --outfile=./build/templates/intel/macos13.vmx vmx.j2 vmx.toml
 
-jinja2 --format=toml --section=amd_macos_10_15 -D VERSION=$VERSION --outfile=./build/Templates/amd/macos1015.vmx vmx.j2 vmx.toml
-jinja2 --format=toml --section=amd_macos_11 -D VERSION=$VERSION --outfile=./build/Templates/amd/macos11.vmx vmx.j2 vmx.toml
-jinja2 --format=toml --section=amd_macos_12 -D VERSION=$VERSION --outfile=./build/Templates/amd/macos12.vmx vmx.j2 vmx.toml
-jinja2 --format=toml --section=amd_macos_13 -D VERSION=$VERSION --outfile=./build/Templates/amd/macos13.vmx vmx.j2 vmx.toml
+jinja2 --format=toml --section=amd_macos_10_15 -D VERSION=$VERSION --outfile=./build/templates/amd/macos1015.vmx vmx.j2 vmx.toml
+jinja2 --format=toml --section=amd_macos_11 -D VERSION=$VERSION --outfile=./build/templates/amd/macos11.vmx vmx.j2 vmx.toml
+jinja2 --format=toml --section=amd_macos_12 -D VERSION=$VERSION --outfile=./build/templates/amd/macos12.vmx vmx.j2 vmx.toml
+jinja2 --format=toml --section=amd_macos_13 -D VERSION=$VERSION --outfile=./build/templates/amd/macos13.vmx vmx.j2 vmx.toml
 
 exit

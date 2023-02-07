@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 #set -x
-echo Creating OpenCore DMG/VMDK Images
+echo Creating OpenCore DMG/vmdk Images
 
 # Read current version
 VERSION=$(<VERSION)
@@ -11,7 +11,7 @@ build_dmg() {
   msg_status "Building $1"
 
   # Make a copy of base image
-  cp -v ./DMG/opencore.* $2
+  cp -v ./dmg/opencore.* $2
 
   # Attach blank DMG and create OC setup
   hdiutil attach $2/opencore.dmg -noverify -nobrowse -noautoopen
@@ -45,37 +45,37 @@ msg_error() {
 }
 
 # Clear previous build
-rm -rfv ./build/VMDK/*
+rm -rfv ./build/vmdk/*
 
 # Create new output folders
-mkdir -p ./build/VMDK/release_intel
-mkdir -p ./build/VMDK/release_amd
-mkdir -p ./build/VMDK/debug_intel
-mkdir -p ./build/VMDK/debug_amd
+mkdir -p ./build/vmdk/release_intel
+mkdir -p ./build/vmdk/release_amd
+mkdir -p ./build/vmdk/debug_intel
+mkdir -p ./build/vmdk/debug_amd
 
-# Build the OpenCore DMG/VMDK files
+# Build the OpenCore DMG/vmdk files
 MSG="Intel Release"
-VMDK="./build/VMDK/release_intel/"
-BASE="./DiskContents/Release-Base/."
-CONFIG="./build/Config/release_intel/config.plist"
+VMDK="./build/vmdk/release_intel/"
+BASE="./disk_contents/Release-Base/."
+CONFIG="./build/config/release_intel/config.plist"
 build_dmg "$MSG" $VMDK $BASE $CONFIG
 
 MSG="AMD Release"
-VMDK="./build/VMDK/release_amd/"
-BASE="./DiskContents/Release-Base/."
-CONFIG="./build/Config/release_amd/config.plist"
+VMDK="./build/vmdk/release_amd/"
+BASE="./disk_contents/Release-Base/."
+CONFIG="./build/config/release_amd/config.plist"
 build_dmg "$MSG" $VMDK $BASE $CONFIG
 
 MSG="Intel Debug"
-VMDK="./build/VMDK/debug_intel/"
-BASE="./DiskContents/Debug-Base/."
-CONFIG="./build/Config/debug_intel/config.plist"
+VMDK="./build/vmdk/debug_intel/"
+BASE="./disk_contents/Debug-Base/."
+CONFIG="./build/config/debug_intel/config.plist"
 build_dmg "$MSG" $VMDK $BASE $CONFIG
 
 MSG="AMD Debug"
-VMDK="./build/VMDK/debug_amd/"
-BASE="./DiskContents/Debug-Base/."
-CONFIG="./build/Config/debug_amd/config.plist"
+VMDK="./build/vmdk/debug_amd/"
+BASE="./disk_contents/Debug-Base/."
+CONFIG="./build/config/debug_amd/config.plist"
 build_dmg "$MSG" $VMDK $BASE $CONFIG
 
 exit
