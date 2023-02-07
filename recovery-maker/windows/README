@@ -1,0 +1,124 @@
+
+DMG2IMG is a tool which allows converting Apple compressed dmg 
+archives to standard (hfsplus) image disk files.
+
+This tool handles zlib and bzip2 compressed dmg images.
+
+
+USAGE:
+    dmg2img [-l] [-p N] [-s] [-v] [-V] [-d] <input.dmg> [<output.img>]
+or
+    dmg2img -i <input.dmg> -o <output.img>
+    
+It is derived from dmg2iso v0.2c by vu1tur <to@vu1tur.eu.org>
+
+
+NOTES: 
+
+1. An equivalent command under Mac OS X would be:
+hdiutil convert <input.dmg> -format UDTO -o <output.img>
+
+2. Under linux, the image disk file can be mounted with the commands
+
+modprobe hfsplus
+mount -t hfsplus -o loop <output.img> /mnt
+
+[normally, only 'root' might be able to do this]
+
+3. Windows users should be able to open the image disk file with UltraISO.
+
+Jean-Pierre Demailly <demailly@fourier.ujf-grenoble.fr>
+
+
+COMPILATION:
+
+The default included Makefile is for Linux/gcc. The development files 
+in zlib-dev and libbz2-dev are needed to compile dmg2img, and those
+in openssl-dev are needed to compile vfdecrypt.
+
+
+CHANGELOG:
+
+1.0     3 August 2007
+        * Initial version 
+
+1.1     4 August 2008
+        * Fixed segfault bug occurring when decompressing certain dmg files
+          beyond the actual end of the file (due to not correctly setting
+          the size of the compressed parts ...)
+        * Added slightly modified vfdecrypt utility from 
+          Weinmann-Appelbaum-Fromme in order to decrypt encrypted dmg files.
+
+1.2    17 September 2008
+        * Fixed segfault bug due to buffer overflow (buffer sizes
+          incorrectly set, resulting in insufficient memory allocation).
+        * Fixed most compilation warnings - remaining ones are
+          irrelevant with standard compilers.
+	
+1.3    19 September 2008
+        * Further fixes which (hopefully) enable dmg2img to work on
+          dmg archives of arbitrary size, while reducing RAM usage a lot.
+        * A lot of thanks to Alfred E. Hegge and Randy Broman for testing
+          and reporting bugs.
+
+1.4     5 April 2009
+        * Applied patch from Vladimir 'phcoder' Serbinenko which brings
+          correct handling of 64bit integers in koly signature and
+          plist data, and should enable dmg2img to work on huge 
+          archives > 4GBytes (tested by 'phcoder').
+        * Added support for dmg archives involving bzip2 instead of zlib
+          compression (this has not received much testing yet, as those
+          archives are still unfrequent).
+        * Many thanks to Pierre Duhem for useful hints.
+
+1.4.1   6 April 2009
+        * Fixed a bug in writing the output file that caused some DMG images
+          to convert to a broken unmountable IMG image.
+
+1.5     8 April 2009
+        * Fixed a bug in parsing plist for image partitions.
+        * Added support for ADC-compressed dmg images.
+
+1.5.1  11 April 2009
+        * Added missing zero block type.
+        * Small fixes and clean up.
+
+1.6    15 April 2009
+        * Added support for dmg images that only have binary resource fork
+          but no XML plist. 
+        * Refined koly block processing.
+        * Fixed a bug in finding the offset for the next compressed block
+          when offsets are defined relative to the current partition.
+        * Fixed broken progress indicator.
+        * Added detection of images with GUID Partition Table and respective 
+          mount commands in linux.
+
+1.6.1  12 August 2009
+        * Fixed a bug in handling large files on win32 systems.
+
+1.6.2  24 March 2010
+        * Fixed a bug in processing a terminal block type.
+        * Added periodic flushing of debug log file.
+
+1.6.3  07 April 2012
+        * Added option -l to list partitions
+        * Added option -p to extract only specific partition
+        * Added support for a rare case scenario of koly block being at the
+          the beginning of the image (thanks to Friik)
+
+1.6.4  25 April 2012
+        * Compilation bugfix (Linux)
+
+1.6.5  23 July 2013
+        * Fixed a bug in handling some types of dmg files
+
+1.6.6  06 February 2017
+        * Fixed a crash on invalid block signature (thanks to Peter Wu)
+
+1.6.7  09 February 2017
+        * Fixed buffer underrun (thanks to Peter Wu)
+        * Avoid truncating .img file when run to list partition 
+          (thanks to Frederic Germain)
+        * Small fixes and cleanup
+
+http://vu1tur.eu.org/dmg2img
