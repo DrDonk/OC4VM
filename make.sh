@@ -5,5 +5,6 @@ echo Creating OC4VM
 ./build-config.sh
 ./build-vmdk.sh
 ./build-templates.sh
+./build-release.sh
 
 exit
