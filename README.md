@@ -41,9 +41,15 @@ VMX file setting can be matched up to this table if the version of macOS needs t
 
 
 ## x.x VMware Tools
-OC4VM provides the VMware tools ISO images. Version 16/17 of Workstation Pro recognises the darwin.iso files and the
-tools can be installed in the usual way by using the "Install VMware Tools" menu item. The Player version does not
-automatically pick up the ISO images and so the ISO must be maually attached to the VM via the guest's settings.
+OC4VM provides a copy of the VMware tools ISO images. Version 16/17 of Workstation Pro recognises the darwin.iso files 
+and the tools can be installed in the usual way by using the "Install VMware Tools" menu item. The Player version does
+not automatically pick up the ISO images and so the ISO must be maually attached to the VM via the guest's settings.
+
+Copy the tools ISOs to these folders:
+
+* Windows
+* Linux
+* ESXi
 
 ## x. VMware Downloads
 These URLs will link to the latest versions of VMware's products:
