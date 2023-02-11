@@ -35,7 +35,7 @@ VMX file setting can be matched up to this table if the version of macOS needs t
 ### 3.1 Download Release
 
 * Download a binary release from https://github.com/DrDonk/oc4vm/releases
-* Optionally check the sha256 checksum matches that published in the release
+* Optionally check the sha512 checksum matches that published in the release
 * Unzip the archive to extract the files
 * Navigate to the folder with the extracted files
 
