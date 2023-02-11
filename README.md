@@ -1,4 +1,4 @@
-# OC4VM OpenCore for VMware
+# OC4VM - OpenCore for VMware
 ## 1. Introduction
 OpenCore 4 VMware provides a set of VMware macOS templates and boot disks to allow macOS to run on ESXi, Linux and 
 Windows. This system does not require patching VMware using the Unlocker and also allows fixes to limitations which
@@ -63,5 +63,12 @@ These URLs will link to the latest versions of VMware's products:
 * VMware Guest Tools https://vmware.com/go/tools
 
 ## x. Thanks
+
+OCLP
+OpenCore
+Lilu
+DebugEnhancer
+VirtualSMC
+NoAVXFSCompressionTypeZlib-AVXPel
 
 (c) 2023 David Parsons
