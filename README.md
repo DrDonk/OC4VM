@@ -5,7 +5,66 @@ Windows. This system does not require patching VMware using the Unlocker and als
 cannot be patched in VMware. For example, running Ventura on pre-Haswell CPUs without AVX2 support. It can also be used
 with VMware Fusion to fix issues such as booting to Recovery mode which is not enabled in VMware UEFI firmware.
 
-## 2. Limitations
+## 2. Using OC4VM
+### 2.1 Download Release
+
+* Download a binary release from https://github.com/DrDonk/oc4vm/releases
+* Optionally check the sha512 checksum matches that published in the release
+* Unzip the archive to extract the files
+* Navigate to the folder with the extracted files
+
+### 2.2 VM Templates
+There is a folder called "templates" that contain a VM template for either Intel or AMD CPU based macOS virtual machines. 
+Each folder has an OpenCore booter and VMX file tailored for the CPU that is running on the host.
+
+```
+templates
+├── intel
+│  ├── opencore.vmdk
+│  ├── opencore.dmg
+│  ├── macos1015.vmx
+│  ├── macos13.vmx
+│  ├── macos12.vmx
+│  ├── macos11.vmx
+│  └── macos.vmdk
+└── amd
+   ├── opencore.vmdk
+   ├── opencore.dmg
+   ├── macos1015.vmx
+   ├── macos13.vmx
+   ├── macos12.vmx
+   ├── macos11.vmx
+   └── macos.vmdk
+```
+Each folder comprises of the following files:
+
+| File          | Function                             |
+|:--------------|--------------------------------------|
+| opencore.vmdk | Virtual Disk descriptor for DMG file |
+| opencore.dmg  | OpenCore boot DMG file               |
+| macos1015.vmx | macOS 10.15 Catalina VMX file        |
+| macos11.vmx   | macOS 11 Big Sur VMX file            |
+| macos12.vmx   | macOS 12 Monterey VMX file           |
+| macos13.vmx   | macOS 13 Ventura VMX file            |
+| macos.vmdk    | Pre-formated HFS+J virtual disk      |
+
+To create a new virtual machine copy either the Intel or AMD template to a new folder and remove the VMX files that
+you do not need. For example, if you are building a Ventura VM remove macos1015.vmx. macos11.vmx and macos12.vmx. The
+new folder should have:
+
+* opencore.vmdk
+* opencore.dmg
+* macos13.vmx
+* macos.vmdk
+
+***
+Note: 
+
+Make sure you use the correct folder for your CPU as using the wrong one will cause the VM not to boot 
+and give an error message.
+***
+
+## x. Limitations
 The only downside of not using the unlocker is the guest OS type cannot be changed in the VMware UI. This should not 
 be a problem as the OC4VM package provides template VMs for 10.15 (Catalina) through to 13 (Ventura). The "guestos"
 VMX file setting can be matched up to this table if the version of macOS needs to be changed.
@@ -29,16 +88,6 @@ VMX file setting can be matched up to this table if the version of macOS needs t
 | macOS 11              | Big Sur       | darwin20-64         |
 | macOS 12              | Monterey      | darwin21-64         |
 | macOS 13              | Ventura       | darwin22-64         |
-
-
-## 3. Using OC4VM
-### 3.1 Download Release
-
-* Download a binary release from https://github.com/DrDonk/oc4vm/releases
-* Optionally check the sha512 checksum matches that published in the release
-* Unzip the archive to extract the files
-* Navigate to the folder with the extracted files
-
 
 ## x.x VMware Tools
 OC4VM provides a copy of the VMware tools ISO images. Version 16/17 of Workstation Pro recognises the darwin.iso files 
