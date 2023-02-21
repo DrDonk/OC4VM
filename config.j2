@@ -193,9 +193,9 @@
 				<key>Skip</key>
 				<integer>0</integer>
 			</dict>
-            {%- if AMD == '1' -%}
-            {% include 'amd.j2' -%}
-            {%- endif %}
+{%- if AMD == '1' %}
+{% include 'amd.j2' %}
+{%- endif %}
    		</array>
  		<key>Quirks</key>
 		<dict>
@@ -224,9 +224,9 @@
 			<key>Timeout</key>
 			<integer>{{TIMEOUT}}</integer>
 		</dict>
-        {%- if DEBUG == '1' -%}
-        {% include 'debug.j2' -%}
-        {%- endif %}
+{%- if DEBUG == '1' %}
+{% include 'debug.j2' %}
+{%- endif %}
 		<key>Security</key>
 		<dict>
 			<key>AllowSetDefault</key>
