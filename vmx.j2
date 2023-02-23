@@ -40,6 +40,10 @@ serial0.yieldOnMsrRead = "TRUE"
 
 vmx.buildType = "release"
 
+# Ensure OC drive is first in boot
+bios.bootOrder = "HDD"
+bios.hddOrder = "sata0:2"
+
 config.version = "8"
 cpuid.coresPerSocket = "2"
 displayName = "{{DISPLAYNAME}}"
