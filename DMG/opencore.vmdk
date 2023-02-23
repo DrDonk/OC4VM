@@ -7,7 +7,7 @@ isNativeSnapshot="no"
 createType="monolithicFlat"
 
 # Extent description
-RW 204800 FLAT "opencore.dmg" 0
+RW 39103 FLAT "opencore.dmg" 0
 
 # The Disk Data Base 
 #DDB
