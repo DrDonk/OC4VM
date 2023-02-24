@@ -16,7 +16,7 @@ the development of the tool.
 
 * Linux   - Use your distro package manager
 * macOS   - `brew install python3`
-* Windows - Recommended way is to install Python 3.10 from the Microsoft App Store
+* Windows - Recommended way is to install Python 3.10 from the Microsoft App Store, or use Chocolatey or Scoop.
 
 ### dmg2img & qemu-img
 
@@ -52,9 +52,9 @@ but the full Qemu package must be installed:
 3. Run the tool: `python3 recovery_vmdk.py`
 4. The menu will be displayed and just select the macOS version you want using the number on the menu.
 ```
-Tokamak macOS Recovery VMDK Maker
-=================================
-(c) David Parsons 2022
+OC4VM macOS Recovery VMDK Maker
+===============================
+(c) David Parsons 2022-23
 
 Create a VMware VMDK Recovery Image
 1. Catalina
