@@ -3,19 +3,20 @@ version=1
 encoding="UTF-8"
 CID=fffffffe
 parentCID=ffffffff
-isNativeSnapshot="no"
-createType="monolithicFlat"
+createType="vmfs"
 
 # Extent description
-RW 39103 FLAT "opencore.dmg" 0
+RW 39103 VMFS "opencore.dmg" 0
 
-# The Disk Data Base 
+# The Disk Data Base
 #DDB
 
 ddb.adapterType = "lsilogic"
-#ddb.geometry.cylinders is not used by Mac OS.
-#ddb.geometry.heads is not used by Mac OS.
-#ddb.geometry.sectors is not used by Mac OS.
-#ddb.longContentID will be generated on the first write to the file.
-#ddb.uuid is not used by Mac OS.
+ddb.deletable = "true"
+ddb.geometry.cylinders = "19"
+ddb.geometry.heads = "64"
+ddb.geometry.sectors = "32"
+ddb.longContentID = "d81dfbaf8f3cc731a75d498dfffffffe"
+ddb.thinProvisioned = "1"
+ddb.uuid = "60 00 C2 9e 69 ed b1 7d-cc 72 0e 38 3a ad 66 8a"
 ddb.virtualHWVersion = "6"
