@@ -47,7 +47,7 @@ but the full Qemu package must be installed:
    
 
 ## Instructions
-1. Unzip the archive maintaining the folder strucutre
+1. Unzip the archive maintaining the folder structure
 2. Open a console/shell in the folder with the tool
 3. Run the tool: `python3 recovery_vmdk.py`
 4. The menu will be displayed and just select the macOS version you want using the number on the menu.
