@@ -36,13 +36,14 @@ but the full Qemu package must be installed:
 
     `brew install dmg2img`
 
-  * `brew install qemu`
+    `brew install qemu`
 
 
 * Windows - use [Chocolatey](https://chocolatey.org) or [Scoop](https://scoop.sh) to install the programs:
 
     `choco/scoop install dmg2img`
     
+
     `choco/scoop install qemu`
    
 
