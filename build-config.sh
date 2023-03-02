@@ -7,7 +7,7 @@ VERSION=$(<VERSION)
 echo "$VERSION"
 
 # Clear previous build
-rm -rfv ./build/config/*
+rm -rfv ./build/config/* 2>/dev/null
 
 # Create new output folders
 mkdir -p ./build/config/release_intel

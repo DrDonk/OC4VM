@@ -6,11 +6,15 @@ echo Creating OC4VM Release
 VERSION=$(<VERSION)
 echo "$VERSION"
 
+rm -v ./build/* 2>/dev/null
+rm -v ./dist/oc4vm-$VERSION.zip 2>/dev/null
+
 cp -v README.md ./build/
 cp -v LICENSE ./build/
 cp -vr ./iso ./build/
-cp -vr ./recovery_maker ./build/
+cp -vr ./recovery-maker ./build/
 7z a ./dist/oc4vm-$VERSION.zip ./build/*
+
 cd ./dist
 shasum -a 512 oc4vm-$VERSION.zip > oc4vm-$VERSION.sha512
 cd ..

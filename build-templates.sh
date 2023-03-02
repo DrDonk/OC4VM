@@ -7,7 +7,7 @@ VERSION=$(<VERSION)
 echo "$VERSION"
 
 # Clear previous build
-rm -rfv ./build/templates/*
+rm -rfv ./build/templates/* 2>/dev/null
 
 # Build VMX files
 mkdir -p ./build/templates/intel

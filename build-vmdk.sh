@@ -11,6 +11,7 @@ build_dmg() {
   msg_status "Building $1"
 
   # Make a copy of base image
+  rm -v $2/opencore.dmg 2>/dev/null
   cp -v ./dmg/opencore.* $2
 
   # Attach blank DMG and create OC setup
