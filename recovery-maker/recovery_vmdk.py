@@ -5,7 +5,6 @@
 # SPDX-License-Identifier: MIT
 
 import macrecovery
-import os
 import subprocess
 import sys
 
@@ -14,23 +13,6 @@ def main():
     print('\nOC4VM macOS Recovery VMDK Maker')
     print('=================================')
     print('(c) David Parsons 2022-23\n')
-
-    # Create full path to dmg2img utility for platform
-    cwd = os.path.dirname(os.path.realpath(__file__))
-    platform = sys.platform
-
-    if platform == 'linux':
-        dmg2img = 'dmg2img'
-        qemu_img = 'qemu-img'
-    elif platform == 'darwin':
-        dmg2img = 'dmg2img'
-        qemu_img = 'qemu-img'
-    elif platform == 'win32':
-        dmg2img = os.path.join(cwd, 'windows/dmg2img.exe')
-        qemu_img = os.path.join(cwd, 'windows/qemu-img')
-    else:
-        print(f'Unknown platform {platform}')
-        exit(1)
 
     # Print the menu
     print('Create a VMware VMDK Recovery Image')
@@ -78,7 +60,7 @@ def main():
     vmdk = f'{basename}.vmdk'
 
     print('Convertng to VMDK: ')
-    qemu_img = f'{qemu_img} convert -O vmdk {dmg} {vmdk} -p'
+    qemu_img = f'qemu_img convert -O vmdk {dmg} {vmdk} -p'
     subprocess.call(qemu_img.split())
     print(f'Created VMDK disk: {vmdk}')
     return
