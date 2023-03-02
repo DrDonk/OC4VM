@@ -11,11 +11,11 @@ build_dmg() {
   msg_status "Building $1"
 
   # Make a copy of base image
-  rm -v $2/opencore.dmg 2>/dev/null
-  cp -v ./dmg/opencore.* $2
+  mkdir -v -p $2/tmp
+  cp -v ./dmg/opencore.* $2/tmp/
 
   # Attach blank DMG and create OC setup
-  hdiutil attach $2/opencore.dmg -noverify -nobrowse -noautoopen
+  hdiutil attach $2/tmp/opencore.dmg -noverify -nobrowse -noautoopen
   diskutil eraseVolume FAT32 OPENCORE /Volumes/OPENCORE
   cp -r $3 /Volumes/OPENCORE
   cp -r $4 /Volumes/OPENCORE/EFI/OC
@@ -24,12 +24,16 @@ build_dmg() {
   ls -a /Volumes/OPENCORE
   hdiutil detach /Volumes/OPENCORE
 
-  # Validate VMDK is OK
+  # Convert and validate VMDK
+  /Applications/VMware\ Fusion.app/Contents/Library/vmware-vdiskmanager -e $2/tmp/opencore.vmdk
+  /Applications/VMware\ Fusion.app/Contents/Library/vmware-vdiskmanager -r $2/tmp/opencore.vmdk -t 0 $2/opencore.vmdk
   /Applications/VMware\ Fusion.app/Contents/Library/vmware-vdiskmanager -e $2/opencore.vmdk
+
+  rm -rfv $2/tmp
 
   # Write a message
   if [[ -f "$2/opencore.vmdk" ]]; then
-    msg_status "Built .vmdk file is available at $2/opencore.vmdk"
+    msg_status "Built .vmdk file is available at $2opencore.vmdk"
   else
     msg_error "Build failure! Built .vmdk file not found!"
   fi
@@ -56,26 +60,26 @@ mkdir -p ./build/vmdk/debug_amd
 
 # Build the OpenCore DMG/vmdk files
 MSG="Intel Release"
-VMDK="./build/vmdk/release_intel/"
-BASE="./disk_contents/Release-Base/."
+VMDK="./build/vmdk/release_intel"
+BASE="./disk_contents/release-base/."
 CONFIG="./build/config/release_intel/config.plist"
 build_dmg "$MSG" $VMDK $BASE $CONFIG
 
 MSG="AMD Release"
-VMDK="./build/vmdk/release_amd/"
-BASE="./disk_contents/Release-Base/."
+VMDK="./build/vmdk/release_amd"
+BASE="./disk_contents/release-base/."
 CONFIG="./build/config/release_amd/config.plist"
 build_dmg "$MSG" $VMDK $BASE $CONFIG
 
 MSG="Intel Debug"
-VMDK="./build/vmdk/debug_intel/"
-BASE="./disk_contents/Debug-Base/."
+VMDK="./build/vmdk/debug_intel"
+BASE="./disk_contents/debug-base/."
 CONFIG="./build/config/debug_intel/config.plist"
 build_dmg "$MSG" $VMDK $BASE $CONFIG
 
 MSG="AMD Debug"
-VMDK="./build/vmdk/debug_amd/"
-BASE="./disk_contents/Debug-Base/."
+VMDK="./build/vmdk/debug_amd"
+BASE="./disk_contents/debug-base/."
 CONFIG="./build/config/debug_amd/config.plist"
 build_dmg "$MSG" $VMDK $BASE $CONFIG
 
