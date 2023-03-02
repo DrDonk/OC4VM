@@ -18,15 +18,11 @@ the development of the tool.
 * macOS   - `brew install python3`
 * Windows - Recommended way is to install Python 3.10 from the Microsoft App Store, or use Chocolatey or Scoop.
 
-### dmg2img & qemu-img
+### qemu-img
 
-You will need to have two utilities on the path:
-1. dmg2img
-2. qemu-img
+You will need to have qemu-img utility, from QEMU, on the path.
 
 * Linux - These can be installed from Linux repos, for example Debian based distros:
-
-    `sudo apt install -y dmg2img`
 
     `sudo apt install -y qemu-utils`
 
@@ -34,15 +30,10 @@ You will need to have two utilities on the path:
 * macOS - The [brew](https://brew.sh) package manager is the best way to install on macOS, 
 but the full Qemu package must be installed:
 
-    `brew install dmg2img`
-
     `brew install qemu`
 
 
 * Windows - use [Chocolatey](https://chocolatey.org) or [Scoop](https://scoop.sh) to install the programs:
-
-    `choco/scoop install dmg2img`
-    
 
     `choco/scoop install qemu`
    
@@ -80,6 +71,5 @@ from Apple and can be removed if not needed.
 This tool wraps several other great open source commands. Thanks to the authors of those tools.
 
 * macrecovery.py - https://github.com/acidanthera/OpenCorePkg
-* dmg2img - http://vu1tur.eu.org/tools
 * qemu - https://www.qemu.org
 * qemu-img for Windows - https://cloudbase.it/qemu-img-windows

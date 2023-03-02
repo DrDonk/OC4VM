@@ -75,19 +75,11 @@ def main():
 
     # Convert DMG to IMG using dmg2img
     dmg = f'{basename}.dmg'
-    img = f'{basename}.img'
     vmdk = f'{basename}.vmdk'
-    convert = f'{dmg2img} -i {dmg} -o {img}'
-    subprocess.call(convert.split())
 
     print('Convertng to VMDK: ')
-    qemu_img = f'{qemu_img} convert -O vmdk {img} {vmdk} -p'
+    qemu_img = f'{qemu_img} convert -O vmdk {dmg} {vmdk} -p'
     subprocess.call(qemu_img.split())
-
-    # Cleanup raw file
-    if os.path.exists(f'{img}'):
-        os.remove(f'{img}')
-
     print(f'Created VMDK disk: {vmdk}')
     return
 
