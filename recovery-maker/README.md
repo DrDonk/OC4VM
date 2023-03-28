@@ -4,10 +4,6 @@
 This is a utility  to download the recovery image for macOS from Apple's servers and create a bootable 
 VMDK file that can be used to start an Internet installtion of macOS.
 
-It also allows SIP and other recovery only mode commands to be used on an existing macOS guest. 
-This is needed due to a bug in VMware EFI implementation which stops the Recovery environment being 
-booted directly by using the CMD-R combination.
-
 ## Pre-requisites
 
 ###  Python 3
