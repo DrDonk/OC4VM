@@ -53,14 +53,14 @@ def main():
                 '--basename', basename,
                 '-os', 'latest']
 
-    macrecovery.main()
+    # macrecovery.main()
 
     # Convert DMG to IMG using dmg2img
     dmg = f'{basename}.dmg'
     vmdk = f'{basename}.vmdk'
 
     print('Convertng to VMDK: ')
-    qemu_img = f'qemu_img convert -O vmdk {dmg} {vmdk} -p'
+    qemu_img = f'qemu-img convert -O vmdk {dmg} {vmdk} -p'
     subprocess.call(qemu_img.split())
     print(f'Created VMDK disk: {vmdk}')
     return
