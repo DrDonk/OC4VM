@@ -41,7 +41,7 @@ but the full Qemu package must be installed:
 ## Instructions
 1. Unzip the archive maintaining the folder structure
 2. Open a console/shell in the folder with the tool
-3. Run the tool: `python3 recovery_vmdk.py`
+3. Run the tool: `python3 recovery-vmdk.py`
 4. The menu will be displayed and just select the macOS version you want using the number on the menu.
 ```
 OC4VM macOS Recovery VMDK Maker
@@ -66,6 +66,13 @@ there will be:
 
 The .vmdk file is the only one needed for VMware. The .dmg and .chunklist files are the orginal files downloaded 
 from Apple and can be removed if not needed.
+
+Occasionally you may get this error:
+
+`ERROR: "HTTP Error 403: " when connecting to http://osrecovery.apple.com/InstallationPayload/RecoveryImage`
+
+Just re-run the command and it should work.
+
 
 ## Acknowledgements
 This tool wraps several other great open source commands. Thanks to the authors of those tools.
