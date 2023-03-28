@@ -53,7 +53,7 @@ def main():
                 '--basename', basename,
                 '-os', 'latest']
 
-    # macrecovery.main()
+    macrecovery.main()
 
     # Convert DMG to IMG using dmg2img
     dmg = f'{basename}.dmg'
