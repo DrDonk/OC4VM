@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 #set -x
-echo Creating OpenCore DMG/vmdk Images
+echo Creating OpenCore DMG/VMDK Images
 
 # Read current version
 VERSION=$(<VERSION)
