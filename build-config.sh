@@ -10,15 +10,19 @@ echo "$VERSION"
 rm -rfv ./build/config/* 2>/dev/null
 
 # Create new output folders
-mkdir -p ./build/config/release_intel
-mkdir -p ./build/config/release_amd
-mkdir -p ./build/config/debug_intel
-mkdir -p ./build/config/debug_amd
+mkdir -p ./build/config/intel-release
+mkdir -p ./build/config/amd-release
+mkdir -p ./build/config/intel-verbose
+mkdir -p ./build/config/amd-verbose
+mkdir -p ./build/config/intel-debug
+mkdir -p ./build/config/amd-debug
 
 # Build config.plist files
-jinja2 --format=toml --section=release_intel -D VERSION=$VERSION --outfile=./build/config/release_intel/config.plist config.j2 config.toml
-jinja2 --format=toml --section=release_amd -D VERSION=$VERSION --outfile=./build/config/release_amd/config.plist config.j2 config.toml
-jinja2 --format=toml --section=debug_intel -D VERSION=$VERSION --outfile=./build/config/debug_intel/config.plist config.j2 config.toml
-jinja2 --format=toml --section=debug_amd -D VERSION=$VERSION --outfile=./build/config/debug_amd/config.plist config.j2 config.toml
+jinja2 --format=toml --section=intel-release -D VERSION=$VERSION --outfile=./build/config/intel-release/config.plist config.j2 config.toml
+jinja2 --format=toml --section=amd-release -D VERSION=$VERSION --outfile=./build/config/amd-release/config.plist config.j2 config.toml
+jinja2 --format=toml --section=intel-verbose -D VERSION=$VERSION --outfile=./build/config/intel-verbose/config.plist config.j2 config.toml
+jinja2 --format=toml --section=amd-verbose -D VERSION=$VERSION --outfile=./build/config/amd-verbose/config.plist config.j2 config.toml
+jinja2 --format=toml --section=intel-debug -D VERSION=$VERSION --outfile=./build/config/intel-debug/config.plist config.j2 config.toml
+jinja2 --format=toml --section=amd-debug -D VERSION=$VERSION --outfile=./build/config/amd-debug/config.plist config.j2 config.toml
 
 exit

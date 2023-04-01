@@ -11,11 +11,11 @@ build_dmg() {
   msg_status "Building $1"
 
   # Make a copy of base image
-  mkdir -v -p $2/tmp
-  cp -v ./dmg/opencore.* $2/tmp/
+  mkdir -v -p $2/esxi
+  cp -v ./dmg/opencore.* $2/esxi/
 
   # Attach blank DMG and create OC setup
-  hdiutil attach $2/tmp/opencore.dmg -noverify -nobrowse -noautoopen
+  hdiutil attach $2/esxi/opencore.dmg -noverify -nobrowse -noautoopen
   diskutil eraseVolume FAT32 OPENCORE /Volumes/OPENCORE
   cp -r $3 /Volumes/OPENCORE
   cp -r $4 /Volumes/OPENCORE/EFI/OC
@@ -25,11 +25,9 @@ build_dmg() {
   hdiutil detach /Volumes/OPENCORE
 
   # Convert and validate VMDK
-  /Applications/VMware\ Fusion.app/Contents/Library/vmware-vdiskmanager -e $2/tmp/opencore.vmdk
-  /Applications/VMware\ Fusion.app/Contents/Library/vmware-vdiskmanager -r $2/tmp/opencore.vmdk -t 0 $2/opencore.vmdk
+  /Applications/VMware\ Fusion.app/Contents/Library/vmware-vdiskmanager -e $2/esxi/opencore.vmdk
+  /Applications/VMware\ Fusion.app/Contents/Library/vmware-vdiskmanager -r $2/esxi/opencore.vmdk -t 0 $2/opencore.vmdk
   /Applications/VMware\ Fusion.app/Contents/Library/vmware-vdiskmanager -e $2/opencore.vmdk
-
-  rm -rfv $2/tmp
 
   # Write a message
   if [[ -f "$2/opencore.vmdk" ]]; then
@@ -50,37 +48,51 @@ msg_error() {
 }
 
 # Clear previous build
-rm -rfv ./build/vmdk/*
+rm -rf ./build/vmdk/* 2>/dev/null
 
 # Create new output folders
-mkdir -p ./build/vmdk/release_intel
-mkdir -p ./build/vmdk/release_amd
-mkdir -p ./build/vmdk/debug_intel
-mkdir -p ./build/vmdk/debug_amd
+mkdir -p ./build/vmdk/intel-release
+mkdir -p ./build/vmdk/amd-release
+mkdir -p ./build/vmdk/intel-verbose
+mkdir -p ./build/vmdk/amd-verbose
+mkdir -p ./build/vmdk/intel-debug
+mkdir -p ./build/vmdk/amd-debug
 
 # Build the OpenCore DMG/vmdk files
 MSG="Intel Release"
-VMDK="./build/vmdk/release_intel"
+VMDK="./build/vmdk/intel-release"
 BASE="./disk_contents/release-base/."
-CONFIG="./build/config/release_intel/config.plist"
+CONFIG="./build/config/intel-release/config.plist"
 build_dmg "$MSG" $VMDK $BASE $CONFIG
 
 MSG="AMD Release"
-VMDK="./build/vmdk/release_amd"
+VMDK="./build/vmdk/amd-release"
 BASE="./disk_contents/release-base/."
-CONFIG="./build/config/release_amd/config.plist"
+CONFIG="./build/config/amd-release/config.plist"
+
+build_dmg "$MSG" $VMDK $BASE $CONFIG
+MSG="Intel Verbose"
+VMDK="./build/vmdk/intel-verbose"
+BASE="./disk_contents/release-base/."
+CONFIG="./build/config/intel-verbose/config.plist"
+build_dmg "$MSG" $VMDK $BASE $CONFIG
+
+MSG="AMD Verbose"
+VMDK="./build/vmdk/amd-verbose"
+BASE="./disk_contents/release-base/."
+CONFIG="./build/config/amd-verbose/config.plist"
 build_dmg "$MSG" $VMDK $BASE $CONFIG
 
 MSG="Intel Debug"
-VMDK="./build/vmdk/debug_intel"
+VMDK="./build/vmdk/intel-debug"
 BASE="./disk_contents/debug-base/."
-CONFIG="./build/config/debug_intel/config.plist"
+CONFIG="./build/config/intel-debug/config.plist"
 build_dmg "$MSG" $VMDK $BASE $CONFIG
 
 MSG="AMD Debug"
-VMDK="./build/vmdk/debug_amd"
+VMDK="./build/vmdk/amd-debug"
 BASE="./disk_contents/debug-base/."
-CONFIG="./build/config/debug_amd/config.plist"
+CONFIG="./build/config/amd-debug/config.plist"
 build_dmg "$MSG" $VMDK $BASE $CONFIG
 
 exit

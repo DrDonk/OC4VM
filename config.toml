@@ -1,4 +1,4 @@
-[release_intel]
+[intel-release]
 AMD = "0"
 AVX2 = "0"
 BOOTARGS = 'keepsyms=1 -lilubetaall '
@@ -8,7 +8,7 @@ HIDEAUXILLARY = "true"
 RESOLUTION = "1440x900@32"
 TIMEOUT = "5"
 
-[release_amd]
+[amd-release]
 AMD = "1"
 AVX2 = "0"
 BOOTARGS = 'keepsyms=1 -lilubetaall '
@@ -18,7 +18,27 @@ HIDEAUXILLARY = "true"
 RESOLUTION = "1440x900@32"
 TIMEOUT = "5"
 
-[debug_intel]
+[intel-verbose]
+AMD = "0"
+AVX2 = "0"
+BOOTARGS = '-v keepsyms=1 serial=1 -no_panic_dialog -lilubetaall -liludbgall'
+DEBUG = "0"
+DESCRIPTION = "Verbose Intel"
+HIDEAUXILLARY = "true"
+RESOLUTION = "1440x900@32"
+TIMEOUT = "5"
+
+[amd-verbose]
+AMD = "1"
+AVX2 = "0"
+BOOTARGS = '-v keepsyms=1 serial=1 -no_panic_dialog -lilubetaall -liludbgall'
+DEBUG = "0"
+DESCRIPTION = "Verbose AMD"
+HIDEAUXILLARY = "true"
+RESOLUTION = "1440x900@32"
+TIMEOUT = "5"
+
+[intel-debug]
 AMD = "0"
 AVX2 = "0"
 BOOTARGS = '-v keepsyms=1 serial=1 -no_panic_dialog -lilubetaall -liludbgall'
@@ -28,7 +48,7 @@ HIDEAUXILLARY = "false"
 RESOLUTION = "1440x900@32"
 TIMEOUT = "0"
 
-[debug_amd]
+[amd-debug]
 AMD = "1"
 AVX2 = "0"
 BOOTARGS = '-v keepsyms=1 serial=1 -no_panic_dialog -lilubetaall -liludbgall'

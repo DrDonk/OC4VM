@@ -268,6 +268,45 @@
 			</dict>
 		</array>
 	</dict>
+	<key>NVRAM</key>
+	<dict>
+		<key>Add</key>
+		<dict>
+			<key>7C436110-AB2A-4BBB-A880-FE41995C9F82</key>
+			<dict>
+				<key>boot-args</key>
+				<string>{{BOOTARGS}}</string>
+			</dict>
+            <key>4D1EDE05-38C7-4A6A-9CC6-4BCCA8B38C14</key>
+            <dict>
+                <key>UIScale</key>
+                <data>AQ==</data>
+            </dict>
+            <key>4D1FDA02-38C7-4A6A-9CC6-4BCCA8B30102</key>
+            <dict>
+                <string>OC4VM_TYPE</string>
+                <string>{{DESCRIPTION}}</string>
+                <string>OC4VM_VERSION</string>
+                <string>{{VERSION}}</string>
+            </dict>
+		</dict>
+        <key>Delete</key>
+		<dict>
+			<key>7C436110-AB2A-4BBB-A880-FE41995C9F82</key>
+			<array>
+				<string>boot-args</string>
+			</array>
+            <key>4D1EDE05-38C7-4A6A-9CC6-4BCCA8B38C14</key>
+            <array>
+                <string>UIScale</string>
+            </array>
+            <key>4D1FDA02-38C7-4A6A-9CC6-4BCCA8B30102</key>
+            <array>
+                <string>OC4VM_TYPE</string>
+                <string>OC4VM_VERSION</string>
+            </array>
+		</dict>
+	</dict>
 	<key>UEFI</key>
 	<dict>
 		<key>ConnectDrivers</key>
@@ -304,26 +343,6 @@
 				<key>Path</key>
 				<string>OpenCanopy.efi</string>
 			</dict>
-			<dict>
-				<key>Arguments</key>
-				<string></string>
-				<key>Comment</key>
-				<string>Toggle SIP</string>
-				<key>Enabled</key>
-				<true/>
-				<key>Path</key>
-				<string>ToggleSipEntry.efi</string>
-			</dict>
-			<dict>
-				<key>Arguments</key>
-				<string></string>
-				<key>Comment</key>
-				<string>Reset NVRAM</string>
-				<key>Enabled</key>
-				<true/>
-				<key>Path</key>
-				<string>ResetNvramEntry.efi</string>
-			</dict>
 		</array>
 		<key>Input</key>
 		<dict>
@@ -347,33 +366,6 @@
 		<dict>
 			<key>RequestBootVarRouting</key>
 			<true/>
-		</dict>
-	</dict>
-	<key>NVRAM</key>
-	<dict>
-		<key>Add</key>
-		<dict>
-			<key>7C436110-AB2A-4BBB-A880-FE41995C9F82</key>
-			<dict>
-				<key>boot-args</key>
-				<string>{{BOOTARGS}}</string>
-			</dict>
-            <key>4D1EDE05-38C7-4A6A-9CC6-4BCCA8B38C14</key>
-            <dict>
-                <key>UIScale</key>
-                <data>AQ==</data>
-            </dict>
-		</dict>
-        <key>Delete</key>
-		<dict>
-			<key>7C436110-AB2A-4BBB-A880-FE41995C9F82</key>
-			<array>
-				<string>boot-args</string>
-			</array>
-            <key>4D1EDE05-38C7-4A6A-9CC6-4BCCA8B38C14</key>
-            <array>
-                <string>UIScale</string>
-            </array>
 		</dict>
 	</dict>
 </dict>

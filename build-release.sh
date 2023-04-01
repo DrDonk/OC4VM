@@ -6,9 +6,9 @@ echo Creating OC4VM Release
 VERSION=$(<VERSION)
 echo "$VERSION"
 
-rm -rfv ./build/iso
-rm -rfv ./build/recovery-maker
-rm -v ./dist/oc4vm-$VERSION.*
+rm -rf ./build/iso 2>/dev/null
+rm -rf ./build/recovery-maker 2>/dev/null
+rm ./dist/oc4vm-$VERSION.* 2>/dev/null
 
 cp -v README.md ./build/
 cp -v LICENSE ./build/
