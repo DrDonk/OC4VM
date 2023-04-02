@@ -1,7 +1,7 @@
 [intel-release]
 AMD = "0"
 AVX2 = "0"
-BOOTARGS = 'keepsyms=1 -lilubetaall '
+BOOTARGS = 'keepsyms=1 -lilubetaall'
 DEBUG = "0"
 DESCRIPTION = "Release Intel"
 HIDEAUXILLARY = "true"
@@ -11,7 +11,7 @@ TIMEOUT = "5"
 [amd-release]
 AMD = "1"
 AVX2 = "0"
-BOOTARGS = 'keepsyms=1 -lilubetaall '
+BOOTARGS = 'keepsyms=1 -lilubetaall'
 DEBUG = "0"
 DESCRIPTION = "Release AMD"
 HIDEAUXILLARY = "true"
@@ -21,7 +21,7 @@ TIMEOUT = "5"
 [intel-verbose]
 AMD = "0"
 AVX2 = "0"
-BOOTARGS = '-v keepsyms=1 serial=1 -no_panic_dialog -lilubetaall -liludbgall'
+BOOTARGS = '-v keepsyms=1 serial=1 -lilubetaall'
 DEBUG = "0"
 DESCRIPTION = "Verbose Intel"
 HIDEAUXILLARY = "true"
@@ -31,7 +31,7 @@ TIMEOUT = "5"
 [amd-verbose]
 AMD = "1"
 AVX2 = "0"
-BOOTARGS = '-v keepsyms=1 serial=1 -no_panic_dialog -lilubetaall -liludbgall'
+BOOTARGS = '-v keepsyms=1 serial=1 -lilubetaall'
 DEBUG = "0"
 DESCRIPTION = "Verbose AMD"
 HIDEAUXILLARY = "true"
