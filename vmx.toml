@@ -1,9 +1,18 @@
+[intel_generic]
+AMD = "0"
+AVX1 = "0"
+AVX2 = "0"
+RDRAND = "0"
+DISPLAYNAME = 'macOS Intel'
+ETHERNET_DEVICE = 'e1000e'
+GUESTOS = 'darwin20-64'
+
 [intel_macos_10_15]
 AMD = "0"
 AVX1 = "0"
 AVX2 = "0"
 RDRAND = "0"
-DISPLAYNAME = 'maOS 10.15 Catalina'
+DISPLAYNAME = 'macOS 10.15 Catalina'
 ETHERNET_DEVICE = 'e1000e'
 GUESTOS = 'darwin19-64'
 
@@ -12,7 +21,7 @@ AMD = "0"
 AVX1 = "0"
 AVX2 = "0"
 RDRAND = "0"
-DISPLAYNAME = 'maOS 11 Big Sur'
+DISPLAYNAME = 'macOS 11 Big Sur'
 ETHERNET_DEVICE = 'e1000e'
 GUESTOS = 'darwin20-64'
 
@@ -21,7 +30,7 @@ AMD = "0"
 AVX1 = "0"
 AVX2 = "0"
 RDRAND = "0"
-DISPLAYNAME = 'maOS 12 Monterey'
+DISPLAYNAME = 'macOS 12 Monterey'
 ETHERNET_DEVICE = 'e1000e'
 GUESTOS = 'darwin20-64'
 
@@ -34,12 +43,21 @@ DISPLAYNAME = 'macOS 13 Ventura'
 ETHERNET_DEVICE = 'e1000e'
 GUESTOS = 'darwin20-64'
 
+[amd_generic]
+AMD = "1"
+AVX1 = "0"
+AVX2 = "0"
+RDRAND = "0"
+DISPLAYNAME = 'macOS AMD'
+ETHERNET_DEVICE = 'e1000e'
+GUESTOS = 'darwin20-64'
+
 [amd_macos_10_15]
 AMD = "1"
 AVX1 = "0"
 AVX2 = "0"
 RDRAND = "0"
-DISPLAYNAME = 'maOS 10.15 Catalina'
+DISPLAYNAME = 'macOS 10.15 Catalina'
 ETHERNET_DEVICE = 'e1000e'
 GUESTOS = 'darwin19-64'
 
@@ -48,7 +66,7 @@ AMD = "1"
 AVX1 = "0"
 AVX2 = "0"
 RDRAND = "0"
-DISPLAYNAME = 'maOS 11 Big Sur'
+DISPLAYNAME = 'macOS 11 Big Sur'
 ETHERNET_DEVICE = 'e1000e'
 GUESTOS = 'darwin20-64'
 
@@ -57,7 +75,7 @@ AMD = "1"
 AVX1 = "0"
 AVX2 = "0"
 RDRAND = "0"
-DISPLAYNAME = 'maOS 12 Monterey'
+DISPLAYNAME = 'macOS 12 Monterey'
 ETHERNET_DEVICE = 'e1000e'
 GUESTOS = 'darwin20-64'
 
