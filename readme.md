@@ -30,7 +30,7 @@ The OC4VM system has been tested with Big Sur, Monterey and Ventura.
 * Unzip the archive to extract the files
 * Navigate to the folder with the extracted files
 
-### 2.1 Folder Contents
+### 2.2 Folder Contents
 
 OC4VM has several folders:
 
@@ -88,10 +88,8 @@ Before powering on the new VM you will need to set networking up for your enviro
 networking type is required and so will start disconnected.
 
 ## 2.3 VMware Tools
-OC4VM provides a copy of the VMware macOS guest tools ISO images. To install mount the ISO file using the VMs virtual 
+OC4VM provides a copy of the VMware macOS guest tools ISO images. To install mount the darwin.iso file using the VMs virtual 
 CD/DVD drive.
-
-## x. Limitations
 
 ## x. VMware Downloads
 These URLs will link to the latest versions of VMware's products:
