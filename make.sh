@@ -1,5 +1,6 @@
 #!/usr/bin/env zsh
 #set -x
+source ./venv/bin/activate
 echo Creating OC4VM
 
 ./build-config.sh
@@ -7,4 +8,5 @@ echo Creating OC4VM
 ./build-templates.sh
 ./build-release.sh
 
+deactivate
 exit
