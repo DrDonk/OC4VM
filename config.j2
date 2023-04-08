@@ -86,24 +86,6 @@
 				<key>Arch</key>
 				<string>x86_64</string>
 				<key>BundlePath</key>
-				<string>NoAVXFSCompressionTypeZlib-AVXpel.kext</string>
-				<key>Comment</key>
-				<string>Work-around 13.0+ Zlib kernel panic</string>
-				<key>Enabled</key>
-				<true/>
-				<key>ExecutablePath</key>
-				<string>Contents/MacOS/NoAVXFSCompressionTypeZlib</string>
-				<key>MaxKernel</key>
-				<string></string>
-				<key>MinKernel</key>
-				<string>22.0.0</string>
-				<key>PlistPath</key>
-				<string>Contents/Info.plist</string>
-			</dict>
-			<dict>
-				<key>Arch</key>
-				<string>x86_64</string>
-				<key>BundlePath</key>
 				<string>Intel82574L.kext</string>
 				<key>Comment</key>
 				<string>Intel82574L Ethernet Driver</string>
@@ -121,80 +103,9 @@
 		</array>
  		<key>Patch</key>
 		<array>
-			<dict>
-				<key>Arch</key>
-				<string>x86_64</string>
-				<key>Base</key>
-				<string>_early_random</string>
-				<key>Comment</key>
-				<string>SurPlus v1 - PART 1 of 2 - Patch read_erandom (inlined in _early_random)</string>
-				<key>Count</key>
-				<integer>1</integer>
-				<key>Enabled</key>
-				<true/>
-				<key>Find</key>
-				<data>
-				AHQjSIs=
-				</data>
-				<key>Identifier</key>
-				<string>kernel</string>
-				<key>Limit</key>
-				<integer>800</integer>
-				<key>Mask</key>
-				<data>
-				</data>
-				<key>MaxKernel</key>
-				<string>21.2.0</string>
-				<key>MinKernel</key>
-				<string>20.4.0</string>
-				<key>Replace</key>
-				<data>
-				AOsjSIs=
-				</data>
-				<key>ReplaceMask</key>
-				<data>
-				</data>
-				<key>Skip</key>
-				<integer>0</integer>
-			</dict>
-			<dict>
-				<key>Arch</key>
-				<string>x86_64</string>
-				<key>Base</key>
-				<string>_register_and_init_prng</string>
-				<key>Comment</key>
-				<string>SurPlus v1 - PART 2 of 2 - Patch register_and_init_prng</string>
-				<key>Count</key>
-				<integer>1</integer>
-				<key>Enabled</key>
-				<true/>
-				<key>Find</key>
-				<data>
-				ukgBAAAx9g==
-				</data>
-				<key>Identifier</key>
-				<string>kernel</string>
-				<key>Limit</key>
-				<integer>256</integer>
-				<key>Mask</key>
-				<data>
-				</data>
-				<key>MaxKernel</key>
-				<string>21.2.0</string>
-				<key>MinKernel</key>
-				<string>20.4.0</string>
-				<key>Replace</key>
-				<data>
-				ukgBAADrBQ==
-				</data>
-				<key>ReplaceMask</key>
-				<data>
-				</data>
-				<key>Skip</key>
-				<integer>0</integer>
-			</dict>
 {%- if AMD == '1' %}
-{% include 'amd.j2' %}
+        <!-- AMD START -->
+        <!-- AMD END -->
 {%- endif %}
    		</array>
  		<key>Quirks</key>
@@ -225,7 +136,32 @@
 			<integer>{{TIMEOUT}}</integer>
 		</dict>
 {%- if DEBUG == '1' %}
-{% include 'debug.j2' %}
+        <!-- DEBUG START -->
+        <key>Debug</key>
+		<dict>
+			<key>AppleDebug</key>
+			<true/>
+			<key>ApplePanic</key>
+			<true/>
+			<key>DisplayDelay</key>
+			<integer>0</integer>
+			<key>DisableWatchDog</key>
+			<true/>
+			<key>DisplayLevel</key>
+			<integer>2147483714</integer>
+			<key>LogModules</key>
+			<string>*</string>
+			<key>SysReport</key>
+			<false/>
+			<key>Target</key>
+			<integer>10</integer>
+		</dict>
+		<key>Serial</key>
+		<dict>
+			<key>Init</key>
+			<true/>
+		</dict>
+        <!-- DEBUG END -->
 {%- endif %}
 		<key>Security</key>
 		<dict>
@@ -371,6 +307,30 @@
 				<key>Path</key>
 				<string>OpenCanopy.efi</string>
 			</dict>
+{%- if DEBUG == '1' %}
+            <!-- DEBUG START -->
+            <dict>
+				<key>Arguments</key>
+				<string></string>
+				<key>Comment</key>
+				<string>Toggle SIP</string>
+				<key>Enabled</key>
+				<true/>
+				<key>Path</key>
+				<string>ToggleSipEntry.efi</string>
+			</dict>
+			<dict>
+				<key>Arguments</key>
+				<string></string>
+				<key>Comment</key>
+				<string>Reset NVRAM</string>
+				<key>Enabled</key>
+				<true/>
+				<key>Path</key>
+				<string>ResetNvramEntry.efi</string>
+			</dict>
+            <!-- DEBUG END -->
+{%- endif %}
 		</array>
 		<key>Input</key>
 		<dict>
