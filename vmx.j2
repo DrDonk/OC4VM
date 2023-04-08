@@ -20,9 +20,7 @@ featMask.vm.cpuid.RDRAND = "Min:1"
 {% endif %}
 
 # Check CPU as OC4VM has Intel and AMD variants
-{% if AMD == '0' -%}
-featMask.vm.cpuid.INTEL = "Min:1"
-{% elif AMD == '1' -%}
+{% if AMD == '1' -%}
 featMask.vm.cpuid.AMD = "Min:1"
 
 # Switch off VMware default CPUID masks
@@ -37,9 +35,7 @@ featMask.vm.cpuid.FAMILY = "Val:0x6"
 featMask.vm.cpuid.MODEL = "Val:0x4e"
 featMask.vm.cpuid.STEPPING = "Val:0x03"
 {% else -%}
-{# Error no valid CPU passed so raise a zero division error #}
-{# https://stackoverflow.com/a/43398591 #}
-{{ 0/0 }}
+featMask.vm.cpuid.INTEL = "Min:1"
 {% endif %}
 
 # Mac mini 2018
