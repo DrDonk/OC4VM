@@ -6,6 +6,14 @@
 	<string>{{DESCRIPTION}}</string>
 	<key>#OC4VM VERSION</key>
 	<string>{{VERSION}}</string>
+	<key>Booter</key>
+	<dict>
+		<key>Quirks</key>
+		<dict>
+			<key>ProtectUefiServices</key>
+			<false/>
+		</dict>
+	</dict>
 	<key>Kernel</key>
 	<dict>
 		<key>Add</key>
@@ -112,6 +120,8 @@
 		<dict>
 			<key>DisableLinkeditJettison</key>
 			<true/>
+			<key>ProvideCurrentCpuInfo</key>
+			<true/>
 		</dict>
 	</dict>
 	<key>Misc</key>
@@ -154,7 +164,7 @@
 			<key>SysReport</key>
 			<false/>
 			<key>Target</key>
-			<integer>10</integer>
+			<integer>11</integer>
 		</dict>
 		<key>Serial</key>
 		<dict>
@@ -275,6 +285,11 @@
 	</dict>
 	<key>UEFI</key>
 	<dict>
+		<key>Audio</key>
+		<dict>
+			<key>DisconnectHda</key>
+			<true/>
+		</dict>
 		<key>ConnectDrivers</key>
 		<true/>
 		<key>Drivers</key>
