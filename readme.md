@@ -3,19 +3,14 @@
 OpenCore 4 VMware (OC4VM) provides a set of VMware macOS templates and boot disks to allow macOS to run on Linux 
 and Windows versions of VMware Workstation and Player. It can also be used with VMware Fusion on macOS.
 
-Using OpenCore allows for a more flexible patching system over using the VMware Unlocker. It basically creates a 
-virtual Hackintosh, a Virtualtosh, which is similar to what the OpenCore Legacy Patcher does for older Apple Mac 
-computers.
+Using OpenCore allows for a more flexible patching system compared to using the VMware Unlocker. It basically creates a 
+virtual Hackintosh, "Virtualtosh", which is similar to the OpenCore Legacy Patcher for older Apple Mac computers.
 
 OC4VM can be used with or without unlocking VMware. It is recommended that the Unlocker is not installed. OC4VM does 
 not alter anything in the VMware program folders.
 
-What can OC4VM do:
+What can OC4VM do?
 * Run macOS on Intel and AMD CPUs
-* Run macOS on CPUs without these instructions, e.g., running Ventura on pre-Haswell CPUs without AVX2 support. 
-  * AVX
-  * AVX2
-  * RANDR
 * Boot to macOS Recovery mode which is broken in VMware's EFI implementation
 * Easily change SIP settings using an EFI utility
 * Add Intel e1000e virtual NIC compatibility for Ventura
@@ -26,7 +21,7 @@ The OC4VM system has been tested with Big Sur, Monterey and Ventura.
 ### 2.1 Download Release
 
 * Download a binary release from https://github.com/DrDonk/oc4vm/releases
-* Optionally check the sha512 checksum matches that published in the release
+* Optionally check the sha512 checksum matches that published with the release
 * Unzip the archive to extract the files
 * Navigate to the folder with the extracted files
 
@@ -83,12 +78,16 @@ Note:
 Make sure you use the correct folder for your CPU as using the wrong one will give a VMware error message.
 ***
 
-Before powering on the new VM you will need to set networking up for your environment. The templates do not specify what
-networking type is required and so will start disconnected.
-
-## 2.3 VMware Tools
+### 2.3 VMware Tools
 OC4VM provides a copy of the VMware macOS guest tools ISO images. To install mount the darwin.iso file using the VMs virtual 
 CD/DVD drive.
+
+## x. Platform specific notes
+### x.1 Intel CPU
+TODO
+
+### x.2 AMD CPU
+1. The CPUs and cores cannot be changed in the VM as the OpenCore booter is hard coded to 2 cores
 
 ## x. VMware Downloads
 These URLs will link to the latest versions of VMware's products:
