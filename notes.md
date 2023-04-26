@@ -20,3 +20,17 @@
 | macOS 12              | Monterey      | darwin21-64         | 0x5063 |
 | macOS 13              | Ventura       | darwin22-64         | 0x5064 |
 | macOS 14              | ???????       | darwin23-64         | 0x5065 |
+
+
+#### Cores for AMD Patches
+
+| Cores | 10.13/10.14<br/>uAAAAAAA<br/>B8000000 0000 | 10.15/11.0<br/>ugAAAAAA<br/>BA000000 0000 | 12.0/13.0<br/>ugAAAACQ<br/>BA000000 0090 | 13.3+<br/>ugAAAAA=<br/>BA000000 |
+|-------|---------------------------------------------|--------------------------------------------|------------------------|----------------------------|
+| 1     | uAEAAAAA                                    | ugEAAAAA                                   | ugEAAACQ               | ugEAAAA=                   |
+| 2     | uAIAAAAA                                    | ugIAAAAA                                   | ugIAAACQ               | ugIAAAA=                   |
+| 4     | uAQAAAAA                                    | ugQAAAAA                                   | ugQAAACQ               | ugQAAAA=                   |
+| 8     | uAgAAAAA                                    | uggAAAAA                                   | uggAAACQ               | uggAAAA=                   |
+| 16    | uBAAAAAA                                    | uhAAAAAA                                   | uhAAAACQ               | uhAAAAA=                   |
+| 24    | uBgAAAAA                                    | uhgAAAAA                                   | uhgAAACQ               | uhgAAAA=                   |
+| 32    | uCAAAAAA                                    | uiAAAAAA                                   | uiAAAACQ               | uiAAAAA=                   |
+| 64    | uEAAAAAA                                    | ukAAAAAA                                   | ukAAAACQ               | ukAAAAA=                   |
