@@ -80,8 +80,7 @@ To create a new virtual machine copy either the Intel or AMD template to a new f
 ***
 Note: 
 
-Make sure you use the correct folder for your CPU as using the wrong one will cause the VM not to boot 
-and give an error message.
+Make sure you use the correct folder for your CPU as using the wrong one will give a VMware error message.
 ***
 
 Before powering on the new VM you will need to set networking up for your environment. The templates do not specify what
