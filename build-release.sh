@@ -3,7 +3,9 @@
 echo Creating OC4VM Release
 
 # Read current version
+# Read current version
 VERSION=$(<VERSION)
+VERSION+=-$(git rev-parse --short HEAD)
 echo "$VERSION"
 
 rm -rf ./build/iso 2>/dev/null

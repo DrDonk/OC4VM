@@ -4,6 +4,7 @@ echo Creating OpenCore DMG/VMDK Images
 
 # Read current version
 VERSION=$(<VERSION)
+VERSION+=-$(git rev-parse --short HEAD)
 echo "$VERSION"
 
 # Build the DMG & VMDK

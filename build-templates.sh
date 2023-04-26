@@ -4,6 +4,7 @@ echo Creating OpenCore VMware templates
 
 # Read current version
 VERSION=$(<VERSION)
+VERSION+=-$(git rev-parse --short HEAD)
 echo "$VERSION"
 
 # Clear previous build
