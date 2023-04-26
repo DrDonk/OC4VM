@@ -34,3 +34,18 @@
 | 24    | uBgAAAAA                                    | uhgAAAAA                                   | uhgAAACQ               | uhgAAAA=                   |
 | 32    | uCAAAAAA                                    | uiAAAAAA                                   | uiAAAACQ               | uiAAAAA=                   |
 | 64    | uEAAAAAA                                    | ukAAAAAA                                   | ukAAAACQ               | ukAAAAA=                   |
+
+#### VMware Socket Calculations
+
+| numvcpus | cpuid.coresPerSocket | sockets |
+|----------|----------------------|---------|
+| 1        | 1                    | 1       |
+| 2        | 2                    | 1       |
+| 2        | 1                    | 2       |
+| 4        | 4                    | 1       |
+| 4        | 2                    | 2       |
+| 4        | 1                    | 4       |
+| 8        | 8                    | 1       |
+| 8        | 2                    | 4       |
+| 8        | 4                    | 2       |
+| 8        | 1                    | 8       |
