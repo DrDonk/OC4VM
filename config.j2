@@ -625,14 +625,14 @@
 			<key>Timeout</key>
 			<integer>{{TIMEOUT}}</integer>
 		</dict>
-{%- if DEBUG == '1' %}
-        <!-- DEBUG START -->
         <key>Debug</key>
 		<dict>
 			<key>AppleDebug</key>
 			<true/>
 			<key>ApplePanic</key>
 			<true/>
+{%- if DEBUG == '1' %}
+        <!-- DEBUG START -->
 			<key>DisplayDelay</key>
 			<integer>0</integer>
 			<key>DisableWatchDog</key>
@@ -645,13 +645,17 @@
 			<false/>
 			<key>Target</key>
 			<integer>11</integer>
+        <!-- DEBUG END -->
+{%- endif %}
 		</dict>
+{%- if SERIAL == '1' %}
+        <!-- SERIAL START -->
 		<key>Serial</key>
 		<dict>
 			<key>Init</key>
 			<true/>
 		</dict>
-        <!-- DEBUG END -->
+        <!-- SERIAL END -->
 {%- endif %}
 		<key>Security</key>
 		<dict>

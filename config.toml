@@ -6,6 +6,7 @@ DEBUG = "0"
 DESCRIPTION = "Release Intel"
 HIDEAUXILLARY = "true"
 RESOLUTION = "1440x900@32"
+SERIAL = "0"
 TIMEOUT = "5"
 
 [amd-release]
@@ -16,6 +17,7 @@ DEBUG = "0"
 DESCRIPTION = "Release AMD"
 HIDEAUXILLARY = "true"
 RESOLUTION = "1440x900@32"
+SERIAL = "0"
 TIMEOUT = "5"
 
 [intel-verbose]
@@ -25,6 +27,7 @@ BOOTARGS = '-v keepsyms=1 serial=1 -lilubetaall'
 DEBUG = "0"
 DESCRIPTION = "Verbose Intel"
 HIDEAUXILLARY = "true"
+SERIAL = "1"
 RESOLUTION = "1440x900@32"
 TIMEOUT = "5"
 
@@ -36,6 +39,7 @@ DEBUG = "0"
 DESCRIPTION = "Verbose AMD"
 HIDEAUXILLARY = "true"
 RESOLUTION = "1440x900@32"
+SERIAL = "1"
 TIMEOUT = "5"
 
 [intel-debug]
@@ -46,6 +50,7 @@ DEBUG = "1"
 DESCRIPTION = "Debug Intel"
 HIDEAUXILLARY = "false"
 RESOLUTION = "1440x900@32"
+SERIAL = "1"
 TIMEOUT = "0"
 
 [amd-debug]
@@ -56,4 +61,5 @@ DEBUG = "1"
 DESCRIPTION = "Debug AMD"
 HIDEAUXILLARY = "false"
 RESOLUTION = "1440x900@32"
+SERIAL = "1"
 TIMEOUT = "0"
