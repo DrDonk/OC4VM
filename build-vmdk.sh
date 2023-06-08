@@ -32,7 +32,7 @@ build_dmg() {
 
   # Write a message
   if [[ -f "$2/opencore.vmdk" ]]; then
-    msg_status "Built .vmdk file is available at $2opencore.vmdk"
+    msg_status "Built .vmdk file is available at $2/opencore.vmdk"
   else
     msg_error "Build failure! Built .vmdk file not found!"
   fi
