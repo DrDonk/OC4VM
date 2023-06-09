@@ -36,7 +36,7 @@ F16C = "1"
 RDRAND = "1"
 DISPLAYNAME = 'macOS 12 Monterey'
 ETHERNET_DEVICE = 'e1000e'
-GUESTOS = 'darwin20-64'
+GUESTOS = 'darwin21-64'
 
 [intel_macos_13]
 AMD = "0"
@@ -46,7 +46,17 @@ F16C = "1"
 RDRAND = "1"
 DISPLAYNAME = 'macOS 13 Ventura'
 ETHERNET_DEVICE = 'e1000e'
-GUESTOS = 'darwin20-64'
+GUESTOS = 'darwin22-64'
+
+[intel_macos_14]
+AMD = "0"
+AVX1 = "1"
+AVX2 = "0"
+F16C = "1"
+RDRAND = "1"
+DISPLAYNAME = 'macOS 14 Sonoma'
+ETHERNET_DEVICE = 'e1000e'
+GUESTOS = 'darwin23-64'
 
 [amd_generic]
 AMD = "1"
@@ -86,7 +96,7 @@ F16C = "1"
 RDRAND = "1"
 DISPLAYNAME = 'macOS 12 Monterey'
 ETHERNET_DEVICE = 'e1000e'
-GUESTOS = 'darwin20-64'
+GUESTOS = 'darwin21-64'
 
 [amd_macos_13]
 AMD = "1"
@@ -96,4 +106,14 @@ F16C = "1"
 RDRAND = "1"
 DISPLAYNAME = 'macOS 13 Ventura'
 ETHERNET_DEVICE = 'e1000e'
-GUESTOS = 'darwin20-64'
+GUESTOS = 'darwin22-64'
+
+[amd_macos_14]
+AMD = "1"
+AVX1 = "1"
+AVX2 = "0"
+F16C = "1"
+RDRAND = "1"
+DISPLAYNAME = 'macOS 14 Sonoma'
+ETHERNET_DEVICE = 'e1000e'
+GUESTOS = 'darwin23-64'
