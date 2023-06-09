@@ -1,7 +1,8 @@
 [intel-release]
 AMD = "0"
 AVX2 = "0"
-BOOTARGS = 'keepsyms=1 -lilubetaall'
+BOOTARGS = "keepsyms=1 -lilubetaall"
+CSRCONFIG = "AAAAAA=="
 DEBUG = "0"
 DESCRIPTION = "Release Intel"
 HIDEAUXILLARY = "true"
@@ -12,7 +13,8 @@ TIMEOUT = "5"
 [amd-release]
 AMD = "1"
 AVX2 = "0"
-BOOTARGS = 'keepsyms=1 -lilubetaall'
+BOOTARGS = "keepsyms=1 -lilubetaall"
+CSRCONFIG = "AAAAAA=="
 DEBUG = "0"
 DESCRIPTION = "Release AMD"
 HIDEAUXILLARY = "true"
@@ -23,7 +25,8 @@ TIMEOUT = "5"
 [intel-verbose]
 AMD = "0"
 AVX2 = "0"
-BOOTARGS = '-v keepsyms=1 serial=1 -lilubetaall'
+BOOTARGS = "-v keepsyms=1 serial=1 -lilubetaall"
+CSRCONFIG = "AAAAAA=="
 DEBUG = "0"
 DESCRIPTION = "Verbose Intel"
 HIDEAUXILLARY = "true"
@@ -34,7 +37,8 @@ TIMEOUT = "5"
 [amd-verbose]
 AMD = "1"
 AVX2 = "0"
-BOOTARGS = '-v keepsyms=1 serial=1 -lilubetaall'
+BOOTARGS = "-v keepsyms=1 serial=1 -lilubetaall"
+CSRCONFIG = "AAAAAA=="
 DEBUG = "0"
 DESCRIPTION = "Verbose AMD"
 HIDEAUXILLARY = "true"
@@ -45,7 +49,8 @@ TIMEOUT = "5"
 [intel-debug]
 AMD = "0"
 AVX2 = "0"
-BOOTARGS = '-v keepsyms=1 serial=1 -no_panic_dialog -lilubetaall -liludbgall'
+BOOTARGS = "-v keepsyms=1 serial=1 -no_panic_dialog -lilubetaall -liludbgall"
+CSRCONFIG = "AAAAAA=="
 DEBUG = "1"
 DESCRIPTION = "Debug Intel"
 HIDEAUXILLARY = "false"
@@ -56,9 +61,34 @@ TIMEOUT = "0"
 [amd-debug]
 AMD = "1"
 AVX2 = "0"
-BOOTARGS = '-v keepsyms=1 serial=1 -no_panic_dialog -lilubetaall -liludbgall'
+BOOTARGS = "-v keepsyms=1 serial=1 -no_panic_dialog -lilubetaall -liludbgall"
+CSRCONFIG = "AAAAAA=="
 DEBUG = "1"
 DESCRIPTION = "Debug AMD"
+HIDEAUXILLARY = "false"
+RESOLUTION = "1440x900@32"
+SERIAL = "1"
+TIMEOUT = "0"
+
+[intel-kdk]
+AMD = "0"
+AVX2 = "0"
+BOOTARGS = "-v avx512=0 keepsyms=1 debug=0x108 serial=15 msgbuf=104857 -no_panic_dialog -lilubetaall -liludbgall amfi=0x80 wdt=-1 kcsuffix=development -topo -cpuid cwad"
+CSRCONFIG = "AAAIfw=="
+DEBUG = "1"
+DESCRIPTION = "KDK Intel"
+HIDEAUXILLARY = "false"
+RESOLUTION = "1440x900@32"
+SERIAL = "1"
+TIMEOUT = "0"
+
+[amd-kdk]
+AMD = "1"
+AVX2 = "0"
+BOOTARGS = "-v avx512=0 keepsyms=1 debug=0x108 serial=15 msgbuf=104857 -no_panic_dialog -lilubetaall -liludbgall amfi=0x80 wdt=-1 kcsuffix=development -topo -cpuid cwad"
+CSRCONFIG = "AAAIfw=="
+DEBUG = "1"
+DESCRIPTION = "KDK AMD"
 HIDEAUXILLARY = "false"
 RESOLUTION = "1440x900@32"
 SERIAL = "1"

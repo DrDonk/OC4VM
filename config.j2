@@ -11,7 +11,7 @@
 		<key>Quirks</key>
 		<dict>
 			<key>ProtectUefiServices</key>
-			<false/>
+			<true/>
 		</dict>
 	</dict>
 	<key>Kernel</key>
@@ -109,10 +109,9 @@
 				<string>Contents/Info.plist</string>
 			</dict>
 		</array>
+{%- if AMD == '1' %}
  		<key>Patch</key>
 		<array>
-{%- if AMD == '1' %}
-            <!-- AMD START -->
 			<dict>
 				<key>Arch</key>
 				<string>x86_64</string>
@@ -593,9 +592,8 @@
 				<key>Skip</key>
 				<integer>0</integer>
 			</dict>
-        <!-- AMD END -->
-{%- endif %}
    		</array>
+{%- endif %}
  		<key>Quirks</key>
 		<dict>
 			<key>DisableLinkeditJettison</key>
@@ -631,32 +629,38 @@
 			<true/>
 			<key>ApplePanic</key>
 			<true/>
-{%- if DEBUG == '1' %}
-        <!-- DEBUG START -->
-			<key>DisplayDelay</key>
+            <key>DisplayDelay</key>
 			<integer>0</integer>
+            <key>LogModules</key>
+			<string>*</string>
+            <key>SysReport</key>
+			<true/>
+{%- if DEBUG == '1' %}
 			<key>DisableWatchDog</key>
 			<true/>
 			<key>DisplayLevel</key>
 			<integer>2147483714</integer>
-			<key>LogModules</key>
-			<string>*</string>
-			<key>SysReport</key>
-			<false/>
 			<key>Target</key>
 			<integer>11</integer>
-        <!-- DEBUG END -->
+        </dict>
+{%- else %}
+            <key>DisableWatchDog</key>
+			<false/>
+			<key>DisplayLevel</key>
+			<integer>0</integer>
+			<key>Target</key>
+			<integer>0</integer>
+        </dict>
 {%- endif %}
-		</dict>
-{%- if SERIAL == '1' %}
-        <!-- SERIAL START -->
 		<key>Serial</key>
 		<dict>
 			<key>Init</key>
+{%- if SERIAL == '1' %}
 			<true/>
-		</dict>
-        <!-- SERIAL END -->
+{%- else %}
+			<false/>
 {%- endif %}
+		</dict>
 		<key>Security</key>
 		<dict>
 			<key>AllowSetDefault</key>
@@ -706,6 +710,8 @@
 			<dict>
 				<key>boot-args</key>
 				<string>{{BOOTARGS}}</string>
+                <key>csr-active-config</key>
+                <string>{{CSRCONFIG}}</string>
 			</dict>
             <key>4D1EDE05-38C7-4A6A-9CC6-4BCCA8B38C14</key>
             <dict>
@@ -725,6 +731,7 @@
 			<key>7C436110-AB2A-4BBB-A880-FE41995C9F82</key>
 			<array>
 				<string>boot-args</string>
+                <string>csr-active-config</string>
 			</array>
             <key>4D1EDE05-38C7-4A6A-9CC6-4BCCA8B38C14</key>
             <array>
@@ -808,8 +815,6 @@
 				<key>Path</key>
 				<string>OpenCanopy.efi</string>
 			</dict>
-{%- if DEBUG == '1' %}
-            <!-- DEBUG START -->
             <dict>
 				<key>Arguments</key>
 				<string></string>
@@ -830,8 +835,6 @@
 				<key>Path</key>
 				<string>ResetNvramEntry.efi</string>
 			</dict>
-            <!-- DEBUG END -->
-{%- endif %}
 		</array>
 		<key>Input</key>
 		<dict>
