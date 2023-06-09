@@ -3,7 +3,6 @@
 echo Creating OC4VM Release
 
 # Read current version
-# Read current version
 VERSION=$(<VERSION)
 VERSION+=-$(git rev-parse --short HEAD)
 echo "$VERSION"
@@ -11,6 +10,7 @@ echo "$VERSION"
 rm -rf ./build/iso 2>/dev/null
 rm -rf ./build/recovery-maker 2>/dev/null
 rm ./dist/oc4vm-$VERSION.* 2>/dev/null
+rm -rf ./recovery-maker/__pycache__
 
 cp -v README.md ./build/
 cp -v LICENSE ./build/

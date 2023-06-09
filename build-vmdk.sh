@@ -58,6 +58,8 @@ mkdir -p ./build/vmdk/intel-verbose
 mkdir -p ./build/vmdk/amd-verbose
 mkdir -p ./build/vmdk/intel-debug
 mkdir -p ./build/vmdk/amd-debug
+mkdir -p ./build/vmdk/intel-kdk
+mkdir -p ./build/vmdk/amd-kdk
 
 # Build the OpenCore DMG/vmdk files
 MSG="Intel Release"
@@ -94,6 +96,18 @@ MSG="AMD Debug"
 VMDK="./build/vmdk/amd-debug"
 BASE="./disk_contents/debug-base/."
 CONFIG="./build/config/amd-debug/config.plist"
+build_dmg "$MSG" $VMDK $BASE $CONFIG
+
+MSG="Intel KDK"
+VMDK="./build/vmdk/intel-kdk"
+BASE="./disk_contents/debug-base/."
+CONFIG="./build/config/intel-kdk/config.plist"
+build_dmg "$MSG" $VMDK $BASE $CONFIG
+
+MSG="AMD KDK"
+VMDK="./build/vmdk/amd-kdk"
+BASE="./disk_contents/debug-base/."
+CONFIG="./build/config/amd-kdk/config.plist"
 build_dmg "$MSG" $VMDK $BASE $CONFIG
 
 exit
