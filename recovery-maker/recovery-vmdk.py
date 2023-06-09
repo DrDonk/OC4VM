@@ -33,7 +33,6 @@ def main():
             basename = 'bigsur'
             boardid = 'Mac-2BD1B31983FE1663'
             break
-
         if selection == '3':
             basename = 'monterey'
             boardid = 'Mac-A5C67F76ED83108C'
