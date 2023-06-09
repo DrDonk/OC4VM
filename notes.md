@@ -51,7 +51,9 @@
 | 8        | 1                    | 8       |
 
 Encode a base64 encoded binary:
-print 0x087f | xxd -r | base64 
+
+`print 0x087f | xxd -r | base64`
 
 Decode a base64 encoded binary:
-print MduAPQAAAAAGdQA= | base64 -D | xxd
+
+`print MduAPQAAAAAGdQA= | base64 -D | xxd`
