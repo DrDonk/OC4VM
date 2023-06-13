@@ -7,6 +7,7 @@ echo Creating OC4VM
 ./build-vmdk.sh
 ./build-templates.sh
 ./build-release.sh
+./build-zip.sh
 
 deactivate
 exit
