@@ -12,11 +12,11 @@ build_dmg() {
   msg_status "Building $1"
 
   # Make a copy of base image
-  mkdir -v -p $2/esxi
-  cp -v ./dmg/opencore.* $2/esxi/
+  mkdir -v -p $2
+  cp -v ./dmg/opencore.* $2/
 
   # Attach blank DMG and create OC setup
-  hdiutil attach $2/esxi/opencore.dmg -noverify -nobrowse -noautoopen
+  hdiutil attach $2/opencore.dmg -noverify -nobrowse -noautoopen
   diskutil eraseVolume FAT32 OPENCORE /Volumes/OPENCORE
   cp -r $3 /Volumes/OPENCORE
   cp -r $4 /Volumes/OPENCORE/EFI/OC
@@ -26,9 +26,11 @@ build_dmg() {
   hdiutil detach /Volumes/OPENCORE
 
   # Convert and validate VMDK
-  /Applications/VMware\ Fusion.app/Contents/Library/vmware-vdiskmanager -e $2/esxi/opencore.vmdk
-  /Applications/VMware\ Fusion.app/Contents/Library/vmware-vdiskmanager -r $2/esxi/opencore.vmdk -t 0 $2/opencore.vmdk
-  /Applications/VMware\ Fusion.app/Contents/Library/vmware-vdiskmanager -e $2/opencore.vmdk
+#  /Applications/VMware\ Fusion.app/Contents/Library/vmware-vdiskmanager -e $2/esxi/opencore.vmdk
+#  /Applications/VMware\ Fusion.app/Contents/Library/vmware-vdiskmanager -r $2/esxi/opencore.vmdk -t 0 $2/opencore.vmdk
+#  /Applications/VMware\ Fusion.app/Contents/Library/vmware-vdiskmanager -e $2/opencore.vmdk
+  qemu-img convert -f raw -O vmdk $2/opencore.dmg $2/opencore.vmdk
+  qemu-img check -f vmdk $2/opencore.vmdk
 
   # Write a message
   if [[ -f "$2/opencore.vmdk" ]]; then
