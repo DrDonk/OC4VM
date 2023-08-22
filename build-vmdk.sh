@@ -54,13 +54,9 @@ rm -rf ./build/vmdk/* 2>/dev/null
 
 # Create new output folders
 mkdir -p ./build/vmdk/intel-release
-mkdir -p ./build/vmdk/amd-release
 mkdir -p ./build/vmdk/intel-verbose
-mkdir -p ./build/vmdk/amd-verbose
 mkdir -p ./build/vmdk/intel-debug
-mkdir -p ./build/vmdk/amd-debug
 mkdir -p ./build/vmdk/intel-kdk
-mkdir -p ./build/vmdk/amd-kdk
 
 # Build the OpenCore DMG/vmdk files
 MSG="Intel Release"
@@ -69,22 +65,10 @@ BASE="./disk_contents/release-base/."
 CONFIG="./build/config/intel-release/config.plist"
 build_dmg "$MSG" $VMDK $BASE $CONFIG
 
-MSG="AMD Release"
-VMDK="./build/vmdk/amd-release"
-BASE="./disk_contents/release-base/."
-CONFIG="./build/config/amd-release/config.plist"
-
-build_dmg "$MSG" $VMDK $BASE $CONFIG
 MSG="Intel Verbose"
 VMDK="./build/vmdk/intel-verbose"
 BASE="./disk_contents/release-base/."
 CONFIG="./build/config/intel-verbose/config.plist"
-build_dmg "$MSG" $VMDK $BASE $CONFIG
-
-MSG="AMD Verbose"
-VMDK="./build/vmdk/amd-verbose"
-BASE="./disk_contents/release-base/."
-CONFIG="./build/config/amd-verbose/config.plist"
 build_dmg "$MSG" $VMDK $BASE $CONFIG
 
 MSG="Intel Debug"
@@ -93,22 +77,10 @@ BASE="./disk_contents/debug-base/."
 CONFIG="./build/config/intel-debug/config.plist"
 build_dmg "$MSG" $VMDK $BASE $CONFIG
 
-MSG="AMD Debug"
-VMDK="./build/vmdk/amd-debug"
-BASE="./disk_contents/debug-base/."
-CONFIG="./build/config/amd-debug/config.plist"
-build_dmg "$MSG" $VMDK $BASE $CONFIG
-
 MSG="Intel KDK"
 VMDK="./build/vmdk/intel-kdk"
 BASE="./disk_contents/debug-base/."
 CONFIG="./build/config/intel-kdk/config.plist"
-build_dmg "$MSG" $VMDK $BASE $CONFIG
-
-MSG="AMD KDK"
-VMDK="./build/vmdk/amd-kdk"
-BASE="./disk_contents/debug-base/."
-CONFIG="./build/config/amd-kdk/config.plist"
 build_dmg "$MSG" $VMDK $BASE $CONFIG
 
 exit

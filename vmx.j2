@@ -23,25 +23,6 @@ featMask.vm.cpuid.F16C = "Min:1"
 featMask.vm.cpuid.RDRAND = "Min:1"
 {% endif %}
 
-# Check CPU as OC4VM has Intel and AMD variants
-{% if AMD == '1' -%}
-featMask.vm.cpuid.AMD = "Min:1"
-
-# Switch off VMware default CPUID masks
-cpuid.inhibitDarwinMasks = "TRUE"
-
-# Fusion macOS masked CPU is Skylake family
-cpuid.0.ebx = "0111:0101:0110:1110:0110:0101:0100:0111"
-cpuid.0.ecx = "0110:1100:0110:0101:0111:0100:0110:1110"
-cpuid.0.edx = "0100:1001:0110:0101:0110:1110:0110:1001"
-cpuid.brandstring = "Intel(R) Core(TM) i7-6500U CPU @ 2.50GHz"
-featMask.vm.cpuid.FAMILY = "Val:0x6"
-featMask.vm.cpuid.MODEL = "Val:0x4e"
-featMask.vm.cpuid.STEPPING = "Val:0x03"
-{% else -%}
-featMask.vm.cpuid.INTEL = "Min:1"
-{% endif %}
-
 # Mac mini 2018
 board-id = "Mac-7BA5B2DFE22DDD8C"
 board-id.reflectHost = "FALSE"

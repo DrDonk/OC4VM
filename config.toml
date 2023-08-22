@@ -10,18 +10,6 @@ RESOLUTION = "1440x900@32"
 SERIAL = "0"
 TIMEOUT = "5"
 
-[amd-release]
-AMD = "1"
-AVX2 = "0"
-BOOTARGS = "keepsyms=1 -lilubetaall"
-CSRCONFIG = "AAAAAA=="
-DEBUG = "0"
-DESCRIPTION = "Release AMD"
-HIDEAUXILLARY = "true"
-RESOLUTION = "1440x900@32"
-SERIAL = "0"
-TIMEOUT = "5"
-
 [intel-verbose]
 AMD = "0"
 AVX2 = "0"
@@ -32,18 +20,6 @@ DESCRIPTION = "Verbose Intel"
 HIDEAUXILLARY = "true"
 SERIAL = "1"
 RESOLUTION = "1440x900@32"
-TIMEOUT = "5"
-
-[amd-verbose]
-AMD = "1"
-AVX2 = "0"
-BOOTARGS = "-keepsyms=1 -lilubetaall -v serial=5"
-CSRCONFIG = "AAAAAA=="
-DEBUG = "0"
-DESCRIPTION = "Verbose AMD"
-HIDEAUXILLARY = "true"
-RESOLUTION = "1440x900@32"
-SERIAL = "1"
 TIMEOUT = "5"
 
 [intel-debug]
@@ -58,18 +34,6 @@ RESOLUTION = "1440x900@32"
 SERIAL = "1"
 TIMEOUT = "0"
 
-[amd-debug]
-AMD = "1"
-AVX2 = "0"
-BOOTARGS = "keepsyms=1 -lilubetaall -v serial=5 debug=2 -no_panic_dialog -liludbgall -topo -cpuid avx512=0 cwad"
-CSRCONFIG = "AAAAAA=="
-DEBUG = "1"
-DESCRIPTION = "Debug AMD"
-HIDEAUXILLARY = "false"
-RESOLUTION = "1440x900@32"
-SERIAL = "1"
-TIMEOUT = "0"
-
 [intel-kdk]
 AMD = "0"
 AVX2 = "0"
@@ -77,18 +41,6 @@ BOOTARGS = "keepsyms=1 -lilubetaall -v serial=5 debug=2 -no_panic_dialog -liludb
 CSRCONFIG = "fwgAAA=="
 DEBUG = "1"
 DESCRIPTION = "KDK Intel"
-HIDEAUXILLARY = "false"
-RESOLUTION = "1440x900@32"
-SERIAL = "1"
-TIMEOUT = "0"
-
-[amd-kdk]
-AMD = "1"
-AVX2 = "0"
-BOOTARGS = "keepsyms=1 -lilubetaall -v serial=5 debug=2 -no_panic_dialog -liludbgall -topo -cpuid avx512=0 cwad kcsuffix=development"
-CSRCONFIG = "fwgAAA=="
-DEBUG = "1"
-DESCRIPTION = "KDK AMD"
 HIDEAUXILLARY = "false"
 RESOLUTION = "1440x900@32"
 SERIAL = "1"
