@@ -9,5 +9,5 @@ echo Creating OC4VM
 ./build-release.sh
 #./build-zip.sh
 
-deactivate
+#deactivate
 exit

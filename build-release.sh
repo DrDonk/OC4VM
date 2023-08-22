@@ -9,7 +9,6 @@ echo "$VERSION"
 
 rm -rf ./build/iso 2>/dev/null
 rm -rf ./build/recovery-maker 2>/dev/null
-rm ./dist/oc4vm-$VERSION.* 2>/dev/null
 rm -rf ./recovery-maker/__pycache__
 
 cp -v README.md ./build/
