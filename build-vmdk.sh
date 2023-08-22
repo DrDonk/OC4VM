@@ -26,9 +26,6 @@ build_dmg() {
   hdiutil detach /Volumes/OPENCORE
 
   # Convert and validate VMDK
-#  /Applications/VMware\ Fusion.app/Contents/Library/vmware-vdiskmanager -e $2/esxi/opencore.vmdk
-#  /Applications/VMware\ Fusion.app/Contents/Library/vmware-vdiskmanager -r $2/esxi/opencore.vmdk -t 0 $2/opencore.vmdk
-#  /Applications/VMware\ Fusion.app/Contents/Library/vmware-vdiskmanager -e $2/opencore.vmdk
   qemu-img convert -f raw -O vmdk $2/opencore.dmg $2/opencore.vmdk
   qemu-img check -f vmdk $2/opencore.vmdk
   qemu-img convert -f raw -O qcow2 $2/opencore.dmg $2/opencore.qcow2
