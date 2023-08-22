@@ -31,6 +31,8 @@ build_dmg() {
 #  /Applications/VMware\ Fusion.app/Contents/Library/vmware-vdiskmanager -e $2/opencore.vmdk
   qemu-img convert -f raw -O vmdk $2/opencore.dmg $2/opencore.vmdk
   qemu-img check -f vmdk $2/opencore.vmdk
+  qemu-img convert -f raw -O qcow2 $2/opencore.dmg $2/opencore.qcow2
+  qemu-img check -f qcow2 $2/opencore.qcow2
 
   # Write a message
   if [[ -f "$2/opencore.vmdk" ]]; then
