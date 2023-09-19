@@ -127,7 +127,7 @@
 				<string>Contents/Info.plist</string>
 			</dict>
 		</array>
- 		<key>Quirks</key>
+		<key>Quirks</key>
 		<dict>
 			<key>DisableLinkeditJettison</key>
 			<true/>
@@ -156,17 +156,17 @@
 			<key>Timeout</key>
 			<integer>{{TIMEOUT}}</integer>
 		</dict>
-        <key>Debug</key>
+		<key>Debug</key>
 		<dict>
 			<key>AppleDebug</key>
 			<true/>
 			<key>ApplePanic</key>
 			<true/>
-            <key>DisplayDelay</key>
+			<key>DisplayDelay</key>
 			<integer>0</integer>
-            <key>LogModules</key>
+			<key>LogModules</key>
 			<string>*</string>
-            <key>SysReport</key>
+			<key>SysReport</key>
 			<true/>
 {%- if DEBUG == '1' %}
 			<key>DisableWatchDog</key>
@@ -175,15 +175,15 @@
 			<integer>2147483714</integer>
 			<key>Target</key>
 			<integer>11</integer>
-        </dict>
+		</dict>
 {%- else %}
-            <key>DisableWatchDog</key>
+			<key>DisableWatchDog</key>
 			<false/>
 			<key>DisplayLevel</key>
 			<integer>0</integer>
 			<key>Target</key>
 			<integer>0</integer>
-        </dict>
+		</dict>
 {%- endif %}
 		<key>Serial</key>
 		<dict>
@@ -206,7 +206,7 @@
 			<integer>0</integer>
 			<key>SecureBootModel</key>
 			<string>Disabled</string>
- 			<key>Vault</key>
+			<key>Vault</key>
 			<string>Optional</string>
 		</dict>
 		<key>Tools</key>
@@ -243,40 +243,40 @@
 			<dict>
 				<key>boot-args</key>
 				<string>{{BOOTARGS}}</string>
-                <key>csr-active-config</key>
-                <data>{{CSRCONFIG}}</data>
+				<key>csr-active-config</key>
+				<data>{{CSRCONFIG}}</data>
 			</dict>
-            <key>4D1EDE05-38C7-4A6A-9CC6-4BCCA8B38C14</key>
-            <dict>
-                <key>UIScale</key>
-                <data>AQ==</data>
-            </dict>
-            <key>4D1FDA02-38C7-4A6A-9CC6-4BCCA8B30102</key>
-            <dict>
-                <string>OC4VM_TYPE</string>
-                <string>{{DESCRIPTION}}</string>
-                <string>OC4VM_VERSION</string>
-                <string>{{VERSION}}</string>
-            </dict>
+			<key>4D1EDE05-38C7-4A6A-9CC6-4BCCA8B38C14</key>
+			<dict>
+				<key>UIScale</key>
+				<data>AQ==</data>
+			</dict>
+			<key>4D1FDA02-38C7-4A6A-9CC6-4BCCA8B30102</key>
+			<dict>
+				<string>OC4VM_TYPE</string>
+				<string>{{DESCRIPTION}}</string>
+				<string>OC4VM_VERSION</string>
+				<string>{{VERSION}}</string>
+			</dict>
 		</dict>
-        <key>Delete</key>
+		<key>Delete</key>
 		<dict>
 			<key>7C436110-AB2A-4BBB-A880-FE41995C9F82</key>
 			<array>
 				<string>boot-args</string>
-                <string>csr-active-config</string>
+				<string>csr-active-config</string>
 			</array>
-            <key>4D1EDE05-38C7-4A6A-9CC6-4BCCA8B38C14</key>
-            <array>
-                <string>UIScale</string>
-            </array>
-            <key>4D1FDA02-38C7-4A6A-9CC6-4BCCA8B30102</key>
-            <array>
-                <string>OC4VM_TYPE</string>
-                <string>OC4VM_VERSION</string>
-            </array>
+			<key>4D1EDE05-38C7-4A6A-9CC6-4BCCA8B38C14</key>
+			<array>
+				<string>UIScale</string>
+			</array>
+			<key>4D1FDA02-38C7-4A6A-9CC6-4BCCA8B30102</key>
+			<array>
+				<string>OC4VM_TYPE</string>
+				<string>OC4VM_VERSION</string>
+			</array>
 		</dict>
-        <key>WriteFlash</key>
+		<key>WriteFlash</key>
 		<true/>
 	</dict>
 	<key>PlatformInfo</key>
@@ -285,15 +285,15 @@
 		<false/>
 		<key>Generic</key>
 		<dict>
-            <key>BoardProduct</key>
-            <string></string>
-            <key>MLB</key>
+			<key>BoardProduct</key>
 			<string></string>
-            <key>ROM</key>
+			<key>MLB</key>
 			<string></string>
-            <key>SystemProductName</key>
+			<key>ROM</key>
 			<string></string>
-            <key>SystemSerialNumber</key>
+			<key>SystemProductName</key>
+			<string></string>
+			<key>SystemSerialNumber</key>
 			<string></string>
 		</dict>
 		<key>UpdateDataHub</key>
@@ -348,7 +348,7 @@
 				<key>Path</key>
 				<string>OpenCanopy.efi</string>
 			</dict>
-            <dict>
+			<dict>
 				<key>Arguments</key>
 				<string></string>
 				<key>Comment</key>
@@ -384,8 +384,8 @@
 			<true/>
 			<key>Resolution</key>
 			<string>{{RESOLUTION}}</string>
-            <key>TextRenderer</key>
-            <string>BuiltinGraphics</string>
+			<key>TextRenderer</key>
+			<string>BuiltinGraphics</string>
 		</dict>
 		<key>Quirks</key>
 		<dict>
