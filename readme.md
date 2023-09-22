@@ -1,21 +1,35 @@
-# OC4VM - OpenCore for VMware
+# OC4VM - OpenCore for Virtual Machines
 ## 1. Introduction
-OpenCore 4 VMware (OC4VM) provides a set of VMware macOS templates and boot disks to allow macOS to run on Linux 
-and Windows versions of VMware Workstation and Player. It can also be used with VMware Fusion on macOS.
+OpenCore 4 Virtual Machines (OC4VM) has been built to run macOS VMs on Intel based Apple Macs. It provides an OpenCore 
+disk image that can be used to boot Intel based macOS using QEMU, UTM and VMware.
 
-Using OpenCore allows for a more flexible patching system compared to using the VMware Unlocker. It basically creates a 
-virtual Hackintosh, "Virtualtosh", which is similar to the OpenCore Legacy Patcher for older Apple Mac computers.
+Using OpenCore allows for a flexible patching system to overcome limitations of the virtualisation software. It 
+basically creates a virtual Hackintosh, "Virtualtosh", which is similar in implementation to the OpenCore Legacy Patcher
+used to run unsupported macOS versions on older Apple Mac computers.
 
-OC4VM can be used with or without unlocking VMware. It is recommended that the Unlocker is not installed. OC4VM does 
-not alter anything in the VMware program folders.
+OC4VM can be used on other host operating systems to run macOS but that is not the primary purpose of OC4VM. 
 
-What can OC4VM do?
-* Run macOS on Intel and AMD CPUs
+What OC4VM can do?
+* Run macOS on Intel CPUs
 * Boot to macOS Recovery mode which is broken in VMware's EFI implementation
 * Easily change SIP settings using an EFI utility
-* Add Intel e1000e virtual NIC compatibility for Ventura
+* Add Intel e1000e virtual NIC compatibility for Ventura and later versions of macOS
 
-The OC4VM system has been tested with Big Sur, Monterey and Ventura.
+What OC4VM cannot do:
+* Boot macOS on an AMD CPU
+* Boot macOS on an Apple Silicon CPU
+
+The OC4VM system has been tested on an Intel Mac mini mid-2014 with these guest OSes:
+* Big Sur
+* Monterey
+* Ventura
+* Sonoma
+
+using:
+* QEMU 8
+* UTM 4
+* VMware Fusion 13
+
 
 ## 2. Using OC4VM
 ### 2.1 Download Release
@@ -24,6 +38,12 @@ The OC4VM system has been tested with Big Sur, Monterey and Ventura.
 * Optionally check the sha512 checksum matches that published with the release
 * Unzip the archive to extract the files
 * Navigate to the folder with the extracted files
+
+***
+Note:
+If you have installed the VMware Unlocker it is recommended that the Unlocker is uninstalled. OC4VM does 
+not alter anything in the VMware program folders.
+***
 
 ### 2.2 Folder Contents
 
@@ -50,13 +70,10 @@ VMX file. It will not change any of the behaviours of the guest and could cause 
 ```
 templates
 ├── intel
-│  ├── opencore.vmdk
-│  ├── macos.vmx
-│  └── macos.vmdk
-└── amd
    ├── opencore.vmdk
    ├── macos.vmx
    └── macos.vmdk
+
 ```
 The folder contains these files:
 
@@ -72,22 +89,16 @@ To create a new virtual machine copy either the Intel or AMD template to a new f
 * macos.vmx
 * macos.vmdk
 
-***
-Note: 
-
-Make sure you use the correct folder for your CPU as using the wrong one will give a VMware error message.
-***
-
 ### 2.3 VMware Tools
-OC4VM provides a copy of the VMware macOS guest tools ISO images. To install mount the darwin.iso file using the VMs virtual 
-CD/DVD drive.
+OC4VM provides a copy of the VMware macOS guest tools ISO images. These are useful for VMware Fusion and also QEMU/UTM.
+To install mount the darwin.iso file using the VMs virtual CD/DVD drive.
 
 ## x. Platform specific notes
-### x.1 Intel CPU
-TODO
 
-### x.2 AMD CPU
-1. The CPUs and cores cannot be changed in the VM as the OpenCore booter is hard coded to 2 cores
+TODO
+### VMware
+### UTM
+### QEMU
 
 ## x. VMware Downloads
 These URLs will link to the latest versions of VMware's products:
@@ -100,6 +111,11 @@ These URLs will link to the latest versions of VMware's products:
 * VMware ESXi https://customerconnect.vmware.com/en/evalcenter?p=free-esxi8
 * VMware Guest Tools https://vmware.com/go/tools
 
+## x. Building OC4VM
+```brew install qemu```
+
+```brew install jinja2-cli```
+
 ## x. Thanks
 
 Many thanks to the great developers and community around the OpenCore scene. The OC4VM pacakge uses the following:
@@ -109,8 +125,8 @@ Many thanks to the great developers and community around the OpenCore scene. The
 * CryptexFixup - https://github.com/acidanthera/CryptexFixup
 * DebugEnhancer - https://github.com/acidanthera/DebugEnhancer
 * VirtualSMC - https://github.com/acidanthera/VirtualSMC
-* AMD Patches - https://github.com/AMD-OSX/AMD_Vanilla
-
+* AppleHDA - https://github.com/acidanthera/AppleHDA
 Also thanks to the testers who helped me out with the project.
 
 (c) 2023 David Parsons
+
