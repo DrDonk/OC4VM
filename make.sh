@@ -6,6 +6,6 @@ echo Creating OC4VM
 ./build-disks.sh
 ./build-templates.sh
 ./build-release.sh
-#./build-zip.sh
+./build-zip.sh
 
 exit
