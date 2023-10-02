@@ -7,7 +7,8 @@ Using OpenCore allows for a flexible patching system to overcome limitations of 
 basically creates a virtual Hackintosh, "Virtualtosh", which is similar in implementation to the OpenCore Legacy Patcher
 used to run unsupported macOS versions on older Apple Mac computers.
 
-OC4VM can be used on other host operating systems to run macOS but that is not the primary purpose of OC4VM. 
+OC4VM can be used on other host operating systems to run macOS but that is not the primary purpose of OC4VM. It can 
+replace the Unlocker to run macOS on Linux and Windows.
 
 What OC4VM can do?
 * Run macOS on Intel CPUs
@@ -126,6 +127,8 @@ Many thanks to the great developers and community around the OpenCore scene. The
 * DebugEnhancer - https://github.com/acidanthera/DebugEnhancer
 * VirtualSMC - https://github.com/acidanthera/VirtualSMC
 * AppleHDA - https://github.com/acidanthera/AppleHDA
+* STOML- https://github.com/freshautomations/stoml
+
 Also thanks to the testers who helped me out with the project.
 
 (c) 2023 David Parsons
