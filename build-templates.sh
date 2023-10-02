@@ -11,8 +11,8 @@ echo "$VERSION"
 rm -rf ./build/templates/* 2>/dev/null
 
 # Build VMX files
-mkdir -p ./build/templates/intel
-cp -v macos.vmdk ./build/templates/intel
+mkdir -p ./build/templates/vmware
+cp -v macos.vmdk ./build/templates/vmware
 cp -v ./build/vmdk/intel-release/opencore.vmdk ./build/templates/intel
-jinja2 --format=toml --section=intel_generic -D VERSION=$VERSION --outfile=./build/templates/intel/macos.vmx vmx.j2 vmx.toml
+jinja2 --format=toml --section=intel_generic -D VERSION=$VERSION --outfile=./build/templates/vmware/macos.vmx vmx.j2 vmx.toml
 exit
