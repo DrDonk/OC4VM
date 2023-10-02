@@ -1,0 +1,32 @@
+#!/bin/sh
+# OC4VM VERSION
+# {{VERSION}}
+qemu-system-x86_64 \
+-name "{DISPLAYNAME}" \
+-cpu host,-pdpe1gb \
+-smp cpus=2,sockets=1,cores=2,threads=1 \
+-machine q35,vmport=on,i8042=off,hpet=off \
+-accel hvf \
+-m 4096 \
+-nodefaults \
+-device ich9-intel-hda \
+-device virtio-net-pci,mac=66:C9:75:99:89:AC,netdev=net0 \
+-netdev user,id=net0,hostfwd=tcp::5959-:5900 \
+-device vmware-svga,vgamem_mb=128 \
+-device virtio-rng-pci \
+-global ICH9-LPC.disable_s3=1 \
+-drive if=pflash,format=raw,unit=0,file.filename=./edk2-x86_64-code.fd,file.locking=off,readonly=on \
+-drive "if=pflash,format=raw,unit=1,file=./efi_vars.fd" \
+-device virtio-blk,drive=opencore,bootindex=0 \
+-drive "if=none,media=disk,id=opencore,file=opencore.qcow,discard=unmap,detect-zeroes=unmap,format=qcow2" \
+-device virtio-blk,drive=macos,bootindex=1 \
+-drive "if=none,media=disk,id=macos,file=macos.qcow2,discard=unmap,detect-zeroes=unmap" \
+-device qemu-xhci \
+-device usb-tablet \
+-device usb-kbd \
+-smbios type=2 \
+{-% if SERIAL == '1' -%}
+-chardev stdio,id=char0,mux=on,logfile=serial.log,signal=off \
+-serial chardev:char0 \
+-mon chardev=char0
+{%- endif %}
