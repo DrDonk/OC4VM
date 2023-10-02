@@ -1,8 +1,4 @@
-[intel_generic]
-AVX1 = "1"
-AVX2 = "1"
-F16C = "1"
-RDRAND = "1"
-DISPLAYNAME = 'macOS Intel'
+[intel-release]
+DISPLAYNAME = 'macOS Intel Template'
 ETHERNET_DEVICE = 'e1000e'
 GUESTOS = 'darwin20-64'
