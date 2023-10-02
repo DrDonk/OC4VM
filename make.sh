@@ -2,8 +2,8 @@
 #set -x
 echo Creating OC4VM
 
-./build-config.sh
-./build-vmdk.sh
+./build-configs.sh
+./build-disks.sh
 ./build-templates.sh
 ./build-release.sh
 #./build-zip.sh

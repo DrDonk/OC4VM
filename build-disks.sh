@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 #set -x
-echo Creating OpenCore DMG/VMDK Images
+echo Creating OpenCore DMG/VMDK/QCOW2 Images
 
 # Read current version
 VERSION=$(<VERSION)
@@ -25,17 +25,20 @@ build_dmg() {
   ls -a /Volumes/OPENCORE
   hdiutil detach /Volumes/OPENCORE
 
-  # Convert and validate VMDK
+  # Convert DMG to VMDK & QCOW2
   qemu-img convert -f raw -O vmdk $2/opencore.dmg $2/opencore.vmdk
   qemu-img check -f vmdk $2/opencore.vmdk
+  if [[ -f "$2/opencore.vmdk" ]]; then
+    msg_status "VMware vmdk file is available at $2/opencore.vmdk"
+  else
+    msg_error "Build failure! opencore.vmdk file not found!"
+  fi
   qemu-img convert -f raw -O qcow2 $2/opencore.dmg $2/opencore.qcow2
   qemu-img check -f qcow2 $2/opencore.qcow2
-
-  # Write a message
-  if [[ -f "$2/opencore.vmdk" ]]; then
-    msg_status "Built .vmdk file is available at $2/opencore.vmdk"
+  if [[ -f "$2/opencore.qcow2" ]]; then
+    msg_status "QEMU qcow2 file is available at $2/opencore.qcow2"
   else
-    msg_error "Build failure! Built .vmdk file not found!"
+    msg_error "Build failure! opencore.qcow2 file not found!"
   fi
 
   msg_status "Building process complete.\n"
