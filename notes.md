@@ -57,3 +57,19 @@ Encode a base64 encoded binary:
 Decode a base64 encoded binary:
 
 `print MduAPQAAAAAGdQA= | base64 -D | xxd`
+
+Spoof Mac mini 2018 in VMware VMX
+```commandline
+# Mac mini 2018
+board-id = "Mac-7BA5B2DFE22DDD8C"
+board-id.reflectHost = "FALSE"
+efi.nvram.var.MLB = "C07801609GUKXPGJA"
+efi.nvram.var.MLB.reflectHost = "FALSE"
+efi.nvram.var.ROM = "EFA3707116CA"
+efi.nvram.var.ROM.reflectHost = "FALSE"
+hw.model = "Macmini8,1"
+hw.model.reflectHost = "FALSE"
+serialNumber = "C07W20B5JYVX"
+serialNumber.reflectHost = "FALSE"
+smbios.reflectHost = "TRUE"
+```
