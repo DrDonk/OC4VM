@@ -9,7 +9,9 @@ qemu-system-x86_64 \
 -accel hvf \
 -m 4096 \
 -nodefaults \
+-audiodev coreaudio,id=audio0 \
 -device ich9-intel-hda \
+-device hda-output,audiodev=audio0 \
 -device virtio-net-pci,mac=66:C9:75:99:89:AC,netdev=net0 \
 -netdev user,id=net0,hostfwd=tcp::5959-:5900 \
 -device vmware-svga,vgamem_mb=128 \

@@ -117,6 +117,8 @@ These URLs will link to the latest versions of VMware's products:
 
 ```brew install jinja2-cli```
 
+```brew install p7zip```
+
 ## x. Thanks
 
 Many thanks to the great developers and community around the OpenCore scene. The OC4VM pacakge uses the following:
@@ -127,7 +129,6 @@ Many thanks to the great developers and community around the OpenCore scene. The
 * DebugEnhancer - https://github.com/acidanthera/DebugEnhancer
 * VirtualSMC - https://github.com/acidanthera/VirtualSMC
 * AppleHDA - https://github.com/acidanthera/AppleHDA
-* STOML- https://github.com/freshautomations/stoml
 
 Also thanks to the testers who helped me out with the project.
 
