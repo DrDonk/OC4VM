@@ -1,0 +1,19 @@
+[intel-release]
+BUILD = '1'
+DISPLAYNAME = 'macOS Intel Release Template'
+SERIAL = '0'
+
+[intel-verbose]
+BUILD = '1'
+DISPLAYNAME = 'macOS Intel Verbose Template'
+SERIAL = '1'
+
+[intel-debug]
+BUILD = '1'
+DISPLAYNAME = 'macOS Intel Debug Template'
+SERIAL = '1'
+
+[intel-kdk]
+BUILD = '1'
+DISPLAYNAME = 'macOS Intel KDK Template'
+SERIAL = '1'
