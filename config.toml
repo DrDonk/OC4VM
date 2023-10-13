@@ -1,43 +1,47 @@
 [intel-release]
-BOOTARGS = "keepsyms=1 -lilubetaall"
-CSRCONFIG = "AAAAAA=="
-DEBUG = "0"
-DESCRIPTION = "Intel Release"
-FILES = "release-base"
-HIDEAUXILLARY = "true"
-RESOLUTION = "1440x900@32"
-SERIAL = "0"
-TIMEOUT = "5"
+BUILD = '1'
+BOOTARGS = 'keepsyms=1 -lilubetaall'
+CSRCONFIG = 'AAAAAA=='
+DEBUG = '0'
+DESCRIPTION = 'Intel Release'
+FILES = 'release-base'
+HIDEAUXILLARY = 'true'
+RESOLUTION = '1440x900@32'
+SERIAL = '0'
+TIMEOUT = '5'
 
 [intel-verbose]
-BOOTARGS = "keepsyms=1 -lilubetaall -v serial=5"
-CSRCONFIG = "AAAAAA=="
-DEBUG = "0"
-DESCRIPTION = "Intel Verbose"
-FILES = "release-base"
-HIDEAUXILLARY = "true"
-SERIAL = "1"
-RESOLUTION = "1440x900@32"
-TIMEOUT = "5"
+BUILD = '1'
+BOOTARGS = 'keepsyms=1 -lilubetaall -v serial=5'
+CSRCONFIG = 'AAAAAA=='
+DEBUG = '0'
+DESCRIPTION = 'Intel Verbose'
+FILES = 'release-base'
+HIDEAUXILLARY = 'true'
+SERIAL = '1'
+RESOLUTION = '1440x900@32'
+TIMEOUT = '5'
 
 [intel-debug]
-BOOTARGS = "keepsyms=1 -lilubetaall -v serial=5 debug=2 -no_panic_dialog -liludbgall -topo -cpuid"
-CSRCONFIG = "AAAAAA=="
-DEBUG = "1"
-DESCRIPTION = "Intel Debug"
-FILES = "debug-base"
-HIDEAUXILLARY = "false"
-RESOLUTION = "1440x900@32"
-SERIAL = "1"
-TIMEOUT = "0"
+BUILD = '1'
+BOOTARGS = 'keepsyms=1 -lilubetaall -v serial=5 debug=2 -no_panic_dialog -liludbgall -topo -cpuid'
+CSRCONFIG = 'AAAAAA=='
+DEBUG = '1'
+DESCRIPTION = 'Intel Debug'
+FILES = 'debug-base'
+HIDEAUXILLARY = 'false'
+RESOLUTION = '1440x900@32'
+SERIAL = '1'
+TIMEOUT = '0'
 
 [intel-kdk]
-BOOTARGS = "keepsyms=1 -lilubetaall -v serial=5 debug=2 -no_panic_dialog -liludbgall -topo -cpuid kcsuffix=development"
-CSRCONFIG = "fwgAAA=="
-DEBUG = "1"
-DESCRIPTION = "Intel KDK"
-FILES = "debug-base"
-HIDEAUXILLARY = "false"
-RESOLUTION = "1440x900@32"
-SERIAL = "1"
-TIMEOUT = "0"
+BUILD = '1'
+BOOTARGS = 'keepsyms=1 -lilubetaall -v serial=5 debug=2 -no_panic_dialog -liludbgall -topo -cpuid kcsuffix=development'
+CSRCONFIG = 'fwgAAA=='
+DEBUG = '1'
+DESCRIPTION = 'Intel KDK'
+FILES = 'debug-base'
+HIDEAUXILLARY = 'false'
+RESOLUTION = '1440x900@32'
+SERIAL = '1'
+TIMEOUT = '0'

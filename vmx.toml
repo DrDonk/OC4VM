@@ -1,27 +1,31 @@
 [intel-release]
-BUILD = 'release'
+BUILD = '1'
 DISPLAYNAME = 'macOS Intel Release Template'
 ETHERNET_DEVICE = 'e1000e'
 GUESTOS = 'darwin20-64'
 SERIAL = 'FALSE'
+VMX = 'release'
 
 [intel-verbose]
-BUILD = 'debug'
+BUILD = '1'
 DISPLAYNAME = 'macOS Intel Verbose Template'
 ETHERNET_DEVICE = 'e1000e'
 GUESTOS = 'darwin20-64'
 SERIAL = 'TRUE'
+VMX = 'debug'
 
 [intel-debug]
-BUILD = 'debug'
+BUILD = '1'
 DISPLAYNAME = 'macOS Intel Debug Template'
 ETHERNET_DEVICE = 'e1000e'
 GUESTOS = 'darwin20-64'
 SERIAL = 'TRUE'
+VMX = 'debug'
 
 [intel-kdk]
-BUILD = 'debug'
+BUILD = '1'
 DISPLAYNAME = 'macOS Intel KDK Template'
 ETHERNET_DEVICE = 'e1000e'
 GUESTOS = 'darwin20-64'
 SERIAL = 'TRUE'
+VMX = 'debug'
