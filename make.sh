@@ -75,9 +75,9 @@ do
     jinja2 --format=toml --section=$variant -D VERSION=$VERSION --outfile=./build/config/$variant/config.plist config.j2 config.toml
 
     # Build the OpenCore DMG/vmdk files
-    mkdir -p ./build/vmdk/$variant
+    mkdir -p ./build/disks/$variant
     FILES=$(./utilities/stoml_darwin_arm64 config.toml $variant.FILES)
-    VMDK="./build/vmdk/$variant"
+    VMDK="./build/disks/$variant"
     BASE="./disk_contents/$FILES/."
     CONFIG="./build/config/$variant/config.plist"
     build_dmg $VMDK $BASE $CONFIG
@@ -97,7 +97,7 @@ do
     fi
     mkdir -p ./build/templates/vmware/$variant 2>&1 >/dev/null
     cp -v macos.vmdk ./build/templates/vmware/$variant 2>&1 >/dev/null
-    cp -v ./build/vmdk/$variant/opencore.vmdk ./build/templates/vmware/$variant
+    cp -v ./build/disks/$variant/opencore.vmdk ./build/templates/vmware/$variant
     jinja2 --format=toml --section=$variant -D VERSION=$VERSION --outfile=./build/templates/vmware/$variant/macos.vmx vmx.j2 vmx.toml
 done
 
@@ -115,7 +115,7 @@ do
     fi
     mkdir -p ./build/templates/qemu/$variant 2>&1 >/dev/null
     cp -v macos.vmdk ./build/templates/qemu/$variant 2>&1 >/dev/null
-    cp -v ./build/vmdk/$variant/opencore.qcow2 ./build/templates/qemu/$variant
+    cp -v ./build/disks/$variant/opencore.qcow2 ./build/templates/qemu/$variant
     jinja2 --format=toml --section=$variant -D VERSION=$VERSION --outfile=./build/templates/qemu/$variant/qemu-run.sh qemu-run.j2 qemu-run.toml
 done
 
