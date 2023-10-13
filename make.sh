@@ -64,7 +64,12 @@ for variant in $variants
 do
     DESCRIPTION=$(./utilities/stoml_darwin_arm64 config.toml $variant.DESCRIPTION)
     msg_status "$DESCRIPTION variant:"
-
+    BUILD=$(./utilities/stoml_darwin_arm64 config.toml $variant.BUILD)
+    if [[ $BUILD == "0" ]]
+    then
+      msg_error "Skipping $DESCRIPTION"
+      continue
+    fi
     # Build config.plist
     mkdir -p ./build/config/$variant 2>&1 >/dev/null
     jinja2 --format=toml --section=$variant -D VERSION=$VERSION --outfile=./build/config/$variant/config.plist config.j2 config.toml
@@ -82,11 +87,36 @@ msg_status "\nCreating VMware templates..."
 variants=("${(f)$(./utilities/stoml_darwin_arm64 vmx.toml . | tr ' ' '\n')}")
 for variant in $variants
 do
-    msg_status "$variant variant"
+    DISPLAYNAME=$(./utilities/stoml_darwin_arm64 vmx.toml $variant.DISPLAYNAME)
+    msg_status "$DISPLAYNAME variant"
+    BUILD=$(./utilities/stoml_darwin_arm64 vmx.toml $variant.BUILD)
+    if [[ $BUILD == "0" ]]
+    then
+      msg_error "Skipping $DISPLAYNAME"
+      continue
+    fi
     mkdir -p ./build/templates/vmware/$variant 2>&1 >/dev/null
     cp -v macos.vmdk ./build/templates/vmware/$variant 2>&1 >/dev/null
     cp -v ./build/vmdk/$variant/opencore.vmdk ./build/templates/vmware/$variant
     jinja2 --format=toml --section=$variant -D VERSION=$VERSION --outfile=./build/templates/vmware/$variant/macos.vmx vmx.j2 vmx.toml
+done
+
+msg_status "\nCreating QEMU templates..."
+variants=("${(f)$(./utilities/stoml_darwin_arm64 qemu-run.toml . | tr ' ' '\n')}")
+for variant in $variants
+do
+    DISPLAYNAME=$(./utilities/stoml_darwin_arm64 qemu-run.toml $variant.DISPLAYNAME)
+    msg_status "$DISPLAYNAME variant"
+    BUILD=$(./utilities/stoml_darwin_arm64 qemu-run.toml $variant.BUILD)
+    if [[ $BUILD == "0" ]]
+    then
+      msg_error "Skipping $DISPLAYNAME"
+      continue
+    fi
+    mkdir -p ./build/templates/qemu/$variant 2>&1 >/dev/null
+    cp -v macos.vmdk ./build/templates/qemu/$variant 2>&1 >/dev/null
+    cp -v ./build/vmdk/$variant/opencore.qcow2 ./build/templates/qemu/$variant
+    jinja2 --format=toml --section=$variant -D VERSION=$VERSION --outfile=./build/templates/qemu/$variant/qemu-run.sh qemu-run.j2 qemu-run.toml
 done
 
 msg_status "\nZipping OC4VM Release..."
