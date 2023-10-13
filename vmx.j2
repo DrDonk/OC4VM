@@ -24,12 +24,12 @@ answer.msg.serial.file.open = "Replace"
 serial0.fileName = "serial.log"
 serial0.fileType = "file"
 serial0.present = "TRUE"
-serial0.startConnected = "FALSE"
+serial0.startConnected = "{{SERIAL}}"
 serial0.tryNoRxLoss = "FALSE"
 serial0.yieldOnMsrRead = "TRUE"
 
 # VMware build release/debug/stats
-vmx.buildType = "release"
+vmx.buildType = "{{BUILD}}"
 
 # Standard VMX parameters from Fusion macOS VM
 # Except SMC is set to false OC emulates SMC now
