@@ -114,9 +114,12 @@ do
       continue
     fi
     mkdir -p ./build/templates/qemu/$variant 2>&1 >/dev/null
+    cp -v edk2-x86_64-code.fd ./build/templates/qemu/$variant 2>&1 >/dev/null
+    cp -v efi_vars.fd ./build/templates/qemu/$variant 2>&1 >/dev/null
     cp -v macos.qcow2 ./build/templates/qemu/$variant 2>&1 >/dev/null
     cp -v ./build/disks/$variant/opencore.qcow2 ./build/templates/qemu/$variant
     jinja2 --format=toml --section=$variant -D VERSION=$VERSION --outfile=./build/templates/qemu/$variant/qemu-run.sh qemu-run.j2 qemu-run.toml
+    chmod +x ./build/templates/qemu/$variant/qemu-run.sh
 done
 
 msg_status "\nZipping OC4VM Release..."
