@@ -8,12 +8,13 @@ BUILD = '1'
 DISPLAYNAME = 'macOS Intel Verbose Template'
 SERIAL = '1'
 
+# These are not normally built and are for debugging only
 [intel-debug]
-BUILD = '1'
+BUILD = '0'
 DISPLAYNAME = 'macOS Intel Debug Template'
 SERIAL = '1'
 
 [intel-kdk]
-BUILD = '1'
+BUILD = '0'
 DISPLAYNAME = 'macOS Intel KDK Template'
 SERIAL = '1'

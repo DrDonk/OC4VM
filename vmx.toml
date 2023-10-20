@@ -14,8 +14,9 @@ GUESTOS = 'darwin20-64'
 SERIAL = 'TRUE'
 VMX = 'debug'
 
+# These are not normally built and are for debugging only
 [intel-debug]
-BUILD = '1'
+BUILD = '0'
 DISPLAYNAME = 'macOS Intel Debug Template'
 ETHERNET_DEVICE = 'e1000e'
 GUESTOS = 'darwin20-64'
@@ -23,7 +24,7 @@ SERIAL = 'TRUE'
 VMX = 'debug'
 
 [intel-kdk]
-BUILD = '1'
+BUILD = '0'
 DISPLAYNAME = 'macOS Intel KDK Template'
 ETHERNET_DEVICE = 'e1000e'
 GUESTOS = 'darwin20-64'
