@@ -114,7 +114,7 @@ do
       continue
     fi
     mkdir -p ./build/templates/qemu/$variant 2>&1 >/dev/null
-    cp -v macos.vmdk ./build/templates/qemu/$variant 2>&1 >/dev/null
+    cp -v macos.qcow2 ./build/templates/qemu/$variant 2>&1 >/dev/null
     cp -v ./build/disks/$variant/opencore.qcow2 ./build/templates/qemu/$variant
     jinja2 --format=toml --section=$variant -D VERSION=$VERSION --outfile=./build/templates/qemu/$variant/qemu-run.sh qemu-run.j2 qemu-run.toml
 done
