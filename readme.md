@@ -1,8 +1,8 @@
 # WIP - currently no releases
 # OC4VM - OpenCore for Virtual Machines
 ## 1. Introduction
-OpenCore 4 Virtual Machines (OC4VM) has been built to run macOS VMs on Intel based Apple Macs. It provides an OpenCore 
-disk image that can be used to boot Intel based macOS using QEMU, UTM and VMware.
+OpenCore for Virtual Machines (OC4VM) has been built to run macOS VMs on Intel based Apple Macs. It provides an OpenCore 
+disk image that can be used to boot Intel based macOS using QEMU, UTM and VMware Fusion.
 
 Using OpenCore allows for a flexible patching system to overcome limitations of the virtualisation software. It 
 basically creates a virtual Hackintosh, "Virtualtosh", which is similar in implementation to the OpenCore Legacy Patcher
@@ -17,9 +17,12 @@ What OC4VM can do?
 * Easily change SIP settings using an EFI utility
 * Add Intel e1000e virtual NIC compatibility for Ventura and later versions of macOS
 
+What OC4VM can do but not recommended:
+* Boot macOS on an Apple Silicon CPU
+
 What OC4VM cannot do:
 * Boot macOS on an AMD CPU
-* Boot macOS on an Apple Silicon CPU
+
 
 The OC4VM system has been tested on an Intel Mac mini mid-2014 with these guest OSes:
 * Big Sur
@@ -43,41 +46,51 @@ using:
 
 ***
 Note:
-If you have installed the VMware Unlocker it is recommended that the Unlocker is uninstalled. OC4VM does 
-not alter anything in the VMware program folders.
+If you are not using an Apple computer and have installed the VMware Unlocker it is recommended that the Unlocker is 
+uninstalled. OC4VM does not alter anything in the VMware program folders.
 ***
 
 ### 2.2 Folder Contents
 
 OC4VM has several folders:
 
-| Folder         | Function                                            |
-|:---------------|-----------------------------------------------------|
-| config         | OpenCore config.plist files for reference           |
-| iso            | VMware macOS guest tools                            |
-| recovery-maker | Tool to build a bootable VMware macOS recovery disk |
-| templates      | Template VMs for Intel and AMD                      |
-| vmdk           | Debug and Verbose OpenCore boot variants            |
+| Folder         | Function                                              |
+|:---------------|-------------------------------------------------------|
+| config         | OpenCore config.plist files for reference             |
+| disks          | OpenCore boot variants in DMG, VMDK and QCOW2 formats |
+| iso            | VMware Fusion macOS guest tools                       |
+| recovery-maker | Tool to build a bootable macOS recovery disk          |
+| templates      | Template VMs for VMware and QEMU                      |
+
 
 The most import folders are the 'templates' and 'iso' folders. 
 
-### 2.2 VM Templates
-The 'templates' folder contains VM templates for either Intel or AMD CPU based macOS virtual machines. 
-Each folder has an OpenCore booter and VMX file tailored for the CPU that is running on the host.
+### 2.2 OC4VM Variants
+TODO
+
+### 2.3 VMware Templates
+The 'templates' folder has a sub-folder called "vmware" which contains VM templates for VMware macOS virtual machines. 
+Each folder has an OpenCore booter and VMX file tailored for the OC4VM variant you choose.
 
 The templates are designed for maximum compatibilty between different releases and platforms, and you should not 
-upgrade the virtual hardware if prompted to by the VMware software. Also do not change the guesOS settings in the 
+upgrade the virtual hardware if prompted to by the VMware software. Also do not change the guestOS settings in the 
 VMX file. It will not change any of the behaviours of the guest and could cause issues in the future.
 
 ```
-templates
-├── intel
-   ├── opencore.vmdk
-   ├── macos.vmx
-   └── macos.vmdk
+ templates
+   └── vmware
+      ├── intel-release
+      │  ├── macos.vmdk
+      │  ├── macos.vmx
+      │  └── opencore.vmdk
+      └── intel-verbose
+         ├── macos.vmdk
+         ├── macos.vmx
+         └── opencore.vmdk
+
 
 ```
-The folder contains these files:
+Each  folder contains these files:
 
 | File          | Function                        |
 |:--------------|---------------------------------|
@@ -100,6 +113,27 @@ To install mount the darwin.iso file using the VMs virtual CD/DVD drive.
 TODO
 ### VMware
 ### UTM
+``` 
+templates
+   ├── qemu
+   │  ├── intel-release
+   │  │  ├── macos.vmdk
+   │  │  ├── opencore.qcow2
+   │  │  └── qemu-run.sh
+   │  └── intel-verbose
+   │     ├── macos.vmdk
+   │     ├── opencore.qcow2
+   │     └── qemu-run.sh
+   └── vmware
+      ├── intel-release
+      │  ├── macos.vmdk
+      │  ├── macos.vmx
+      │  └── opencore.vmdk
+      └── intel-verbose
+         ├── macos.vmdk
+         ├── macos.vmx
+         └── opencore.vmdk
+```
 ### QEMU
 
 ## x. VMware Downloads
@@ -114,11 +148,25 @@ These URLs will link to the latest versions of VMware's products:
 * VMware Guest Tools https://vmware.com/go/tools
 
 ## x. Building OC4VM
-```brew install qemu```
 
-```brew install jinja2-cli```
+Building must be done on macOS, either real or virtualized. The Homebrew package manager will need to be installed to
+allowm installation of the follwoing pre-requisites. Please follow the instructions at https://brew.sh.
 
-```brew install p7zip```
+Once brew is installed run the folowing commands to install the required software:
+```
+brew install qemu
+brew install jinja2-cli
+brew install p7zip
+```
+
+Now clone the OC4VM repository using:
+```git clone https://github.com/DrDonk/OC4VM.git```
+
+Using the terminal OC4VM can be built by simply running the make.sh command from tbe cloned repository.
+
+```./make.sh```
+
+The build artefacts will be found in the "build" folder and the release zip file in the "dist" folder.
 
 ## x. Thanks
 
