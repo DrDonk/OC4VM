@@ -1,12 +1,37 @@
 #!/bin/sh
 # OC4VM VERSION
 # {{VERSION}}
+
+# set -x
+
+# Check if the number of arguments is not equal to 1
+if [[ $# -ne 1 ]]; then
+    echo "Usage: $0 <tcg or hvf>"
+    exit 1
+fi
+
+# Get the value of the parameter
+param="$1"
+
+# Check if the parameter is either "tcg" or "hvf"
+if [[ "$param" != "tcg" ]] && [[ "$param" != "hvf" ]]; then
+    echo "Parameter must be 'tcg' or 'hvf'."
+    exit 1
+fi
+
+# Your script logic goes here based on the provided parameter
+if [[ "$param" == "tcg" ]]; then
+    accel="tcg,tb-size=8192"
+elif [[ "$param" == "hvf" ]]; then
+    accel="hvf"
+fi
+
 qemu-system-x86_64 \
--name "{{DISPLAYNAME}}" \
+-name "{{DESCRIPTION}}" \
 -cpu Skylake-Server,-pdpe1gb,-avx512f,-avx512dq,-avx512cd,-avx512bw,-avx512vl \
 -smp cpus=2,sockets=1,cores=2,threads=1 \
 -machine q35,vmport=on,i8042=off,hpet=off \
--accel hvf \
+-accel $accel \
 -m 4096 \
 -nodefaults \
 -device ich9-intel-hda \
