@@ -32,14 +32,14 @@ build_dmg() {
   hdiutil detach /Volumes/OPENCORE
 
   # Convert DMG to VMDK & QCOW2
-  qemu-img convert -f raw -O vmdk $1/opencore.dmg $1/opencore.vmdk
+  qemu-img convert -f raw -O vmdk $1/opencore.dmg $1/opencore.vmdk 2>&1 >/dev/null
   qemu-img check -f vmdk $1/opencore.vmdk
   if [[ -f "$1/opencore.vmdk" ]]; then
     msg_status "VMware vmdk file is available at $1/opencore.vmdk"
   else
     msg_error "Build failure! opencore.vmdk file not found!"
   fi
-  qemu-img convert -f raw -O qcow2 $1/opencore.dmg $1/opencore.qcow2
+  qemu-img convert -f raw -O qcow2 $1/opencore.dmg $1/opencore.qcow2 2>&1 >/dev/null
   qemu-img check -f qcow2 $1/opencore.qcow2
   if [[ -f "$1/opencore.qcow2" ]]; then
     msg_status "QEMU qcow2 file is available at $1/opencore.qcow2"
@@ -52,75 +52,45 @@ build_dmg() {
 rm -rfv ./build/* 2>&1 >/dev/null
 rm -rf ./recovery-maker/__pycache__ 2>&1 >/dev/null
 
-msg_status "\nCopying files..."
-cp -v README.md ./build/
-cp -v LICENSE ./build/
-cp -vr ./iso ./build/
-cp -vr ./recovery-maker ./build/
-
-msg_status "\nCreating OpenCore disk images..."
-variants=("${(f)$(./utilities/stoml_darwin_arm64 config.toml . | tr ' ' '\n')}")
+variants=("${(f)$(./utilities/stoml_darwin_arm64 oc4vm.toml . | tr ' ' '\n')}")
 for variant in $variants
 do
-    DESCRIPTION=$(./utilities/stoml_darwin_arm64 config.toml $variant.DESCRIPTION)
-    msg_status "$DESCRIPTION variant:"
-    BUILD=$(./utilities/stoml_darwin_arm64 config.toml $variant.BUILD)
+    DESCRIPTION=$(./utilities/stoml_darwin_arm64 oc4vm.toml $variant.DESCRIPTION)
+
+    BUILD=$(./utilities/stoml_darwin_arm64 oc4vm.toml $variant.BUILD)
     if [[ $BUILD == "0" ]]
     then
-      msg_error "Skipping $DESCRIPTION"
+      msg_error "Skipping $DESCRIPTION variant!"
       continue
+    else
+      msg_status "Building $DESCRIPTION variant..."
     fi
     # Build config.plist
     mkdir -p ./build/config/$variant 2>&1 >/dev/null
-    jinja2 --format=toml --section=$variant -D VERSION=$VERSION --outfile=./build/config/$variant/config.plist config.j2 config.toml
+    jinja2 --format=toml --section=$variant -D VERSION=$VERSION --outfile=./build/config/$variant/config.plist config.j2 oc4vm.toml
 
     # Build the OpenCore DMG/vmdk files
     mkdir -p ./build/disks/$variant
-    FILES=$(./utilities/stoml_darwin_arm64 config.toml $variant.FILES)
-    VMDK="./build/disks/$variant"
-    BASE="./disk_contents/$FILES/."
-    CONFIG="./build/config/$variant/config.plist"
-    build_dmg $VMDK $BASE $CONFIG
-done
-
-msg_status "\nCreating VMware templates..."
-variants=("${(f)$(./utilities/stoml_darwin_arm64 vmx.toml . | tr ' ' '\n')}")
-for variant in $variants
-do
-    DISPLAYNAME=$(./utilities/stoml_darwin_arm64 vmx.toml $variant.DISPLAYNAME)
-    msg_status "$DISPLAYNAME variant"
-    BUILD=$(./utilities/stoml_darwin_arm64 vmx.toml $variant.BUILD)
-    if [[ $BUILD == "0" ]]
-    then
-      msg_error "Skipping $DISPLAYNAME"
-      continue
-    fi
+    FILES=$(./utilities/stoml_darwin_arm64 oc4vm.toml $variant.FILES)
+    build_dmg ./build/disks/$variant ./disk_contents/$FILES/. ./build/config/$variant/config.plist
     mkdir -p ./build/templates/vmware/$variant 2>&1 >/dev/null
     cp -v macos.vmdk ./build/templates/vmware/$variant 2>&1 >/dev/null
     cp -v ./build/disks/$variant/opencore.vmdk ./build/templates/vmware/$variant
-    jinja2 --format=toml --section=$variant -D VERSION=$VERSION --outfile=./build/templates/vmware/$variant/macos.vmx vmx.j2 vmx.toml
-done
-
-msg_status "\nCreating QEMU templates..."
-variants=("${(f)$(./utilities/stoml_darwin_arm64 qemu-run.toml . | tr ' ' '\n')}")
-for variant in $variants
-do
-    DISPLAYNAME=$(./utilities/stoml_darwin_arm64 qemu-run.toml $variant.DISPLAYNAME)
-    msg_status "$DISPLAYNAME variant"
-    BUILD=$(./utilities/stoml_darwin_arm64 qemu-run.toml $variant.BUILD)
-    if [[ $BUILD == "0" ]]
-    then
-      msg_error "Skipping $DISPLAYNAME"
-      continue
-    fi
+    jinja2 --format=toml --section=$variant -D VERSION=$VERSION --outfile=./build/templates/vmware/$variant/macos.vmx vmx.j2 oc4vm.toml
     mkdir -p ./build/templates/qemu/$variant 2>&1 >/dev/null
     cp -v edk2-x86_64-code.fd ./build/templates/qemu/$variant 2>&1 >/dev/null
     cp -v efi_vars.fd ./build/templates/qemu/$variant 2>&1 >/dev/null
     cp -v macos.qcow2 ./build/templates/qemu/$variant 2>&1 >/dev/null
     cp -v ./build/disks/$variant/opencore.qcow2 ./build/templates/qemu/$variant
-    jinja2 --format=toml --section=$variant -D VERSION=$VERSION --outfile=./build/templates/qemu/$variant/qemu-run.sh qemu-run.j2 qemu-run.toml
+    jinja2 --format=toml --section=$variant -D VERSION=$VERSION --outfile=./build/templates/qemu/$variant/qemu-run.sh qemu-run.j2 oc4vm.toml
     chmod +x ./build/templates/qemu/$variant/qemu-run.sh
 done
+
+msg_status "\nCopying files..."
+cp -v README.md ./build/
+cp -v LICENSE ./build/
+cp -vr ./iso ./build/
+cp -vr ./recovery-maker ./build/
 
 msg_status "\nZipping OC4VM Release..."
 rm ./dist/oc4vm-$VERSION.* 2>&1 >/dev/null
