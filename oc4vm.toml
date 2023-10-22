@@ -1,3 +1,5 @@
+#TODO: Add ability to specify Mac system in TOML
+
 [intel-release]
 BUILD = '1'
 BOOTARGS = 'keepsyms=1 -lilubetaall'

@@ -1,4 +1,6 @@
 #!/usr/bin/env zsh
+
+# TODO: Needs some better cleanup if an error occurs
 #set -x
 
 # Provide custom colors in Terminal for status and error messages
@@ -57,6 +59,7 @@ for variant in $variants
 do
     DESCRIPTION=$(./utilities/stoml_darwin_arm64 oc4vm.toml $variant.DESCRIPTION)
 
+    # Check if build disabled
     BUILD=$(./utilities/stoml_darwin_arm64 oc4vm.toml $variant.BUILD)
     if [[ $BUILD == "0" ]]
     then
@@ -65,6 +68,7 @@ do
     else
       msg_status "Building $DESCRIPTION variant..."
     fi
+
     # Build config.plist
     mkdir -p ./build/config/$variant 2>&1 >/dev/null
     jinja2 --format=toml --section=$variant -D VERSION=$VERSION --outfile=./build/config/$variant/config.plist config.j2 oc4vm.toml
@@ -73,10 +77,14 @@ do
     mkdir -p ./build/disks/$variant
     FILES=$(./utilities/stoml_darwin_arm64 oc4vm.toml $variant.FILES)
     build_dmg ./build/disks/$variant ./disk_contents/$FILES/. ./build/config/$variant/config.plist
+
+    # Build the VMware templates
     mkdir -p ./build/templates/vmware/$variant 2>&1 >/dev/null
     cp -v macos.vmdk ./build/templates/vmware/$variant 2>&1 >/dev/null
     cp -v ./build/disks/$variant/opencore.vmdk ./build/templates/vmware/$variant
     jinja2 --format=toml --section=$variant -D VERSION=$VERSION --outfile=./build/templates/vmware/$variant/macos.vmx vmx.j2 oc4vm.toml
+
+    # Build the QEMU templates
     mkdir -p ./build/templates/qemu/$variant 2>&1 >/dev/null
     cp -v edk2-x86_64-code.fd ./build/templates/qemu/$variant 2>&1 >/dev/null
     cp -v efi_vars.fd ./build/templates/qemu/$variant 2>&1 >/dev/null
