@@ -2,7 +2,7 @@
 
 [intel-release]
 BUILD = '1'
-BOOTARGS = 'keepsyms=1 -lilubetaall'
+BOOTARGS = 'keepsyms=1 -lilubetaall -no_compat_check'
 CSRCONFIG = 'AAAAAA=='
 DEBUG = '0'
 DESCRIPTION = 'macos Intel Release'
@@ -17,7 +17,7 @@ VMX = 'release'
 
 [intel-verbose]
 BUILD = '1'
-BOOTARGS = 'keepsyms=1 -lilubetaall -v serial=5'
+BOOTARGS = 'keepsyms=1 -lilubetaall -no_compat_check -v serial=5'
 CSRCONFIG = 'AAAAAA=='
 DEBUG = '0'
 DESCRIPTION = 'macos Intel Verbose'
@@ -33,7 +33,7 @@ VMX = 'release'
 # These are not normally built and are for debugging only
 [intel-debug]
 BUILD = '0'
-BOOTARGS = 'keepsyms=1 -lilubetaall -v serial=5 debug=2 -no_panic_dialog -liludbgall -topo -cpuid'
+BOOTARGS = 'keepsyms=1 -lilubetaall -v-no_compat_check serial=5 debug=2 -no_panic_dialog -liludbgall -topo -cpuid'
 CSRCONFIG = 'AAAAAA=='
 DEBUG = '1'
 DESCRIPTION = 'macos Intel Debug'
@@ -48,7 +48,7 @@ VMX = 'debug'
 
 [intel-kdk]
 BUILD = '0'
-BOOTARGS = 'keepsyms=1 -lilubetaall -v serial=5 debug=2 -no_panic_dialog -liludbgall -topo -cpuid kcsuffix=development'
+BOOTARGS = 'keepsyms=1 -lilubetaall -v -no_compat_check serial=5 debug=2 -no_panic_dialog -liludbgall -topo -cpuid kcsuffix=development'
 CSRCONFIG = 'fwgAAA=='
 DEBUG = '1'
 DESCRIPTION = 'macos Intel KDK'
