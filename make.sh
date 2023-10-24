@@ -54,13 +54,13 @@ build_dmg() {
 rm -rfv ./build/* 2>&1 >/dev/null
 rm -rf ./recovery-maker/__pycache__ 2>&1 >/dev/null
 
-variants=("${(f)$(./utilities/stoml_darwin_arm64 oc4vm.toml . | tr ' ' '\n')}")
+variants=("${(f)$(./utilities/stoml_darwin_amd64 oc4vm.toml . | tr ' ' '\n')}")
 for variant in $variants
 do
-    DESCRIPTION=$(./utilities/stoml_darwin_arm64 oc4vm.toml $variant.DESCRIPTION)
+    DESCRIPTION=$(./utilities/stoml_darwin_amd64 oc4vm.toml $variant.DESCRIPTION)
 
     # Check if build disabled
-    BUILD=$(./utilities/stoml_darwin_arm64 oc4vm.toml $variant.BUILD)
+    BUILD=$(./utilities/stoml_darwin_amd64 oc4vm.toml $variant.BUILD)
     if [[ $BUILD == "0" ]]
     then
       msg_error "Skipping $DESCRIPTION variant!"
@@ -75,7 +75,7 @@ do
 
     # Build the OpenCore DMG/vmdk files
     mkdir -p ./build/disks/$variant
-    FILES=$(./utilities/stoml_darwin_arm64 oc4vm.toml $variant.FILES)
+    FILES=$(./utilities/stoml_darwin_amd64 oc4vm.toml $variant.FILES)
     build_dmg ./build/disks/$variant ./disk_contents/$FILES/. ./build/config/$variant/config.plist
 
     # Build the VMware templates
