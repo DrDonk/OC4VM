@@ -1,15 +1,15 @@
 # WIP - currently no releases
 # OC4VM - OpenCore for Virtual Machines
 ## 1. Introduction
-OpenCore for Virtual Machines (OC4VM) has been built to run macOS VMs on Intel based Apple Macs. It provides an OpenCore 
-disk image that can be used to boot Intel based macOS using QEMU, UTM and VMware Fusion.
+OpenCore for Virtual Machines (OC4VM) has been built to run macOS VMs on Intel based Apple Macs. It provides an 
+OpenCore disk image that can be used to boot Intel based macOS using QEMU, UTM and VMware Fusion.
 
 Using OpenCore allows for a flexible patching system to overcome limitations of the virtualisation software. It 
-basically creates a virtual Hackintosh, "Virtualtosh", which is similar in implementation to the OpenCore Legacy Patcher
-used to run unsupported macOS versions on older Apple Mac computers.
+basically creates a virtual Hackintosh, "Virtualtosh", which is similar in implementation to the 
+OpenCore Legacy Patcher used to run unsupported macOS versions on older Apple Mac computers.
 
 OC4VM can be used on other host operating systems to run macOS but that is not the primary purpose of OC4VM. It can 
-replace the Unlocker to run macOS on Linux and Windows.
+replace the Unlocker to run macOS on Linux and Windows with VMware.
 
 What OC4VM can do?
 * Run macOS on Intel CPUs
@@ -25,8 +25,6 @@ What OC4VM cannot do:
 
 
 The OC4VM system has been tested on an Intel Mac mini mid-2014 with these guest OSes:
-* Big Sur
-* Monterey
 * Ventura
 * Sonoma
 
