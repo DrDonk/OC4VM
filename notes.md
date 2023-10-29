@@ -73,3 +73,11 @@ serialNumber = "C07W20B5JYVX"
 serialNumber.reflectHost = "FALSE"
 smbios.reflectHost = "TRUE"
 ```
+
+Windows enable WHPX:
+
+```Dism /Online /Enable-Feature:HypervisorPlatform```
+
+QEMU host folder as drive:
+
+```-device usb-storage,drive=fat16 -drive file=fat:rw:fat-type=16:"<full path to host folder>",id=fat16,format=raw,if=none```
