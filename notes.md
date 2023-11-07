@@ -59,7 +59,7 @@ Decode a base64 encoded binary:
 `print MduAPQAAAAAGdQA= | base64 -D | xxd`
 
 Spoof Mac mini 2018 in VMware VMX
-```commandline
+```
 # Mac mini 2018
 board-id = "Mac-7BA5B2DFE22DDD8C"
 board-id.reflectHost = "FALSE"
