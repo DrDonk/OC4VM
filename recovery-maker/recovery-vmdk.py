@@ -8,6 +8,7 @@ import macrecovery
 import subprocess
 import sys
 
+
 def main():
 
     print('\nOC4VM macOS Recovery VMDK Maker')
@@ -20,9 +21,12 @@ def main():
     print('2. Big Sur')
     print('3. Monterey')
     print('4. Ventura')
-
+    print('5. Sonoma')
+    print('')
+    print('0. Exit')
     # And get the input
     while True:
+
         selection = input('Input menu number: ')
 
         if selection == '1':
@@ -41,6 +45,12 @@ def main():
             basename = 'ventura'
             boardid = 'Mac-B4831CEBD52A0C4C'
             break
+        if selection == '5':
+            basename = 'sonoma'
+            boardid = 'Mac-7BA5B2D9E42DDD94'
+            break
+        if selection == '0':
+            exit(0)
 
     print('Downloading DMG... \n')
 
