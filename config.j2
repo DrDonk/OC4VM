@@ -80,7 +80,11 @@
 				<key>Comment</key>
 				<string>Debug Enhancer</string>
 				<key>Enabled</key>
+                {%- if DEBUG == '1' %}
 				<true/>
+                {%- else %}
+                <false/>
+                {%- endif %}
 				<key>ExecutablePath</key>
 				<string>Contents/MacOS/DebugEnhancer</string>
 				<key>MaxKernel</key>
