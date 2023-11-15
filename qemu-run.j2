@@ -6,7 +6,7 @@
 
 # Check if the number of arguments is not equal to 1
 if [[ $# -ne 1 ]]; then
-    echo "Usage: $0 <tcg or hvf>"
+    echo "Usage: $0 [--tcg or --hvf]"
     exit 1
 fi
 
@@ -28,7 +28,7 @@ fi
 
 qemu-system-x86_64 \
 -name "{{DESCRIPTION}}" \
--cpu Skylake-Server,-pdpe1gb,-avx512f,-avx512dq,-avx512cd,-avx512bw,-avx512vl \
+-cpu Skylake-Client-noTSX-IBRS,-pdpe1gb,-avx512f,-avx512dq,-avx512cd,-avx512bw,-avx512vl,-pcid,-x2apic,-tsc-deadline,-invpcid,-spec-ctrl,-xsavec,vendor=GenuineIntel \
 -smp cpus=2,sockets=1,cores=2,threads=1 \
 -machine q35,vmport=on,i8042=off,hpet=off \
 -accel $accel \

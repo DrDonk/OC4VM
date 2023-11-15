@@ -1,7 +1,12 @@
 #TODO: Add ability to specify Mac system in TOML
+#TODO: Add CPU count and core to AMD patches
 
+#
+# Intel CPU Settings
+#
 [intel-release]
 BUILD = '1'
+AMD = '0'
 BOOTARGS = 'keepsyms=1 -lilubetaall -no_compat_check'
 CSRCONFIG = 'AAAAAA=='
 DEBUG = '0'
@@ -17,7 +22,8 @@ VMX = 'release'
 
 [intel-verbose]
 BUILD = '1'
-BOOTARGS = 'keepsyms=1 -lilubetaall -no_compat_check -v serial=5'
+AMD = '0'
+BOOTARGS = 'keepsyms=1 -lilubetaall -no_compat_check -v serial=1'
 CSRCONFIG = 'AAAAAA=='
 DEBUG = '0'
 DESCRIPTION = 'macos Intel Verbose'
@@ -30,10 +36,10 @@ RESOLUTION = '1440x900@32'
 TIMEOUT = '5'
 VMX = 'release'
 
-# These are not normally built and are for debugging only
 [intel-debug]
-BUILD = '1'
-BOOTARGS = 'keepsyms=1 -lilubetaall -v-no_compat_check serial=5 debug=2 -no_panic_dialog -liludbgall -topo -cpuid'
+BUILD = '0'
+AMD = '0'
+BOOTARGS = 'keepsyms=1 -lilubetaall -v-no_compat_check serial=1 debug=2 -no_panic_dialog -liludbgall -topo -cpuid'
 CSRCONFIG = 'AAAAAA=='
 DEBUG = '1'
 DESCRIPTION = 'macos Intel Debug'
@@ -47,11 +53,79 @@ TIMEOUT = '0'
 VMX = 'debug'
 
 [intel-kdk]
-BUILD = '1'
-BOOTARGS = 'keepsyms=1 -lilubetaall -v -no_compat_check serial=5 debug=2 -no_panic_dialog -liludbgall -topo -cpuid kcsuffix=development'
+BUILD = '0'
+AMD = '0'
+BOOTARGS = 'keepsyms=1 -lilubetaall -v -no_compat_check serial=1 debug=2 -no_panic_dialog -liludbgall -topo -cpuid kcsuffix=development'
 CSRCONFIG = 'fwgAAA=='
 DEBUG = '1'
 DESCRIPTION = 'macos Intel KDK'
+ETHERNET_DEVICE = 'e1000e'
+FILES = 'debug-base'
+GUESTOS = 'darwin20-64'
+HIDEAUXILLARY = 'false'
+RESOLUTION = '1440x900@32'
+SERIAL = 'TRUE'
+TIMEOUT = '0'
+VMX = 'debug'
+
+#
+# AMD CPU Settings
+#
+[amd-release]
+BUILD = '1'
+AMD = '1'
+BOOTARGS = 'keepsyms=1 -lilubetaall -no_compat_check'
+CSRCONFIG = 'AAAAAA=='
+DEBUG = '0'
+DESCRIPTION = 'macos amd Release'
+ETHERNET_DEVICE = 'e1000e'
+FILES = 'release-base'
+GUESTOS = 'darwin20-64'
+HIDEAUXILLARY = 'true'
+RESOLUTION = '1440x900@32'
+SERIAL = 'FALSE'
+TIMEOUT = '5'
+VMX = 'release'
+
+[amd-verbose]
+BUILD = '1'
+AMD = '1'
+BOOTARGS = 'keepsyms=1 -lilubetaall -no_compat_check -v serial=1'
+CSRCONFIG = 'AAAAAA=='
+DEBUG = '0'
+DESCRIPTION = 'macos amd Verbose'
+ETHERNET_DEVICE = 'e1000e'
+FILES = 'release-base'
+GUESTOS = 'darwin20-64'
+HIDEAUXILLARY = 'true'
+SERIAL = 'TRUE'
+RESOLUTION = '1440x900@32'
+TIMEOUT = '5'
+VMX = 'release'
+
+[amd-debug]
+BUILD = '0'
+AMD = '1'
+BOOTARGS = 'keepsyms=1 -lilubetaall -v-no_compat_check serial=1 debug=2 -no_panic_dialog -liludbgall -topo -cpuid avx512=0 cwad'
+CSRCONFIG = 'AAAAAA=='
+DEBUG = '1'
+DESCRIPTION = 'macos amd Debug'
+ETHERNET_DEVICE = 'e1000e'
+FILES = 'debug-base'
+GUESTOS = 'darwin20-64'
+HIDEAUXILLARY = 'false'
+RESOLUTION = '1440x900@32'
+SERIAL = 'TRUE'
+TIMEOUT = '0'
+VMX = 'debug'
+
+[amd-kdk]
+BUILD = '0'
+AMD = '1'
+BOOTARGS = 'keepsyms=1 -lilubetaall -v -no_compat_check serial=1 debug=2 -no_panic_dialog -liludbgall -topo -cpuid avx512=0 cwad kcsuffix=development'
+CSRCONFIG = 'fwgAAA=='
+DEBUG = '1'
+DESCRIPTION = 'macos amd KDK'
 ETHERNET_DEVICE = 'e1000e'
 FILES = 'debug-base'
 GUESTOS = 'darwin20-64'
