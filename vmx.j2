@@ -5,11 +5,11 @@
 # Sanity Checks #
 
 # Check CPU as OC4VM has Intel and AMD variants
- {% if AMD == '1' -%}
- featMask.vm.cpuid.AMD = "Min:1"
- {% else -%}
- featMask.vm.cpuid.INTEL = "Min:1"
- {% endif %}
+{% if AMD == '1' -%}
+featMask.vm.cpuid.AMD = "Min:1"
+{% else -%}
+featMask.vm.cpuid.INTEL = "Min:1"
+{% endif %}
 
 # Check AVX 1.0 support in CPU (Sandy Bridge and Bulldozer or later)
 featMask.vm.cpuid.AVX = "Min:1"
