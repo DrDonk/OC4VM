@@ -29,6 +29,7 @@ build_dmg() {
   cp -r $2 /Volumes/OPENCORE
   cp -r $3 /Volumes/OPENCORE/EFI/OC
   rm -rf /Volumes/OPENCORE/.fseventsd
+  SetFile -a C /Volumes/OPENCORE
   dot_clean -m /Volumes/OPENCORE
   #ls -la /Volumes/OPENCORE
   hdiutil detach /Volumes/OPENCORE
