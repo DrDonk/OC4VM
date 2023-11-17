@@ -72,7 +72,12 @@ do
 
     # Build config.plist
     mkdir -p ./build/config/$variant 2>&1 >/dev/null
-    jinja2 --format=toml --section=$variant -D VERSION=$VERSION --outfile=./build/config/$variant/config.plist config.j2 oc4vm.toml
+    jinja2 --format=toml \
+      --section=$variant \
+      -D VERSION=$VERSION \
+      --outfile=./build/config/$variant/config.plist \
+      config.j2 \
+      oc4vm.toml
 
     # Build the OpenCore DMG/vmdk files
     mkdir -p ./build/disks/$variant
@@ -83,7 +88,13 @@ do
     mkdir -p ./build/templates/vmware/$variant 2>&1 >/dev/null
     cp -v macos.vmdk ./build/templates/vmware/$variant 2>&1 >/dev/null
     cp -v ./build/disks/$variant/opencore.vmdk ./build/templates/vmware/$variant
-    jinja2 --format=toml --section=$variant -D VERSION=$VERSION --outfile=./build/templates/vmware/$variant/macos.vmx vmx.j2 oc4vm.toml
+    jinja2 --format=toml \
+      --section=$variant \
+      -D \
+      VERSION=$VERSION \
+      --outfile=./build/templates/vmware/$variant/macos.vmx \
+      vmx.j2 \
+      oc4vm.toml
 
     # Build the QEMU templates
     mkdir -p ./build/templates/qemu/$variant 2>&1 >/dev/null
@@ -91,7 +102,12 @@ do
     cp -v efi_vars.fd ./build/templates/qemu/$variant 2>&1 >/dev/null
     cp -v macos.qcow2 ./build/templates/qemu/$variant 2>&1 >/dev/null
     cp -v ./build/disks/$variant/opencore.qcow2 ./build/templates/qemu/$variant
-    jinja2 --format=toml --section=$variant -D VERSION=$VERSION --outfile=./build/templates/qemu/$variant/qemu-macos.sh qemu-macos.j2 oc4vm.toml
+    jinja2 --format=toml \
+      --section=$variant \
+      -D VERSION=$VERSION \
+      --outfile=./build/templates/qemu/$variant/qemu-macos.sh \
+      qemu-macos.j2 \
+      oc4vm.toml
     chmod +x ./build/templates/qemu/$variant/qemu-macos.sh
 done
 
