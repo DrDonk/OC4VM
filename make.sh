@@ -91,8 +91,8 @@ do
     cp -v efi_vars.fd ./build/templates/qemu/$variant 2>&1 >/dev/null
     cp -v macos.qcow2 ./build/templates/qemu/$variant 2>&1 >/dev/null
     cp -v ./build/disks/$variant/opencore.qcow2 ./build/templates/qemu/$variant
-    jinja2 --format=toml --section=$variant -D VERSION=$VERSION --outfile=./build/templates/qemu/$variant/qemu-run.sh qemu-run.j2 oc4vm.toml
-    chmod +x ./build/templates/qemu/$variant/qemu-run.sh
+    jinja2 --format=toml --section=$variant -D VERSION=$VERSION --outfile=./build/templates/qemu/$variant/qemu-macos.sh qemu-macos.j2 oc4vm.toml
+    chmod +x ./build/templates/qemu/$variant/qemu-macos.sh
 done
 
 msg_status "\nCopying files..."
