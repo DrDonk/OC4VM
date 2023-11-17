@@ -37,7 +37,7 @@ TIMEOUT = '5'
 VMX = 'release'
 
 [intel-debug]
-BUILD = '0'
+BUILD = '1'
 AMD = '0'
 BOOTARGS = 'keepsyms=1 -lilubetaall -v-no_compat_check serial=1 debug=2 -no_panic_dialog -liludbgall -topo -cpuid'
 CSRCONFIG = 'AAAAAA=='
@@ -53,7 +53,7 @@ TIMEOUT = '0'
 VMX = 'debug'
 
 [intel-kdk]
-BUILD = '0'
+BUILD = '1'
 AMD = '0'
 BOOTARGS = 'keepsyms=1 -lilubetaall -v -no_compat_check serial=1 debug=2 -no_panic_dialog -liludbgall -topo -cpuid kcsuffix=development'
 CSRCONFIG = 'fwgAAA=='
@@ -104,7 +104,7 @@ TIMEOUT = '5'
 VMX = 'release'
 
 [amd-debug]
-BUILD = '0'
+BUILD = '1'
 AMD = '1'
 BOOTARGS = 'keepsyms=1 -lilubetaall -v-no_compat_check serial=1 debug=2 -no_panic_dialog -liludbgall -topo -cpuid avx512=0 cwad'
 CSRCONFIG = 'AAAAAA=='
@@ -120,7 +120,7 @@ TIMEOUT = '0'
 VMX = 'debug'
 
 [amd-kdk]
-BUILD = '0'
+BUILD = '1'
 AMD = '1'
 BOOTARGS = 'keepsyms=1 -lilubetaall -v -no_compat_check serial=1 debug=2 -no_panic_dialog -liludbgall -topo -cpuid avx512=0 cwad kcsuffix=development'
 CSRCONFIG = 'fwgAAA=='
