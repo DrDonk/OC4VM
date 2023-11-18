@@ -6,11 +6,7 @@
 
 args=(
 -name "{{DESCRIPTION}}"
-{%- if AMD == '1' %}
--cpu EPYC-Rome,vmware-cpuid-freq=on,vendor=AuthenticAMD
-{%- else %}
--cpu Skylake-Client-noTSX-IBRS,vmware-cpuid-freq=on,vendor=GenuineIntel
-{%- endif %}
+-cpu host,vmware-cpuid-freq=on
 -smp cpus=2,sockets=1,cores=2,threads=1
 -machine q35,vmport=off,i8042=off,hpet=off
 -accel hvf
