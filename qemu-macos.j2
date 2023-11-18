@@ -9,7 +9,7 @@ args=(
 {%- if AMD == '1' %}
 -cpu EPYC-Rome,vmware-cpuid-freq=on,vendor=AuthenticAMD
 {%- else %}
--cpu Skylake-Client-noTSX,vmware-cpuid-freq=on,vendor=GenuineIntel
+-cpu Skylake-Client-noTSX-IBRS,vmware-cpuid-freq=on,vendor=GenuineIntel
 {%- endif %}
 -smp cpus=2,sockets=1,cores=2,threads=1
 -machine q35,vmport=off,i8042=off,hpet=off
@@ -26,14 +26,14 @@ args=(
 -drive if=pflash,format=raw,unit=0,file.filename=./edk2-x86_64-code.fd,file.locking=off,readonly=on
 -drive if=pflash,format=raw,unit=1,file=./efi_vars.fd
 -device virtio-blk,drive=opencore,bootindex=0
--drive if=none,media=disk,id=opencore,file=opencore.dmg,discard=unmap,detect-zeroes=unmap,format=raw
+-drive if=none,media=disk,id=opencore,file=opencore.qcow2,discard=unmap,detect-zeroes=unmap,format=qcow2
 -device virtio-blk,drive=macos,bootindex=1
 -drive if=none,media=disk,id=macos,file=macos.qcow2,discard=unmap,detect-zeroes=unmap
 -device qemu-xhci
 -device usb-tablet
 -device usb-kbd
 -smbios type=1
-{%- if SERIAL == '1' %}
+{%- if SERIAL == 'TRUE' %}
 -chardev stdio,id=char0,mux=on,logfile=serial-amd.log,signal=off
 -serial chardev:char0
 -mon chardev=char0
