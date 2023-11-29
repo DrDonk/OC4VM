@@ -1,7 +1,7 @@
-# OC4VM  - macOS Recovery VMDK Maker
+# OC4VM - recoveryOS VMDK Maker
 
 ## Introduction
-This is a utility  to download the recovery image for macOS from Apple's servers and create a bootable 
+This is a utility to download the recovery image, recoveryOS, for macOS from Apple's servers and create a bootable 
 VMDK file that can be used to start an Internet installtion of macOS.
 
 ## Pre-requisites
@@ -40,28 +40,29 @@ but the full Qemu package must be installed:
 3. Run the tool: `python3 recovery-vmdk.py`
 4. The menu will be displayed and just select the macOS version you want using the number on the menu.
 ```
-OC4VM macOS Recovery VMDK Maker
-===============================
+OC4VM recoveryOS VMDK Maker
+===========================
 (c) David Parsons 2022-23
 
-Create a VMware VMDK Recovery Image
+Create a VMware VMDK recoveryOS Image
 1. Catalina
 2. Big Sur
 3. Monterey
 4. Ventura
+5. Sonoma
 Input menu number: 
 ```
 The tool will  download the BaseSystem.dmg for the macOS version you selected and convert it to a VMDK.
 
-Aftr the tool has finished there will be 3 files present in the folder. For example if downloading Ventura
+After the tool has finished there will be 3 files present in the folder. For example if downloading Sonoma
 there will be:
 
-1. ventura.dmg
-2. ventura.chunklist
-3. ventura.vmdk
+1. sonoma.dmg
+2. sonoma.chunklist
+3. sonoma.vmdk
 
-The .vmdk file is the only one needed for VMware. The .dmg and .chunklist files are the orginal files downloaded 
-from Apple and can be removed if not needed.
+The .vmdk file is the only one needed for VMware, and can also be used for QEMU. The .dmg and .chunklist files are the 
+original files downloaded from Apple and can be removed if not needed.
 
 Occasionally you may get this error:
 

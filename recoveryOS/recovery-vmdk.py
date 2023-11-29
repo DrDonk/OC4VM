@@ -11,12 +11,12 @@ import sys
 
 def main():
 
-    print('\nOC4VM macOS Recovery VMDK Maker')
-    print('=================================')
+    print('\nOC4VM recoveryOS VMDK Maker')
+    print('=============================')
     print('(c) David Parsons 2022-23\n')
 
     # Print the menu
-    print('Create a VMware VMDK Recovery Image')
+    print('Create a VMware VMDK recoveryOS Image')
     print('1. Catalina')
     print('2. Big Sur')
     print('3. Monterey')

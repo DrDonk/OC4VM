@@ -51,7 +51,7 @@ build_dmg() {
 
 # Clear previous build
 rm -rfv ./build/* 2>&1 >/dev/null
-rm -rf ./recovery-maker/__pycache__ 2>&1 >/dev/null
+rm -rf ./recoveryOS/__pycache__ 2>&1 >/dev/null
 
 variants=("${(f)$(./utilities/stoml_darwin_amd64 oc4vm.toml . | tr ' ' '\n')}")
 for variant in $variants
@@ -117,7 +117,7 @@ msg_status "\nStep 5. Copying misc files"
 cp -v README.md ./build/
 cp -v LICENSE ./build/
 cp -vr ./vmware/iso ./build/
-cp -vr ./recovery-maker ./build/
+cp -vr ./recoveryOS ./build/
 
 msg_status "\nStep 6. Zipping OC4VM Release"
 rm ./dist/oc4vm-$VERSION.* 2>&1 >/dev/null
