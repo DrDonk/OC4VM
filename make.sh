@@ -10,7 +10,7 @@ msg_status() {
 msg_error() {
   echo "\033[0;31m$1\033[0m"
 }
-msg_status "Creating OpenCore for Virtualization"
+msg_status "Creating OpenCore for Virtual Machines"
 
 # Read current version
 VERSION=$(<VERSION)
