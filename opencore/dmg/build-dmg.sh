@@ -16,10 +16,10 @@ msg_status "Creating Base Disk Images"
 build_dmg() {
 
   # Make a copy of base image
-  cp -v ./dmg/opencore.dmg ./dmg/$1/
+  cp -v ./blank/opencore.dmg ./$1/
 
   # Attach blank DMG and copy neccessary files
-  hdiutil attach ./dmg/$1/opencore.dmg -noverify -nobrowse -noautoopen
+  hdiutil attach ./$1/opencore.dmg -noverify -nobrowse -noautoopen
   cp -r $2 /Volumes/OPENCORE
   rm -rf /Volumes/OPENCORE/.fseventsd
   dot_clean -m /Volumes/OPENCORE
@@ -29,6 +29,6 @@ build_dmg() {
 
   # Build the OpenCore DMG/vmdk files
 msg_status "Creating release image..."
-build_dmg release ./disk_contents/release-base/.
+build_dmg release ../disk_contents/release-base/.
 msg_status "Creating debug image"
-build_dmg debug ./disk_contents/debug-base/.
+build_dmg debug ../disk_contents/debug-base/.
