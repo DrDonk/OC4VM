@@ -86,27 +86,27 @@ do
 
     # Build the VMware templates
     mkdir -p ./build/templates/vmware/$variant 2>&1 >/dev/null
-    cp -v macos.vmdk ./build/templates/vmware/$variant 2>&1 >/dev/null
+    cp -v ./vmware/macos.vmdk ./build/templates/vmware/$variant 2>&1 >/dev/null
     cp -v ./build/disks/$variant/opencore.vmdk ./build/templates/vmware/$variant
     jinja2 --format=toml \
       --section=$variant \
       -D \
       VERSION=$VERSION \
       --outfile=./build/templates/vmware/$variant/macos.vmx \
-      vmx.j2 \
+      ./vmware/vmx.j2 \
       oc4vm.toml
 
     # Build the QEMU templates
     mkdir -p ./build/templates/qemu/$variant 2>&1 >/dev/null
-    cp -v edk2-x86_64-code.fd ./build/templates/qemu/$variant 2>&1 >/dev/null
-    cp -v efi_vars.fd ./build/templates/qemu/$variant 2>&1 >/dev/null
-    cp -v macos.qcow2 ./build/templates/qemu/$variant 2>&1 >/dev/null
+    cp -v ./qemu/edk2-x86_64-code.fd ./build/templates/qemu/$variant 2>&1 >/dev/null
+    cp -v ./qemu/efi_vars.fd ./build/templates/qemu/$variant 2>&1 >/dev/null
+    cp -v ./qemu/macos.qcow2 ./build/templates/qemu/$variant 2>&1 >/dev/null
     cp -v ./build/disks/$variant/opencore.qcow2 ./build/templates/qemu/$variant
     jinja2 --format=toml \
       --section=$variant \
       -D VERSION=$VERSION \
       --outfile=./build/templates/qemu/$variant/qemu-macos.sh \
-      qemu-macos.j2 \
+      ./qemu/qemu-macos.j2 \
       oc4vm.toml
     chmod +x ./build/templates/qemu/$variant/qemu-macos.sh
 done
@@ -114,7 +114,7 @@ done
 msg_status "\nCopying files..."
 cp -v README.md ./build/
 cp -v LICENSE ./build/
-cp -vr ./iso ./build/
+cp -vr ./vmware/iso ./build/
 cp -vr ./recovery-maker ./build/
 
 msg_status "\nZipping OC4VM Release..."
