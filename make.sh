@@ -29,10 +29,9 @@ build_dmg() {
   cp -r $2 /Volumes/OPENCORE
   cp -r $3 /Volumes/OPENCORE/EFI/OC
   rm -rf /Volumes/OPENCORE/.fseventsd
-  SetFile -a C /Volumes/OPENCORE
   dot_clean -m /Volumes/OPENCORE
-  #ls -la /Volumes/OPENCORE
-  hdiutil detach /Volumes/OPENCORE
+  SetFile -a C /Volumes/OPENCORE
+  hdiutil detach /Volumes/OPENCORE -force
 
   # Convert DMG to VMDK & QCOW2
   qemu-img convert -f raw -O vmdk $1/opencore.dmg $1/opencore.vmdk 2>&1 >/dev/null
