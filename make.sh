@@ -22,7 +22,7 @@ build_dmg() {
 
   # Make a copy of base image
   mkdir -v -p $1
-  cp -v ./dmg/opencore.dmg $1/
+  cp -v ./opencore/dmg/opencore.dmg $1/
 
   # Attach blank DMG and create OC setup
   hdiutil attach $1/opencore.dmg -noverify -nobrowse -noautoopen
@@ -75,13 +75,13 @@ do
       --section=$variant \
       -D VERSION=$VERSION \
       --outfile=./build/config/$variant/config.plist \
-      config.j2 \
+      ./opencore/config.j2 \
       oc4vm.toml
 
     # Build the OpenCore DMG/vmdk files
     mkdir -p ./build/disks/$variant
     FILES=$(./utilities/stoml_darwin_amd64 oc4vm.toml $variant.FILES)
-    build_dmg ./build/disks/$variant ./disk_contents/$FILES/. ./build/config/$variant/config.plist
+    build_dmg ./build/disks/$variant ./opencore/disk_contents/$FILES/. ./build/config/$variant/config.plist
 
     # Build the VMware templates
     mkdir -p ./build/templates/vmware/$variant 2>&1 >/dev/null
