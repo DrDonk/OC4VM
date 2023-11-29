@@ -52,13 +52,13 @@ uninstalled. OC4VM does not alter anything in the VMware program folders.
 
 OC4VM has several folders:
 
-| Folder         | Function                                              |
-|:---------------|-------------------------------------------------------|
-| config         | OpenCore config.plist files for reference             |
-| disks          | OpenCore boot variants in DMG, VMDK and QCOW2 formats |
-| iso            | VMware Fusion macOS guest tools                       |
-| recovery-maker | Tool to build a bootable macOS recovery disk          |
-| templates      | Template VMs for VMware and QEMU                      |
+| Folder     | Function                                              |
+|:-----------|-------------------------------------------------------|
+| config     | OpenCore config.plist files for reference             |
+| disks      | OpenCore boot variants in DMG, VMDK and QCOW2 formats |
+| iso        | VMware Fusion macOS guest tools                       |
+| recoveryOS | Tool to build a bootable macOS recoveryOS disk        |
+| templates  | Template VMs for VMware and QEMU                      |
 
 
 The most import folders are the 'templates' and 'iso' folders. 
