@@ -62,13 +62,14 @@ do
     BUILD=$(./utilities/stoml_darwin_amd64 oc4vm.toml $variant.BUILD)
     if [[ $BUILD == "0" ]]
     then
-      msg_error "Skipping $DESCRIPTION variant!"
+      msg_error "\nSkipping $DESCRIPTION variant!"
       continue
     else
-      msg_status "Building $DESCRIPTION variant..."
+      msg_status "\nBuilding $DESCRIPTION variant..."
     fi
 
     # Build config.plist
+    msg_status "Step 1. Create config.plist"
     mkdir -p ./build/config/$variant 2>&1 >/dev/null
     jinja2 --format=toml \
       --section=$variant \
@@ -78,11 +79,13 @@ do
       oc4vm.toml
 
     # Build the OpenCore DMG/vmdk files
+    msg_status "Step 2. Create disk images DMG/VMDK/QCOW2"
     mkdir -p ./build/disks/$variant
     DMG=$(./utilities/stoml_darwin_amd64 oc4vm.toml $variant.DMG)
     build_dmg ./build/disks/$variant $DMG ./build/config/$variant/config.plist
 
     # Build the VMware templates
+    msg_status "Step 3. Create VMware templates"
     mkdir -p ./build/templates/vmware/$variant 2>&1 >/dev/null
     cp -v ./vmware/macos.vmdk ./build/templates/vmware/$variant 2>&1 >/dev/null
     cp -v ./build/disks/$variant/opencore.vmdk ./build/templates/vmware/$variant
@@ -95,6 +98,7 @@ do
       oc4vm.toml
 
     # Build the QEMU templates
+    msg_status "Step 4. Create QEMU templates"
     mkdir -p ./build/templates/qemu/$variant 2>&1 >/dev/null
     cp -v ./qemu/edk2-x86_64-code.fd ./build/templates/qemu/$variant 2>&1 >/dev/null
     cp -v ./qemu/efi_vars.fd ./build/templates/qemu/$variant 2>&1 >/dev/null
@@ -109,13 +113,13 @@ do
     chmod +x ./build/templates/qemu/$variant/qemu-macos.sh
 done
 
-msg_status "\nCopying files..."
+msg_status "\nStep 5. Copying misc files"
 cp -v README.md ./build/
 cp -v LICENSE ./build/
 cp -vr ./vmware/iso ./build/
 cp -vr ./recovery-maker ./build/
 
-msg_status "\nZipping OC4VM Release..."
+msg_status "\nStep 6. Zipping OC4VM Release"
 rm ./dist/oc4vm-$VERSION.* 2>&1 >/dev/null
 7z a ./dist/oc4vm-$VERSION.zip ./build/*
 cd ./dist
