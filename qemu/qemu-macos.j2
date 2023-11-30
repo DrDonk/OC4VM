@@ -6,7 +6,7 @@
 
 args=(
 -name "{{DESCRIPTION}}"
--cpu host,vmware-cpuid-freq=on
+-cpu host,-pdpe1gb,vmware-cpuid-freq=on
 -smp cpus=2,sockets=1,cores=2,threads=1
 -machine q35,vmport=off,i8042=off,hpet=off
 -accel hvf
