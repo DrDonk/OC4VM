@@ -1,0 +1,22 @@
+# Disk DescriptorFile
+version=1
+encoding="UTF-8"
+CID=fffffffe
+parentCID=ffffffff
+createType="vmfs"
+
+# Extent description
+RW 78165 VMFS "opencore.dmg" 0
+
+# The Disk Data Base 
+#DDB
+
+ddb.adapterType = "lsilogic"
+ddb.deletable = "true"
+ddb.geometry.cylinders = "38"
+ddb.geometry.heads = "64"
+ddb.geometry.sectors = "32"
+ddb.longContentID = "a5ce855ae2d0d1542cff055c3975a671"
+ddb.thinProvisioned = "1"
+ddb.uuid = "60 00 C2 9e 7c 34 02 f2-95 6b 2b 40 9c 5f e7 e3"
+ddb.virtualHWVersion = "6"

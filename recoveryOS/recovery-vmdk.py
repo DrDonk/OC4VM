@@ -1,0 +1,79 @@
+#!/usr/bin/env python3
+# coding=utf-8
+
+# SPDX-FileCopyrightText: © 2022-23 David Parsons
+# SPDX-License-Identifier: MIT
+
+import macrecovery
+import subprocess
+import sys
+
+
+def main():
+
+    print('\nOC4VM recoveryOS VMDK Maker')
+    print('=============================')
+    print('(c) David Parsons 2022-23\n')
+
+    # Print the menu
+    print('Create a VMware VMDK recoveryOS Image')
+    print('1. Catalina')
+    print('2. Big Sur')
+    print('3. Monterey')
+    print('4. Ventura')
+    print('5. Sonoma')
+    print('')
+    print('0. Exit')
+    # And get the input
+    while True:
+
+        selection = input('Input menu number: ')
+
+        if selection == '1':
+            basename = 'catalina'
+            boardid = 'Mac-6F01561E16C75D06'
+            break
+        if selection == '2':
+            basename = 'bigsur'
+            boardid = 'Mac-2BD1B31983FE1663'
+            break
+        if selection == '3':
+            basename = 'monterey'
+            boardid = 'Mac-A5C67F76ED83108C'
+            break
+        if selection == '4':
+            basename = 'ventura'
+            boardid = 'Mac-B4831CEBD52A0C4C'
+            break
+        if selection == '5':
+            basename = 'sonoma'
+            boardid = 'Mac-7BA5B2D9E42DDD94'
+            break
+        if selection == '0':
+            exit(0)
+
+    print('Downloading DMG... \n')
+
+    # Setup args for macrecovery and get the download
+    sys.argv = ['macrecovery.py',
+                'download',
+                '-b', boardid,
+                '-m', '00000000000000000',
+                '--basename', basename,
+                '-os', 'latest']
+
+    macrecovery.main()
+
+    # Convert DMG to IMG using dmg2img
+    dmg = f'{basename}.dmg'
+    vmdk = f'{basename}.vmdk'
+
+    print('Convertng to VMDK: ')
+    qemu_img = f'qemu-img convert -O vmdk {dmg} {vmdk} -p'
+    subprocess.call(qemu_img.split())
+    print(f'Created VMDK disk: {vmdk}')
+    return
+
+
+if __name__ == '__main__':
+    main()
