@@ -1,4 +1,0 @@
-[intel-release]
-DISPLAYNAME = 'macOS Intel Template'
-ETHERNET_DEVICE = 'e1000e'
-GUESTOS = 'darwin20-64'
