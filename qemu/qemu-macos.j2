@@ -24,11 +24,11 @@ args=(
 -device virtio-blk,drive=opencore,bootindex=0
 -drive if=none,media=disk,id=opencore,file=opencore.qcow2,discard=unmap,detect-zeroes=unmap,format=qcow2
 -device virtio-blk,drive=macos,bootindex=1
--drive if=none,media=disk,id=macos,file=macos.qcow2,discard=unmap,detect-zeroes=unmap
+-drive if=none,media=disk,id=macos,file=macos.qcow2,discard=unmap,detect-zeroes=unmap,format=qcow2
 -device qemu-xhci
 -device usb-tablet
 -device usb-kbd
--smbios type=1
+-smbios type=2
 {%- if SERIAL == 'TRUE' %}
 -chardev stdio,id=char0,mux=on,logfile=serial-amd.log,signal=off
 -serial chardev:char0
