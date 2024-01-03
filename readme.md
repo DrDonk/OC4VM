@@ -179,5 +179,5 @@ Many thanks to the great developers and community around the OpenCore scene. The
 
 Also thanks to the testers who helped me out with the project.
 
-(c) 2023 David Parsons
+(c) 2023-4 David Parsons
 
