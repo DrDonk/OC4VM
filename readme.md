@@ -134,7 +134,7 @@ These URLs will link to the latest versions of VMware's products:
 ## x. Building OC4VM
 
 Building must be done on macOS, either real or virtualized. The Homebrew package manager will need to be installed to
-allow installation of the follwoing pre-requisites. Please follow the instructions at https://brew.sh.
+allow installation of the following pre-requisites. Please follow the instructions at https://brew.sh.
 
 Once brew is installed run the following commands to install the required software:
 ```
