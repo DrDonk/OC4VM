@@ -1,34 +1,40 @@
+***
 # WIP - currently no releases
+# This has been in developemt for a year but is still a work in progress. I will be asking for testers soon.
+***
+
 # OC4VM - OpenCore for Virtual Machines
 ## 1. Introduction
 OpenCore for Virtual Machines (OC4VM) has been built to run macOS VMs on Intel based Apple Macs. It provides an 
 OpenCore disk image that can be used to boot Intel based macOS using QEMU, UTM and VMware Fusion.
 
 Using OpenCore allows for a flexible patching system to overcome limitations of the virtualisation software. It 
-basically creates a virtual Hackintosh, "Virtualtosh", which is similar in implementation to the 
+basically creates a virtual Hackintosh, which is similar in implementation to the 
 OpenCore Legacy Patcher used to run unsupported macOS versions on older Apple Mac computers.
 
-OC4VM can be used on other host operating systems to run macOS but that is not the primary purpose of OC4VM. It can 
-replace the Unlocker to run macOS on Linux and Windows with VMware.
+It is also a replacement for the Unlocker and does not require patching VMware, but that is not the primary purpose of 
+OC4VM which was originally created to fix issues on VMware Fusion when running macOS guests. 
 
 What OC4VM can do?
 * Run macOS on Intel CPUs
+* Boot macOS on some AMD CPU
 * Boot to macOS Recovery mode which is broken in VMware's EFI implementation
 * Easily change SIP settings using an EFI utility
 * Add Intel e1000e virtual NIC compatibility for Ventura and later versions of macOS
 
 What OC4VM can do but not recommended:
-* Boot macOS on an Apple Silicon CPU
+* Boot Intel macOS on an Apple Silicon CPU
 
 What OC4VM cannot do:
-* Boot macOS on an AMD CPU
-
+* Use the Apple para-vitrualised GPU on none Apple hardware 
+* Use the Apple para-vitrualised GPU in QEMU on Apple hardware
 
 The OC4VM system has been tested on an Intel Mac mini mid-2014 with these guest OSes:
 * Ventura
 * Sonoma
 
 using:
+
 * QEMU 8
 * UTM 4
 * VMware Fusion 13
@@ -57,9 +63,7 @@ OC4VM has several folders:
 | config     | OpenCore config.plist files for reference             |
 | disks      | OpenCore boot variants in DMG, VMDK and QCOW2 formats |
 | iso        | VMware Fusion macOS guest tools                       |
-| recoveryOS | Tool to build a bootable macOS recoveryOS disk        |
 | templates  | Template VMs for VMware and QEMU                      |
-
 
 The most import folders are the 'templates' and 'iso' folders. 
 
@@ -102,37 +106,19 @@ To create a new virtual machine copy either the Intel or AMD template to a new f
 * macos.vmx
 * macos.vmdk
 
-### 2.3 VMware Tools
 OC4VM provides a copy of the VMware macOS guest tools ISO images. These are useful for VMware Fusion and also QEMU/UTM.
 To install mount the darwin.iso file using the VMs virtual CD/DVD drive.
 
-## x. Platform specific notes
+### QEMU
+``` 
+TO DO
 
-TODO
-### VMware
+```
 ### UTM
 ``` 
-templates
-   ├── qemu
-   │  ├── intel-release
-   │  │  ├── macos.vmdk
-   │  │  ├── opencore.qcow2
-   │  │  └── qemu-run.sh
-   │  └── intel-verbose
-   │     ├── macos.vmdk
-   │     ├── opencore.qcow2
-   │     └── qemu-run.sh
-   └── vmware
-      ├── intel-release
-      │  ├── macos.vmdk
-      │  ├── macos.vmx
-      │  └── opencore.vmdk
-      └── intel-verbose
-         ├── macos.vmdk
-         ├── macos.vmx
-         └── opencore.vmdk
+TO DO
+
 ```
-### QEMU
 
 ## x. VMware Downloads
 These URLs will link to the latest versions of VMware's products:
