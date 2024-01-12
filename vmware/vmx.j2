@@ -104,4 +104,11 @@ vhv.enable = "FALSE"
 vpmc.enable = "FALSE"
 vvtd.enable = "FALSE"
 
+{% if RECOVERY == '1' -%}
+# Add the RecoveryOS base image for an Internet installation
+installationSourceDevice = "sata0:3"
+sata0:3.fileName = "basesystem.vmdk"
+sata0:3.present = "TRUE"
+{% endif %}
+
 # VMware added settings
