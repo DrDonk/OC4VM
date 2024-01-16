@@ -25,6 +25,10 @@ args=(
 -drive if=none,media=disk,id=opencore,file=opencore.qcow2,discard=unmap,detect-zeroes=unmap,format=qcow2
 -device virtio-blk,drive=macos,bootindex=1
 -drive if=none,media=disk,id=macos,file=macos.qcow2,discard=unmap,detect-zeroes=unmap,format=qcow2
+{%- if RECOVERY == '1' %}
+-device virtio-blk,drive=macos,bootindex=2
+-drive if=none,media=disk,id=macos,file=basesystem.qcow2,discard=unmap,detect-zeroes=unmap,format=qcow2
+{%- endif -%}
 -device qemu-xhci
 -device usb-tablet
 -device usb-kbd
