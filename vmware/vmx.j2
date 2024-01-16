@@ -1,29 +1,23 @@
+.encoding = "UTF-8"
 # OC4VM VERSION
 # {{VERSION}}
-.encoding = "UTF-8"
 
-# Sanity Checks #
+__OC4VM_GuestInfo__ = ""
+guestinfo.oc4vm.version = "{{VERSION}}"
+guestinfo.oc4vm.version = "{{VARIANT}}"
 
-# Check CPU as OC4VM has Intel and AMD variants
+__CPU_Sanity_Checks__ = ""
 {% if AMD == '1' -%}
-featMask.vm.cpuid.AMD = "Min:1"
+featMask.vm.cpuid.AMD = "Min:1"           # Check CPU as OC4VM has Intel and AMD variants
 {% else -%}
-featMask.vm.cpuid.INTEL = "Min:1"
+featMask.vm.cpuid.INTEL = "Min:1"         # Check CPU as OC4VM has Intel and AMD variants
 {% endif %}
+featMask.vm.cpuid.AVX = "Min:1"           # Check AVX 1.0 support in CPU (Sandy Bridge and Bulldozer or later)
+featMask.vm.cpuid.AVX2 = "Min:1"          # Check AVX 2.0 support in CPU (Haswell and Excavator or later)
+featMask.vm.cpuid.F16C = "Min:1"          # Check F16C support in CPU (mix of CPUs)
+featMask.vm.cpuid.RDRAND = "Min:1"        # Check RDRAND support in CPU (mix of CPUs)
 
-# Check AVX 1.0 support in CPU (Sandy Bridge and Bulldozer or later)
-featMask.vm.cpuid.AVX = "Min:1"
-
-# Check AVX 2.0 support in CPU (Haswell and Excavator or later)
-featMask.vm.cpuid.AVX2 = "Min:1"
-
-# Check F16C support in CPU (mix of CPUs)
-featMask.vm.cpuid.F16C = "Min:1"
-
-# Check RDRAND support in CPU (mix of CPUs)
-featMask.vm.cpuid.RDRAND = "Min:1"
-
-# Serial port for debugging
+__Serial_Port_Settings__ = ""
 answer.msg.serial.file.open = "Replace"
 serial0.fileName = "serial.log"
 serial0.fileType = "file"
@@ -32,11 +26,17 @@ serial0.startConnected = "{{SERIAL}}"
 serial0.tryNoRxLoss = "FALSE"
 serial0.yieldOnMsrRead = "TRUE"
 
-# VMware build release/debug/stats
-vmx.buildType = "{{BUILD}}"
+__VMware_Build__ = ""
+vmx.buildType = "{{VMX}}"                # VMware build release/debug/stats
 
-# Standard VMX parameters from Fusion macOS VM
-# Except SMC is set to false OC emulates SMC now
+{% if RECOVERY == '1' -%}
+__RecoveryOS_Installation_Settings__ = ""
+installationSourceDevice = "sata0:3"
+sata0:3.fileName = "basesystem.vmdk"
+sata0:3.present = "TRUE"
+{%- endif %}
+
+__Standard_Fusion_macOS_VMX__ = ""
 config.version = "8"
 cpuid.coresPerSocket = "2"
 displayName = "{{DESCRIPTION}}"
@@ -86,7 +86,7 @@ sata0:2.present = "TRUE"
 sata0:2.startConnected = "FALSE"
 sata0.present = "TRUE"
 smbios.restrictSerialCharset = "TRUE"
-smc.present = "FALSE"
+smc.present = "FALSE"                     # SMC is emulated in OpenCore
 sound.autoDetect = "TRUE"
 sound.fileName = "-1"
 sound.present = "TRUE"
@@ -104,11 +104,4 @@ vhv.enable = "FALSE"
 vpmc.enable = "FALSE"
 vvtd.enable = "FALSE"
 
-{% if RECOVERY == '1' -%}
-# Add the RecoveryOS base image for an Internet installation
-installationSourceDevice = "sata0:3"
-sata0:3.fileName = "basesystem.vmdk"
-sata0:3.present = "TRUE"
-{% endif %}
-
-# VMware added settings
+__VMware_added_settings__ = ""
