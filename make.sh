@@ -90,8 +90,8 @@ do
     cp -v ./build/disks/$variant/opencore.vmdk ./build/templates/vmware/$variant
     jinja2 --format=toml \
       --section=$variant \
-      -D \
-      VERSION=$VERSION \
+      -D VERSION=$VERSION \
+      -D VARIANT=$variant \
       --outfile=./build/templates/vmware/$variant/macos.vmx \
       ./vmware/vmx.j2 \
       oc4vm.toml
@@ -106,6 +106,7 @@ do
     jinja2 --format=toml \
       --section=$variant \
       -D VERSION=$VERSION \
+      -D VARIANT=$variant \
       --outfile=./build/templates/qemu/$variant/qemu-macos.sh \
       ./qemu/qemu-macos.j2 \
       oc4vm.toml
