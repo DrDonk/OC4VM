@@ -17,7 +17,6 @@ OC4VM which was originally created to fix issues on VMware Fusion when running m
 
 What OC4VM can do?
 * Run macOS on Intel CPUs
-* Boot macOS on some AMD CPU
 * Boot to macOS Recovery mode which is broken in VMware's EFI implementation
 * Easily change SIP settings using an EFI utility
 * Add Intel e1000e virtual NIC compatibility for Ventura and later versions of macOS
