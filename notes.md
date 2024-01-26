@@ -56,7 +56,7 @@ Encode a base64 encoded binary:
 
 Decode a base64 encoded binary:
 
-`print MduAPQAAAAAGdQA= | base64 -D | xxd`
+`print MduAPQAAAAAGdQA= | base64 -D | xxd -u -g 4 -e`
 
 Spoof Mac mini 2018 in VMware VMX
 ```
