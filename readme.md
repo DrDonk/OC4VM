@@ -138,7 +138,6 @@ allow installation of the following pre-requisites. Please follow the instructio
 Once brew is installed run the following commands to install the required software:
 ```
 brew install qemu
-brew install jinja2-cli
 brew install p7zip
 ```
 
