@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 # TODO: Needs some better cleanup if an error occurs
-set -x
+#set -x
 
 # Provide custom colors in Terminal for status and error messages
 msg_status() {
