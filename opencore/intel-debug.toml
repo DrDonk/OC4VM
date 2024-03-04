@@ -1,5 +1,5 @@
 VARIANT = 'intel-debug'
-BUILD = '1'
+BUILD = '0'
 AMD = '0'
 BOOTARGS = 'keepsyms=1 -lilubetaall -v -no_compat_check serial=1 debug=2 -no_panic_dialog -liludbgall -topo -cpuid'
 CSRCONFIG = 'AAAAAA=='
