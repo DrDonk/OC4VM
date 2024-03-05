@@ -1,6 +1,5 @@
 #!/usr/bin/env zsh
 
-# TODO: Needs some better cleanup if an error occurs
 #set -x
 
 # Provide custom colors in Terminal for status and error messages
@@ -79,6 +78,16 @@ do
         -o ./build/config/$VARIANT/config.plist \
         ./opencore/config.j2 \
         $file
+
+    xmllint ./build/config/$VARIANT/config.plist --valid --noout
+    RETURN=$?
+    if [ $RETURN -eq 0 ];
+    then
+      msg_status "config.plist correctly formatted"
+    else
+      msg_error "config.plist incorrectly formatted"
+      exit $RETURN
+    fi
 
     # Build the OpenCore DMG/vmdk files
     msg_status "Step 2. Create disk images DMG/VMDK/QCOW2"
