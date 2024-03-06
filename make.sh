@@ -51,13 +51,14 @@ build_dmg() {
 # Clear previous build
 rm -rfv ./build/* 2>&1 >/dev/null
 
-files=(./opencore/*.toml)
-for file in $files
+
+VARIANTS=("${(f)$(./utilities/stoml oc4vm.toml . | tr ' ' '\n')}")
+for VARIANT in $VARIANTS
 do
-    # Get variant, description and build flag
-    VARIANT=$(./utilities/stoml $file VARIANT)
-    DESCRIPTION=$(./utilities/stoml $file DESCRIPTION)
-    BUILD=$(./utilities/stoml $file BUILD)
+
+    # Get description and build flag
+    DESCRIPTION=$(./utilities/stoml oc4vm.toml $VARIANT.DESCRIPTION)
+    BUILD=$(./utilities/stoml oc4vm.toml $VARIANT.BUILD)
 
     # Check if build disabled
     if [[ $BUILD == "0" ]]
@@ -75,9 +76,10 @@ do
         --format=toml \
         -D VERSION=$VERSION \
         -D VARIANT=$VARIANT \
+        --select $VARIANT \
         -o ./build/config/$VARIANT/config.plist \
         ./opencore/config.j2 \
-        $file
+        oc4vm.toml
 
     xmllint ./build/config/$VARIANT/config.plist --valid --noout
     RETURN=$?
@@ -92,7 +94,7 @@ do
     # Build the OpenCore DMG/vmdk files
     msg_status "Step 2. Create disk images DMG/VMDK/QCOW2"
     mkdir -p ./build/disks/$VARIANT
-    DMG=$(./utilities/stoml $file DMG)
+    DMG=$(./utilities/stoml oc4vm.toml $VARIANT.DMG)
     build_dmg ./build/disks/$VARIANT $DMG ./build/config/$VARIANT/config.plist
 
     # Build the VMware templates
@@ -104,9 +106,10 @@ do
         --format=toml \
         -D VERSION=$VERSION \
         -D VARIANT=$VARIANT \
+         --select $VARIANT \
         -o ./build/templates/vmware/$VARIANT/macos.vmx \
         ./vmware/vmx.j2 \
-        $file
+        oc4vm.toml
 
     # Build the QEMU templates
     msg_status "Step 4. Create QEMU templates"
@@ -119,9 +122,10 @@ do
         --format=toml \
         -D VERSION=$VERSION \
         -D VARIANT=$VARIANT \
+        --select $VARIANT \
         -o ./build/templates/qemu/$VARIANT/qemu-macos.sh \
         ./qemu/qemu-macos.j2 \
-        $file
+        oc4vm.toml
     chmod +x ./build/templates/qemu/$VARIANT/qemu-macos.sh
 done
 
