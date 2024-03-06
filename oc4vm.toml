@@ -1,5 +1,12 @@
-#TODO: Add ability to specify Mac system in TOML
-#TODO: Add CPU count and core to AMD patches
+#
+# Specify the Mac model and parameters
+#
+[system]
+MODEL = 'Macmini8,1'
+SERIAL = 'C07W20B5JYVX'
+MLB = 'C07801609GUKXPGJA'
+ROM = 'EFA3707116CA'
+UUID = '007076A6-F2A2-4461-BBE5-BAD019F8025A'
 
 #
 # Intel CPU Settings

@@ -52,9 +52,22 @@ build_dmg() {
 rm -rfv ./build/* 2>&1 >/dev/null
 
 
+# Get the Mac model details
+MODEL=$(./utilities/stoml oc4vm.toml system.MODEL)
+SERIAL=$(./utilities/stoml oc4vm.toml system.SERIAL)
+ROM=$(./utilities/stoml oc4vm.toml system.ROM)
+MLB=$(./utilities/stoml oc4vm.toml system.MLB)
+UUID=$(./utilities/stoml oc4vm.toml system.UUID)
+
 VARIANTS=("${(f)$(./utilities/stoml oc4vm.toml . | tr ' ' '\n')}")
 for VARIANT in $VARIANTS
 do
+
+    # Skip the system section
+    if [[ $VARIANT == "system" ]]
+    then
+      continue
+    fi
 
     # Get description and build flag
     DESCRIPTION=$(./utilities/stoml oc4vm.toml $VARIANT.DESCRIPTION)
@@ -63,10 +76,10 @@ do
     # Check if build disabled
     if [[ $BUILD == "0" ]]
     then
-        msg_error "\nSkipping $DESCRIPTION VARIANT!"
+        msg_error "\nSkipping $DESCRIPTION variant!"
         continue
     else
-        msg_status "\nBuilding $DESCRIPTION VARIANT..."
+        msg_status "\nBuilding $DESCRIPTION variant..."
     fi
 
     # Build config.plist
@@ -76,6 +89,11 @@ do
         --format=toml \
         -D VERSION=$VERSION \
         -D VARIANT=$VARIANT \
+        -D MODEL=$MODEL \
+        -D SERIAL=$SERIAL \
+        -D ROM=$ROM \
+        -D MLB=$MLB \
+        -D UUID=$UUID \
         --select $VARIANT \
         -o ./build/config/$VARIANT/config.plist \
         ./opencore/config.j2 \
