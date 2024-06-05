@@ -1,8 +1,3 @@
-***
-# WIP - currently no releases
-# This has been in developemt for a year but is still a work in progress. I will be asking for testers soon.
-***
-
 # OC4VM - OpenCore for Virtual Machines
 ## 1. Introduction
 OpenCore for Virtual Machines (OC4VM) has been built to run macOS VMs on Intel based Apple Macs. It provides an 
