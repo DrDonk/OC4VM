@@ -20,6 +20,7 @@
 | macOS 12              | Monterey      | darwin21-64         | 0x5063 |
 | macOS 13              | Ventura       | darwin22-64         | 0x5064 |
 | macOS 14              | Sonoma        | darwin23-64         | 0x5065 |
+| macOS 15              | Sequoia       | darwin24-64         | 0x5066 |
 
 
 #### Cores for AMD Patches

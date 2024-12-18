@@ -26,10 +26,11 @@ What OC4VM cannot do:
 The OC4VM system has been tested on an Intel Mac mini mid-2014 with these guest OSes:
 * Ventura
 * Sonoma
+* Sequoia
 
 using:
 
-* QEMU 8
+* QEMU 9
 * UTM 4
 * VMware Fusion 13
 
@@ -113,18 +114,6 @@ TO DO
 TO DO
 
 ```
-
-## x. VMware Downloads
-These URLs will link to the latest versions of VMware's products:
-
-* VMware Fusion https://vmware.com/go/getfusion
-* VMware Workstation for Windows https://www.vmware.com/go/getworkstation-win
-* VMware Workstation for Linux https://www.vmware.com/go/getworkstation-linux
-* VMware Player for Windows https://www.vmware.com/go/getplayer-win
-* VMware Player for Linux https://www.vmware.com/go/getplayer-linux
-* VMware ESXi https://customerconnect.vmware.com/en/evalcenter?p=free-esxi8
-* VMware Guest Tools https://vmware.com/go/tools
-
 ## x. Building OC4VM
 
 Building must be done on macOS, either real or virtualized. The Homebrew package manager will need to be installed to
@@ -156,7 +145,9 @@ Many thanks to the great developers and community around the OpenCore scene. The
 * VirtualSMC - https://github.com/acidanthera/VirtualSMC
 * AppleHDA - https://github.com/acidanthera/AppleHDA
 
+Thanks also to the team behind minijinja:
+* https://github.com/mitsuhiko/minijinja
+
 Also thanks to the testers who helped me out with the project.
 
-(c) 2023-4 David Parsons
-
+(c) 2023-5 David Parsons
