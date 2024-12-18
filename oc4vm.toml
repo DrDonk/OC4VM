@@ -46,7 +46,7 @@ TIMEOUT = '0'
 VMX = 'release'
 
 [intel-installer]
-BUILD = '0'
+BUILD = '1'
 AMD = '0'
 BOOTARGS = 'keepsyms=1 -lilubetaall -no_compat_check'
 CSRCONFIG = 'AAAAAA=='
@@ -80,7 +80,7 @@ TIMEOUT = '0'
 VMX = 'debug'
 
 [intel-kdk]
-BUILD = '0'
+BUILD = '1'
 AMD = '0'
 BOOTARGS = 'keepsyms=1 -lilubetaall -v -no_compat_check serial=1 debug=2 -no_panic_dialog -liludbgall -topo -cpuid kcsuffix=development'
 CSRCONFIG = 'fwgAAA=='
