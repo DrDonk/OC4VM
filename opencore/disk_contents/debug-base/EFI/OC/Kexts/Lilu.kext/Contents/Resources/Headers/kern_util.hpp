@@ -395,6 +395,7 @@ enum KernelVersion {
 	Monterey      = 21,
 	Ventura       = 22,
 	Sonoma        = 23,
+	Sequoia       = 24,
 };
 
 /**
@@ -709,7 +710,7 @@ public:
 		for (size_t i = 0; ptr == nullptr && i < N; i++) {
 			thread_t nullThread = nullptr;
 			if (atomic_compare_exchange_strong_explicit(&threads[i], &nullThread, currThread,
-				memory_order_acq_rel, memory_order_acq_rel))
+				memory_order_acq_rel, memory_order_acquire))
 				ptr = &values[i];
 		}
 
