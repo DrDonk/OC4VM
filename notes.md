@@ -1,4 +1,21 @@
-#### VMware Mac OS X & macOS table
+# Random Notes
+
+## Opencore
+#### Cores for AMD Patches
+
+| Cores | 10.13/10.14<br/>uAAAAAAA<br/>B8000000 0000 | 10.15/11.0<br/>ugAAAAAA<br/>BA000000 0000 | 12.0/13.0<br/>ugAAAACQ<br/>BA000000 0090 | 13.3+<br/>ugAAAAA=<br/>BA000000 |
+|-------|--------------------------------------------|-------------------------------------------|------------------------------------------|---------------------------------|
+| 1     | uAEAAAAA                                   | ugEAAAAA                                  | ugEAAACQ                                 | ugEAAAA=                        |
+| 2     | uAIAAAAA                                   | ugIAAAAA                                  | ugIAAACQ                                 | ugIAAAA=                        |
+| 4     | uAQAAAAA                                   | ugQAAAAA                                  | ugQAAACQ                                 | ugQAAAA=                        |
+| 8     | uAgAAAAA                                   | uggAAAAA                                  | uggAAACQ                                 | uggAAAA=                        |
+| 16    | uBAAAAAA                                   | uhAAAAAA                                  | uhAAAACQ                                 | uhAAAAA=                        |
+| 24    | uBgAAAAA                                   | uhgAAAAA                                  | uhgAAACQ                                 | uhgAAAA=                        |
+| 32    | uCAAAAAA                                   | uiAAAAAA                                  | uiAAAACQ                                 | uiAAAAA=                        |
+| 64    | uEAAAAAA                                   | ukAAAAAA                                  | ukAAAACQ                                 | ukAAAAA=                        |
+
+## VMware
+### VMware Mac OS X & macOS table
 
 | macOS                 | Name          | guestOS             |  GOS   |
 |:----------------------|---------------|---------------------|--------|
@@ -22,21 +39,7 @@
 | macOS 14              | Sonoma        | darwin23-64         | 0x5065 |
 | macOS 15              | Sequoia       | darwin24-64         | 0x5066 |
 
-
-#### Cores for AMD Patches
-
-| Cores | 10.13/10.14<br/>uAAAAAAA<br/>B8000000 0000 | 10.15/11.0<br/>ugAAAAAA<br/>BA000000 0000 | 12.0/13.0<br/>ugAAAACQ<br/>BA000000 0090 | 13.3+<br/>ugAAAAA=<br/>BA000000 |
-|-------|--------------------------------------------|-------------------------------------------|------------------------------------------|---------------------------------|
-| 1     | uAEAAAAA                                   | ugEAAAAA                                  | ugEAAACQ                                 | ugEAAAA=                        |
-| 2     | uAIAAAAA                                   | ugIAAAAA                                  | ugIAAACQ                                 | ugIAAAA=                        |
-| 4     | uAQAAAAA                                   | ugQAAAAA                                  | ugQAAACQ                                 | ugQAAAA=                        |
-| 8     | uAgAAAAA                                   | uggAAAAA                                  | uggAAACQ                                 | uggAAAA=                        |
-| 16    | uBAAAAAA                                   | uhAAAAAA                                  | uhAAAACQ                                 | uhAAAAA=                        |
-| 24    | uBgAAAAA                                   | uhgAAAAA                                  | uhgAAACQ                                 | uhgAAAA=                        |
-| 32    | uCAAAAAA                                   | uiAAAAAA                                  | uiAAAACQ                                 | uiAAAAA=                        |
-| 64    | uEAAAAAA                                   | ukAAAAAA                                  | ukAAAACQ                                 | ukAAAAA=                        |
-
-#### VMware Socket Calculations
+### VMware Socket Calculations
 
 | numvcpus | cpuid.coresPerSocket | sockets |
 |----------|----------------------|---------|
@@ -51,24 +54,7 @@
 | 8        | 4                    | 2       |
 | 8        | 1                    | 8       |
 
-#### QEMU Socket Calculations
-
-| # of cores | QEMU SMP                                                     |
-|------------|--------------------------------------------------------------|
-| 1 2 4 8    | SMP=$CPU_CORES,sockets=1,dies=1,cores=$CPU_CORES,threads=1   |
-| 6 7        | SMP="$CPU_CORES,sockets=3,dies=1,cores=2,threads=1"          |
-| 10 11      | SMP="$CPU_CORES,sockets=5,dies=1,cores=2,threads=1"          |
-| 12 13      | SMP="$CPU_CORES,sockets=3,dies=1,cores=4,threads=1"          |
-| 14 15      | SMP="$CPU_CORES,sockets=7,dies=1,cores=2,threads=1"          |
-| 16 32 64   | SMP="$CPU_CORES,sockets=1,dies=1,cores=$CPU_CORES,threads=1" |
-
-Encode a base64 encoded binary:
-
-`print 0x087f | xxd -r | base64`
-
-Decode a base64 encoded binary:
-
-`print MduAPQAAAAAGdQA= | base64 -D | xxd -u -g 4 -e`
+### VMware machine spoofing
 
 Spoof Mac mini 2018 in VMware VMX
 ```
@@ -86,6 +72,19 @@ serialNumber.reflectHost = "FALSE"
 smbios.reflectHost = "TRUE"
 ```
 
+## QEMU
+### QEMU Socket Calculations
+
+| # of cores | QEMU SMP                                                          |
+|------------|-------------------------------------------------------------------|
+| 1 2 4 8    | SMP="cpus=$CPU_CORES,sockets=1,dies=1,cores=$CPU_CORES,threads=1" |
+| 6 7        | SMP="cpus=$CPU_CORES,sockets=3,dies=1,cores=2,threads=1"          |
+| 10 11      | SMP="cpus=$CPU_CORES,sockets=5,dies=1,cores=2,threads=1"          |
+| 12 13      | SMP="cpus=$CPU_CORES,sockets=3,dies=1,cores=4,threads=1"          |
+| 14 15      | SMP="cpus=$CPU_CORES,sockets=7,dies=1,cores=2,threads=1"          |
+| 16 32 64   | SMP="cpus=$CPU_CORES,sockets=1,dies=1,cores=$CPU_CORES,threads=1" |
+
+### QEMU on Windows
 Windows enable WHPX:
 
 ```Dism /Online /Enable-Feature:HypervisorPlatform```
@@ -93,3 +92,15 @@ Windows enable WHPX:
 QEMU host folder as drive:
 
 ```-device usb-storage,drive=fat16 -drive file=fat:rw:fat-type=16:"<full path to host folder>",id=fat16,format=raw,if=none```
+
+```.\oc4vm-runner.ps1 -AccelType hvf -MemorySize 8 -OpencoreImage "opencore.qcow2" -EnableSerial```
+
+### Random
+
+Encode a base64 encoded binary:
+
+`print 0x087f | xxd -r | base64`
+
+Decode a base64 encoded binary:
+
+`print MduAPQAAAAAGdQA= | base64 -D | xxd -u -g 4 -e`
