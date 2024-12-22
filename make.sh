@@ -1,5 +1,6 @@
 #!/usr/bin/env zsh
-
+# SPDX-FileCopyrightText: © 2023-25 David Parsons
+# SPDX-License-Identifier: MIT
 #set -x
 
 # Provide custom colors in Terminal for status and error messages
@@ -145,6 +146,14 @@ do
         ./qemu/qemu-macos.j2 \
         oc4vm.toml
     chmod +x ./build/templates/qemu/$VARIANT/qemu-macos.sh
+    ./utilities/minijinja-cli \
+        --format=toml \
+        -D VERSION=$VERSION \
+        -D VARIANT=$VARIANT \
+        --select $VARIANT \
+        -o ./build/templates/qemu/$VARIANT/qemu-macos-win.ps1 \
+        ./qemu/qemu-macos-win.j2 \
+        oc4vm.toml
 done
 
 msg_status "\nStep 5. Copying misc files"
