@@ -144,6 +144,7 @@ Many thanks to the great developers and community around the OpenCore scene. The
 * DebugEnhancer - https://github.com/acidanthera/DebugEnhancer
 * VirtualSMC - https://github.com/acidanthera/VirtualSMC
 * AppleHDA - https://github.com/acidanthera/AppleHDA
+* AMD_Vanilla - https://github.com/AMD-OSX/AMD_Vanilla
 
 Thanks also to the team behind minijinja:
 * https://github.com/mitsuhiko/minijinja
