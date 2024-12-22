@@ -49,7 +49,7 @@ TIMEOUT = '0'
 VMX = 'release'
 
 [intel-installer]
-BUILD = '1'
+BUILD = '0'
 AMD = '0'
 BOOTARGS = 'keepsyms=1 -lilubetaall -no_compat_check'
 CSRCONFIG = 'AAAAAA=='
@@ -66,9 +66,9 @@ TIMEOUT = '0'
 VMX = 'release'
 
 [intel-debug]
-BUILD = '1'
+BUILD = '0'
 AMD = '0'
-BOOTARGS = 'keepsyms=1 -lilubetaall -v -no_compat_check serial=1 debug=2 -no_panic_dialog -liludbgall -topo -cpuid'
+BOOTARGS = 'keepsyms=1 -lilubetaall -v -no_compat_check serial=1 debug=2 -no_panic_dialog -liludbgall'
 CSRCONFIG = 'AAAAAA=='
 DEBUG = '1'
 DESCRIPTION = 'macOS Intel Debug'
@@ -83,7 +83,7 @@ TIMEOUT = '0'
 VMX = 'debug'
 
 [intel-kdk]
-BUILD = '1'
+BUILD = '0'
 AMD = '0'
 BOOTARGS = 'keepsyms=1 -lilubetaall -v -no_compat_check serial=1 debug=2 -no_panic_dialog -liludbgall -topo -cpuid kcsuffix=development'
 CSRCONFIG = 'fwgAAA=='
@@ -137,7 +137,7 @@ TIMEOUT = '5'
 VMX = 'release'
 
 [amd-installer]
-BUILD = '1'
+BUILD = '0'
 AMD = '1'
 BOOTARGS = 'keepsyms=1 -lilubetaall -no_compat_check'
 CSRCONFIG = 'AAAAAA=='
@@ -156,7 +156,7 @@ VMX = 'release'
 [amd-debug]
 BUILD = '1'
 AMD = '1'
-BOOTARGS = 'keepsyms=1 -lilubetaall -v -no_compat_check serial=1 debug=2 -no_panic_dialog -liludbgall -topo -cpuid avx512=0 cwad'
+BOOTARGS = 'keepsyms=1 -lilubetaall -v -no_compat_check serial=1 debug=2 -no_panic_dialog -liludbgall avx512=0 cwad'
 CSRCONFIG = 'AAAAAA=='
 DEBUG = '1'
 DESCRIPTION = 'macOS AMD Debug'
@@ -171,7 +171,7 @@ TIMEOUT = '0'
 VMX = 'debug'
 
 [amd-kdk]
-BUILD = '1'
+BUILD = '0'
 AMD = '1'
 BOOTARGS = 'keepsyms=1 -lilubetaall -v -no_compat_check serial=1 debug=2 -no_panic_dialog -liludbgall -topo -cpuid avx512=0 cwad kcsuffix=development'
 CSRCONFIG = 'fwgAAA=='
