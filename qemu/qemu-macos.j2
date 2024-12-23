@@ -71,7 +71,7 @@ while getopts ${OPTSTRING} opt; do
 		d)
 			echo "macOS image: ${OPTARG}"
 			DISK_FLAG=1
-			DISKC_IMG=${OPTARG}
+			DISK_IMG=${OPTARG}
 			if [ ! -f $DISK_IMG ]; then
         		echo "ERROR: $DISK_IMG not found!"
 			  	exit 1
