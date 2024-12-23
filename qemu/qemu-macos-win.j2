@@ -30,7 +30,7 @@ function Show-Usage {
 NAME:
     $($MyInvocation.MyCommand.Name)
 SYNOPSIS:
-    $($MyInvocation.MyCommand.Name) [-AccelType {hvf | kvm | tcg}] [-MemorySize <memory-size>] [-macOSImage <macos-image>] [-OpencoreImage <opencore-image>] [-RecoveryImage <recovery-image>] [-EnableSerial]
+    $($MyInvocation.MyCommand.Name) [-AccelType {whpx | aehd | tcg}] [-MemorySize <memory-size>] [-macOSImage <macos-image>] [-OpencoreImage <opencore-image>] [-RecoveryImage <recovery-image>] [-EnableSerial]
 DESCRIPTION:
     Run macOS using QEMU
 OPTIONS:
@@ -143,7 +143,7 @@ $args = @(
     "-device", "virtio-blk,drive=opencore,bootindex=0"
     "-drive", "if=none,media=disk,id=opencore,file=$OPENCORE_IMG,discard=unmap,detect-zeroes=unmap"
     "-device", "virtio-blk,drive=macos,bootindex=1"
-    "-drive", "if=none,media=disk,id=macos,file=$DISK_IMG,discard=unmap,detect-zeroes=unmap,format=qcow2"
+    "-drive", "if=none,media=disk,id=macos,file=$DISK_IMG,discard=unmap,detect-zeroes=unmap"
     "-device", "qemu-xhci"
     "-device", "usb-tablet"
     "-device", "usb-kbd"
