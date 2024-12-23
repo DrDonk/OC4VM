@@ -4,10 +4,8 @@
 # SPDX-FileCopyrightText: © 2023-25 David Parsons
 # SPDX-License-Identifier: MIT
 
-# Enable debug if environment variable is set
-if ($env:OC4VM_QEMU_DEBUG) {
-    Set-PSDebug -Trace 1
-}
+# Uncomment to debug
+# Set-PSDebug -Trace 1
 
 Write-Host "OC4VM QEMU Runner"
 
@@ -17,6 +15,8 @@ $ACCEL_TYPE = "whpx"
 if ((Get-WmiObject Win32_Processor).Architecture -eq 5) {  # ARM64
     $ACCEL_TYPE = "tcg"
 }
+DISK_FLAG=0
+DISK_IMAGE="macos.qcow2"
 $MEMORY_FLAG = 0
 $MEMORY_SIZE = "4"
 $OPENCORE_FLAG = 0
@@ -30,12 +30,13 @@ function Show-Usage {
 NAME:
     $($MyInvocation.MyCommand.Name)
 SYNOPSIS:
-    $($MyInvocation.MyCommand.Name) [-AccelType {hvf | kvm | tcg}] [-MemorySize <memory-size>] [-OpencoreImage <opencore-image>] [-RecoveryImage <recovery-image>] [-EnableSerial]
+    $($MyInvocation.MyCommand.Name) [-AccelType {hvf | kvm | tcg}] [-MemorySize <memory-size>] [-macOSImage <macos-image>] [-OpencoreImage <opencore-image>] [-RecoveryImage <recovery-image>] [-EnableSerial]
 DESCRIPTION:
     Run macOS using QEMU
 OPTIONS:
     -AccelType       QEMU accelerator to use.
     -MemorySize      Specifies amount of memory to allocate to VM.
+    -macOSImage   Specifies OpenCore boot image.
     -OpencoreImage   Specifies OpenCore boot image.
     -RecoveryImage   Specifies macOS recoveryOS image.
     -EnableSerial    Enable serial output.
@@ -46,6 +47,7 @@ OPTIONS:
 param(
     [string]$AccelType,
     [string]$MemorySize,
+    [string]$macOSImage,
     [string]$OpencoreImage,
     [string]$RecoveryImage,
     [switch]$EnableSerial
@@ -79,6 +81,17 @@ if ($MemorySize) {
     }
     if ([int]$MEMORY_SIZE -lt 4) {
         Write-Host "ERROR: Memory size must be 4GB or greater!"
+        exit 1
+    }
+}
+
+# Process macOSImage
+if ($macOSImage) {
+    Write-Host "macOS image: $macOSImage"
+    $DISK_FLAG = 1
+    $DISK_IMG = $macOSImage
+    if (-not (Test-Path $DISK_IMG)) {
+        Write-Host "ERROR: $DISK_IMG not found!"
         exit 1
     }
 }
@@ -130,7 +143,7 @@ $args = @(
     "-device", "virtio-blk,drive=opencore,bootindex=0"
     "-drive", "if=none,media=disk,id=opencore,file=$OPENCORE_IMG,discard=unmap,detect-zeroes=unmap"
     "-device", "virtio-blk,drive=macos,bootindex=1"
-    "-drive", "if=none,media=disk,id=macos,file=macos.qcow2,discard=unmap,detect-zeroes=unmap,format=qcow2"
+    "-drive", "if=none,media=disk,id=macos,file=$DISK_IMG,discard=unmap,detect-zeroes=unmap,format=qcow2"
     "-device", "qemu-xhci"
     "-device", "usb-tablet"
     "-device", "usb-kbd"

@@ -5,14 +5,19 @@
 # SPDX-FileCopyrightText: © 2023-25 David Parsons
 # SPDX-License-Identifier: MIT
 
+# Uncomment to debug
+# set -x
+
 echo "OC4VM QEMU Runner"
 
-OPTSTRING=":a:m:o:sr:"
+OPTSTRING=":a:d:m:o:sr:"
 ACCEL_FLAG=0
 ACCEL_TYPE="hvf"
 if [[ $(arch) == 'arm64' ]]; then
   ACCEL_TYPE="tcg"
 fi
+DISK_FLAG=0
+DISK_IMAGE="macos.qcow2"
 MEMORY_FLAG=0
 MEMORY_SIZE="4"
 OPENCORE_FLAG=0
@@ -27,14 +32,15 @@ usage () {
 	$0
 
  SYNOPSIS:
-	$0 [-a {hvf | kvm | tcg}] [-m <memory-size>] [-o <opencore-image>] [-r <recovery-image>] [-s]
+	$0 [-a {hvf | kvm | tcg}] [-m <memory-size>] [-d <macos-image>] [-o <opencore-image>] [-r <recovery-image>] [-s]
 
  DESCRIPTION:
 	Run macOS using QEMU
 
  OPTIONS:
 	-a ACCEL              QEMU accelerator to use.
-	-m MEMORY             specifies amountof memory to allocate to VM.
+	-d DISK-IMAGE         species a macOS drive image to use.
+	-m MEMORY             specifies amount of memory to allocate to VM.
 	-o OPENCORE-IMAGE     specifies OpenCore boot image.
 	-r RECOVERY-IMAGE     specifies macOS recoveryOS image.
 	-s                    enable serial output.
@@ -61,6 +67,15 @@ while getopts ${OPTSTRING} opt; do
 				 	exit 1
 					;;
 			esac
+			;;
+		d)
+			echo "macOS image: ${OPTARG}"
+			DISK_FLAG=1
+			DISKC_IMG=${OPTARG}
+			if [ ! -f $DISK_IMG ]; then
+        		echo "ERROR: $DISK_IMG not found!"
+			  	exit 1
+			fi
 			;;
 		m)
 			echo "Memory size: ${OPTARG}"
@@ -128,7 +143,7 @@ args=(
 -device virtio-blk,drive=opencore,bootindex=0
 -drive if=none,media=disk,id=opencore,file="$OPENCORE_IMG",discard=unmap,detect-zeroes=unmap
 -device virtio-blk,drive=macos,bootindex=1
--drive if=none,media=disk,id=macos,file=macos.qcow2,discard=unmap,detect-zeroes=unmap,format=qcow2
+-drive if=none,media=disk,id=macos,file="$DISK_IMG",discard=unmap,detect-zeroes=unmap
 -device qemu-xhci
 -device usb-tablet
 -device usb-kbd
