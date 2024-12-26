@@ -1,0 +1,101 @@
+#!/bin/sh
+# OC4VM VERSION
+# {{VERSION}}
+# {{VARIANT}}
+# SPDX-FileCopyrightText: © 2023-25 David Parsons
+# SPDX-License-Identifier: MIT
+
+# Uncomment to debug
+# set -x
+
+echo "OC4VM VMware Configurator"
+
+OPTSTRING=":d:m:o:sr:"
+
+DISK_IMAGE="macos.vmdk"
+MEMORY_SIZE="4"
+OPENCORE_IMG="opencore.vmdk"
+RECOVERY_FLAG=0
+RECOVERYOS_IMG=""
+SERIAL_FLAG=0
+
+usage () {
+	cat <<HELP
+ NAME:
+	$0
+
+ SYNOPSIS:
+	$0 [-m <memory-size>] [-d <macos-image>] [-o <opencore-image>] [-r <recovery-image>] [-s]
+
+ DESCRIPTION:
+	Configure macOS VMware VM
+
+ OPTIONS:
+	-d DISK-IMAGE         species a macOS drive image to use.
+	-m MEMORY             specifies amount of memory to allocate to VM.
+	-o OPENCORE-IMAGE     specifies OpenCore boot image.
+	-r RECOVERY-IMAGE     specifies macOS recoveryOS image.
+	-s                    enable serial output.
+HELP
+}
+
+while getopts ${OPTSTRING} opt; do
+	case ${opt} in
+		d)
+			echo "macOS image: ${OPTARG}"
+			DISK_IMG=${OPTARG}
+			if [ ! -f $DISK_IMG ]; then
+				echo "ERROR: $DISK_IMG not found!"
+			  	exit 1
+			fi
+			vmcli macos.vmx configparams setentry sata0:1.fileName $DISK_IMG
+			;;
+		m)
+			echo "Memory size: ${OPTARG}"
+			MEMORY_SIZE=${OPTARG}
+			if [ ! -z "${MEMORY_SIZE//[0-9]}" ]; then
+				echo "ERROR: Memory size $MEMORY_SIZE not an integer!"
+			  	exit 1
+			fi
+			if [ "$MEMORY_SIZE" -lt "4" ]; then
+				echo "ERROR: Memory size must be 4GB or greater!"
+			  	exit 1
+			fi
+			;;
+		o)
+			echo "OpenCore image: ${OPTARG}"
+			OPENCORE_IMG=${OPTARG}
+			if [ ! -f $OPENCORE_IMG ]; then
+				echo "ERROR: $OPENCORE_IMG not found!"
+			  	exit 1
+			fi
+			vmcli macos.vmx configparams setentry sata0:0.fileName $OPENCORE_IMG
+			;;
+		r)
+			echo "Recovery image: ${OPTARG}"
+			RECOVERY_FLAG=1
+			RECOVERYOS_IMG=${OPTARG}
+			if [ ! -f $RECOVERYOS_IMG ]; then
+				echo "ERROR: $RECOVERYOS_IMG not found!"
+				exit 1
+			fi
+			vmcli macos.vmx configparams setentry sata0:3.fileName $RECOVERYOS_IMG
+			vmcli macos.vmx configparams setentry sata0:3.present TRUE
+			;;
+		s)
+			echo "Serial output enabled"
+			SERIAL_FLAG=1
+			vmcli macos.vmx configparams setentry serial0.startConnected TRUE
+			;;
+		:)
+			echo "ERROR: Option -${OPTARG} requires an argument."
+			usage
+			exit 1
+			;;
+		?)
+			echo "ERROR: Invalid option: -${OPTARG}"
+			usage
+			exit 1
+			;;
+	esac
+done
