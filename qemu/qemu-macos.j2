@@ -12,19 +12,30 @@ echo "OC4VM QEMU Runner"
 
 OPTSTRING=":a:d:m:o:sr:"
 ACCEL_FLAG=0
-ACCEL_TYPE="hvf"
-if [[ $(arch) == 'arm64' ]]; then
+
+# Setup default accelerator flags
+case "$(uname -s)" in
+	Linux)
+		ACCEL_TYPE="kvm"
+		;;
+	Darwin)
+		ACCEL_TYPE="hvf"
+		;;
+	*)
+		ACCEL_TYPE="tcg"
+		;;
+esac
+
+if [[ $(uname -m) == 'arm64' ]]; then
   ACCEL_TYPE="tcg"
 fi
-DISK_FLAG=0
+
 DISK_IMAGE="macos.qcow2"
-MEMORY_FLAG=0
 MEMORY_SIZE="4"
-OPENCORE_FLAG=0
 OPENCORE_IMG="opencore.qcow2"
-SERIAL_FLAG=0
 RECOVERY_FLAG=0
 RECOVERYOS_IMG=""
+SERIAL_FLAG=0
 
 usage () {
 	cat <<HELP
@@ -51,15 +62,13 @@ while getopts ${OPTSTRING} opt; do
 	case ${opt} in
 		a)
 			echo "Accelerator: ${OPTARG}"
-			ACCEL_FLAG=1
 			ACCEL_TYPE=${OPTARG}
-			# TODO: Parse and check HVF, TCG or KVM
 			case ${ACCEL_TYPE} in
 				hvf)
 					;;
-				tcg)
-					;;
 				kvm)
+					;;
+				tcg)
 					;;
 				*)
 					echo "ERROR: Invalid accelerator option: ${OPTARG}"
@@ -70,7 +79,6 @@ while getopts ${OPTSTRING} opt; do
 			;;
 		d)
 			echo "macOS image: ${OPTARG}"
-			DISK_FLAG=1
 			DISK_IMG=${OPTARG}
 			if [ ! -f $DISK_IMG ]; then
         		echo "ERROR: $DISK_IMG not found!"
@@ -79,7 +87,6 @@ while getopts ${OPTSTRING} opt; do
 			;;
 		m)
 			echo "Memory size: ${OPTARG}"
-			MEMORY_FLAG=1
 			MEMORY_SIZE=${OPTARG}
 			if [ ! -z "${MEMORY_SIZE//[0-9]}" ]; then
         		echo "ERROR: Memory size $MEMORY_SIZE not an integer!"
@@ -92,7 +99,6 @@ while getopts ${OPTSTRING} opt; do
 			;;
 		o)
 			echo "OpenCore image: ${OPTARG}"
-			OPENCORE_FLAG=1
 			OPENCORE_IMG=${OPTARG}
 			if [ ! -f $OPENCORE_IMG ]; then
         		echo "ERROR: $OPENCORE_IMG not found!"
@@ -127,14 +133,14 @@ done
 
 args=(
 -name "macOS Intel"
--cpu Skylake-Client-noTSX-IBRS,vmware-cpuid-freq=on,vendor=GenuineIntel,check
+-cpu Skylake-Client-noTSX-IBRS,pdpe1gb=off,vmware-cpuid-freq=on,vendor=GenuineIntel,check
 -smp cpus=2,sockets=1,cores=2,threads=1
 -machine q35,vmport=off,i8042=off,hpet=off
 -accel $ACCEL_TYPE
 -m "$MEMORY_SIZE"G
 -nodefaults
 -device virtio-net-pci,mac=66:C9:75:99:89:AC,netdev=net0
--netdev user,id=net0,hostfwd=tcp::5959-:5900,hostfwd=tcp::2222-:22
+-netdev user,id=net0
 -device virtio-vga
 -device virtio-rng-pci
 -global ICH9-LPC.disable_s3=1
@@ -148,23 +154,24 @@ args=(
 -device usb-tablet
 -device usb-kbd
 -smbios type=1
--audiodev coreaudio,id=audio0
--device ich9-intel-hda
--device hda-output,audiodev=audio0
+# TODO: Enable audio
+# -audiodev coreaudio,id=audio0
+# -device ich9-intel-hda
+# -device hda-output,audiodev=audio0
 )
+
+if [ $RECOVERY_FLAG = 1 ]; then
+args+=(
+-device virtio-blk,drive=recoveryos,bootindex=2
+-drive if=none,media=disk,id=recoveryos,file=$RECOVERYOS_IMG,discard=unmap,detect-zeroes=unmap
+)
+fi
 
 if [ $SERIAL_FLAG = 1 ]; then
 args+=(
 -chardev stdio,id=char0,mux=on,logfile=serial.log,signal=off
 -serial chardev:char0
 -mon chardev=char0
-)
-fi
-
-if [ $RECOVERY_FLAG = 1 ]; then
-args+=(
--device virtio-blk,drive=recoveryos,bootindex=2
--drive if=none,media=disk,id=recoveryos,file=$RECOVERYOS_IMG,discard=unmap,detect-zeroes=unmap
 )
 fi
 

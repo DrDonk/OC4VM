@@ -4,67 +4,40 @@
 # SPDX-FileCopyrightText: © 2023-25 David Parsons
 # SPDX-License-Identifier: MIT
 
-# Uncomment to debug
-# Set-PSDebug -Trace 1
-
-Write-Host "OC4VM QEMU Runner"
-
-# Initialize default values
-$ACCEL_FLAG = 0
-$ACCEL_TYPE = "whpx"
-if ((Get-WmiObject Win32_Processor).Architecture -eq 5) {  # ARM64
-    $ACCEL_TYPE = "tcg"
-}
-DISK_FLAG=0
-DISK_IMAGE="macos.qcow2"
-$MEMORY_FLAG = 0
-$MEMORY_SIZE = "4"
-$OPENCORE_FLAG = 0
-$OPENCORE_IMG = "opencore.qcow2"
-$SERIAL_FLAG = 0
-$RECOVERY_FLAG = 0
-$RECOVERYOS_IMG = ""
-
-function Show-Usage {
-    Write-Host @"
-NAME:
-    $($MyInvocation.MyCommand.Name)
-SYNOPSIS:
-    $($MyInvocation.MyCommand.Name) [-AccelType {whpx | aehd | tcg}] [-MemorySize <memory-size>] [-macOSImage <macos-image>] [-OpencoreImage <opencore-image>] [-RecoveryImage <recovery-image>] [-EnableSerial]
-DESCRIPTION:
-    Run macOS using QEMU
-OPTIONS:
-    -AccelType       QEMU accelerator to use.
-    -MemorySize      Specifies amount of memory to allocate to VM.
-    -macOSImage   Specifies OpenCore boot image.
-    -OpencoreImage   Specifies OpenCore boot image.
-    -RecoveryImage   Specifies macOS recoveryOS image.
-    -EnableSerial    Enable serial output.
-"@
-}
-
 # Parameter definition
-param(
-    [string]$AccelType,
-    [string]$MemorySize,
-    [string]$macOSImage,
-    [string]$OpencoreImage,
+param (
+    [Parameter(HelpMessage="QEMU accelerator to use.")]
+    [string]$AccelType = "tcg",
+    [Parameter(HelpMessage="Amount of memory to allocate to VM.")]
+    [string]$MemorySize = 4,
+    [Parameter(HelpMessage="macOS drive image to use.")]
+    [string]$macOSImage = "macos.qcow2",
+    [Parameter(HelpMessage="OpenCore boot image.")]
+    [string]$OpencoreImage = "opencore.qcow2",
+    [Parameter(HelpMessage="macOS recoveryOS image.")]
     [string]$RecoveryImage,
+    [Parameter(HelpMessage="Enable serial output.")]
     [switch]$EnableSerial
 )
 
+Write-Host "OC4VM QEMU Runner for Windows (Experimental)"
+
 # Process AccelType
 if ($AccelType) {
+    if ((Get-WmiObject Win32_Processor).Architecture -eq 5) {  # ARM64
+        $AccelType = "tcg"
+    }
     Write-Host "Accelerator: $AccelType"
-    $ACCEL_FLAG = 1
-    $ACCEL_TYPE = $AccelType
-    switch ($ACCEL_TYPE) {
+    switch ($AccelType) {
         "aehd" { }
-        "whpx" { }
+        "whpx" { 
+            $AccelType = "whpx,kernel-irqchip=off"
+            Write-Host "ERROR: whpx accelerator is currently broken in QEMU!"
+            exit 1
+        }
         "tcg" { }
         default {
-            Write-Host "ERROR: Invalid accelerator option: $ACCEL_TYPE"
-            Show-Usage
+            Write-Host "ERROR: Invalid accelerator option: $AccelType"
             exit 1
         }
     }
@@ -73,13 +46,11 @@ if ($AccelType) {
 # Process MemorySize
 if ($MemorySize) {
     Write-Host "Memory size: $MemorySize"
-    $MEMORY_FLAG = 1
-    $MEMORY_SIZE = $MemorySize
-    if ($MEMORY_SIZE -notmatch '^\d+$') {
-        Write-Host "ERROR: Memory size $MEMORY_SIZE not an integer!"
+    if ($MemorySize -notmatch '^\d+$') {
+        Write-Host "ERROR: Memory size $MemorySize not an integer!"
         exit 1
     }
-    if ([int]$MEMORY_SIZE -lt 4) {
+    if ([int]$MemorySize -lt 4) {
         Write-Host "ERROR: Memory size must be 4GB or greater!"
         exit 1
     }
@@ -88,10 +59,8 @@ if ($MemorySize) {
 # Process macOSImage
 if ($macOSImage) {
     Write-Host "macOS image: $macOSImage"
-    $DISK_FLAG = 1
-    $DISK_IMG = $macOSImage
-    if (-not (Test-Path $DISK_IMG)) {
-        Write-Host "ERROR: $DISK_IMG not found!"
+    if (-not (Test-Path $macOSImage)) {
+        Write-Host "ERROR: $macOSImage not found!"
         exit 1
     }
 }
@@ -99,10 +68,8 @@ if ($macOSImage) {
 # Process OpencoreImage
 if ($OpencoreImage) {
     Write-Host "OpenCore image: $OpencoreImage"
-    $OPENCORE_FLAG = 1
-    $OPENCORE_IMG = $OpencoreImage
-    if (-not (Test-Path $OPENCORE_IMG)) {
-        Write-Host "ERROR: $OPENCORE_IMG not found!"
+    if (-not (Test-Path $OpencoreImage)) {
+        Write-Host "ERROR: $OpencoreImage not found!"
         exit 1
     }
 }
@@ -110,10 +77,9 @@ if ($OpencoreImage) {
 # Process RecoveryImage
 if ($RecoveryImage) {
     Write-Host "Recovery image: $RecoveryImage"
-    $RECOVERY_FLAG = 1
-    $RECOVERYOS_IMG = $RecoveryImage
-    if (-not (Test-Path $RECOVERYOS_IMG)) {
-        Write-Host "ERROR: $RECOVERYOS_IMG not found!"
+    $RecoveryImage = $RecoveryImage
+    if (-not (Test-Path $RecoveryImage)) {
+        Write-Host "ERROR: $RecoveryImage not found!"
         exit 1
     }
 }
@@ -121,39 +87,47 @@ if ($RecoveryImage) {
 # Process EnableSerial
 if ($EnableSerial) {
     Write-Host "Serial output enabled"
-    $SERIAL_FLAG = 1
 }
 
 # Build QEMU arguments array
 $args = @(
     "-name", "macOS Intel"
-    "-cpu", "Skylake-Client-noTSX-IBRS,vmware-cpuid-freq=on,vendor=GenuineIntel,check"
+    "-cpu", "Skylake-Client-noTSX-IBRS,pdpe1gb=off,vmware-cpuid-freq=on,vendor=GenuineIntel,check"
     "-smp", "cpus=2,sockets=1,cores=2,threads=1"
     "-machine", "q35,vmport=off,i8042=off,hpet=off"
-    "-accel", $ACCEL_TYPE
-    "-m", "${MEMORY_SIZE}G"
+    "-accel", $AccelType
+    "-m", "$($MemorySize)G"
     "-nodefaults"
     "-device", "virtio-net-pci,mac=66:C9:75:99:89:AC,netdev=net0"
-    "-netdev", "user,id=net0,hostfwd=tcp::5959-:5900,hostfwd=tcp::2222-:22"
+    "-netdev", "user,id=net0"
     "-device", "virtio-vga"
     "-device", "virtio-rng-pci"
     "-global", "ICH9-LPC.disable_s3=1"
     "-drive", "if=pflash,format=raw,unit=0,file.filename=./edk2-x86_64-code.fd,file.locking=off,readonly=on"
     "-drive", "if=pflash,format=raw,unit=1,file=./efi_vars.fd"
     "-device", "virtio-blk,drive=opencore,bootindex=0"
-    "-drive", "if=none,media=disk,id=opencore,file=$OPENCORE_IMG,discard=unmap,detect-zeroes=unmap"
+    "-drive", "if=none,media=disk,id=opencore,file=$OpencoreImage,discard=unmap,detect-zeroes=unmap"
     "-device", "virtio-blk,drive=macos,bootindex=1"
-    "-drive", "if=none,media=disk,id=macos,file=$DISK_IMG,discard=unmap,detect-zeroes=unmap"
+    "-drive", "if=none,media=disk,id=macos,file=$macOSImage,discard=unmap,detect-zeroes=unmap"
     "-device", "qemu-xhci"
     "-device", "usb-tablet"
     "-device", "usb-kbd"
     "-smbios", "type=1"
-    "-audiodev", "coreaudio,id=audio0"
-    "-device", "ich9-intel-hda"
-    "-device", "hda-output,audiodev=audio0"
+    # TODO: Enable audio
+    # "-audiodev", "coreaudio,id=audio0"
+    # "-device", "ich9-intel-hda"
+    # "-device", "hda-output,audiodev=audio0"
 )
 
-if ($SERIAL_FLAG -eq 1) {
+
+if ($RecoveryImage) {
+    $args += @(
+        "-device", "virtio-blk,drive=recoveryos,bootindex=2"
+        "-drive", "if=none,media=disk,id=recoveryos,file=$RecoveryImage,discard=unmap,detect-zeroes=unmap"
+    )
+}
+
+if ($EnableSerial) {
     $args += @(
         "-chardev", "stdio,id=char0,mux=on,logfile=serial.log,signal=off"
         "-serial", "chardev:char0"
@@ -161,12 +135,6 @@ if ($SERIAL_FLAG -eq 1) {
     )
 }
 
-if ($RECOVERY_FLAG -eq 1) {
-    $args += @(
-        "-device", "virtio-blk,drive=recoveryos,bootindex=2"
-        "-drive", "if=none,media=disk,id=recoveryos,file=$RECOVERYOS_IMG,discard=unmap,detect-zeroes=unmap"
-    )
-}
-
 # Run QEMU
+# Write-Host "$args"
 & qemu-system-x86_64 $args
