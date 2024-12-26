@@ -25,19 +25,16 @@ answer.msg.serial.file.open = "Replace"
 serial0.fileName = "serial.log"
 serial0.fileType = "file"
 serial0.present = "TRUE"
-serial0.startConnected = "{{SERIAL}}"
+serial0.startConnected = "FALSE"
 serial0.tryNoRxLoss = "FALSE"
 serial0.yieldOnMsrRead = "TRUE"
 
 __VMware_Build__ = ""
-vmx.buildType = "{{VMX}}"                # VMware build release/debug/stats
+vmx.buildType = "release"                # VMware build release/debug/stats
 
-{% if RECOVERY == '1' -%}
 __RecoveryOS_Installation_Settings__ = ""
-installationSourceDevice = "sata0:3"
 sata0:3.fileName = "basesystem.vmdk"
-sata0:3.present = "TRUE"
-{%- endif %}
+sata0:3.present = "FALSE"
 
 __Standard_Fusion_macOS_VMX__ = ""
 config.version = "8"
@@ -50,11 +47,11 @@ ethernet0.linkStatePropagation.enable = "TRUE"
 ethernet0.pciSlotNumber = "160"
 ethernet0.present = "TRUE"
 ethernet0.startConnected = "TRUE"
-ethernet0.virtualDev = "{{ETHERNET_DEVICE}}"
+ethernet0.virtualDev = "e1000e"
 extendedConfigFile = "macos.vmxf"
 firmware = "efi"
 floppy0.present = "FALSE"
-guestOS = "{{GUESTOS}}"
+guestOS = "darwin20-64"
 gui.fitGuestUsingNativeDisplayResolution = "FALSE"
 hpet0.present = "TRUE"
 ich7m.present = "TRUE"

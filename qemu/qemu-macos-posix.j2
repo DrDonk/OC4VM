@@ -132,7 +132,7 @@ while getopts ${OPTSTRING} opt; do
 done
 
 args=(
--name "macOS Intel"
+-name "{{DESCRIPTION}}"
 -cpu Skylake-Client-noTSX-IBRS,pdpe1gb=off,vmware-cpuid-freq=on,vendor=GenuineIntel,check
 -smp cpus=2,sockets=1,cores=2,threads=1
 -machine q35,vmport=off,i8042=off,hpet=off

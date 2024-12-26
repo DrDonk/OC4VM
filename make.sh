@@ -115,7 +115,11 @@ do
     mkdir -p ./build/disks/$VARIANT
     DMG=$(./utilities/stoml oc4vm.toml $VARIANT.DMG)
     build_dmg ./build/disks/$VARIANT $DMG ./build/config/$VARIANT/config.plist
+done
 
+VARIANTS=("${(f)$(./utilities/stoml vm.toml . | tr ' ' '\n')}")
+for VARIANT in $VARIANTS
+do
     # Build the VMware templates
     msg_status "Step 3. Create VMware templates"
     mkdir -p ./build/templates/vmware/$VARIANT 2>&1 >/dev/null
@@ -128,7 +132,7 @@ do
          --select $VARIANT \
         -o ./build/templates/vmware/$VARIANT/macos.vmx \
         ./vmware/vmx.j2 \
-        oc4vm.toml
+        vm.toml
 
     # Build the QEMU templates
     msg_status "Step 4. Create QEMU templates"
@@ -143,17 +147,17 @@ do
         -D VARIANT=$VARIANT \
         --select $VARIANT \
         -o ./build/templates/qemu/$VARIANT/qemu-macos.sh \
-        ./qemu/qemu-macos.j2 \
-        oc4vm.toml
+        ./qemu/qemu-macos-posix.j2 \
+        vm.toml
     chmod +x ./build/templates/qemu/$VARIANT/qemu-macos.sh
     ./utilities/minijinja-cli \
         --format=toml \
         -D VERSION=$VERSION \
         -D VARIANT=$VARIANT \
         --select $VARIANT \
-        -o ./build/templates/qemu/$VARIANT/qemu-macos-win.ps1 \
+        -o ./build/templates/qemu/$VARIANT/qemu-macos.ps1 \
         ./qemu/qemu-macos-win.j2 \
-        oc4vm.toml
+        vm.toml
 done
 
 msg_status "\nStep 5. Copying misc files"
