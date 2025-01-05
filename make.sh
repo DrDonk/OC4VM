@@ -40,13 +40,6 @@ build_dmg() {
     else
         msg_error "Build failure! opencore.vmdk file not found!"
     fi
-    qemu-img convert -f raw -O qcow2 $1/opencore.dmg $1/opencore.qcow2 2>&1 >/dev/null
-    qemu-img check -f qcow2 $1/opencore.qcow2
-    if [[ -f "$1/opencore.qcow2" ]]; then
-        msg_status "QEMU qcow2 file is available at $1/opencore.qcow2"
-    else
-        msg_error "Build failure! opencore.qcow2 file not found!"
-    fi
 }
 
 # Clear previous build
@@ -149,30 +142,6 @@ do
         ./vmware/vmw-macos-posix.j2
     chmod +x ./build/templates/vmware/$VARIANT/vmw-macos.sh
 
-    # Build the QEMU templates
-    msg_status "Step 4. Create QEMU templates"
-    mkdir -p ./build/templates/qemu/$VARIANT 2>&1 >/dev/null
-    cp -v ./qemu/edk2-x86_64-code.fd ./build/templates/qemu/$VARIANT 2>&1 >/dev/null
-    cp -v ./qemu/efi_vars.fd ./build/templates/qemu/$VARIANT 2>&1 >/dev/null
-    cp -v ./qemu/macos.qcow2 ./build/templates/qemu/$VARIANT 2>&1 >/dev/null
-    cp -v ./build/disks/$VARIANT/opencore.qcow2 ./build/templates/qemu/$VARIANT
-
-    ./utilities/minijinja-cli \
-        --format=toml \
-        -D VERSION=$VERSION \
-        -D VARIANT=$VARIANT \
-        -D DESCRIPTION="macOS $VARIANT" \
-        -o ./build/templates/qemu/$VARIANT/qemu-macos.sh \
-        ./qemu/qemu-macos-posix.j2
-    chmod +x ./build/templates/qemu/$VARIANT/qemu-macos.sh
-
-    ./utilities/minijinja-cli \
-        --format=toml \
-        -D VERSION=$VERSION \
-        -D VARIANT=$VARIANT \
-        -D DESCRIPTION="macOS $VARIANT" \
-        -o ./build/templates/qemu/$VARIANT/qemu-macos.ps1 \
-        ./qemu/qemu-macos-win.j2
 done
 
 msg_status "\nStep 5. Copying misc files"
