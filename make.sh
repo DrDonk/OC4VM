@@ -149,6 +149,14 @@ do
         ./vmware/vmw-macos-posix.j2
     chmod +x ./build/templates/vmware/$VARIANT/vmw-macos.sh
 
+    ./utilities/minijinja-cli \
+        --format=toml \
+        -D VERSION=$VERSION \
+        -D VARIANT=$VARIANT \
+        -D DESCRIPTION="macOS $VARIANT" \
+        -o ./build/templates/vmware/$VARIANT/vmx-macos.ps1 \
+        ./vmware/vmw-macos-win.j2
+
     # Build the QEMU templates
     msg_status "Step 4. Create QEMU templates"
     mkdir -p ./build/templates/qemu/$VARIANT 2>&1 >/dev/null
