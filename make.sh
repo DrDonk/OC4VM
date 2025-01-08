@@ -180,9 +180,9 @@ cp -v README.md ./build/
 cp -v LICENSE ./build/
 cp -vr ./vmware/tools ./build/templates/vmware
 
-msg_status "\nStep 6. Zipping OC4VM Release"
-rm ./dist/oc4vm-$VERSION.* 2>&1 >/dev/null
-7z a ./dist/oc4vm-$VERSION.zip ./build/*
-cd ./dist
-shasum -a 512 oc4vm-$VERSION.zip > oc4vm-$VERSION.sha512
-cd ..
+# msg_status "\nStep 6. Zipping OC4VM Release"
+# rm ./dist/oc4vm-$VERSION.* 2>&1 >/dev/null
+# 7z a ./dist/oc4vm-$VERSION.zip ./build/*
+# cd ./dist
+# shasum -a 512 oc4vm-$VERSION.zip > oc4vm-$VERSION.sha512
+# cd ..
