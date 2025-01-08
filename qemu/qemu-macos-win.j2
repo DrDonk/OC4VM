@@ -30,11 +30,7 @@ if ($AccelType) {
     Write-Host "Accelerator: $AccelType"
     switch ($AccelType) {
         "aehd" { }
-        "whpx" { 
-            $AccelType = "whpx,kernel-irqchip=off"
-            Write-Host "ERROR: whpx accelerator is currently broken in QEMU!"
-            exit 1
-        }
+        "whpx" { }
         "tcg" { }
         default {
             Write-Host "ERROR: Invalid accelerator option: $AccelType"
@@ -94,7 +90,7 @@ $args = @(
     "-name", "{{DESCRIPTION}}"
     "-cpu", "Skylake-Client-noTSX-IBRS,pdpe1gb=off,vmware-cpuid-freq=on,vendor=GenuineIntel,check"
     "-smp", "cpus=2,sockets=1,cores=2,threads=1"
-    "-machine", "q35,vmport=off,i8042=off,hpet=off"
+    "-machine", "q35,vmport=off,i8042=off,hpet=off,smm=off"
     "-accel", $AccelType
     "-m", "$($MemorySize)G"
     "-nodefaults"
