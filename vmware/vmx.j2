@@ -34,6 +34,7 @@ vmx.buildType = "release"                # VMware build release/debug/stats
 
 __RecoveryOS_Installation_Settings__ = ""
 sata0:3.fileName = "recovery.vmdk"
+sata0:3.mode = "independent-nonpersistent"
 sata0:3.present = "FALSE"
 
 __Standard_Fusion_macOS_VMX__ = ""
@@ -76,6 +77,7 @@ powerType.powerOn = "soft"
 powerType.reset = "soft"
 powerType.suspend = "soft"
 sata0:0.fileName = "opencore.vmdk"
+sata0:0.mode = "independent-nonpersistent"
 sata0:0.present = "TRUE"
 sata0:1.fileName = "macos.vmdk"
 sata0:1.present = "TRUE"
