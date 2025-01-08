@@ -1,0 +1,178 @@
+#!/bin/sh
+# OC4VM VERSION
+# {{VERSION}}
+# {{VARIANT}}
+# SPDX-FileCopyrightText: © 2023-25 David Parsons
+# SPDX-License-Identifier: MIT
+
+# Uncomment to debug
+# set -x
+
+echo "OC4VM QEMU Runner"
+
+OPTSTRING=":a:d:m:o:sr:"
+ACCEL_FLAG=0
+
+# Setup default accelerator flags
+case "$(uname -s)" in
+	Linux)
+		ACCEL_TYPE="kvm"
+		;;
+	Darwin)
+		ACCEL_TYPE="hvf"
+		;;
+	*)
+		ACCEL_TYPE="tcg"
+		;;
+esac
+
+if [[ $(uname -m) == 'arm64' ]]; then
+  ACCEL_TYPE="tcg"
+fi
+
+DISK_IMAGE="macos.qcow2"
+MEMORY_SIZE="4"
+OPENCORE_IMG="opencore.qcow2"
+RECOVERY_FLAG=0
+RECOVERYOS_IMG=""
+SERIAL_FLAG=0
+
+usage () {
+	cat <<HELP
+ NAME:
+	$0
+
+ SYNOPSIS:
+	$0 [-a {hvf | kvm | tcg}] [-m <memory-size>] [-d <macos-image>] [-o <opencore-image>] [-r <recovery-image>] [-s]
+
+ DESCRIPTION:
+	Run macOS using QEMU
+
+ OPTIONS:
+	-a ACCEL              QEMU accelerator to use.
+	-d DISK-IMAGE         species a macOS drive image to use.
+	-m MEMORY             specifies amount of memory to allocate to VM.
+	-o OPENCORE-IMAGE     specifies OpenCore boot image.
+	-r RECOVERY-IMAGE     specifies macOS recoveryOS image.
+	-s                    enable serial output.
+HELP
+}
+
+while getopts ${OPTSTRING} opt; do
+	case ${opt} in
+		a)
+			echo "Accelerator: ${OPTARG}"
+			ACCEL_TYPE=${OPTARG}
+			case ${ACCEL_TYPE} in
+				hvf)
+					;;
+				kvm)
+					;;
+				tcg)
+					;;
+				*)
+					echo "ERROR: Invalid accelerator option: ${OPTARG}"
+					usage
+				 	exit 1
+					;;
+			esac
+			;;
+		d)
+			echo "macOS image: ${OPTARG}"
+			DISK_IMG=${OPTARG}
+			if [ ! -f $DISK_IMG ]; then
+        		echo "ERROR: $DISK_IMG not found!"
+			  	exit 1
+			fi
+			;;
+		m)
+			echo "Memory size: ${OPTARG}"
+			MEMORY_SIZE=${OPTARG}
+			if [ ! -z "${MEMORY_SIZE//[0-9]}" ]; then
+        		echo "ERROR: Memory size $MEMORY_SIZE not an integer!"
+			  	exit 1
+			fi
+			if [ "$MEMORY_SIZE" -lt "4" ]; then
+    			echo "ERROR: Memory size must be 4GB or greater!"
+			  	exit 1
+			fi
+			;;
+		o)
+			echo "OpenCore image: ${OPTARG}"
+			OPENCORE_IMG=${OPTARG}
+			if [ ! -f $OPENCORE_IMG ]; then
+        		echo "ERROR: $OPENCORE_IMG not found!"
+			  	exit 1
+			fi
+			;;
+		r)
+			echo "Recovery image: ${OPTARG}"
+			RECOVERY_FLAG=1
+			RECOVERYOS_IMG=${OPTARG}
+			if [ ! -f $RECOVERYOS_IMG ]; then
+				echo "ERROR: $RECOVERYOS_IMG not found!"
+				exit 1
+			fi
+			;;
+		s)
+			echo "Serial output enabled"
+			SERIAL_FLAG=1
+			;;
+		:)
+			echo "ERROR: Option -${OPTARG} requires an argument."
+			usage
+			exit 1
+			;;
+		?)
+			echo "ERROR: Invalid option: -${OPTARG}"
+			usage
+			exit 1
+			;;
+	esac
+done
+
+args=(
+-name "{{DESCRIPTION}}"
+-cpu Skylake-Client-noTSX-IBRS,pdpe1gb=off,vmware-cpuid-freq=on,vendor=GenuineIntel,check
+-smp cpus=2,sockets=1,cores=2,threads=1
+-machine q35,vmport=off,i8042=off,hpet=off
+-accel $ACCEL_TYPE
+-m "$MEMORY_SIZE"G
+-nodefaults
+-device virtio-net-pci,mac=66:C9:75:99:89:AC,netdev=net0
+-netdev user,id=net0
+-device virtio-vga
+-device virtio-rng-pci
+-global ICH9-LPC.disable_s3=1
+-drive if=pflash,format=raw,unit=0,file.filename=./edk2-x86_64-code.fd,file.locking=off,readonly=on
+-drive if=pflash,format=raw,unit=1,file=./efi_vars.fd
+-device virtio-blk,drive=opencore,bootindex=0
+-drive if=none,media=disk,id=opencore,file="$OPENCORE_IMG",discard=unmap,detect-zeroes=unmap
+-device virtio-blk,drive=macos,bootindex=1
+-drive if=none,media=disk,id=macos,file="$DISK_IMG",discard=unmap,detect-zeroes=unmap
+-device qemu-xhci
+-device usb-tablet
+-device usb-kbd
+-smbios type=1
+# TODO: Enable audio
+# -audiodev coreaudio,id=audio0
+# -device ich9-intel-hda
+# -device hda-output,audiodev=audio0
+)
+
+if [ $RECOVERY_FLAG = 1 ]; then
+args+=(
+-device virtio-blk,drive=recoveryos,bootindex=2
+-drive if=none,media=disk,id=recoveryos,file=$RECOVERYOS_IMG,discard=unmap,detect-zeroes=unmap
+)
+fi
+
+if [ $SERIAL_FLAG = 1 ]; then
+args+=(
+-chardev stdio,id=char0,mux=on,logfile=serial.log,signal=off
+-serial chardev:char0
+-mon chardev=char0
+)
+fi
+
+qemu-system-x86_64 "${args[@]}"
