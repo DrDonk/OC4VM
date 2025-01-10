@@ -10,7 +10,7 @@
 
 echo "OC4VM QEMU Runner"
 
-OPTSTRING=":a:d:m:o:sr:"
+OPTSTRING=":a:c:d:m:o:sr:"
 ACCEL_FLAG=0
 
 # Setup default accelerator flags
@@ -30,7 +30,7 @@ if [[ $(uname -m) == 'arm64' ]]; then
   ACCEL_TYPE="tcg"
 fi
 
-CPU="host"
+CPU="max"
 DISK_IMAGE="macos.qcow2"
 MEMORY_SIZE="4"
 OPENCORE_IMG="opencore.qcow2"
@@ -51,6 +51,7 @@ usage () {
 
  OPTIONS:
 	-a ACCEL              QEMU accelerator to use.
+	-c CPU                CPU to use.
 	-d DISK-IMAGE         species a macOS drive image to use.
 	-m MEMORY             specifies amount of memory to allocate to VM.
 	-o OPENCORE-IMAGE     specifies OpenCore boot image.
@@ -78,6 +79,10 @@ while getopts ${OPTSTRING} opt; do
 					;;
 			esac
 			;;
+		c)
+			echo "CPU: ${OPTARG}"
+			CPU=${OPTARG}
+			;;	
 		d)
 			echo "macOS image: ${OPTARG}"
 			DISK_IMG=${OPTARG}
@@ -134,7 +139,7 @@ done
 
 args=(
 -name "{{DESCRIPTION}}"
--cpu Skylake-Client-noTSX-IBRS,pdpe1gb=off,vmware-cpuid-freq=on,vendor=GenuineIntel,check
+-cpu $CPU,pdpe1gb=off,vmware-cpuid-freq=on,vendor=GenuineIntel,check
 -smp cpus=2,sockets=1,cores=2,threads=1
 -machine q35,vmport=off,i8042=off,hpet=off,smm=off
 -accel $ACCEL_TYPE
