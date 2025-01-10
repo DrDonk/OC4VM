@@ -5,6 +5,7 @@
 # Specify the Mac model and parameters
 #
 [system]
+CPU = '0'
 MODEL = 'Macmini8,1'
 SERIAL = 'C07W20B5JYVX'
 MLB = 'C07801609GUKXPGJA'
