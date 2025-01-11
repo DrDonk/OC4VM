@@ -54,6 +54,7 @@ rm -rfv ./build/* 2>&1 >/dev/null
 
 
 # Get the Mac model details
+CPU=$(./utilities/stoml oc4vm.toml system.CPU)
 MODEL=$(./utilities/stoml oc4vm.toml system.MODEL)
 SERIAL=$(./utilities/stoml oc4vm.toml system.SERIAL)
 ROM=$(./utilities/stoml oc4vm.toml system.ROM)
@@ -90,6 +91,7 @@ do
         --format=toml \
         -D VERSION=$VERSION \
         -D VARIANT=$VARIANT \
+        -D CPU=$CPU \
         -D MODEL=$MODEL \
         -D SERIAL=$SERIAL \
         -D ROM=$ROM \
@@ -99,7 +101,7 @@ do
         -o ./build/config/$VARIANT/config.plist \
         ./opencore/config.j2 \
         oc4vm.toml
-
+    ./utilities/ocvalidate ./build/config/$VARIANT/config.plist
     xmllint ./build/config/$VARIANT/config.plist --valid --noout
     RETURN=$?
     if [ $RETURN -eq 0 ];
