@@ -33,6 +33,7 @@ fi
 CPU="max"
 DISK_IMAGE="macos.qcow2"
 MEMORY_SIZE="4"
+MONITOR_FLAG=0
 OPENCORE_IMG="opencore.qcow2"
 RECOVERY_FLAG=0
 RECOVERYOS_IMG=""
@@ -165,6 +166,13 @@ args=(
 # -device hda-output,audiodev=audio0
 )
 
+if [ $MONITOR_FLAG = 1 ]; then
+args+=(
+-chardev stdio,id=char0,mux=on,logfile=monitor.log,signal=off
+-mon chardev=char0
+)
+fi
+
 if [ $RECOVERY_FLAG = 1 ]; then
 args+=(
 -device virtio-blk,drive=recoveryos,bootindex=2
@@ -174,9 +182,8 @@ fi
 
 if [ $SERIAL_FLAG = 1 ]; then
 args+=(
--chardev stdio,id=char0,mux=on,logfile=serial.log,signal=off
--serial chardev:char0
--mon chardev=char0
+-chardev file,id=char1,path=serial.log
+-serial chardev:char1
 )
 fi
 
