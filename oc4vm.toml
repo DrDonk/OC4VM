@@ -31,7 +31,7 @@ TIMEOUT = '0'
 [intel-verbose]
 BUILD = '1'
 AMD = '0'
-BOOTARGS = 'keepsyms=1 -lilubetaall -no_compat_check -v'
+BOOTARGS = 'keepsyms=1 -lilubetaall -no_compat_check -v serial=1 -no_panic_dialog'
 CSRCONFIG = 'AAAAAA=='
 DEBUG = '0'
 DESCRIPTION = 'macOS Intel Verbose'
