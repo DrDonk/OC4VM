@@ -58,7 +58,7 @@ TIMEOUT = '0'
 
 [intel-kdk]
 BUILD = '1'
-AMD = '0'
+AMD = '1'
 BOOTARGS = 'keepsyms=1 -lilubetaall -v -no_compat_check serial=1 debug=2 -no_panic_dialog -liludbgall -topo -cpuid kcsuffix=development'
 CSRCONFIG = 'fwgAAA=='
 DEBUG = '1'
@@ -73,7 +73,7 @@ TIMEOUT = '0'
 # AMD CPU Settings
 #
 [amd]
-BUILD = '0'
+BUILD = '1'
 AMD = '1'
 BOOTARGS = 'keepsyms=1 -lilubetaall -no_compat_check'
 CSRCONFIG = 'AAAAAA=='
@@ -83,10 +83,23 @@ DMG = 'release'
 HIDEAUXILLARY = 'false'
 RESOLUTION = '1440x900@32'
 SERIAL = 'FALSE'
-TIMEOUT = '5'
+TIMEOUT = '0'
+
+[amd-dev]
+BUILD = '1'
+AMD = '1'
+BOOTARGS = 'keepsyms=1 -lilubetaall -no_compat_check -v -no_panic_dialog'
+CSRCONFIG = 'AAAAAA=='
+DEBUG = '0'
+DESCRIPTION = 'macOS AMD Development'
+DMG = 'release'
+HIDEAUXILLARY = 'false'
+RESOLUTION = '1440x900@32'
+SERIAL = 'FALSE'
+TIMEOUT = '0'
 
 [amd-verbose]
-BUILD = '0'
+BUILD = '1'
 AMD = '1'
 BOOTARGS = 'keepsyms=1 -lilubetaall -no_compat_check -v serial=1'
 CSRCONFIG = 'AAAAAA=='
@@ -99,7 +112,7 @@ SERIAL = 'TRUE'
 TIMEOUT = '5'
 
 [amd-debug]
-BUILD = '0'
+BUILD = '1'
 AMD = '1'
 BOOTARGS = 'keepsyms=1 -lilubetaall -v -no_compat_check serial=1 debug=2 -no_panic_dialog -liludbgall avx512=0 cwad'
 CSRCONFIG = 'AAAAAA=='
@@ -112,7 +125,7 @@ SERIAL = 'TRUE'
 TIMEOUT = '0'
 
 [amd-kdk]
-BUILD = '0'
+BUILD = '1'
 AMD = '1'
 BOOTARGS = 'keepsyms=1 -lilubetaall -v -no_compat_check serial=1 debug=2 -no_panic_dialog -liludbgall -topo -cpuid avx512=0 cwad kcsuffix=development'
 CSRCONFIG = 'fwgAAA=='
