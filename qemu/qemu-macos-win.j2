@@ -113,6 +113,12 @@ try {
         # "-audiodev", "coreaudio,id=audio0"
         # "-device", "ich9-intel-hda"
         # "-device", "hda-output,audiodev=audio0"
+        # BIOS Information
+        "-smbios", "type=0,vendor='VMware,, Inc.',version='VMW71.00V.24006586.B64.2406042151',date='06/04/2024',uefi=on"
+        # System Information
+        "-smbios", "type=1,manufacturer='VMware,, Inc.',product='VMware7,,1',serial='VMX4wtlEPW0L',uuid='007076A6-F2A2-4461-BBE5-BAD019F8025A'"
+        # Baseboard Information
+        "-smbios", "type=2,manufacturer='Intel Corporation',product='440BX Desktop Reference Platform'"
     )
 
 
