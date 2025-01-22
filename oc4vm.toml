@@ -17,6 +17,19 @@ RESOLUTION = '1440x900@32'
 SERIAL = 'FALSE'
 TIMEOUT = '0'
 
+[intel-dev]
+BUILD = '1'
+AMD = '0'
+BOOTARGS = 'keepsyms=1 -lilubetaall -no_compat_check -v -no_panic_dialog'
+CSRCONFIG = 'AAAAAA=='
+DEBUG = '0'
+DESCRIPTION = 'macOS Intel Development'
+DMG = 'release'
+HIDEAUXILLARY = 'false'
+RESOLUTION = '1440x900@32'
+SERIAL = 'FALSE'
+TIMEOUT = '0'
+
 [intel-verbose]
 BUILD = '1'
 AMD = '0'
