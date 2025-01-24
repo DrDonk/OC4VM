@@ -98,7 +98,7 @@ do
     build_dmg ./build/disks/$VARIANT $DMG ./build/config/$VARIANT/config.plist
 done
 
-VARIANTS=("Intel" "AMD")
+VARIANTS=("intel" "amd")
 for VARIANT in $VARIANTS
 do
     # Build the VMware templates
@@ -130,13 +130,13 @@ do
         ./vmware/vmw-macos-posix.j2
     chmod +x ./build/templates/vmware/$VARIANT/vmw-macos.sh
 
-    ./utilities/minijinja-cli \
-        --format=toml \
-        -D VERSION=$VERSION \
-        -D VARIANT=$VARIANT \
-        -D DESCRIPTION="macOS $VARIANT" \
-        -o ./build/templates/vmware/$VARIANT/vmx-macos.ps1 \
-        ./vmware/vmw-macos-win.j2
+    # ./utilities/minijinja-cli \
+    #     --format=toml \
+    #     -D VERSION=$VERSION \
+    #     -D VARIANT=$VARIANT \
+    #     -D DESCRIPTION="macOS $VARIANT" \
+    #     -o ./build/templates/vmware/$VARIANT/vmx-macos.ps1 \
+    #     ./vmware/vmw-macos-win.j2
 
     # Build the QEMU templates
     msg_status "Step 4. Create QEMU templates"
@@ -155,13 +155,13 @@ do
         ./qemu/qemu-macos-posix.j2
     chmod +x ./build/templates/qemu/$VARIANT/qemu-macos.sh
 
-    ./utilities/minijinja-cli \
-        --format=toml \
-        -D VERSION=$VERSION \
-        -D VARIANT=$VARIANT \
-        -D DESCRIPTION="macOS $VARIANT" \
-        -o ./build/templates/qemu/$VARIANT/qemu-macos.ps1 \
-        ./qemu/qemu-macos-win.j2
+    # ./utilities/minijinja-cli \
+    #     --format=toml \
+    #     -D VERSION=$VERSION \
+    #     -D VARIANT=$VARIANT \
+    #     -D DESCRIPTION="macOS $VARIANT" \
+    #     -o ./build/templates/qemu/$VARIANT/qemu-macos.ps1 \
+    #     ./qemu/qemu-macos-win.j2
 done
 
 msg_status "\nStep 5. Copying misc files"
