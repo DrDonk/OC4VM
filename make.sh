@@ -10,12 +10,17 @@ msg_status() {
 msg_error() {
   echo "\033[0;31m$1\033[0m"
 }
+
+# Bail out if not macOS
 msg_status "Creating OpenCore for Virtual Machines"
+if [[ $OSTYPE != 'darwin'* ]]; then
+  msg_error 'OC4VM can only be built on macOS!'
+fi
 
 # Read current version
 VERSION=$(<VERSION)
-VERSION+=-$(git rev-parse --short HEAD)
-msg_status "Version: $VERSION"
+COMMIT=$(git rev-parse --short HEAD)
+msg_status "Version: $VERSION Cpmmit: $COMMIT"
 
 # Build the DMG & VMDK
 build_dmg() {
@@ -76,6 +81,7 @@ do
         --format=toml \
         -D VERSION=$VERSION \
         -D VARIANT=$VARIANT \
+        -D COMMIT=$COMMIT \
         --select $VARIANT \
         -o ./build/config/$VARIANT/config.plist \
         ./opencore/config.j2 \
@@ -117,6 +123,7 @@ do
         --format=toml \
         -D VERSION=$VERSION \
         -D VARIANT=$VARIANT \
+        -D COMMIT=$COMMIT \
         -D DESCRIPTION="macOS $VARIANT" \
         -D AMD=$AMD \
         -o ./build/templates/vmware/$VARIANT/macos.vmx \
@@ -126,17 +133,10 @@ do
         --format=toml \
         -D VERSION=$VERSION \
         -D VARIANT=$VARIANT \
+        -D COMMIT=$COMMIT \
         -o ./build/templates/vmware/$VARIANT/vmw-macos.sh \
         ./vmware/vmw-macos-posix.j2
     chmod +x ./build/templates/vmware/$VARIANT/vmw-macos.sh
-
-    # ./utilities/minijinja-cli \
-    #     --format=toml \
-    #     -D VERSION=$VERSION \
-    #     -D VARIANT=$VARIANT \
-    #     -D DESCRIPTION="macOS $VARIANT" \
-    #     -o ./build/templates/vmware/$VARIANT/vmx-macos.ps1 \
-    #     ./vmware/vmw-macos-win.j2
 
     # Build the QEMU templates
     msg_status "Step 4. Create QEMU templates"
@@ -150,18 +150,12 @@ do
         --format=toml \
         -D VERSION=$VERSION \
         -D VARIANT=$VARIANT \
+        -D COMMIT=$COMMIT \
         -D DESCRIPTION="macOS $VARIANT" \
         -o ./build/templates/qemu/$VARIANT/qemu-macos.sh \
         ./qemu/qemu-macos-posix.j2
     chmod +x ./build/templates/qemu/$VARIANT/qemu-macos.sh
 
-    # ./utilities/minijinja-cli \
-    #     --format=toml \
-    #     -D VERSION=$VERSION \
-    #     -D VARIANT=$VARIANT \
-    #     -D DESCRIPTION="macOS $VARIANT" \
-    #     -o ./build/templates/qemu/$VARIANT/qemu-macos.ps1 \
-    #     ./qemu/qemu-macos-win.j2
 done
 
 msg_status "\nStep 5. Copying misc files"
@@ -169,9 +163,9 @@ cp -v README.md ./build/
 cp -v LICENSE ./build/
 cp -vr ./vmware/tools ./build/templates/vmware
 
-# msg_status "\nStep 6. Zipping OC4VM Release"
-# rm ./dist/oc4vm-$VERSION.* 2>&1 >/dev/null
-# 7z a ./dist/oc4vm-$VERSION.zip ./build/*
-# cd ./dist
-# shasum -a 512 oc4vm-$VERSION.zip > oc4vm-$VERSION.sha512
-# cd ..
+msg_status "\nStep 6. Zipping OC4VM Release"
+rm ./dist/oc4vm-$VERSION.* 2>&1 >/dev/null
+7z a ./dist/oc4vm-$VERSION.zip ./build/*
+cd ./dist
+shasum -a 512 oc4vm-$VERSION.zip > oc4vm-$VERSION.sha512
+cd ..
