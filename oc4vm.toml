@@ -17,26 +17,26 @@ RESOLUTION = '1440x900@32'
 SERIAL = 'FALSE'
 TIMEOUT = '0'
 
-[intel-dev]
+[intel-verbose]
 BUILD = '1'
 AMD = '0'
 BOOTARGS = 'keepsyms=1 -lilubetaall -no_compat_check -v -no_panic_dialog'
 CSRCONFIG = 'AAAAAA=='
 DEBUG = '0'
-DESCRIPTION = 'macOS Intel Development'
+DESCRIPTION = 'macOS Intel Verbose'
 DMG = 'release'
 HIDEAUXILLARY = 'false'
 RESOLUTION = '1440x900@32'
 SERIAL = 'FALSE'
 TIMEOUT = '0'
 
-[intel-verbose]
+[intel-trace]
 BUILD = '1'
 AMD = '0'
 BOOTARGS = 'keepsyms=1 -lilubetaall -no_compat_check -v serial=1 -no_panic_dialog'
 CSRCONFIG = 'AAAAAA=='
 DEBUG = '0'
-DESCRIPTION = 'macOS Intel Verbose'
+DESCRIPTION = 'macOS Intel Trace'
 DMG = 'release'
 HIDEAUXILLARY = 'false'
 RESOLUTION = '1440x900@32'
@@ -85,26 +85,26 @@ RESOLUTION = '1440x900@32'
 SERIAL = 'FALSE'
 TIMEOUT = '0'
 
-[amd-dev]
+[amd-verbose]
 BUILD = '1'
 AMD = '1'
 BOOTARGS = 'keepsyms=1 -lilubetaall -no_compat_check -v -no_panic_dialog'
 CSRCONFIG = 'AAAAAA=='
 DEBUG = '0'
-DESCRIPTION = 'macOS AMD Development'
+DESCRIPTION = 'macOS AMD Verbose'
 DMG = 'release'
 HIDEAUXILLARY = 'false'
 RESOLUTION = '1440x900@32'
 SERIAL = 'FALSE'
 TIMEOUT = '0'
 
-[amd-verbose]
+[amd-trace]
 BUILD = '1'
 AMD = '1'
 BOOTARGS = 'keepsyms=1 -lilubetaall -no_compat_check -v serial=1 -no_panic_dialog'
 CSRCONFIG = 'AAAAAA=='
 DEBUG = '0'
-DESCRIPTION = 'macOS AMD Verbose'
+DESCRIPTION = 'macOS AMD Trace'
 DMG = 'release'
 HIDEAUXILLARY = 'false'
 RESOLUTION = '1440x900@32'
