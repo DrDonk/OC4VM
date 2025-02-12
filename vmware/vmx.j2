@@ -2,12 +2,14 @@
 # OC4VM VERSION
 # {{VERSION}}
 # {{VARIANT}}
+# {{COMMIT}}
 # SPDX-FileCopyrightText: © 2023-25 David Parsons
 # SPDX-License-Identifier: MIT
 
 __OC4VM_GuestInfo__ = ""
-guestinfo.oc4vm.version = "{{VERSION}}"
 guestinfo.oc4vm.variant = "{{VARIANT}}"
+guestinfo.oc4vm.version = "{{VERSION}}"
+guestinfo.oc4vm.revision = "{{COMMIT}}"
 
 __CPU_Sanity_Checks__ = ""
 {% if AMD == '1' -%}
