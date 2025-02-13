@@ -51,7 +51,7 @@ VMware.
 
 ### 2.2 Folder Contents
 
-![Folders](./assets/folders.png)
+<img src="./assets/folders.png" width="50%" height="50%" />
 
 OC4VM has several folders:
 
@@ -73,7 +73,7 @@ The templates are designed for maximum compatibilty between different releases a
 upgrade the virtual hardware if prompted to by the VMware software. Also do not change the guestOS settings in the 
 VMX file. It will not change any of the behaviours of the guest and could cause issues in the future.
 
-![VMware](./assets/vmware.png)
+<img src="./assets/vmware.png" width="50%" height="50%" />
 
 Each folder contains these files:
 
