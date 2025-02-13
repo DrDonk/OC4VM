@@ -3,8 +3,9 @@
 # WORK IN PROGRESS
 
 ## 1. Introduction
-OpenCore for Virtual Machines (OC4VM) has been built to run macOS VMs on Intel based Apple Macs. It provides an 
-OpenCore disk image that can be used to boot Intel based macOS using VMware Fusion andf Wokstation.
+OpenCore for Virtual Machines (OC4VM) has been built to run macOS VMs primarily on Intel based Apple Macs. It
+may also be used on other PC hardware using VMware Workstation. It provides an OpenCore disk image that 
+can be used to boot Intel based macOS using VMware Fusion andf Wokstation.
 
 Using OpenCore allows for a flexible patching system to overcome limitations of the virtualisation software. It 
 basically creates a virtual Hackintosh, which is similar in implementation to the 
@@ -21,10 +22,10 @@ What OC4VM can do?
 
 What OC4VM cannot do:
 * Boot Intel macOS on an Apple Silicon CPU
-* Use the Apple para-vitrualised GPU on none Apple hardware 
-* Use the Apple para-vitrualised GPU in QEMU on Apple hardware
+* Use the Apple para-virtualised GPU on none Apple hardware 
 
 The OC4VM system has been tested on an Intel Mac mini mid-2014 with these guest OSes:
+* Monterey
 * Ventura
 * Sonoma
 * Sequoia
@@ -44,11 +45,13 @@ using:
 ***
 Note:
 If you are not using an Apple computer and have installed the VMware Unlocker it is recommended that the Unlocker is 
-uninstalled. OC4VM does not alter anything in the VMware program folders.
+uninstalled. OC4VM does not alter anything in the VMware program folders and aloows macOS to run without patching 
+VMware.
 ***
 
 ### 2.2 Folder Contents
-**TODO: Update this section with new folder layout**
+
+![Folders](./assets/folders.png)
 
 OC4VM has several folders:
 
@@ -62,7 +65,6 @@ OC4VM has several folders:
 The most import folders are the 'templates' and 'iso' folders. 
 
 ### 2.3 VMware Templates
-**TODO: Update this section with new folder layout**
 
 The 'templates' folder has a sub-folder called "vmware" which contains VM templates for VMware macOS virtual machines. 
 Each folder has an OpenCore booter and VMX file tailored for the OC4VM variant you choose.
@@ -71,20 +73,8 @@ The templates are designed for maximum compatibilty between different releases a
 upgrade the virtual hardware if prompted to by the VMware software. Also do not change the guestOS settings in the 
 VMX file. It will not change any of the behaviours of the guest and could cause issues in the future.
 
-```
- templates
-   └── vmware
-      ├── intel-release
-      │  ├── macos.vmdk
-      │  ├── macos.vmx
-      │  └── opencore.vmdk
-      └── intel-verbose
-         ├── macos.vmdk
-         ├── macos.vmx
-         └── opencore.vmdk
+![VMware](./assets/vmware.png)
 
-
-```
 Each folder contains these files:
 
 | File          | Function                        |
