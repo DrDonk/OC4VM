@@ -31,7 +31,8 @@ build_dmg() {
 
     # Attach blank DMG and create OC setup
     hdiutil attach $1/opencore.dmg -noverify -nobrowse -noautoopen
-    cp -r $3 /Volumes/OPENCORE/EFI/OC
+    cp -rv $3 /Volumes/OPENCORE/EFI/OC
+    cp -v ./tools/ocbootargs /Volumes/OPENCORE/ocbootargs
     rm -rf /Volumes/OPENCORE/.fseventsd
     dot_clean -m /Volumes/OPENCORE
     SetFile -a C /Volumes/OPENCORE
