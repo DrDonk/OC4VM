@@ -109,9 +109,9 @@ for VARIANT in $VARIANTS
 do
     # Build the VMware templates
     msg_status "Step 3. Create VMware templates"
-    mkdir -p ./build/templates/vmware/$VARIANT 2>&1 >/dev/null
-    cp -v ./vmware/macos.vmdk ./build/templates/vmware/$VARIANT 2>&1 >/dev/null
-    cp -v ./build/disks/$VARIANT/opencore.vmdk ./build/templates/vmware/$VARIANT
+    mkdir -p ./build/vmware/$VARIANT 2>&1 >/dev/null
+    cp -v ./vmware/macos.vmdk ./build/vmware/$VARIANT 2>&1 >/dev/null
+    cp -v ./build/disks/$VARIANT/opencore.vmdk ./build/vmware/$VARIANT
 
     if [[ $VARIANT == 'AMD' ]]; then
         AMD="1"
@@ -126,7 +126,7 @@ do
         -D COMMIT=$COMMIT \
         -D DESCRIPTION="macOS $VARIANT" \
         -D AMD=$AMD \
-        -o ./build/templates/vmware/$VARIANT/macos.vmx \
+        -o ./build/vmware/$VARIANT/macos.vmx \
         ./vmware/vmx.j2
 
     ./utilities/minijinja-cli \
@@ -134,17 +134,17 @@ do
         -D VERSION=$VERSION \
         -D VARIANT=$VARIANT \
         -D COMMIT=$COMMIT \
-        -o ./build/templates/vmware/$VARIANT/vmw-macos.sh \
+        -o ./build/vmware/$VARIANT/vmw-macos.sh \
         ./vmware/vmw-macos-posix.j2
-    chmod +x ./build/templates/vmware/$VARIANT/vmw-macos.sh
+    chmod +x ./build/vmware/$VARIANT/vmw-macos.sh
 
     # Build the QEMU templates
     msg_status "Step 4. Create QEMU templates"
-    mkdir -p ./build/templates/qemu/$VARIANT 2>&1 >/dev/null
-    cp -v ./qemu/edk2-x86_64-code.fd ./build/templates/qemu/$VARIANT 2>&1 >/dev/null
-    cp -v ./qemu/efi_vars.fd ./build/templates/qemu/$VARIANT 2>&1 >/dev/null
-    cp -v ./qemu/macos.qcow2 ./build/templates/qemu/$VARIANT 2>&1 >/dev/null
-    cp -v ./build/disks/$VARIANT/opencore.qcow2 ./build/templates/qemu/$VARIANT
+    mkdir -p ./build/qemu/$VARIANT 2>&1 >/dev/null
+    cp -v ./qemu/edk2-x86_64-code.fd ./build/qemu/$VARIANT 2>&1 >/dev/null
+    cp -v ./qemu/efi_vars.fd ./build/qemu/$VARIANT 2>&1 >/dev/null
+    cp -v ./qemu/macos.qcow2 ./build/qemu/$VARIANT 2>&1 >/dev/null
+    cp -v ./build/disks/$VARIANT/opencore.qcow2 ./build/qemu/$VARIANT
 
     ./utilities/minijinja-cli \
         --format=toml \
@@ -152,16 +152,16 @@ do
         -D VARIANT=$VARIANT \
         -D COMMIT=$COMMIT \
         -D DESCRIPTION="macOS $VARIANT" \
-        -o ./build/templates/qemu/$VARIANT/qemu-macos.sh \
+        -o ./build/qemu/$VARIANT/qemu-macos.sh \
         ./qemu/qemu-macos-posix.j2
-    chmod +x ./build/templates/qemu/$VARIANT/qemu-macos.sh
+    chmod +x ./build/qemu/$VARIANT/qemu-macos.sh
 
 done
 
 msg_status "\nStep 5. Copying misc files"
 cp -v README.md ./build/
 cp -v LICENSE ./build/
-cp -vr ./vmware/tools ./build/templates/vmware
+cp -vr ./vmware/tools ./build/
 
 msg_status "\nStep 6. Zipping OC4VM Release"
 rm ./dist/oc4vm-$VERSION.* 2>&1 >/dev/null
