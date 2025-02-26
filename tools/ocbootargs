@@ -1,0 +1,61 @@
+#!/usr/bin/env zsh
+# SPDX-FileCopyrightText: © 2023-25 David Parsons
+# SPDX-License-Identifier: MIT
+
+#set -x
+
+# Define storage file location
+PLIST_FILE="/Volumes/OPENCORE/EFI/OC/config.plist"
+APPLE_NVRAM_VARIABLE_GUID="7C436110-AB2A-4BBB-A880-FE41995C9F82"
+BOOT_ARGS="boot-args"
+ADD_VAR="NVRAM.Add.$APPLE_NVRAM_VARIABLE_GUID.$BOOT_ARGS"
+DELETE_VAR="NVRAM.Delete.$APPLE_NVRAM_VARIABLE_GUID.$BOOT_ARGS."
+
+# Function to print usage information
+print_usage() {
+    cat << EOF
+Usage: ocbootargs [options] [value]
+Options:
+    -get            Print boot-args variable
+    -set value      Set the boot-args variable
+    -h              Print this help message
+EOF
+}
+
+# Function to get variable
+get_variable() {
+    local var="$1"
+    
+    if plutil -extract ${ADD_VAR} raw -- "${PLIST_FILE}" >/dev/null 2>&1; then
+        local value=$(plutil -extract ${ADD_VAR} raw -- "${PLIST_FILE}")
+        echo "bootargs = \"${value}\""
+    else
+        echo "Error: Variable '${var}' not found"
+        return 1
+    fi
+}
+
+# Function to set variable
+set_variable() {
+    local value="$1"
+    plutil -replace ${ADD_VAR} -string ${value} -- "${PLIST_FILE}"
+    get_variable
+}
+
+# Main logic
+echo "OC4VM boot-args utility"
+echo "-----------------------"
+case "$1" in
+    -h)
+        print_usage
+        ;;
+    -set)
+        set_variable "$2"
+        ;;
+    -get)
+        get_variable
+        ;;
+    *)
+        get_variable
+        ;;
+esac
