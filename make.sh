@@ -161,7 +161,7 @@ done
 msg_status "\nStep 5. Copying misc files"
 cp -v README.md ./build/
 cp -v LICENSE ./build/
-cp -vr ./vmware/tools ./build/
+cp -vr ./tools ./build/
 
 msg_status "\nStep 6. Zipping OC4VM Release"
 rm ./dist/oc4vm-$VERSION.* 2>&1 >/dev/null
