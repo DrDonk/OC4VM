@@ -303,20 +303,19 @@
 			<true/>
 			<key>ApplePanic</key>
 			<true/>
-			<key>DisableWatchDog</key>
-			<true/>
 			<key>DisplayDelay</key>
 			<integer>0</integer>
-			<key>DisplayLevel</key>
-			<integer>2147483714</integer>
 			<key>LogModules</key>
 			<string>*</string>
 			<key>SysReport</key>
-			<true/>
+			<false/>
 {%- if DEBUG == '1' %}
+			<key>DisableWatchDog</key>
+			<true/>
+			<key>DisplayLevel</key>
+			<integer>2147483714</integer>
 			<key>Target</key>
 			<integer>11</integer>
-		</dict>
 {%- else %}
 			<key>DisableWatchDog</key>
 			<false/>
@@ -324,8 +323,8 @@
 			<integer>0</integer>
 			<key>Target</key>
 			<integer>0</integer>
-		</dict>
 {%- endif %}
+		</dict>
 		<key>Entries</key>
 		<array/>
 		<key>Security</key>
