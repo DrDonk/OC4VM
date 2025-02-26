@@ -143,11 +143,7 @@
 				<key>Comment</key>
 				<string>Debug Enhancer</string>
 				<key>Enabled</key>
-				{%- if DEBUG == '1' %}
 				<true/>
-				{%- else %}
-				<false/>
-				{%- endif %}
 				<key>ExecutablePath</key>
 				<string>Contents/MacOS/DebugEnhancer</string>
 				<key>MaxKernel</key>
@@ -172,6 +168,24 @@
 				<string></string>
 				<key>MinKernel</key>
 				<string>22.0.0</string>
+				<key>PlistPath</key>
+				<string>Contents/Info.plist</string>
+			</dict>
+			<dict>
+				<key>Arch</key>
+				<string>x86_64</string>
+				<key>BundlePath</key>
+				<string>VMHide.kext</string>
+				<key>Comment</key>
+				<string>VMM stealth mode</string>
+				<key>Enabled</key>
+				<true/>
+				<key>ExecutablePath</key>
+				<string>Contents/MacOS/VMHide</string>
+				<key>MaxKernel</key>
+				<string></string>
+				<key>MinKernel</key>
+				<string>20.0.0</string>
 				<key>PlistPath</key>
 				<string>Contents/Info.plist</string>
 			</dict>
@@ -273,7 +287,7 @@
 			<key>HibernateSkipsPicker</key>
 			<true/>
 			<key>HideAuxiliary</key>
-			<{{HIDEAUXILLARY}}/>
+			<false/>
 			<key>InstanceIdentifier</key>
 			<string></string>
 			<key>LauncherOption</key>
@@ -359,11 +373,7 @@
 		<key>Serial</key>
 		<dict>
 			<key>Init</key>
-{%- if SERIAL == 'TRUE' %}
 			<true/>
-{%- else %}
-			<false/>
-{%- endif %}
 			<key>Override</key>
 			<false/>
 		</dict>
