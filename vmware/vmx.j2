@@ -14,9 +14,9 @@ guestinfo.oc4vm.revision = "{{COMMIT}}"
 __CPU_Sanity_Checks__ = ""
 {% if AMD == '1' -%}
 featMask.vm.cpuid.AMD = "Min:1"           # Check CPU as OC4VM has Intel and AMD variants
-{% else -%}
+{%- else -%}
 featMask.vm.cpuid.INTEL = "Min:1"         # Check CPU as OC4VM has Intel and AMD variants
-{% endif %}
+{%- endif %}
 featMask.vm.cpuid.AVX = "Min:1"           # Check AVX 1.0 support in CPU (Sandy Bridge and Bulldozer or later)
 featMask.vm.cpuid.AVX2 = "Min:1"          # Check AVX 2.0 support in CPU (Haswell and Excavator or later)
 featMask.vm.cpuid.F16C = "Min:1"          # Check F16C support in CPU (mix of CPUs)
