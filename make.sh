@@ -114,18 +114,18 @@ do
     cp -v ./vmware/macos.vmdk ./build/vmware/$VARIANT 2>&1 >/dev/null
     cp -v ./build/disks/$VARIANT/opencore.vmdk ./build/vmware/$VARIANT
 
-    if [[ $VARIANT == 'AMD' ]]; then
-        AMD="1"
+    if [[ $VARIANT == 'amd' ]]; then
+        AMD=1
     else
-        AMD="0"
+        AMD=0
     fi
 
     ./utilities/minijinja-cli \
         --format=toml \
         -D VERSION=$VERSION \
-        -D VARIANT=$VARIANT \
+        -D VARIANT=${VARIANT:u} \
         -D COMMIT=$COMMIT \
-        -D DESCRIPTION="macOS $VARIANT" \
+        -D DESCRIPTION="macOS ${VARIANT:u}" \
         -D AMD=$AMD \
         -o ./build/vmware/$VARIANT/macos.vmx \
         ./vmware/vmx.j2
@@ -133,7 +133,7 @@ do
     ./utilities/minijinja-cli \
         --format=toml \
         -D VERSION=$VERSION \
-        -D VARIANT=$VARIANT \
+        -D VARIANT=${VARIANT:u} \
         -D COMMIT=$COMMIT \
         -o ./build/vmware/$VARIANT/vmw-macos.sh \
         ./vmware/vmw-macos-posix.j2
@@ -150,9 +150,9 @@ do
     ./utilities/minijinja-cli \
         --format=toml \
         -D VERSION=$VERSION \
-        -D VARIANT=$VARIANT \
+        -D VARIANT=${VARIANT:u} \
         -D COMMIT=$COMMIT \
-        -D DESCRIPTION="macOS $VARIANT" \
+        -D DESCRIPTION="macOS ${VARIANT:u}" \
         -o ./build/qemu/$VARIANT/qemu-macos.sh \
         ./qemu/qemu-macos-posix.j2
     chmod +x ./build/qemu/$VARIANT/qemu-macos.sh
