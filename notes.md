@@ -3,7 +3,35 @@
 ## Opencore
 #### Cores for AMD Patches
 
-| Cores | 10.13/10.14<br/>uAAAAAAA<br/>B8000000 0000 | 10.15/11.0<br/>ugAAAAAA<br/>BA000000 0000 | 12.0/13.0<br/>ugAAAACQ<br/>BA000000 0090 | 13.3+<br/>ugAAAAA=<br/>BA000000 |
+From https://github.com/AMD-OSX/AMD_Vanilla/blob/master/README.md
+
+The Core Count patch needs to be modified to boot your system. Find the four `algrey - Force cpuid_cores_per_package` patches and alter the `Replace` value only.
+
+|   macOS Version      | Replace Value | New Value |
+|----------------------|---------------|-----------|
+| 10.13.x, 10.14.x     | B8000000 0000 | B8 < Core Count > 0000 0000 |
+| 10.15.x, 11.x        | BA000000 0000 | BA < Core Count > 0000 0000 |
+| 12.x, 13.0 to 13.2.1 | BA000000 0090 | BA < Core Count > 0000 0090 |
+| 13.3 +               |  BA000000 00  | BA < Core Count > 0000 00 |
+
+From the table above substitue `< Core Count >` with the hexadecimal value matching your physical core count. Do not use your CPU's thread count. See the table below for the values matching your CPU core count.
+
+
+| Core Count | Hexadecimal |
+|------------|-------------|
+|   4 Core   |     `04`    |
+|   6 Core   |     `06`    |
+|   8 Core   |     `08`    |
+|   12 Core  |     `0C`    |
+|   16 Core  |     `10`    |
+|   24 Core  |     `18`    |
+|   32 Core  |     `20`    |
+
+So for example, a user with a 6-core processor should use these `Replace` values: `B8 06 0000 0000` / `BA 06 0000 0000` / `BA 06 0000 0090` / `BA 06 0000 00`
+
+Which gives these values when correclty base64 encoded:
+
+| Cores | 10.13/10.14<br/>uAAAAAAA | 10.15/11.0<br/>ugAAAAAA | 12.0/13.0<br/>ugAAAACQ | 13.3+<br/>ugAAAAA= |
 |-------|--------------------------------------------|-------------------------------------------|------------------------------------------|---------------------------------|
 | 1     | uAEAAAAA                                   | ugEAAAAA                                  | ugEAAACQ                                 | ugEAAAA=                        |
 | 2     | uAIAAAAA                                   | ugIAAAAA                                  | ugIAAACQ                                 | ugIAAAA=                        |
@@ -13,6 +41,29 @@
 | 24    | uBgAAAAA                                   | uhgAAAAA                                  | uhgAAACQ                                 | uhgAAAA=                        |
 | 32    | uCAAAAAA                                   | uiAAAAAA                                  | uiAAAACQ                                 | uiAAAAA=                        |
 | 64    | uEAAAAAA                                   | ukAAAAAA                                  | ukAAAACQ                                 | ukAAAAA=                        |
+
+## macOS
+### Useful boot-args
+[default]<br/>
+`keepsyms=1 -lilubetaall -no_compat_check -no_panic_dialog vmhState=disabled`
+
+[stealth]<br/>
+`keepsyms=1 -lilubetaall -no_compat_check -no_panic_dialog vmhState=enabled`
+
+[verbose]<br/>
+`keepsyms=1 -lilubetaall -no_compat_check -no_panic_dialog vmhState=disabled -v`
+
+[trace]<br/>
+`keepsyms=1 -lilubetaall -no_compat_check -no_panic_dialog vmhState=disabled -v serial=1`
+
+[debug]<br/>
+`keepsyms=1 -lilubetaall -no_compat_check -no_panic_dialog vmhState=disabled -v serial=1 debug=2`
+
+[kdk]<br/>
+`keepsyms=1 -lilubetaall -v -no_compat_check serial=1 debug=2 -no_panic_dialog -liludbgall -topo -cpuid kcsuffix=development`
+
+Useful for AMD deugging using KDK:
+`avx512=0 cwad`
 
 ## VMware
 ### VMware Mac OS X & macOS table
@@ -87,15 +138,13 @@ smbios.reflectHost = "TRUE"
 ### QEMU on Windows
 Windows enable WHPX:
 
-```Dism /Online /Enable-Feature:HypervisorPlatform```
+`Dism /Online /Enable-Feature:HypervisorPlatform`
 
-QEMU host folder as drive:
+### QEMU host folder virtual drive
 
-```-device usb-storage,drive=fat16 -drive file=fat:rw:fat-type=16:"<full path to host folder>",id=fat16,format=raw,if=none```
+`-device usb-storage,drive=fat16 -drive file=fat:rw:fat-type=16:"<full path to host folder>",id=fat16,format=raw,if=none`
 
-```.\oc4vm-runner.ps1 -AccelType hvf -MemorySize 8 -OpencoreImage "opencore.qcow2" -EnableSerial```
-
-### Random
+## Random Stuff
 
 Encode a base64 encoded binary:
 
@@ -103,4 +152,4 @@ Encode a base64 encoded binary:
 
 Decode a base64 encoded binary:
 
-`print MduAPQAAAAAGdQA= | base64 -D | xxd -u -g 4 -e`
+`print AAAf/w== | base64 -D | xxd -u -g 4 -e`
