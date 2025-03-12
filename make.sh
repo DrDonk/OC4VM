@@ -32,7 +32,7 @@ build_dmg() {
     # Attach blank DMG and create OC setup
     hdiutil attach $1/opencore.dmg -noverify -nobrowse -noautoopen
     cp -rv $3 /Volumes/OPENCORE/EFI/OC
-    cp -v ./tools/ocbootargs /Volumes/OPENCORE/ocbootargs
+    cp -rv ./tools /Volumes/OPENCORE
     rm -rf /Volumes/OPENCORE/.fseventsd
     dot_clean -m /Volumes/OPENCORE
     SetFile -a C /Volumes/OPENCORE
@@ -130,14 +130,8 @@ do
         -o ./build/vmware/$VARIANT/macos.vmx \
         ./vmware/vmx.j2
 
-    ./utilities/minijinja-cli \
-        --format=toml \
-        -D VERSION=$VERSION \
-        -D VARIANT=${VARIANT:u} \
-        -D COMMIT=$COMMIT \
-        -o ./build/vmware/$VARIANT/vmw-macos.sh \
-        ./vmware/vmw-macos-posix.j2
-    chmod +x ./build/vmware/$VARIANT/vmw-macos.sh
+    cp -v ./vmware/vmw-macos ./build/vmware/$VARIANT/vmw-macos
+    chmod +x ./build/vmware/$VARIANT/vmw-macos
 
     # Build the QEMU templates
     msg_status "Step 4. Create QEMU templates"
@@ -147,21 +141,15 @@ do
     cp -v ./qemu/macos.qcow2 ./build/qemu/$VARIANT 2>&1 >/dev/null
     cp -v ./build/disks/$VARIANT/opencore.qcow2 ./build/qemu/$VARIANT
 
-    ./utilities/minijinja-cli \
-        --format=toml \
-        -D VERSION=$VERSION \
-        -D VARIANT=${VARIANT:u} \
-        -D COMMIT=$COMMIT \
-        -D DESCRIPTION="macOS ${VARIANT:u}" \
-        -o ./build/qemu/$VARIANT/qemu-macos.sh \
-        ./qemu/qemu-macos-posix.j2
-    chmod +x ./build/qemu/$VARIANT/qemu-macos.sh
+    cp -v ./qemu/qemu-macos ./build/qemu/$VARIANT/qemu-macos
+    chmod +x ./build/qemu/$VARIANT/qemu-macos
 
 done
 
 msg_status "\nStep 5. Copying misc files"
 cp -v README.md ./build/
 cp -v LICENSE ./build/
+cp -vr ./iso ./build/
 cp -vr ./tools ./build/
 
 msg_status "\nStep 6. Zipping OC4VM Release"
