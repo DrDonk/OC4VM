@@ -133,6 +133,7 @@ def set_config(config):
 def get_value():
     config = get_config()
     value = int.from_bytes(config['NVRAM']['Add'][APPLE_NVRAM_VARIABLE_GUID]['csr-active-config'])
+    # global DEBUG
     # if DEBUG:
     #     print_value('get_value:', value, '')
     return value
@@ -140,6 +141,7 @@ def get_value():
 
 def set_value(value):
     config = get_config()
+    # global DEBUG
     # if DEBUG:
     #     print_value('set_value:', value, '')
     config['NVRAM']['Add'][APPLE_NVRAM_VARIABLE_GUID]['csr-active-config'] = value.to_bytes(4)
@@ -154,6 +156,7 @@ def set_value(value):
 
 def csrutil_clear():
     value = CSR_ENABLE_FLAGS
+    global DEBUG
     if DEBUG:
         print_value('clear:', value, '')
     set_value(value)
@@ -165,6 +168,7 @@ def csrutil_clear():
 def csrutil_disable(with_lists=None):
     # Get the inital value and set defaulkt disabled bits
     value = get_value()
+    global DEBUG
     if DEBUG:
         print_value('disable initial:', value, '')
     value = value | CSR_DISABLE_FLAGS
@@ -207,6 +211,7 @@ def csrutil_disable(with_lists=None):
 def csrutil_enable(without_lists=None):
     # Get the inital value and set defaulkt disabled bits
     value = get_value()
+    global DEBUG
     if DEBUG:
         print_value('enable initial:', value, '')
     value = value & MASK_ENABLE_FLAGS
@@ -249,6 +254,9 @@ def csrutil_enable(without_lists=None):
 def csrutil_status():
     prefix = 'System Integrity Protection status:'
     value = get_value()
+    global DEBUG
+    if DEBUG:
+        print_value('status:', value, '')
     if value == CSR_ENABLE_FLAGS:
         print(f'{prefix} disabled')
     elif value == CSR_DISABLE_FLAGS:
@@ -312,8 +320,11 @@ def csrutil_status():
 def csrutil_authenticated_root(subcommand, *args):
     prefix = 'Authenticated Root status:'
     value = get_value()
+    global DEBUG
     match subcommand:
         case 'status':
+            if DEBUG:
+                print_value('auth-root status:', value, '')
             prefix = 'Authenticated Root status:'
             if value & CSR_ALLOW_UNAUTHENTICATED_ROOT:
                 print(f'{prefix} disabled')
@@ -321,11 +332,15 @@ def csrutil_authenticated_root(subcommand, *args):
                 print(f'{prefix} enabled')
         case 'enable':
             value = value & ~CSR_ALLOW_UNAUTHENTICATED_ROOT
+            if DEBUG:
+                print_value('auth-root enable:', value, '')
             set_value(value)
             print('Successfully enabled authenticated root.')
             print('Restart the machine for the changes to take effect.')
         case 'disable':
             value = value | CSR_ALLOW_UNAUTHENTICATED_ROOT
+            if DEBUG:
+                print_value('auth-root disable:', value, '')
             set_value(value)
             print('Successfully disabled authenticated root.')
             print('Restart the machine for the changes to take effect.')
