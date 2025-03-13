@@ -6,7 +6,7 @@
 OpenCore for Virtual Machines (OC4VM) has been built to run macOS VMs primarily on Intel 
 based Apple Macs. It may also be used on other PC hardware using VMware Workstation. It 
 provides an OpenCore disk image that can be used to boot Intel based macOS using VMware 
-Fusion and Workstation.
+Fusion and Workstation, and the open source QEMU program.
 
 Using OpenCore allows for a flexible patching system to overcome limitations of the 
 virtualisation software. It basically creates a virtual Hackintosh, which is similar in 
@@ -22,7 +22,6 @@ What OC4VM can do?
 * Run macOS on Intel CPUs
 * Run macOS on AMD CPUs (experimental)
 * Boot to macOS Recovery mode which is broken in VMware's EFI implementation
-* Easily change SIP settings using an EFI utility
 * Add Intel e1000e virtual NIC compatibility for Ventura and later versions of macOS
 
 What OC4VM cannot do:
@@ -39,6 +38,7 @@ The OC4VM system has been tested on an Intel Mac mini mid-2014 with these guest 
 using:
 * VMware Fusion 13.6
 * VMware Workstation 17.6
+* QEMU 9.2
 
 CPUs will need to support the following instructions:
 
@@ -51,7 +51,7 @@ CPUs will need to support the following instructions:
 ### 3.1 Download Release
 
 * Download a binary release from https://github.com/DrDonk/oc4vm/releases
-* Optionally check the sha512 checksum matches that published with the release
+* Optionally check the sha512 checksum matches that are published with the release
 * Unzip the archive to extract the files
 * Navigate to the folder with the extracted files
 
@@ -70,15 +70,16 @@ OC4VM has 4 sub-folders:
 |:-----------|-------------------------------------------------------|
 | config     | OpenCore config.plist files for reference             |
 | disks      | OpenCore boot variants in DMG, VMDK and QCOW2 formats |
-| qemu       | Template VM for QEMU                                  |
-| tools      | VMware Mac OS X and macOS guest tools iso image       |
-| vmware     | Template VM for VMware                                |
+| iso        | VMware Mac OS X and macOS guest tools iso image       |
+| qemu       | Template VMs for QEMU                                 |
+| tools      | OC4VM tools to manage config.plist                    |
+| vmware     | Template VMs for VMware                               |
 
 The most import folders are the 'qemu' and 'vmware' folders. 
 
 ### 3.3 VMware Templates
 
-The 'vmware' folder has contains 2 folders with a VM template for VMware macOS virtual 
+The 'vmware' folder contains 2 folders with a VM template for VMware macOS virtual 
 machines. The folders are for AMD and intel CPUs. You will need to use the one that 
 matches the host CPU.
 
@@ -89,30 +90,40 @@ of the behaviours of the guest and could cause issues in the future.
 
 Each folder contains these files:
 
-| File          | Function                        |
-|:--------------|---------------------------------|
-| opencore.vmdk | OpenCore boot virtual disk      |
-| macos.vmx     | macOS VMX settings file         |
-| macos.vmdk    | Pre-formated HFS+J virtual disk |
+| File          | Function                          |
+|:--------------|-----------------------------------|
+| opencore.vmdk | OpenCore boot virtual disk        |
+| macos.vmx     | macOS VMX settings file           |
+| macos.vmdk    | Pre-formated HFS+J virtual disk   |
+| vmw-macos     | Shell script to run VM (optional) |
 
+#### 3.3.1 New VM
 To create a new virtual machine copy either the Intel or AMD template to a new folder:
 
 * opencore.vmdk
 * macos.vmx
 * macos.vmdk
 
-TODO:
-How to use with exisitng VM
-Copy oc VMDK
-Add existing disk
-Change the boot disk
-Set startup disk
+You will need to add some installation media to the new VM to install macOS.
 
+#### 3.3.2 Existing VM
+Please follow these instructions to add to an existing macOS guest.
+
+1. Copy the opencore.vmdk from gthe teomplate folder to the exisint guests folder.
+2. Use the guest settings to add the opencore.vmdk disk as a SATA drive.
+3. Boot to the firmware and select the OpenCore drive as the boot device
+
+
+#### 3.3.3 VMware macOS Guest Tools
 OC4VM provides a copy of the VMware macOS guest tools ISO images. These are useful for 
 VMware Fusion and also QEMU/UTM. To install mount the darwin.iso file using the VMs 
 virtual CD/DVD drive.
 
 ### 3.4 QEMU templates
+
+The QEMU template is only supported on Inyel based Macs running macOS. There are other 
+solutions for Linux, and QEMU fails to run macOS on Windows.
+
 ```
 OC4VM QEMU Runner
  NAME:

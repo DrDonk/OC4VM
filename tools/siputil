@@ -5,6 +5,7 @@
 # SPDX-License-Identifier: MIT
 
 import argparse
+import binascii
 import os
 import plistlib
 import platform
@@ -77,6 +78,21 @@ MASK_ENABLE_FLAGS = ~CSR_DISABLE_FLAGS
 APPLE_NVRAM_VARIABLE_GUID = '7C436110-AB2A-4BBB-A880-FE41995C9F82'
 
 
+def hexswap(input_hex: str):
+    hex_pairs = [input_hex[i: i + 2] for i in range(0, len(input_hex), 2)]
+    hex_rev = hex_pairs[::-1]
+    hex_str = "".join(["".join(x) for x in hex_rev])
+    return hex_str.upper()
+
+
+def string_to_hex(input_string):
+    if not (len(input_string) % 2) == 0:
+        input_string = "0" + input_string
+    input_string = hexswap(input_string)
+    input_string = binascii.unhexlify(input_string)
+    return input_string
+
+
 def print_help():
     help_text = '''
 usage: csrutil <options> <command>
@@ -112,9 +128,9 @@ Available commands:
 
 
 def print_value(prefix, value, suffix):
-    raw = value.to_bytes(4)
+    raw = string_to_hex(f'{value:0>8X}')
     b64 = plistlib._encode_base64(raw).decode().rstrip('\n')
-    print(f'{prefix} {value} 0x{value:0>8X} {b64} {suffix}')
+    print(f'{prefix} {value} {raw} {b64} {suffix}')
     return
 
 
@@ -132,7 +148,7 @@ def set_config(config):
 
 def get_value():
     config = get_config()
-    value = int.from_bytes(config['NVRAM']['Add'][APPLE_NVRAM_VARIABLE_GUID]['csr-active-config'])
+    value = int.from_bytes(config['NVRAM']['Add'][APPLE_NVRAM_VARIABLE_GUID]['csr-active-config'], 'little')
     # global DEBUG
     # if DEBUG:
     #     print_value('get_value:', value, '')
@@ -144,7 +160,8 @@ def set_value(value):
     # global DEBUG
     # if DEBUG:
     #     print_value('set_value:', value, '')
-    config['NVRAM']['Add'][APPLE_NVRAM_VARIABLE_GUID]['csr-active-config'] = value.to_bytes(4)
+    raw = string_to_hex(f'{value:0>8X}')
+    config['NVRAM']['Add'][APPLE_NVRAM_VARIABLE_GUID]['csr-active-config'] = raw
     set_config(config)
     if DEBUG:
         check = get_value()
@@ -179,6 +196,10 @@ def csrutil_disable(with_lists=None):
     if with_lists:
         for with_list in with_lists:
             match with_list[0]:
+                case 'apple':
+                    value = value & ~CSR_ALLOW_APPLE_INTERNAL
+                case 'authroot':
+                    value = value & ~CSR_ALLOW_UNAUTHENTICATED_ROOT
                 case 'basesystem':
                     value = value & ~CSR_ALLOW_ANY_RECOVERY_OS
                 case 'debug':
@@ -222,6 +243,10 @@ def csrutil_enable(without_lists=None):
     if without_lists:
         for without_list in without_lists:
             match without_list[0]:
+                case 'apple':
+                    value = value | CSR_ALLOW_APPLE_INTERNAL
+                case 'authroot':
+                    value = value | CSR_ALLOW_UNAUTHENTICATED_ROOT
                 case 'basesystem':
                     value = value | CSR_ALLOW_ANY_RECOVERY_OS
                 case 'debug':
@@ -258,7 +283,7 @@ def csrutil_status():
     if DEBUG:
         print_value('status:', value, '')
     if value == CSR_ENABLE_FLAGS:
-        print(f'{prefix} disabled')
+        print(f'{prefix} enabled')
     elif value == CSR_DISABLE_FLAGS:
         print(f'{prefix} disabled')
     else:
@@ -266,6 +291,13 @@ def csrutil_status():
         print('Configuration:')
         msg = 'Apple Internal: '
         if value & CSR_ALLOW_APPLE_INTERNAL:
+            status = 'disabled'
+        else:
+            status = 'enabled'
+        print(f'\t{msg} {status}')
+
+        msg = 'Authenticated Root: '
+        if value & CSR_ALLOW_UNAUTHENTICATED_ROOT:
             status = 'disabled'
         else:
             status = 'enabled'
