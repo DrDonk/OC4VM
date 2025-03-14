@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# OC4VM csrutil emulator
+# OC4VM siputil
 # SPDX-FileCopyrightText: © 2023-25 David Parsons
 # SPDX-License-Identifier: MIT
 
@@ -9,9 +9,6 @@ import binascii
 import os
 import plistlib
 import platform
-
-DEBUG = False
-CONFIG_PLIST = '/Volumes/OPENCORE/EFI/OC/config.plist'
 
 # Emulates csrutil utility for Opencore
 if platform.system() != 'Darwin':
@@ -71,10 +68,16 @@ CSR_VALID_CAPABILITIES = (CSR_CAPABILITY_UNLIMITED |
                           CSR_CAPABILITY_CONFIG |
                           CSR_CAPABILITY_APPLE_INTERNAL)
 
-# Added flag for clear
-CSR_ENABLE_FLAGS = 0
-MASK_ENABLE_FLAGS = ~CSR_DISABLE_FLAGS
+# FLags used by this utility
+SIP_ENABLE_ALL = 0
+SIP_DISABLE_ALL = CSR_DISABLE_FLAGS | CSR_ALLOW_UNAUTHENTICATED_ROOT
+MASK_ENABLE_FLAGS = ~SIP_DISABLE_ALL
 
+# Option flags
+DEBUG = False
+CONFIG_PLIST = '/Volumes/OPENCORE/EFI/OC/config.plist'
+
+# NVRAM variables
 APPLE_NVRAM_VARIABLE_GUID = '7C436110-AB2A-4BBB-A880-FE41995C9F82'
 
 
@@ -95,7 +98,7 @@ def string_to_hex(input_string):
 
 def print_help():
     help_text = '''
-usage: csrutil <options> <command>
+usage: siputil <options> <command>
 Modify the System Integrity Protection configuration stored in the OpenCore config.plist.
 All configuration changes apply to the entire machine.
 
@@ -114,14 +117,6 @@ Available commands:
         Enable the protection on the machine.
     status
         Display the current configuration.
-
-    authenticated-root
-        status
-            Show the current authenticated root setting.
-        disable
-            Allow booting from non-sealed system snapshots.
-        enable
-            Only allow booting from sealed system snapshots.
 '''
     print(help_text)
     return
@@ -130,7 +125,7 @@ Available commands:
 def print_value(prefix, value, suffix):
     raw = string_to_hex(f'{value:0>8X}')
     b64 = plistlib._encode_base64(raw).decode().rstrip('\n')
-    print(f'{prefix} {value} {raw} {b64} {suffix}')
+    print(f'[debug:] {prefix} {value} 0x{value:0>8X} {raw} {b64} {suffix}')
     return
 
 
@@ -149,17 +144,12 @@ def set_config(config):
 def get_value():
     config = get_config()
     value = int.from_bytes(config['NVRAM']['Add'][APPLE_NVRAM_VARIABLE_GUID]['csr-active-config'], 'little')
-    # global DEBUG
-    # if DEBUG:
-    #     print_value('get_value:', value, '')
     return value
 
 
 def set_value(value):
+    global DEBUG
     config = get_config()
-    # global DEBUG
-    # if DEBUG:
-    #     print_value('set_value:', value, '')
     raw = string_to_hex(f'{value:0>8X}')
     config['NVRAM']['Add'][APPLE_NVRAM_VARIABLE_GUID]['csr-active-config'] = raw
     set_config(config)
@@ -171,24 +161,23 @@ def set_value(value):
     return
 
 
-def csrutil_clear():
-    value = CSR_ENABLE_FLAGS
+def siputil_clear():
+    global DEBUG
+    value = SIP_ENABLE_ALL
     global DEBUG
     if DEBUG:
         print_value('clear:', value, '')
     set_value(value)
-    print('Successfully cleared system integrity configuration.')
-    print('Restart the machine for the changes to take effect.')
     return
 
 
-def csrutil_disable(with_lists=None):
-    # Get the inital value and set defaulkt disabled bits
-    value = get_value()
+def siputil_disable(with_lists=None):
     global DEBUG
+    # Get the inital value and set default disabled bits
+    value = get_value()
     if DEBUG:
         print_value('disable initial:', value, '')
-    value = value | CSR_DISABLE_FLAGS
+    value = value | SIP_DISABLE_ALL
     if DEBUG:
         print_value('disable masked:', value, '')
 
@@ -213,26 +202,23 @@ def csrutil_disable(with_lists=None):
                 case 'nvram':
                     value = value & ~CSR_ALLOW_UNRESTRICTED_NVRAM
                 case _:
-                    print('csrutil: --with requires an argument.')
+                    print('siputil: --with requires an argument.')
                     print_help()
                     return
             if DEBUG:
                 print_value('disable with:', value, with_list[0])
 
-        print('Requesting an unsupported configuration. This is likely to break in the future and leave your machine in an unknown state.')
-
     if DEBUG:
         print_value('disable final:', value, '')
-    print('System Integrity Protection is off.')
-    print('Restart the machine for the changes to take effect.')
     set_value(value)
+    siputil_status()
     return
 
 
-def csrutil_enable(without_lists=None):
-    # Get the inital value and set defaulkt disabled bits
-    value = get_value()
+def siputil_enable(without_lists=None):
     global DEBUG
+    # Get the inital value and set default disabled bits
+    value = get_value()
     if DEBUG:
         print_value('enable initial:', value, '')
     value = value & MASK_ENABLE_FLAGS
@@ -260,131 +246,93 @@ def csrutil_enable(without_lists=None):
                 case 'nvram':
                     value = value | CSR_ALLOW_UNRESTRICTED_NVRAM
                 case _:
-                    print('csrutil: --without requires an argument.')
+                    print('siputil: --without requires an argument.')
                     print_help()
                     return
             if DEBUG:
                 print_value('enable with:', value, without_list[0])
-        print('Requesting an unsupported configuration. This is likely to break in the future and leave your machine in an unknown state.')
 
     if DEBUG:
         print_value('enable final:', value, '')
     set_value(value)
-    print('System Integrity Protection is on.')
-    print('Restart the machine for the changes to take effect.')
-
+    siputil_status()
     return
 
 
-def csrutil_status():
-    prefix = 'System Integrity Protection status:'
-    value = get_value()
+def siputil_status():
     global DEBUG
-    if DEBUG:
-        print_value('status:', value, '')
-    if value == CSR_ENABLE_FLAGS:
-        print(f'{prefix} enabled')
-    elif value == CSR_DISABLE_FLAGS:
-        print(f'{prefix} disabled')
+    print('OpenCore SIP status:')
+    value = get_value()
+    print_value('\tcsr-active-config:', value, '')
+    if value == SIP_ENABLE_ALL:
+        print('\tstatus: enabled')
+    elif value == SIP_DISABLE_ALL:
+        print('\tstatus disabled')
     else:
-        print(f'{prefix} unknown (Custom Configuration).\n')
-        print('Configuration:')
-        msg = 'Apple Internal: '
-        if value & CSR_ALLOW_APPLE_INTERNAL:
-            status = 'disabled'
-        else:
-            status = 'enabled'
-        print(f'\t{msg} {status}')
+        print('\t status custom config')
+    print('\tConfiguration:')
+    msg = 'Apple Internal: '
+    if value & CSR_ALLOW_APPLE_INTERNAL:
+        status = 'disabled'
+    else:
+        status = 'enabled'
+    print(f'\t\t{msg} {status}')
 
-        msg = 'Authenticated Root: '
-        if value & CSR_ALLOW_UNAUTHENTICATED_ROOT:
-            status = 'disabled'
-        else:
-            status = 'enabled'
-        print(f'\t{msg} {status}')
+    msg = 'Authenticated Root: '
+    if value & CSR_ALLOW_UNAUTHENTICATED_ROOT:
+        status = 'disabled'
+    else:
+        status = 'enabled'
+    print(f'\t\t{msg} {status}')
 
-        msg = 'Kext Signing: '
-        if value & CSR_ALLOW_UNTRUSTED_KEXTS:
-            status = 'disabled'
-        else:
-            status = 'enabled'
-        print(f'\t{msg} {status}')
+    msg = 'Kext Signing: '
+    if value & CSR_ALLOW_UNTRUSTED_KEXTS:
+        status = 'disabled'
+    else:
+        status = 'enabled'
+    print(f'\t\t{msg} {status}')
 
-        msg = 'Filesystem Protections: '
-        if value & CSR_ALLOW_UNRESTRICTED_FS:
-            status = 'disabled'
-        else:
-            status = 'enabled'
-        print(f'\t{msg} {status}')
+    msg = 'Filesystem Protections: '
+    if value & CSR_ALLOW_UNRESTRICTED_FS:
+        status = 'disabled'
+    else:
+        status = 'enabled'
+    print(f'\t\t{msg} {status}')
 
-        msg = 'Debugging Restrictions: '
-        if value & CSR_ALLOW_KERNEL_DEBUGGER:
-            status = 'disabled'
-        else:
-            status = 'enabled'
-        print(f'\t{msg} {status}')
+    msg = 'Debugging Restrictions: '
+    if value & CSR_ALLOW_KERNEL_DEBUGGER:
+        status = 'disabled'
+    else:
+        status = 'enabled'
+    print(f'\t\t{msg} {status}')
 
-        msg = 'DTrace Restrictions: '
-        if value & CSR_ALLOW_UNRESTRICTED_DTRACE:
-            status = 'disabled'
-        else:
-            status = 'enabled'
-        print(f'\t{msg} {status}')
+    msg = 'DTrace Restrictions: '
+    if value & CSR_ALLOW_UNRESTRICTED_DTRACE:
+        status = 'disabled'
+    else:
+        status = 'enabled'
+    print(f'\t\t{msg} {status}')
 
-        msg = 'NVRAM Protections: '
-        if value & CSR_ALLOW_UNRESTRICTED_NVRAM:
-            status = 'disabled'
-        else:
-            status = 'enabled'
-        print(f'\t{msg} {status}')
+    msg = 'NVRAM Protections: '
+    if value & CSR_ALLOW_UNRESTRICTED_NVRAM:
+        status = 'disabled'
+    else:
+        status = 'enabled'
+    print(f'\t\t{msg} {status}')
 
-        msg = 'BaseSystem Verification: '
-        if value & CSR_ALLOW_ANY_RECOVERY_OS:
-            status = 'disabled'
-        else:
-            status = 'enabled'
-        print(f'\t{msg} {status}')
-        print('\nThis is an unsupported configuration, likely to break in the future and leave your machine in an unknown state.')
+    msg = 'BaseSystem Verification: '
+    if value & CSR_ALLOW_ANY_RECOVERY_OS:
+        status = 'disabled'
+    else:
+        status = 'enabled'
+    print(f'\t\t{msg} {status}')
 
-    return
-
-
-def csrutil_authenticated_root(subcommand, *args):
-    prefix = 'Authenticated Root status:'
-    value = get_value()
-    global DEBUG
-    match subcommand:
-        case 'status':
-            if DEBUG:
-                print_value('auth-root status:', value, '')
-            prefix = 'Authenticated Root status:'
-            if value & CSR_ALLOW_UNAUTHENTICATED_ROOT:
-                print(f'{prefix} disabled')
-            else:
-                print(f'{prefix} enabled')
-        case 'enable':
-            value = value & ~CSR_ALLOW_UNAUTHENTICATED_ROOT
-            if DEBUG:
-                print_value('auth-root enable:', value, '')
-            set_value(value)
-            print('Successfully enabled authenticated root.')
-            print('Restart the machine for the changes to take effect.')
-        case 'disable':
-            value = value | CSR_ALLOW_UNAUTHENTICATED_ROOT
-            if DEBUG:
-                print_value('auth-root disable:', value, '')
-            set_value(value)
-            print('Successfully disabled authenticated root.')
-            print('Restart the machine for the changes to take effect.')
-        case _:
-            print(f'Invalid authenticated-root keyword: {subcommand}')
-            print_help()
     return
 
 
 def main():
     # Setup parser and get args
-    parser = argparse.ArgumentParser(description='Opencore macOS csrutil command.', add_help=False)
+    parser = argparse.ArgumentParser(description='Opencore macOS siputil command.', add_help=False)
     parser.add_argument('-f', '--file')
     parser.add_argument('-d', '--debug', action='store_true')
     parser.add_argument('-h', '--help', action='store_true')
@@ -397,16 +345,10 @@ def main():
     enable_parser.add_argument('--without', nargs='+', action='append', dest='without_lists')
     status_parser = subparsers.add_parser('status')
 
-    authroot_parser = subparsers.add_parser('authenticated-root')
-    authroot_subparsers = authroot_parser.add_subparsers(dest='authroot_subcommand')
-    authroot_status_parser = authroot_subparsers.add_parser('status')
-    authroot_disable_parser = authroot_subparsers.add_parser('disable')
-    authroot_enable_parser = authroot_subparsers.add_parser('enable')
-
     args = parser.parse_args()
 
-    print('\nOC4VM csrutil emulator')
-    print('----------------------')
+    print('OC4VM siputil')
+    print('-------------')
 
     # Print help if requested
     if args.help or args.command == None:
@@ -429,19 +371,16 @@ def main():
         return
 
     # Execute the command
-    if args.command == 'status':
-        csrutil_status()
-    elif args.command == 'enable':
-        csrutil_enable(args.without_lists)
+    if args.command == 'clear':
+        siputil_clear()
     elif args.command == 'disable':
-        csrutil_disable(args.with_lists)
-    elif args.command == 'clear':
-        csrutil_clear()
-    elif args.command == 'authenticated-root':
-        if args.authroot_subcommand is not None:
-            csrutil_authenticated_root(args.authroot_subcommand)
-        else:
-            print_help()
+        siputil_disable(args.with_lists)
+    elif args.command == 'enable':
+        siputil_enable(args.without_lists)
+    elif args.command == 'status':
+        siputil_status()
+    else:
+        print_help()
     return
 
 
