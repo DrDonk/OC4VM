@@ -125,7 +125,7 @@ Available commands:
 def print_value(prefix, value, suffix):
     raw = string_to_hex(f'{value:0>8X}')
     b64 = plistlib._encode_base64(raw).decode().rstrip('\n')
-    print(f'[debug:] {prefix} {value} 0x{value:0>8X} {raw} {b64} {suffix}')
+    print(f'{prefix} {value} 0x{value:0>8X} {raw} {b64} {suffix}')
     return
 
 
@@ -166,7 +166,7 @@ def siputil_clear():
     value = SIP_ENABLE_ALL
     global DEBUG
     if DEBUG:
-        print_value('clear:', value, '')
+        print_value('[debug] clear:', value, '')
     set_value(value)
     return
 
@@ -176,10 +176,10 @@ def siputil_disable(with_lists=None):
     # Get the inital value and set default disabled bits
     value = get_value()
     if DEBUG:
-        print_value('disable initial:', value, '')
+        print_value('[debug] disable initial:', value, '')
     value = value | SIP_DISABLE_ALL
     if DEBUG:
-        print_value('disable masked:', value, '')
+        print_value('[debug] disable masked:', value, '')
 
     # Process any --with options
     if with_lists:
@@ -206,10 +206,10 @@ def siputil_disable(with_lists=None):
                     print_help()
                     return
             if DEBUG:
-                print_value('disable with:', value, with_list[0])
+                print_value('[debug] disable with:', value, with_list[0])
 
     if DEBUG:
-        print_value('disable final:', value, '')
+        print_value('[debug] disable final:', value, '')
     set_value(value)
     siputil_status()
     return
@@ -220,10 +220,10 @@ def siputil_enable(without_lists=None):
     # Get the inital value and set default disabled bits
     value = get_value()
     if DEBUG:
-        print_value('enable initial:', value, '')
+        print_value('[debug] enable initial:', value, '')
     value = value & MASK_ENABLE_FLAGS
     if DEBUG:
-        print_value('enable masked:', value, '')
+        print_value('[debug] enable masked:', value, '')
 
     # Process any --without options
     if without_lists:
@@ -250,10 +250,10 @@ def siputil_enable(without_lists=None):
                     print_help()
                     return
             if DEBUG:
-                print_value('enable with:', value, without_list[0])
+                print_value('[debug] enable with:', value, without_list[0])
 
     if DEBUG:
-        print_value('enable final:', value, '')
+        print_value('[debug] enable final:', value, '')
     set_value(value)
     siputil_status()
     return
@@ -265,11 +265,11 @@ def siputil_status():
     value = get_value()
     print_value('\tcsr-active-config:', value, '')
     if value == SIP_ENABLE_ALL:
-        print('\tstatus: enabled')
+        print('\tStatus: enabled')
     elif value == SIP_DISABLE_ALL:
-        print('\tstatus disabled')
+        print('\tStatus: disabled')
     else:
-        print('\t status custom config')
+        print('\tStatus: custom')
     print('\tConfiguration:')
     msg = 'Apple Internal: '
     if value & CSR_ALLOW_APPLE_INTERNAL:
