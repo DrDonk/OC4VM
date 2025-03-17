@@ -30,7 +30,7 @@ if [[ $(uname -m) == 'arm64' ]]; then
 fi
 
 CPU="max"
-DISK_IMAGE="macos.qcow2"
+DISK_IMG="macos.qcow2"
 MEMORY_SIZE="4"
 MONITOR_FLAG=0
 OPENCORE_IMG="opencore.qcow2"
@@ -180,7 +180,7 @@ fi
 
 if [ $RECOVERY_FLAG = 1 ]; then
 args+=(
--device virtio-blk,drive=recoveryos,bootindex=1
+-device virtio-blk,drive=recoveryos,bootindex=2
 -drive if=none,media=disk,id=recoveryos,file="$RECOVERYOS_IMG",discard=unmap,detect-zeroes=unmap
 )
 fi
