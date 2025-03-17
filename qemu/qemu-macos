@@ -55,7 +55,7 @@ usage () {
 	-d DISK-IMAGE         species a macOS drive image to use.
 	-m MEMORY             specifies amount of memory to allocate to VM.
 	-o OPENCORE-IMAGE     specifies OpenCore boot image.
-	-r RECOVERY-IMAGE     specifies macOS recoveryOS image.
+	-r RESTORE-IMAGE      specifies macOS installation/restore image ISO.
 	-s                    enable serial output.
 HELP
 }
@@ -112,7 +112,7 @@ while getopts ${OPTSTRING} opt; do
 			fi
 			;;
 		r)
-			echo "Recovery image: ${OPTARG}"
+			echo "Restore image: ${OPTARG}"
 			RECOVERY_FLAG=1
 			RECOVERYOS_IMG=${OPTARG}
 			if [ ! -f $RECOVERYOS_IMG ]; then
@@ -180,8 +180,7 @@ fi
 
 if [ $RECOVERY_FLAG = 1 ]; then
 args+=(
--device virtio-blk,drive=recoveryos,bootindex=2
--drive if=none,media=disk,id=recoveryos,file=$RECOVERYOS_IMG,discard=unmap,detect-zeroes=unmap
+-cdrom $RECOVERYOS_IMG
 )
 fi
 
