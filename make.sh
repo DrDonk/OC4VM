@@ -20,7 +20,7 @@ fi
 # Read current version
 VERSION=$(<VERSION)
 COMMIT=$(git rev-parse --short HEAD)
-msg_status "Version: $VERSION Cpmmit: $COMMIT"
+msg_status "Version: $VERSION Commit: $COMMIT"
 
 # Build the DMG & VMDK
 build_dmg() {
@@ -130,7 +130,12 @@ do
         -o ./build/vmware/$VARIANT/macos.vmx \
         ./vmware/vmx.j2
 
-    cp -v ./vmware/vmw-macos ./build/vmware/$VARIANT/vmw-macos
+    ./utilities/minijinja-cli \
+        --format=toml \
+        -D VERSION=$VERSION \
+        -D COMMIT=$COMMIT \
+        -o ./build/vmware/$VARIANT/vmw-macos \
+        ./vmware/vmw-macos
     chmod +x ./build/vmware/$VARIANT/vmw-macos
 
     # Build the QEMU templates
@@ -141,7 +146,12 @@ do
     cp -v ./qemu/macos.qcow2 ./build/qemu/$VARIANT 2>&1 >/dev/null
     cp -v ./build/disks/$VARIANT/opencore.qcow2 ./build/qemu/$VARIANT
 
-    cp -v ./qemu/qemu-macos ./build/qemu/$VARIANT/qemu-macos
+    ./utilities/minijinja-cli \
+        --format=toml \
+        -D VERSION=$VERSION \
+        -D COMMIT=$COMMIT \
+        -o ./build/qemu/$VARIANT/qemu-macos \
+        ./qemu/qemu-macos
     chmod +x ./build/qemu/$VARIANT/qemu-macos
 
 done
@@ -150,7 +160,14 @@ msg_status "\nStep 5. Copying misc files"
 cp -v README.md ./build/
 cp -v LICENSE ./build/
 cp -vr ./iso ./build/
-cp -vr ./tools ./build/
+# cp -vr ./tools ./build/
+./utilities/minijinja-cli \
+    --format=toml \
+    -D VERSION=$VERSION \
+    -D COMMIT=$COMMIT \
+    -o ./build/tools/bootargs \
+    ./qemu/qemu-macos
+chmod +x ./build/qemu/$VARIANT/qemu-macos
 
 msg_status "\nStep 6. Zipping OC4VM Release"
 rm ./dist/oc4vm-$VERSION.* 2>&1 >/dev/null

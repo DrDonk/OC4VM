@@ -1,5 +1,6 @@
 #!/bin/sh
 # OC4VM QEMU Runner
+# {{VERSION}}-{{COMMIT}}
 # SPDX-FileCopyrightText: © 2023-25 David Parsons
 # SPDX-License-Identifier: MIT
 
