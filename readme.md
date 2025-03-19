@@ -100,8 +100,8 @@ Each folder contains these files:
 #### 3.3.1 New VM
 To create a new virtual machine copy either the Intel or AMD template to a new folder:
 
-* opencore.vmdk
 * macos.vmx
+* opencore.vmdk
 * macos.vmdk
 
 You will need to add some installation media to the new VM to install macOS.
@@ -121,16 +121,25 @@ virtual CD/DVD drive.
 
 ### 3.4 QEMU templates
 
-The QEMU template is only supported on Inyel based Macs running macOS. There are other 
-solutions for Linux, and QEMU fails to run macOS on Windows.
+The QEMU template is only supported on Intel based Macs running macOS. There are other 
+solutions for Linux, and QEMU fails to run macOS on Windows. It has also proived to be
+non-functionall when used on an Apple Silicon M-sereis Mac.
+
+#### 3.3 Create and run macOS
+To create a new virtual machine copy either the Intel or AMD template to a new folder:
+
+* qemu-macos
+* opencore.qcow2
+* macos.qcow2
+
 
 ```
 OC4VM QEMU Runner
  NAME:
-        qemu-macos.sh
+        qemu-macos
 
  SYNOPSIS:
-        qemu-macos.sh [-a {hvf | kvm | tcg}] [-m <memory-size>] [-d <macos-image>] [-o <opencore-image>] [-r <recovery-image>] [-s]
+        qemu-macos [-a {hvf | kvm | tcg}] [-m <memory-size>] [-d <macos-image>] [-o <opencore-image>] [-r <recovery-image>] [-s]
 
  DESCRIPTION:
         Run macOS using QEMU
@@ -141,16 +150,9 @@ OC4VM QEMU Runner
         -d DISK-IMAGE         species a macOS drive image to use.
         -m MEMORY             specifies amount of memory to allocate to VM.
         -o OPENCORE-IMAGE     specifies OpenCore boot image.
-        -r RECOVERY-IMAGE     specifies macOS recoveryOS image.
+	 -r RECOVERY-IMAGE     specifies macOS installation/recovery image.
         -s                    enable serial output.
 ```
-TODO:
-Use only on macOS
-Describe the command parameters
-Apple Silicon does not work
-Windows does not work
-Linux recommend other projects
-
 
 ## 4. Building OC4VM
 
@@ -175,8 +177,17 @@ cloned repository.
 The build artefacts will be found in the "build" folder and the release zip file in the 
 "dist" folder.
 
-TODO:
-Add the current variables in the TOML/Jinja2 files
+| Name        | Type            | Description                                   |
+|:------------|-----------------------------------------------------------------|
+| BUILD       | <0/1>           | build config switch for make.sh               |
+| AMD         | <0/1>           | building for AMD                              |
+| BOOTARGS    | <string>        | macOS NVRAM boot-args                         |
+| CSRCONFIG   | <data>          | base64 encoded macOS CSR SIP value            |
+| DEBUG       | <0/1>           | enable debug options in OpenCore              |
+| DESCRIPTION | <string>        | description of configuration                  |
+| DMG         | <release/debug> | specify release or debug version of OpenCore  |
+| RESOLUTION  | <string>        | screen resolution WxH@Bpp or Max              |
+| TIMEOUT     | <integer>       | timeout for OpenCore boot picker (0 disables) |
 
 
 ## 5. Thanks
