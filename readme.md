@@ -177,17 +177,18 @@ cloned repository.
 The build artefacts will be found in the "build" folder and the release zip file in the 
 "dist" folder.
 
+
 | Name        | Type            | Description                                   |
-|:------------|-----------------------------------------------------------------|
-| BUILD       | <0/1>           | build config switch for make.sh               |
-| AMD         | <0/1>           | building for AMD                              |
-| BOOTARGS    | <string>        | macOS NVRAM boot-args                         |
-| CSRCONFIG   | <data>          | base64 encoded macOS CSR SIP value            |
-| DEBUG       | <0/1>           | enable debug options in OpenCore              |
-| DESCRIPTION | <string>        | description of configuration                  |
+|:------------|-----------------|-----------------------------------------------|
+| BUILD       | \<0/1\>           | build config switch for make.sh               |
+| AMD         | \<0/1\>           | building for AMD                              |
+| BOOTARGS    | \<string\>        | macOS NVRAM boot-args                         |
+| CSRCONFIG   | \<data\>          | base64 encoded macOS CSR SIP value            |
+| DEBUG       | \<0/1\>           | enable debug options in OpenCore              |
+| DESCRIPTION | \<string\>        | description of configuration                  |
 | DMG         | <release/debug> | specify release or debug version of OpenCore  |
-| RESOLUTION  | <string>        | screen resolution WxH@Bpp or Max              |
-| TIMEOUT     | <integer>       | timeout for OpenCore boot picker (0 disables) |
+| RESOLUTION  | \<string\>        | screen resolution WxH@Bpp or Max              |
+| TIMEOUT     | \<integer\>       | timeout for OpenCore boot picker (0 disables) |
 
 
 ## 5. Thanks
