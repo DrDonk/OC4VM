@@ -150,7 +150,7 @@ OC4VM QEMU Runner
         -d DISK-IMAGE         species a macOS drive image to use.
         -m MEMORY             specifies amount of memory to allocate to VM.
         -o OPENCORE-IMAGE     specifies OpenCore boot image.
-	 -r RECOVERY-IMAGE     specifies macOS installation/recovery image.
+        -r RECOVERY-IMAGE     specifies macOS installation/recovery image.
         -s                    enable serial output.
 ```
 
