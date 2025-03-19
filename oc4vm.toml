@@ -1,19 +1,32 @@
 # SPDX-FileCopyrightText: © 2023-25 David Parsons
 # SPDX-License-Identifier: MIT
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 9d1236a8e1b00fcaa46939af43afacf74cc1be74
 # Variables:
 # Name        Type            Description
 # ----        ----            -----------
 # BUILD       <0/1>           - build config switch for make.sh
 # AMD         <0/1>           - building for AMD
 # BOOTARGS    <string>        - macOS NVRAM boot-args
+<<<<<<< HEAD
+# CSRCONFIG   <data>          - base64 encoded macOS CSR SIP value
+=======
 # CSRCONFIG   <data>          - base64 encoded macOS CSR SIP valie
+>>>>>>> 9d1236a8e1b00fcaa46939af43afacf74cc1be74
 # DEBUG       <0/1>           - enable debug options in OpenCore
 # DESCRIPTION <string>        - description of configuration
 # DMG         <release/debug> - specify release or debug version of OpenCore
 # RESOLUTION  <string>        - screen resolution WxH@Bpp or Max
 # TIMEOUT     <integer>       - timeout for OpenCore boot picker (0 disables)
 
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 9d1236a (Add info about TOML/J2 build variables)
+=======
+>>>>>>> 9d1236a8e1b00fcaa46939af43afacf74cc1be74
 #
 # Intel CPU Settings
 #
@@ -29,7 +42,7 @@ RESOLUTION = '1440x900@32'
 TIMEOUT = '5'
 
 [intel-debug]
-BUILD = '1'
+BUILD = '1' 
 AMD = '0'
 BOOTARGS = 'keepsyms=1 -lilubetaall -v -no_compat_check -no_panic_dialog vmhState=disabled -liludbgall'
 CSRCONFIG = 'AAAAAA=='
