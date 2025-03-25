@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 # SPDX-FileCopyrightText: © 2023-25 David Parsons
 # SPDX-License-Identifier: MIT
-#set -x
+# set -x
 
 # Provide custom colors in Terminal for status and error messages
 msg_status() {
@@ -32,7 +32,7 @@ build_dmg() {
     # Attach blank DMG and create OC setup
     hdiutil attach $1/opencore.dmg -noverify -nobrowse -noautoopen
     cp -rv $3 /Volumes/OPENCORE/EFI/OC
-    cp -rv ./tools /Volumes/OPENCORE
+    cp -rv ./build/tools /Volumes/OPENCORE
     rm -rf /Volumes/OPENCORE/.fseventsd
     dot_clean -m /Volumes/OPENCORE
     SetFile -a C /Volumes/OPENCORE
@@ -57,6 +57,25 @@ build_dmg() {
 
 # Clear previous build
 rm -rfv ./build/* 2>&1 >/dev/null
+
+# Fixup version/commit in tools scripts
+mkdir -p ./build/tools 2>&1 >/dev/null
+
+./utilities/minijinja-cli \
+    --format=toml \
+    -D VERSION=$VERSION \
+    -D COMMIT=$COMMIT \
+    -o ./build/tools/bootargs \
+    ./tools/bootargs
+chmod +x ./build/tools/bootargs
+
+./utilities/minijinja-cli \
+    --format=toml \
+    -D VERSION=$VERSION \
+    -D COMMIT=$COMMIT \
+    -o ./build/tools/siputil \
+    ./tools/siputil
+chmod +x ./build/tools/siputil
 
 VARIANTS=("${(f)$(./utilities/stoml oc4vm.toml . | tr ' ' '\n')}")
 for VARIANT in $VARIANTS
@@ -160,14 +179,6 @@ msg_status "\nStep 5. Copying misc files"
 cp -v README.md ./build/
 cp -v LICENSE ./build/
 cp -vr ./iso ./build/
-# cp -vr ./tools ./build/
-./utilities/minijinja-cli \
-    --format=toml \
-    -D VERSION=$VERSION \
-    -D COMMIT=$COMMIT \
-    -o ./build/tools/bootargs \
-    ./qemu/qemu-macos
-chmod +x ./build/qemu/$VARIANT/qemu-macos
 
 msg_status "\nStep 6. Zipping OC4VM Release"
 rm ./dist/oc4vm-$VERSION.* 2>&1 >/dev/null
