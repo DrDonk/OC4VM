@@ -28,7 +28,6 @@ esac
 CPU="max"
 DISK_IMG="macos.qcow2"
 MEMORY_SIZE="4"
-MONITOR_FLAG=0
 OPENCORE_IMG="opencore.qcow2"
 RECOVERY_FLAG=0
 RECOVERYOS_IMG=""
@@ -160,24 +159,7 @@ args=(
 -device qemu-xhci
 -device usb-tablet
 -device usb-kbd
-# TODO: Enable audio
-# -audiodev coreaudio,id=audio0
-# -device ich9-intel-hda
-# -device hda-output,audiodev=audio0
-# BIOS Information
--smbios type=0,vendor="VMware,, Inc.",version="VMW71.00V.24006586.B64.2406042151",date="06/04/2024",uefi=on
-# System Information
--smbios type=1,manufacturer="VMware,, Inc.",product="VMware7,,1",serial="VMX4wtlEPW0L"
-# Baseboard Information
--smbios type=2,manufacturer="Intel Corporation",product="440BX Desktop Reference Platform"
 )
-
-if [ $MONITOR_FLAG = 1 ]; then
-args+=(
--chardev stdio,id=char0,mux=on,logfile=monitor.log,signal=off
--mon chardev=char0
-)
-fi
 
 if [ $RECOVERY_FLAG = 1 ]; then
 args+=(
@@ -188,8 +170,9 @@ fi
 
 if [ $SERIAL_FLAG = 1 ]; then
 args+=(
--chardev file,id=char1,path=serial.log
--serial chardev:char1
+-chardev stdio,id=char0,mux=on,logfile=serial.log,signal=off
+-serial chardev:char0
+-mon chardev=char0
 )
 fi
 
