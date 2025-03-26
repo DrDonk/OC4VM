@@ -15,7 +15,7 @@ DELETE_VAR="NVRAM.Delete.$APPLE_NVRAM_VARIABLE_GUID.$BOOT_ARGS."
 # Function to print usage information
 print_usage() {
     cat << EOF
-Usage: ocbootargs [options] [value]
+Usage: bootargs [options] [value]
 Options:
     -get            Print boot-args variable
     -set value      Set the boot-args variable
