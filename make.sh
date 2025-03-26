@@ -138,6 +138,7 @@ do
     # Build the VMware templates
     msg_status "Step 3. Create VMware templates"
     mkdir -p ./build/vmware/$VARIANT 2>&1 >/dev/null
+    cp -v ./vmware/macos.plist ./build/vmware/$VARIANT 2>&1 >/dev/null
     cp -v ./vmware/macos.vmdk ./build/vmware/$VARIANT 2>&1 >/dev/null
     cp -v ./build/disks/$VARIANT/opencore.vmdk ./build/vmware/$VARIANT
 
