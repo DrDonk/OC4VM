@@ -157,13 +157,14 @@ do
         -o ./build/vmware/$VARIANT/macos.vmx \
         ./vmware/vmx.j2
 
-    ./utilities/minijinja-cli \
-        --format=toml \
-        -D VERSION=$VERSION \
-        -D COMMIT=$COMMIT \
-        -o ./build/vmware/$VARIANT/vmw-macos \
-        ./vmware/vmw-macos.j2
-    chmod +x ./build/vmware/$VARIANT/vmw-macos
+    # Disabled in 1.0.0
+    # ./utilities/minijinja-cli \
+    #     --format=toml \
+    #     -D VERSION=$VERSION \
+    #     -D COMMIT=$COMMIT \
+    #     -o ./build/vmware/$VARIANT/vmw-macos \
+    #     ./vmware/vmw-macos.j2
+    # chmod +x ./build/vmware/$VARIANT/vmw-macos
 
     # Build the QEMU templates
     msg_status "Step 4. Create QEMU templates"
