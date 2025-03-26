@@ -9,7 +9,7 @@
 
 echo "OC4VM QEMU Runner"
 
-OPTSTRING=":a:c:d:m:o:sr:"
+OPTSTRING=":a:c:d:m:o:sr:v:"
 ACCEL_FLAG=0
 
 # Setup default accelerator flags
@@ -32,6 +32,8 @@ OPENCORE_IMG="opencore.qcow2"
 RECOVERY_FLAG=0
 RECOVERYOS_IMG=""
 SERIAL_FLAG=0
+VNC_FLAG=0
+VNC_PASSWORD=""
 
 if [[ $(uname -m) == 'arm64' ]]; then
   ACCEL_TYPE="tcg"
@@ -44,8 +46,8 @@ usage () {
 	$0
 
  SYNOPSIS:
-	$0 [-a {hvf | kvm | tcg}] [-m <memory-size>] [-d <macos-image>] [-o <opencore-image>] [-r <recovery-image>] [-s]
-
+	$0 [-a {hvf | kvm | tcg}] [-m <memory-size>] [-d <macos-image>] [-o <opencore-image>] [-r <recovery-image>] [-s] [-v password]
+	
  DESCRIPTION:
 	Run macOS using QEMU
 
@@ -57,6 +59,7 @@ usage () {
 	-o OPENCORE-IMAGE     specifies OpenCore boot image.
 	-r RECOVERY-IMAGE     specifies macOS installation/recovery image.
 	-s                    enable serial output.
+	-v VNC-PASSWORD       enable VNC output on port 5959 with password.
 HELP
 }
 
@@ -124,6 +127,15 @@ while getopts ${OPTSTRING} opt; do
 			echo "Serial output enabled"
 			SERIAL_FLAG=1
 			;;
+		v)
+			echo "VNC enabled"
+			VNC_FLAG=1
+			VNC_PASSWORD=${OPTARG}
+			if [[ -z $VNC_PASSWORD ]]; then
+				echo "ERROR: VNC password not defined!"
+				exit 1
+			fi
+			;;
 		:)
 			echo "ERROR: Option -${OPTARG} requires an argument."
 			usage
@@ -173,6 +185,13 @@ args+=(
 -chardev stdio,id=char0,mux=on,logfile=serial.log,signal=off
 -serial chardev:char0
 -mon chardev=char0
+)
+fi
+
+if [ $VNC_FLAG = 1 ]; then
+args+=(
+-object secret,id=secvnc0,data=$VNC_PASSWORD
+-vnc :59,password-secret=secvnc0
 )
 fi
 
