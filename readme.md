@@ -51,7 +51,7 @@ CPUs will need to support the following instructions:
 ### 3.1 Download Release
 
 * Download a binary release from https://github.com/DrDonk/oc4vm/releases
-* Optionally check the sha512 checksum matches that are published with the release
+* Optionally check the sha512 checksum matches with the one published with the release
 * Unzip the archive to extract the files
 * Navigate to the folder with the extracted files
 
@@ -70,7 +70,7 @@ OC4VM has 4 sub-folders:
 |:-----------|-------------------------------------------------------|
 | config     | OpenCore config.plist files for reference             |
 | disks      | OpenCore boot variants in DMG, VMDK and QCOW2 formats |
-| iso        | VMware Mac OS X and macOS guest tools iso image       |
+| iso        | VMware Mac OS X and macOS guest tools iso images      |
 | qemu       | Template VMs for QEMU                                 |
 | tools      | OC4VM tools to manage config.plist                    |
 | vmware     | Template VMs for VMware                               |
@@ -104,7 +104,8 @@ To create a new virtual machine copy either the Intel or AMD template to a new f
 * opencore.vmdk
 * macos.vmdk
 
-You will need to add some installation media to the new VM to install macOS.
+You will need to add some installation media to the new VM to install macOS, and set the
+ISO or virtual disk to point to the installation media.
 
 #### 3.3.2 Existing VM
 Please follow these instructions to add to an existing macOS guest.
@@ -117,21 +118,16 @@ Please follow these instructions to add to an existing macOS guest.
 #### 3.3.3 VMware macOS Guest Tools
 OC4VM provides a copy of the VMware macOS guest tools ISO images. These are useful for 
 VMware Fusion and also QEMU/UTM. To install mount the darwin.iso file using the VMs 
-virtual CD/DVD drive.
+virtual CD/DVD drive. You will then need to manually install the tools inside the
+guest OS.
 
 ### 3.4 QEMU templates
 
 The QEMU template is only supported on Intel based Macs running macOS. There are other 
-solutions for Linux, and QEMU fails to run macOS on Windows. It has also proived to be
-non-functionall when used on an Apple Silicon M-sereis Mac.
+solutions for Linux, and QEMU fails to run macOS on Windows. It has also proved to be
+non-functional when used on Apple Silicon M-series Macs.
 
-#### 3.3 Create and run macOS
-To create a new virtual machine copy either the Intel or AMD template to a new folder:
-
-* qemu-macos
-* opencore.qcow2
-* macos.qcow2
-
+To run the VM you need to use the qemu-macos shell script, passing in different parameters. 
 
 ```
 OC4VM QEMU Runner
@@ -139,20 +135,37 @@ OC4VM QEMU Runner
         qemu-macos
 
  SYNOPSIS:
-        qemu-macos [-a {hvf | kvm | tcg}] [-m <memory-size>] [-d <macos-image>] [-o <opencore-image>] [-r <recovery-image>] [-s]
-
+        qemu-macos [-a {hvf | kvm | tcg}] [-m <memory-size>] [-d <macos-image>] [-o <opencore-image>] [-r <recovery-image>] [-s] [-v password]
+        
  DESCRIPTION:
-        Run macOS using QEMU
+	Run macOS using QEMU
 
  OPTIONS:
-        -a ACCEL              QEMU accelerator to use.
-        -c CPU                CPU to use.
-        -d DISK-IMAGE         species a macOS drive image to use.
-        -m MEMORY             specifies amount of memory to allocate to VM.
-        -o OPENCORE-IMAGE     specifies OpenCore boot image.
-        -r RECOVERY-IMAGE     specifies macOS installation/recovery image.
-        -s                    enable serial output.
+	-a ACCEL              QEMU accelerator to use.
+	-c CPU                CPU to use.
+	-d DISK-IMAGE         species a macOS drive image to use.
+	-m MEMORY             specifies amount of memory to allocate to VM.
+	-o OPENCORE-IMAGE     specifies OpenCore boot image.
+	-r RECOVERY-IMAGE     specifies macOS installation/recovery image.
+	-s                    enable serial output.
+	-v VNC-PASSWORD       enable VNC output on port 5959 with password.
 ```
+
+| Option | Default        |
+|:-------|----------------|
+| -a     | hvf            |
+| -c     | max            |
+| -d     | macos.qcow2    |
+| -m     | 4GB RAM        |
+| -o     | opencore.qcow2 | 
+| -r     | \<none\>       |
+| -s     | \<false\>      |
+
+#### 3.4.1 Installing macOS
+To create a new virtual machine copy either the Intel or AMD template to a new folder.
+
+
+### 3.4.2 Running macOS
 
 ## 4. Building OC4VM
 
@@ -177,18 +190,20 @@ cloned repository.
 The build artefacts will be found in the "build" folder and the release zip file in the 
 "dist" folder.
 
+The current variables used to define the different files in OC4VM are stored in 
+oc4vm.toml and used in the OpenCore config.plist, VMware VMX and QEMU templates.
 
 | Name        | Type            | Description                                   |
 |:------------|-----------------|-----------------------------------------------|
-| BUILD       | \<0/1\>           | build config switch for make.sh               |
-| AMD         | \<0/1\>           | building for AMD                              |
-| BOOTARGS    | \<string\>        | macOS NVRAM boot-args                         |
-| CSRCONFIG   | \<data\>          | base64 encoded macOS CSR SIP value            |
-| DEBUG       | \<0/1\>           | enable debug options in OpenCore              |
-| DESCRIPTION | \<string\>        | description of configuration                  |
+| BUILD       | \<0/1\>         | build config switch for make.sh               |
+| AMD         | \<0/1\>         | building for AMD                              |
+| BOOTARGS    | \<string\>      | macOS NVRAM boot-args                         |
+| CSRCONFIG   | \<data\>        | base64 encoded macOS CSR SIP value            |
+| DEBUG       | \<0/1\>         | enable debug options in OpenCore              |
+| DESCRIPTION | \<string\>      | description of configuration                  |
 | DMG         | <release/debug> | specify release or debug version of OpenCore  |
-| RESOLUTION  | \<string\>        | screen resolution WxH@Bpp or Max              |
-| TIMEOUT     | \<integer\>       | timeout for OpenCore boot picker (0 disables) |
+| RESOLUTION  | \<string\>      | screen resolution WxH@Bpp or Max              |
+| TIMEOUT     | \<integer\>     | timeout for OpenCore boot picker (0 disables) |
 
 
 ## 5. Thanks
