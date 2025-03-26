@@ -162,7 +162,7 @@ do
         -D VERSION=$VERSION \
         -D COMMIT=$COMMIT \
         -o ./build/vmware/$VARIANT/vmw-macos \
-        ./vmware/vmw-macos
+        ./vmware/vmw-macos.j2
     chmod +x ./build/vmware/$VARIANT/vmw-macos
 
     # Build the QEMU templates
