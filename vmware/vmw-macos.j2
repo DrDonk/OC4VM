@@ -7,7 +7,7 @@
 # Uncomment to debug
 # set -x
 
-echo "OC4VM VMware Configurator"
+echo "OC4VM VMware Runner"
 
 OPTSTRING=":d:m:o:sr:"
 
@@ -98,3 +98,5 @@ while getopts ${OPTSTRING} opt; do
 			;;
 	esac
 done
+
+vmrun start macos.vmx
