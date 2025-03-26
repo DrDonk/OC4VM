@@ -37,8 +37,14 @@ set_state() {
 }
 
 # Main logic
-echo "OC4VM vmhide utility"
-echo "--------------------"
+echo "OC4VM vmhide"
+echo "------------"
+
+if [ ! -f $PLIST_FILE ]; then
+    echo "ERROR: $PLIST_FILE not found!"
+    exit 1
+fi
+
 case "$1" in
     -h)
         print_usage

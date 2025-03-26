@@ -44,8 +44,14 @@ set_variable() {
 }
 
 # Main logic
-echo "OC4VM boot-args utility"
-echo "-----------------------"
+echo "OC4VM boot-args"
+echo "---------------"
+
+if [ ! -f $PLIST_FILE ]; then
+    echo "ERROR: $PLIST_FILE not found!"
+    exit 1
+fi
+
 case "$1" in
     -h)
         print_usage
@@ -57,6 +63,6 @@ case "$1" in
         get_variable
         ;;
     *)
-        get_variable
+        print_usage
         ;;
 esac
