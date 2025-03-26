@@ -1,7 +1,5 @@
 # OC4VM - OpenCore for Virtual Machines
 
-# WORK IN PROGRESS
-
 ## 1. Introduction
 OpenCore for Virtual Machines (OC4VM) has been built to run macOS VMs primarily on Intel 
 based Apple Macs. It may also be used on other PC hardware using VMware Workstation. It 
@@ -80,12 +78,12 @@ The most import folders are the 'qemu' and 'vmware' folders.
 ### 3.3 VMware Templates
 
 The 'vmware' folder contains 2 folders with a VM template for VMware macOS virtual 
-machines. The folders are for AMD and intel CPUs. You will need to use the one that 
+machines. The folders are for AMD and Intel CPUs. You will need to use the one that 
 matches the host CPU.
 
 The template is designed for maximum compatibilty between different releases and 
 platforms, and you should not upgrade the virtual hardware if prompted to by the VMware 
-software. Also do not change the guestOS settings in the VMX file. It will not change any 
+software. Also do not change the 'guestOS' settings in the VMX file. It will not change any 
 of the behaviours of the guest and could cause issues in the future.
 
 Each folder contains these files:
@@ -95,25 +93,23 @@ Each folder contains these files:
 | opencore.vmdk | OpenCore boot virtual disk        |
 | macos.vmx     | macOS VMX settings file           |
 | macos.vmdk    | Pre-formated HFS+J virtual disk   |
-| vmw-macos     | Shell script to run VM (optional) |
+| macos.plist   | VMware Fusion config file         |
 
 #### 3.3.1 New VM
-To create a new virtual machine copy either the Intel or AMD template to a new folder:
-
-* macos.vmx
-* opencore.vmdk
-* macos.vmdk
+To create a new virtual machine copy either the Intel or AMD template to a new folder.
+Open the VM in the new folder in VMware. Change any memory settings you may need.
 
 You will need to add some installation media to the new VM to install macOS, and set the
 ISO or virtual disk to point to the installation media.
 
+Power on and install macOS as normal.
+
 #### 3.3.2 Existing VM
 Please follow these instructions to add to an existing macOS guest.
 
-1. Copy the opencore.vmdk from gthe teomplate folder to the exisint guests folder.
+1. Copy the opencore.vmdk from the template folder to the existing VMs folder.
 2. Use the guest settings to add the opencore.vmdk disk as a SATA drive.
-3. Boot to the firmware and select the OpenCore drive as the boot device
-
+3. Boot to the firmware and select the OpenCore drive as the boot device.
 
 #### 3.3.3 VMware macOS Guest Tools
 OC4VM provides a copy of the VMware macOS guest tools ISO images. These are useful for 
@@ -163,9 +159,23 @@ OC4VM QEMU Runner
 
 #### 3.4.1 Installing macOS
 To create a new virtual machine copy either the Intel or AMD template to a new folder.
+You will need to provide a macOS installation image for the setup of the macOS guest.
 
+Start the vm using:
+
+`./qemu-macos -r <installation image>`
+
+You may want to add more memory with the -m parameter depending on your needs.
+
+Once you have installed macOS proceed to the next section.
 
 ### 3.4.2 Running macOS
+
+Start the installed macOS guest using:
+
+`./qemu-macos`
+
+Again you may want to alter the memory presented to the guest VM.
 
 ## 4. Building OC4VM
 
@@ -205,8 +215,19 @@ oc4vm.toml and used in the OpenCore config.plist, VMware VMX and QEMU templates.
 | RESOLUTION  | \<string\>      | screen resolution WxH@Bpp or Max              |
 | TIMEOUT     | \<integer\>     | timeout for OpenCore boot picker (0 disables) |
 
+## 5. Support
+If you are trying a specific combination, hypervisor/CPU/OS, please start a discussion instead
+of an issue. It is impossible for us to test all combinations out there and so
+discussions are a better place to help one another. If an actual bug or enhancement
+is identified whilst discussing a specific scenario an issue can then be created 
+to track it. Better still a pull request with a fix would be useful.
 
-## 5. Thanks
+Any obvious bugs should be logged as an issue. Please give all relevant information
+to help diagnose the issue.
+
+Most importantly let us be supportive of each other with respectful discussions.
+
+## 6. Thanks
 
 Many thanks to the great developers and community around the OpenCore scene. The OC4VM 
 package uses the following:
