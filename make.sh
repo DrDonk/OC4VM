@@ -77,6 +77,14 @@ chmod +x ./build/tools/bootargs
     ./tools/siputil
 chmod +x ./build/tools/siputil
 
+./utilities/minijinja-cli \
+    --format=toml \
+    -D VERSION=$VERSION \
+    -D COMMIT=$COMMIT \
+    -o ./build/tools/vmhide \
+    ./tools/vmhide
+chmod +x ./build/tools/vmhide
+
 VARIANTS=("${(f)$(./utilities/stoml oc4vm.toml . | tr ' ' '\n')}")
 for VARIANT in $VARIANTS
 do

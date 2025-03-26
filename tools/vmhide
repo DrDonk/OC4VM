@@ -1,0 +1,55 @@
+#!/usr/bin/env zsh
+# {{VERSION}}-{{COMMIT}}
+# SPDX-FileCopyrightText: © 2023-25 David Parsons
+# SPDX-License-Identifier: MIT
+
+# set -x
+
+# Define storage file location
+PLIST_FILE="/Volumes/OPENCORE/EFI/OC/config.plist"
+
+# Function to print usage information
+print_usage() {
+    cat << EOF
+Usage: vmhide [options]
+Options:
+    -on            Enable VMHide
+    -off           Disable VMHide
+    -h             Print this help message
+EOF
+}
+
+set_state() {
+    local value="$1"
+	count=$(plutil -extract Kernel.Add raw -expect array -- "${PLIST_FILE}")
+	for i in {1..$count}; do
+		# $(($i - 1)) converts 1-based index to 0-based
+		kext=$(plutil -extract Kernel.Add.$((i - 1)).BundlePath raw -expect string -- "${PLIST_FILE}")
+		if [[ $kext == "VMHide.kext" ]]; then
+			echo Setting vmhide state: $value
+			plutil -replace Kernel.Add.$((i - 1)).Enabled -bool ${value} -- "${PLIST_FILE}"
+			# plutil -extract Kernel.Add.$((i - 1)).Enabled raw -expect bool -- "${PLIST_FILE}"
+			break
+		else
+			continue
+		fi
+	done
+}
+
+# Main logic
+echo "OC4VM vmhide utility"
+echo "--------------------"
+case "$1" in
+    -h)
+        print_usage
+        ;;
+    -on)
+        set_state "true"
+        ;;
+    -off)
+        set_state "false"
+        ;;
+    *)
+        print_usage
+        ;;
+esac
