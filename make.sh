@@ -66,7 +66,7 @@ mkdir -p ./build/tools 2>&1 >/dev/null
     -D VERSION=$VERSION \
     -D COMMIT=$COMMIT \
     -o ./build/tools/bootargs \
-    ./tools/bootargs
+    ./tools/bootargs.j2
 chmod +x ./build/tools/bootargs
 
 ./utilities/minijinja-cli \
@@ -74,7 +74,7 @@ chmod +x ./build/tools/bootargs
     -D VERSION=$VERSION \
     -D COMMIT=$COMMIT \
     -o ./build/tools/siputil \
-    ./tools/siputil
+    ./tools/siputil.j2
 chmod +x ./build/tools/siputil
 
 ./utilities/minijinja-cli \
@@ -82,7 +82,7 @@ chmod +x ./build/tools/siputil
     -D VERSION=$VERSION \
     -D COMMIT=$COMMIT \
     -o ./build/tools/vmhide \
-    ./tools/vmhide
+    ./tools/vmhide.j2
 chmod +x ./build/tools/vmhide
 
 VARIANTS=("${(f)$(./utilities/stoml oc4vm.toml . | tr ' ' '\n')}")
@@ -178,7 +178,7 @@ do
         -D VERSION=$VERSION \
         -D COMMIT=$COMMIT \
         -o ./build/qemu/$VARIANT/qemu-macos \
-        ./qemu/qemu-macos
+        ./qemu/qemu-macos.j2
     chmod +x ./build/qemu/$VARIANT/qemu-macos
 
 done
