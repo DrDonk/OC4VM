@@ -7,12 +7,12 @@ From https://github.com/AMD-OSX/AMD_Vanilla/blob/master/README.md
 
 The Core Count patch needs to be modified to boot your system. Find the four `algrey - Force cpuid_cores_per_package` patches and alter the `Replace` value only.
 
-|   macOS Version      | Replace Value | New Value |
-|----------------------|---------------|-----------|
+|   macOS Version      | Replace Value | New Value                   |
+|----------------------|---------------|-----------------------------|
 | 10.13.x, 10.14.x     | B8000000 0000 | B8 < Core Count > 0000 0000 |
 | 10.15.x, 11.x        | BA000000 0000 | BA < Core Count > 0000 0000 |
 | 12.x, 13.0 to 13.2.1 | BA000000 0090 | BA < Core Count > 0000 0090 |
-| 13.3 +               |  BA000000 00  | BA < Core Count > 0000 00 |
+| 13.3 +               |  BA000000 00  | BA < Core Count > 0000 00   |
 
 From the table above substitue `< Core Count >` with the hexadecimal value matching your physical core count. Do not use your CPU's thread count. See the table below for the values matching your CPU core count.
 
