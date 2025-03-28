@@ -31,16 +31,19 @@ Options:
     -h              Print this help message
 ```
 
+## regen
+This utility regenerates serial number, MLB, ROM and UUID for the emulated system which is a 
+Macmini8,1 (Mac mini 2018 model).
+
+Note: You will need to restart the system for the settings to take effect.
+
 ## siputil
-This utility alters the macOS kernel csrconfig SIP settings that are stored in config.plist. It is very similar to the macOS csrutil command but can be run as a regular user
+This utility alters the macOS kernel csrconfig SIP settings that are stored in config.plist. 
+It is very similar to the macOS csrutil command but can be run as a regular user
 in normal mode, unlike csrutil which requires recovery mode.
 
 One difference is the disable and enable commands include the 'authenticated-root' 
 sub-command of csrutil.
-
-Python3 must be installed to use this tool which can be easily setup using Homebrew (https://brew.sh):
-
-`brew install python3`
 
 Note: OC4VM overrides any values stored in NVRAM. You will need to restart the system
 for the settings to take effect.
