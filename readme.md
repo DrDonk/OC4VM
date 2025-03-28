@@ -187,6 +187,7 @@ Once brew is installed run the following commands to install the required softwa
 ```
 brew install qemu
 brew install p7zip
+brew install go
 ```
 
 Now clone the OC4VM repository using:

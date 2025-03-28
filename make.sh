@@ -58,6 +58,8 @@ build_dmg() {
 # Clear previous build
 rm -rfv ./build/* 2>&1 >/dev/null
 
+msg_status "Step 0. Compile tools"
+
 # Fixup version/commit in tools scripts
 mkdir -p ./build/tools 2>&1 >/dev/null
 
@@ -73,9 +75,18 @@ chmod +x ./build/tools/bootargs
     --format=toml \
     -D VERSION=$VERSION \
     -D COMMIT=$COMMIT \
-    -o ./build/tools/siputil \
-    ./tools/siputil.j2
-chmod +x ./build/tools/siputil
+    -o ./build/tools/regen \
+    ./tools/regen.j2
+chmod +x ./build/tools/regen
+
+./utilities/minijinja-cli \
+    --format=toml \
+    -D VERSION=$VERSION \
+    -D COMMIT=$COMMIT \
+    -o ./build/tools/siputil.go \
+    ./tools/siputil.go
+env GOOS=darwin GOARCH=amd64 go build -o ./build/tools ./build/tools/siputil.go
+rm ./build/tools/siputil.go 2>&1 >/dev/null
 
 ./utilities/minijinja-cli \
     --format=toml \
