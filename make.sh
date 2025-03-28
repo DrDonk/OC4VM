@@ -56,7 +56,7 @@ build_dmg() {
 }
 
 # Clear previous build
-rm -rfv ./build/* 2>&1 >/dev/null
+rm -rfv ./build 2>&1 >/dev/null
 
 msg_status "Step 0. Compile tools"
 
@@ -85,6 +85,7 @@ chmod +x ./build/tools/regen
     -D COMMIT=$COMMIT \
     -o ./build/tools/siputil.go \
     ./tools/siputil.go
+go get howett.net/plist
 env GOOS=darwin GOARCH=amd64 go build -o ./build/tools ./build/tools/siputil.go
 rm ./build/tools/siputil.go 2>&1 >/dev/null
 
@@ -197,7 +198,9 @@ do
 done
 
 msg_status "\nStep 5. Copying misc files"
-cp -v README.md ./build/
+cp -v readme.md ./build/
+cp -v notes.md ./build/
+cp -v tools.md ./build/
 cp -v LICENSE ./build/
 cp -vr ./iso ./build/
 
