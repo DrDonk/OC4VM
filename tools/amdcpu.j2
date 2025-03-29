@@ -1,0 +1,60 @@
+#!/usr/bin/env zsh
+
+# Function to display help
+display_help() {
+    echo "Usage: $0 [-f|--file] <filename>"
+    echo "Options:"
+    echo "  -f, --file    Specify a file that exists on disk"
+    echo "  -h, --help    Display this help message"
+}
+
+# Initialize variables
+file=""
+
+# Parse command line arguments
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -f|--file)
+            if [[ -n "$2" ]]; then
+                file="$2"
+                shift 2
+            else
+                echo "Error: No file specified after $1 option." >&2
+                display_help
+                exit 1
+            fi
+            ;;
+        -h|--help)
+            display_help
+            exit 0
+            ;;
+        *)
+            echo "Error: Unknown option $1" >&2
+            display_help
+            exit 1
+            ;;
+    esac
+done
+
+# Check if file was provided
+if [[ -z "$file" ]]; then
+    echo "Error: No file specified. Use -f or --file option." >&2
+    display_help
+    exit 1
+fi
+
+# Check if file exists
+if [[ ! -e "$file" ]]; then
+    echo "Error: File '$file' does not exist." >&2
+    exit 1
+fi
+
+# Check if it's a regular file (not a directory, symlink, etc.)
+if [[ ! -f "$file" ]]; then
+    echo "Error: '$file' exists but is not a regular file." >&2
+    exit 1
+fi
+
+# If we get here, the file exists and is valid
+echo "File '$file' exists and is valid."
+exit 0
