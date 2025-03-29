@@ -132,4 +132,5 @@ dmypy.json
 dist/
 #Software/
 Research/
+tests/
 ._.*
