@@ -12,7 +12,7 @@ The Core Count patch needs to be modified to boot your system. Find the four `al
 | 10.13.x, 10.14.x     | B8000000 0000 | B8 < Core Count > 0000 0000 |
 | 10.15.x, 11.x        | BA000000 0000 | BA < Core Count > 0000 0000 |
 | 12.x, 13.0 to 13.2.1 | BA000000 0090 | BA < Core Count > 0000 0090 |
-| 13.3 +               |  BA000000 00  | BA < Core Count > 0000 00   |
+| 13.3 +               | BA000000 00   | BA < Core Count > 0000 00   |
 
 From the table above substitue `< Core Count >` with the hexadecimal value matching your physical core count. Do not use your CPU's thread count. See the table below for the values matching your CPU core count.
 
@@ -31,7 +31,7 @@ So for example, a user with a 6-core processor should use these `Replace` values
 
 Which gives these values when correclty base64 encoded:
 
-| Cores | 10.13/10.14<br/>uAAAAAAA | 10.15/11.0<br/>ugAAAAAA | 12.0/13.0<br/>ugAAAACQ | 13.3+<br/>ugAAAAA= |
+| Cores | 10.13/10.14<br/>uAAAAAAA                   | 10.15/11.0<br/>ugAAAAAA                   | 12.0/13.0<br/>ugAAAACQ                   | 13.3+<br/>ugAAAAA=              |
 |-------|--------------------------------------------|-------------------------------------------|------------------------------------------|---------------------------------|
 | 1     | uAEAAAAA                                   | ugEAAAAA                                  | ugEAAACQ                                 | ugEAAAA=                        |
 | 2     | uAIAAAAA                                   | ugIAAAAA                                  | ugIAAACQ                                 | ugIAAAA=                        |
@@ -41,6 +41,8 @@ Which gives these values when correclty base64 encoded:
 | 24    | uBgAAAAA                                   | uhgAAAAA                                  | uhgAAACQ                                 | uhgAAAA=                        |
 | 32    | uCAAAAAA                                   | uiAAAAAA                                  | uiAAAACQ                                 | uiAAAAA=                        |
 | 64    | uEAAAAAA                                   | ukAAAAAA                                  | ukAAAACQ                                 | ukAAAAA=                        |
+
+Note: VMware Workstation and Fusion only support up to 16 vCPUs.
 
 ## macOS
 ### Useful boot-args
@@ -107,7 +109,7 @@ Useful for AMD deugging using KDK:
 
 ### VMware machine spoofing
 
-Spoof Mac mini 2018 in VMware VMX
+Spoof Mac mini 2018 in VMware VMX, not normally needed as done in OpenCore.
 ```
 # Mac mini 2018
 board-id = "Mac-7BA5B2DFE22DDD8C"
@@ -152,4 +154,4 @@ Encode a base64 encoded binary:
 
 Decode a base64 encoded binary:
 
-`print AAAf/w== | base64 -D | xxd -u -g 4 -e`
+`print AAAf/w== | base64 -D | xxd`
