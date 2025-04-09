@@ -5,29 +5,29 @@
 
 From https://github.com/AMD-OSX/AMD_Vanilla/blob/master/README.md
 
-The Core Count patch needs to be modified to boot your system. Find the four `algrey - Force cpuid_cores_per_package` patches and alter the `Replace` value only.
-
-|   macOS Version      | Replace Value | New Value                   |
-|----------------------|---------------|-----------------------------|
-| 10.13.x, 10.14.x     | B8000000 0000 | B8 < Core Count > 0000 0000 |
-| 10.15.x, 11.x        | BA000000 0000 | BA < Core Count > 0000 0000 |
-| 12.x, 13.0 to 13.2.1 | BA000000 0090 | BA < Core Count > 0000 0090 |
-| 13.3 +               | BA000000 00   | BA < Core Count > 0000 00   |
-
-From the table above substitue `< Core Count >` with the hexadecimal value matching your physical core count. Do not use your CPU's thread count. See the table below for the values matching your CPU core count.
-
-
-| Core Count | Hexadecimal |
-|------------|-------------|
-|   4 Core   |     `04`    |
-|   6 Core   |     `06`    |
-|   8 Core   |     `08`    |
-|   12 Core  |     `0C`    |
-|   16 Core  |     `10`    |
-|   24 Core  |     `18`    |
-|   32 Core  |     `20`    |
-
-So for example, a user with a 6-core processor should use these `Replace` values: `B8 06 0000 0000` / `BA 06 0000 0000` / `BA 06 0000 0090` / `BA 06 0000 00`
+> The Core Count patch needs to be modified to boot your system. Find the four `algrey - Force cpuid_cores_per_package` patches and alter the `Replace` value only.
+> 
+> |   macOS Version      | Replace Value | New Value                   |
+> |----------------------|---------------|-----------------------------|
+> | 10.13.x, 10.14.x     | B8000000 0000 | B8 < Core Count > 0000 0000 |
+> | 10.15.x, 11.x        | BA000000 0000 | BA < Core Count > 0000 0000 |
+> | 12.x, 13.0 to 13.2.1 | BA000000 0090 | BA < Core Count > 0000 0090 |
+> | 13.3 +               | BA000000 00   | BA < Core Count > 0000 00   |
+> 
+> From the table above substitue `< Core Count >` with the hexadecimal value matching your physical core count. Do not use your CPU's thread count. See the table below for the values matching your CPU core count.
+> 
+> 
+> | Core Count | Hexadecimal |
+> |------------|-------------|
+> |   4 Core   |     `04`    |
+> |   6 Core   |     `06`    |
+> |   8 Core   |     `08`    |
+> |   12 Core  |     `0C`    |
+> |   16 Core  |     `10`    |
+> |   24 Core  |     `18`    |
+> |   32 Core  |     `20`    |
+> 
+> So for example, a user with a 6-core processor should use these `Replace` values: `B8 06 0000 0000` / `BA 06 0000 0000` / `BA 06 0000 0090` / `BA 06 0000 00`
 
 Which gives these values when correclty base64 encoded:
 
@@ -37,19 +37,19 @@ Which gives these values when correclty base64 encoded:
 | 2     | uAIAAAAA                                   | ugIAAAAA                                  | ugIAAACQ                                 | ugIAAAA=                        |
 | 4     | uAQAAAAA                                   | ugQAAAAA                                  | ugQAAACQ                                 | ugQAAAA=                        |
 | 8     | uAgAAAAA                                   | uggAAAAA                                  | uggAAACQ                                 | uggAAAA=                        |
+| 12    | uAwAAAAA                                   | ugwAAAAA                                  | ugwAAACQ                                 | ugwAAAA=                        |
 | 16    | uBAAAAAA                                   | uhAAAAAA                                  | uhAAAACQ                                 | uhAAAAA=                        |
 | 24    | uBgAAAAA                                   | uhgAAAAA                                  | uhgAAACQ                                 | uhgAAAA=                        |
+| 28    | uBwAAAAA                                   | uhwAAAAA                                  | uhwAAACQ                                 | uhwAAAA=                        |
 | 32    | uCAAAAAA                                   | uiAAAAAA                                  | uiAAAACQ                                 | uiAAAAA=                        |
 | 64    | uEAAAAAA                                   | ukAAAAAA                                  | ukAAAACQ                                 | ukAAAAA=                        |
-
-Note: VMware Workstation and Fusion only support up to 16 vCPUs.
 
 ## macOS
 ### Useful boot-args
 [default]<br/>
 `keepsyms=1 -lilubetaall -no_compat_check -no_panic_dialog vmhState=disabled`
 
-[stealth]<br/>
+[stealth]<br/>      
 `keepsyms=1 -lilubetaall -no_compat_check -no_panic_dialog vmhState=enabled`
 
 [verbose]<br/>
@@ -137,6 +137,10 @@ smbios.reflectHost = "TRUE"
 | 14 15      | SMP="cpus=$CPU_CORES,sockets=7,dies=1,cores=2,threads=1"          |
 | 16 32 64   | SMP="cpus=$CPU_CORES,sockets=1,dies=1,cores=$CPU_CORES,threads=1" |
 
+NOTE: It is much simpler just to use the follwoing:
+
+`-smp < Core Count >`
+
 ### QEMU on Windows
 Windows enable WHPX:
 
@@ -150,8 +154,15 @@ Windows enable WHPX:
 
 Encode a base64 encoded binary:
 
-`print 0x087f | xxd -r | base64`
+`print 0xBA00000000 | xxd -r | base64`
 
 Decode a base64 encoded binary:
 
 `print AAAf/w== | base64 -D | xxd`
+
+```
+Find:        wegaAAA= -> c1e8 1a00 00 
+Mask:        //3/AAA= -> fffd ff00 00
+Replace:     uggAAAA= -> ba08 0000 00
+ReplaceMask: //////8= -> ffff ffff ff
+```
