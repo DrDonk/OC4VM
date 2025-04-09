@@ -53,12 +53,6 @@ CPUs will need to support the following instructions:
 * Unzip the archive to extract the files
 * Navigate to the folder with the extracted files
 
-***
-Note:
-If you are not using an Apple computer and have installed the VMware Unlocker it is 
-recommended that the Unlocker is uninstalled. OC4VM does not alter anything in the VMware 
-program folders and allows macOS to run without patching VMware.
-***
 
 ### 3.2 Folder Contents
 
@@ -128,23 +122,25 @@ To run the VM you need to use the qemu-macos shell script, passing in different 
 ```
 OC4VM QEMU Runner
  NAME:
-        qemu-macos
+    qemu-macos
 
  SYNOPSIS:
-        qemu-macos [-a {hvf | kvm | tcg}] [-m <memory-size>] [-d <macos-image>] [-o <opencore-image>] [-r <recovery-image>] [-s] [-v password]
-        
+	qemu-macos [-a {hvf | kvm | tcg}] [-m <memory-size>] [-d <macos-image>] [-n <number-cores>][-o <opencore-image>] [-r <recovery-image>] [-s] [-v password]
+	
  DESCRIPTION:
 	Run macOS using QEMU
 
  OPTIONS:
 	-a ACCEL              QEMU accelerator to use.
-	-c CPU                CPU to use.
+	-c CPU                CPU type to use.
 	-d DISK-IMAGE         species a macOS drive image to use.
 	-m MEMORY             specifies amount of memory to allocate to VM.
+	-n NUM-CORES          specifies no of cores to present to guest. 
 	-o OPENCORE-IMAGE     specifies OpenCore boot image.
 	-r RECOVERY-IMAGE     specifies macOS installation/recovery image.
 	-s                    enable serial output.
 	-v VNC-PASSWORD       enable VNC output on port 5959 with password.
+HELP
 ```
 
 | Option | Default        |
@@ -153,6 +149,7 @@ OC4VM QEMU Runner
 | -c     | max            |
 | -d     | macos.qcow2    |
 | -m     | 4GB RAM        |
+| -n     | 2              |
 | -o     | opencore.qcow2 | 
 | -r     | \<none\>       |
 | -s     | \<false\>      |
