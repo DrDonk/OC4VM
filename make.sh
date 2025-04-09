@@ -97,6 +97,9 @@ rm ./build/tools/siputil.go 2>&1 >/dev/null
     ./tools/vmhide.j2
 chmod +x ./build/tools/vmhide
 
+cp -v ./tools/cpuid ./build/tools/cpuid
+cp -v ./tools/hostcaps ./build/tools/hostcaps
+
 VARIANTS=("${(f)$(./utilities/stoml oc4vm.toml . | tr ' ' '\n')}")
 for VARIANT in $VARIANTS
 do
