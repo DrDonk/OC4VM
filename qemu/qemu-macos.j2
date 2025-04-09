@@ -9,8 +9,7 @@
 
 echo "OC4VM QEMU Runner"
 
-OPTSTRING=":a:c:d:m:o:sr:v:"
-ACCEL_FLAG=0
+OPTSTRING=":a:c:d:m:n:o:sr:v:"
 
 # Setup default accelerator flags
 case "$(uname -s)" in
@@ -29,12 +28,14 @@ CPU="max"
 DISK_IMG="macos.qcow2"
 MEMORY_SIZE="4"
 OPENCORE_IMG="opencore.qcow2"
+NUM_CORES="2"
 RECOVERY_FLAG=0
 RECOVERYOS_IMG=""
 SERIAL_FLAG=0
 VNC_FLAG=0
 VNC_PASSWORD=""
 
+# Experimental Apple Silicon support
 if [[ $(uname -m) == 'arm64' ]]; then
   ACCEL_TYPE="tcg"
   CPU="Skylake-Client"
@@ -46,16 +47,17 @@ usage () {
 	$0
 
  SYNOPSIS:
-	$0 [-a {hvf | kvm | tcg}] [-m <memory-size>] [-d <macos-image>] [-o <opencore-image>] [-r <recovery-image>] [-s] [-v password]
+	$0 [-a {hvf | kvm | tcg}] [-m <memory-size>] [-d <macos-image>] [-n <number-cores>][-o <opencore-image>] [-r <recovery-image>] [-s] [-v password]
 	
  DESCRIPTION:
 	Run macOS using QEMU
 
  OPTIONS:
 	-a ACCEL              QEMU accelerator to use.
-	-c CPU                CPU to use.
+	-c CPU                CPU type to use.
 	-d DISK-IMAGE         species a macOS drive image to use.
 	-m MEMORY             specifies amount of memory to allocate to VM.
+	-n NUM-CORES          specifies no of cores to present to guest. 
 	-o OPENCORE-IMAGE     specifies OpenCore boot image.
 	-r RECOVERY-IMAGE     specifies macOS installation/recovery image.
 	-s                    enable serial output.
@@ -106,6 +108,19 @@ while getopts ${OPTSTRING} opt; do
 			  	exit 1
 			fi
 			;;
+		n)
+			echo "Number of cores: ${OPTARG}"
+			NUM_CORES=${OPTARG}
+			if [ ! -z "${NUM_CORES//[0-9]}" ]; then
+        		echo "ERROR: Number of cores $NUM_CORES not an integer!"
+			  	exit 1
+			fi
+			valid_values=(1 2 4 8 12 16 24 28 32 64)
+			if [[ ! " ${valid_values[@]} " =~ " $NUM_CORES " ]]; then
+				echo "Error: Number of cores must be one of: 1, 2, 4, 8, 12, 16, 24, 28, 32, 64"
+				exit 1
+			fi
+			;;
 		o)
 			echo "OpenCore image: ${OPTARG}"
 			OPENCORE_IMG=${OPTARG}
@@ -152,7 +167,7 @@ done
 args=(
 -name "{{DESCRIPTION}}"
 -cpu $CPU,pdpe1gb=off,vmware-cpuid-freq=on,vendor=GenuineIntel,check
--smp cpus=2,sockets=1,cores=2,threads=1
+-smp $NUM_CORES
 -machine q35,vmport=off,i8042=off,hpet=off,smm=off
 -accel $ACCEL_TYPE
 -m "$MEMORY_SIZE"G
