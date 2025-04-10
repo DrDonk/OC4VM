@@ -74,6 +74,14 @@ mkdir -p ./build/tools 2>&1 >/dev/null
     --format=toml \
     -D VERSION=$VERSION \
     -D COMMIT=$COMMIT \
+    -o ./build/tools/amdcpu \
+    ./tools/amdcpu
+chmod +x ./build/tools/amdcpu
+
+./utilities/minijinja-cli \
+    --format=toml \
+    -D VERSION=$VERSION \
+    -D COMMIT=$COMMIT \
     -o ./build/tools/bootargs \
     ./tools/bootargs
 chmod +x ./build/tools/bootargs
