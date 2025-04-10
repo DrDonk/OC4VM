@@ -68,7 +68,7 @@ mkdir -p ./build/tools 2>&1 >/dev/null
     -D VERSION=$VERSION \
     -D COMMIT=$COMMIT \
     -o ./build/tools/bootargs \
-    ./tools/bootargs.j2
+    ./tools/bootargs
 chmod +x ./build/tools/bootargs
 
 ./utilities/minijinja-cli \
@@ -76,7 +76,7 @@ chmod +x ./build/tools/bootargs
     -D VERSION=$VERSION \
     -D COMMIT=$COMMIT \
     -o ./build/tools/regen \
-    ./tools/regen.j2
+    ./tools/regen
 chmod +x ./build/tools/regen
 
 ./utilities/minijinja-cli \
@@ -94,7 +94,7 @@ rm ./build/tools/siputil.go 2>&1 >/dev/null
     -D VERSION=$VERSION \
     -D COMMIT=$COMMIT \
     -o ./build/tools/vmhide \
-    ./tools/vmhide.j2
+    ./tools/vmhide
 chmod +x ./build/tools/vmhide
 
 cp -v ./tools/cpuid ./build/tools/cpuid
@@ -127,10 +127,13 @@ do
         -D COMMIT=$COMMIT \
         --select $VARIANT \
         -o ./build/config/$VARIANT/config.plist \
-        ./opencore/config.j2 \
+        ./opencore/config.plist \
         oc4vm.toml
-    ./utilities/ocvalidate ./build/config/$VARIANT/config.plist
+
+    # Tests to ensure valid plist and OC configuration
+    plutil -convert xml1 ./build/config/$VARIANT/config.plist
     xmllint ./build/config/$VARIANT/config.plist --valid --noout
+    ./utilities/ocvalidate ./build/config/$VARIANT/config.plist
     RETURN=$?
     if [ $RETURN -eq 0 ];
     then
@@ -171,7 +174,7 @@ do
         -D DESCRIPTION="macOS ${VARIANT:u}" \
         -D AMD=$AMD \
         -o ./build/vmware/$VARIANT/macos.vmx \
-        ./vmware/vmx.j2
+        ./vmware/macos.vmx
 
     # Disabled in 1.0.0
     # ./utilities/minijinja-cli \
@@ -179,7 +182,7 @@ do
     #     -D VERSION=$VERSION \
     #     -D COMMIT=$COMMIT \
     #     -o ./build/vmware/$VARIANT/vmw-macos \
-    #     ./vmware/vmw-macos.j2
+    #     ./vmware/vmw-macos
     # chmod +x ./build/vmware/$VARIANT/vmw-macos
 
     # Build the QEMU templates
@@ -195,7 +198,7 @@ do
         -D VERSION=$VERSION \
         -D COMMIT=$COMMIT \
         -o ./build/qemu/$VARIANT/qemu-macos \
-        ./qemu/qemu-macos.j2
+        ./qemu/qemu-macos
     chmod +x ./build/qemu/$VARIANT/qemu-macos
 
 done
