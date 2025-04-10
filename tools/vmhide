@@ -3,10 +3,12 @@
 # SPDX-FileCopyrightText: © 2023-25 David Parsons
 # SPDX-License-Identifier: MIT
 
-# set -x
+# Enable debug mode if DEBUG environment variable is set to any non-empty value
+[[ -n "$DEBUG" ]] && set -x
 
 # Define storage file location
-PLIST_FILE="/Volumes/OPENCORE/EFI/OC/config.plist"
+DEFAULT_FILE="/Volumes/OPENCORE/EFI/OC/config.plist"
+PLIST_FILE=${FILE:-$DEFAULT_FILE}
 
 # Function to print usage information
 print_usage() {

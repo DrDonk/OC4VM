@@ -3,10 +3,12 @@
 # SPDX-FileCopyrightText: © 2023-25 David Parsons
 # SPDX-License-Identifier: MIT
 
-# set -x
+# Enable debug mode if DEBUG environment variable is set to any non-empty value
+[[ -n "$DEBUG" ]] && set -x
 
 # Define storage file location
-PLIST_FILE="/Volumes/OPENCORE/EFI/OC/config.plist"
+DEFAULT_FILE="/Volumes/OPENCORE/EFI/OC/config.plist"
+PLIST_FILE=${FILE:-$DEFAULT_FILE}
 
 # Generate serial and MLB
 input=$(${0:a:h}/macserial -m Macmini8,1 -n 1 `date +"-w %U -y %Y"`)
