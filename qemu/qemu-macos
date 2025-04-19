@@ -166,7 +166,10 @@ done
 
 args=(
 -name "{{DESCRIPTION}}"
--cpu $CPU,pdpe1gb=off,vmware-cpuid-freq=on,vendor=GenuineIntel,check
+-cpu $CPU,pdpe1gb=off,vmware-cpuid-freq=on,check
+# -cpu $CPU,pdpe1gb=off,vmware-cpuid-freq=on,vendor=GenuineIntel,check
+
+# vendor=AuthenticAMD
 -smp $NUM_CORES
 -machine q35,vmport=off,i8042=off,hpet=off,smm=off
 -accel $ACCEL_TYPE

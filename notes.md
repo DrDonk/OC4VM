@@ -141,6 +141,11 @@ NOTE: It is much simpler just to use the follwoing:
 
 `-smp < Core Count >`
 
+### QEMU Force VendorId
+`-cpu $CPU,pdpe1gb=off,vmware-cpuid-freq=on,vendor=GenuineIntel,check`
+
+`-cpu $CPU,pdpe1gb=off,vmware-cpuid-freq=on,vendor=AuthenticAMD,check`
+
 ### QEMU on Windows
 Windows enable WHPX:
 
