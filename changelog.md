@@ -2,6 +2,13 @@
 
 All dates are UK DD/MM/YY format.
 
+## 22/05/25 1.0.2
+* Default AMD core patch set to 2 cores
+* New amdcpu tool allows AMD core patch to be modified in the guest
+* Default memory for VMs is now set to 8GB
+* New verbose OC4VM to allow macOS boot process to be viewed
+* Modified debug OC4VM variant with in-depth OpenCore and macOS kernel traces
+
 ## 30/03/25 1.0.1
 * Fixed opencore.vmdk and recovery vmdk not being updateable in VMware
 * Ported siputil from Python 3 to Go
