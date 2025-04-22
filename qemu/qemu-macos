@@ -26,7 +26,7 @@ esac
 
 CPU="max"
 DISK_IMG="macos.qcow2"
-MEMORY_SIZE="4"
+MEMORY_SIZE="8"
 OPENCORE_IMG="opencore.qcow2"
 NUM_CORES="2"
 RECOVERY_FLAG=0
