@@ -31,18 +31,18 @@ From https://github.com/AMD-OSX/AMD_Vanilla/blob/master/README.md
 
 Which gives these values when correclty base64 encoded:
 
-| Cores | 10.13/10.14<br/>uAAAAAAA                   | 10.15/11.0<br/>ugAAAAAA                   | 12.0/13.0<br/>ugAAAACQ                   | 13.3+<br/>ugAAAAA=              |
-|-------|--------------------------------------------|-------------------------------------------|------------------------------------------|---------------------------------|
-| 1     | uAEAAAAA                                   | ugEAAAAA                                  | ugEAAACQ                                 | ugEAAAA=                        |
-| 2     | uAIAAAAA                                   | ugIAAAAA                                  | ugIAAACQ                                 | ugIAAAA=                        |
-| 4     | uAQAAAAA                                   | ugQAAAAA                                  | ugQAAACQ                                 | ugQAAAA=                        |
-| 8     | uAgAAAAA                                   | uggAAAAA                                  | uggAAACQ                                 | uggAAAA=                        |
-| 12    | uAwAAAAA                                   | ugwAAAAA                                  | ugwAAACQ                                 | ugwAAAA=                        |
-| 16    | uBAAAAAA                                   | uhAAAAAA                                  | uhAAAACQ                                 | uhAAAAA=                        |
-| 24    | uBgAAAAA                                   | uhgAAAAA                                  | uhgAAACQ                                 | uhgAAAA=                        |
-| 28    | uBwAAAAA                                   | uhwAAAAA                                  | uhwAAACQ                                 | uhwAAAA=                        |
-| 32    | uCAAAAAA                                   | uiAAAAAA                                  | uiAAAACQ                                 | uiAAAAA=                        |
-| 64    | uEAAAAAA                                   | ukAAAAAA                                  | ukAAAACQ                                 | ukAAAAA=                        |
+| Cores | 10.13/10.14<br/>uAAAAAAA | 10.15/11.0<br/>ugAAAAAA | 12.0/13.0<br/>ugAAAACQ  | 13.3+<br/>ugAAAAA=      |
+|-------|--------------------------|-------------------------|-------------------------|-------------------------|
+| 1     | uAEAAAAA                 | ugEAAAAA                | ugEAAACQ                | ugEAAAA=                |
+| 2     | uAIAAAAA                 | ugIAAAAA                | ugIAAACQ                | ugIAAAA=                |
+| 4     | uAQAAAAA                 | ugQAAAAA                | ugQAAACQ                | ugQAAAA=                |
+| 8     | uAgAAAAA                 | uggAAAAA                | uggAAACQ                | uggAAAA=                |
+| 12    | uAwAAAAA                 | ugwAAAAA                | ugwAAACQ                | ugwAAAA=                |
+| 16    | uBAAAAAA                 | uhAAAAAA                | uhAAAACQ                | uhAAAAA=                |
+| 24    | uBgAAAAA                 | uhgAAAAA                | uhgAAACQ                | uhgAAAA=                |
+| 28    | uBwAAAAA                 | uhwAAAAA                | uhwAAACQ                | uhwAAAA=                |
+| 32    | uCAAAAAA                 | uiAAAAAA                | uiAAAACQ                | uiAAAAA=                |
+| 64    | uEAAAAAA                 | ukAAAAAA                | ukAAAACQ                | ukAAAAA=                |
 
 ## macOS
 ### Useful boot-args
