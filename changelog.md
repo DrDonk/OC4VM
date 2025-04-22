@@ -2,7 +2,7 @@
 
 All dates are UK DD/MM/YY format.
 
-## 22/05/25 1.0.2
+## 22/04/25 1.0.2
 * Default AMD core patch set to 2 cores
 * New amdcpu tool allows AMD core patch to be modified in the guest
 * Default memory for VMs is now set to 8GB
