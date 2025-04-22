@@ -4,8 +4,8 @@
 # SPDX-FileCopyrightText: © 2023-25 David Parsons
 # SPDX-License-Identifier: MIT
 
-# Uncomment to debug
-# set -x
+# Enable debug mode if DEBUG environment variable is set to any non-empty value
+[[ -n "$DEBUG" ]] && set -x
 
 echo "OC4VM QEMU Runner"
 
