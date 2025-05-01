@@ -2,6 +2,8 @@
 
 All dates are UK DD/MM/YY format.
 
+## dd/mm/25 1.0.3
+
 ## 22/04/25 1.0.2
 * Default AMD core patch set to 2 cores
 * New amdcpu tool allows AMD core patch to be modified in the guest
