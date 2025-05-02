@@ -18,7 +18,7 @@ Fusion when running macOS guests.
 ## 2. Functionality
 What OC4VM can do?
 * Run macOS on Intel CPUs
-* Run macOS on AMD CPUs (experimental)
+* Run macOS on AMD CPUs
 * Boot to macOS Recovery mode which is broken in VMware's EFI implementation
 * Add Intel e1000e virtual NIC compatibility for Ventura and later versions of macOS
 
@@ -115,7 +115,7 @@ guest OS.
 
 The QEMU template is only supported on Intel based Macs running macOS. There are other 
 solutions for Linux, and QEMU fails to run macOS on Windows. It has also proved to be
-non-functional when used on Apple Silicon M-series Macs.
+barely functional when used on Apple Silicon M-series Macs.
 
 To run the VM you need to use the qemu-macos shell script, passing in different parameters. 
 
