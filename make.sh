@@ -192,15 +192,6 @@ do
         -o ./build/vmware/$VARIANT/macos.vmx \
         ./vmware/macos.vmx
 
-    # Disabled in 1.0.0
-    # ./utilities/minijinja-cli \
-    #     --format=toml \
-    #     -D VERSION=$VERSION \
-    #     -D COMMIT=$COMMIT \
-    #     -o ./build/vmware/$VARIANT/vmw-macos \
-    #     ./vmware/vmw-macos
-    # chmod +x ./build/vmware/$VARIANT/vmw-macos
-
     # Build the QEMU templates
     msg_status "Step 4. Create QEMU templates"
     mkdir -p ./build/qemu/$VARIANT 2>&1 >/dev/null
@@ -220,6 +211,7 @@ do
 done
 
 msg_status "\nStep 5. Copying misc files"
+cp -v ./vmware/VMX-MacOSGuest-UI.exe ./build/vmware/
 cp -v readme.md ./build/
 cp -v notes.md ./build/
 cp -v tools.md ./build/

@@ -75,11 +75,6 @@ The 'vmware' folder contains 2 folders with a VM template for VMware macOS virtu
 machines. The folders are for AMD and Intel CPUs. You will need to use the one that 
 matches the host CPU.
 
-The template is designed for maximum compatibilty between different releases and 
-platforms, and you should not upgrade the virtual hardware if prompted to by the VMware 
-software. Also do not change the 'guestOS' settings in the VMX file. It will not change any 
-of the behaviours of the guest and could cause issues in the future.
-
 Each folder contains these files:
 
 | File          | Function                          |
@@ -110,6 +105,11 @@ OC4VM provides a copy of the VMware macOS guest tools ISO images. These are usef
 VMware Fusion and also QEMU/UTM. To install mount the darwin.iso file using the VMs 
 virtual CD/DVD drive. You will then need to manually install the tools inside the
 guest OS.
+
+#### 3.3.4 VMware macOS Guest Setting
+VMware on Linux and Windows cannot edit the guestOS setting to another version of mac OS X/macOS.
+To get around this limitation the VMware template folder has a small program, VMX-MacOSGuest-UI.exe, 
+that can be used to open the guest's VMX file and change the setting.
 
 ### 3.4 QEMU templates
 
