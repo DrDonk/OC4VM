@@ -3,7 +3,7 @@
 All dates are UK DD/MM/YY format.
 
 ## dd/mm/yy 1.0.4
-TODO
+* Added macguest.exe to change guest OS settings in VMware Workstation
 
 ## 06/05/25 1.0.3
 * macserial utility was missing from the tools folder on the images

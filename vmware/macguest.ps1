@@ -23,7 +23,7 @@ $macOSVersionMap = [ordered]@{
     "darwin11"    = "Mac OS X 10.7 (Lion 32-bit)"
     "darwin10-64" = "Mac OS X 10.6 (Snow Leopard)"
     "darwin10"    = "Mac OS X 10.6 (Snow Leopard 32-bit)"
-    "darwin-64"   = "MacOS X 10.5 (Leopard)"
+    "darwin-64"   = "Mac OS X 10.5 (Leopard)"
     "darwin"      = "Mac OS X 10.5 (Leopard 32-bit)"
 }
 
