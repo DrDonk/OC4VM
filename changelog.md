@@ -2,7 +2,7 @@
 
 All dates are UK DD/MM/YY format.
 
-## dd/mm/25 1.0.3
+## 06/05/25 1.0.3
 * macserial utility was missing from the tools folder on the images
 
 ## 22/04/25 1.0.2
