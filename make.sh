@@ -211,7 +211,7 @@ do
 done
 
 msg_status "\nStep 5. Copying misc files"
-cp -v ./vmware/VMX-MacOSGuest-UI.exe ./build/vmware/
+cp -v ./vmware/macguest.exe ./build/vmware/
 cp -v readme.md ./build/
 cp -v notes.md ./build/
 cp -v tools.md ./build/

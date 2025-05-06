@@ -108,7 +108,7 @@ guest OS.
 
 #### 3.3.4 VMware macOS Guest Setting
 VMware on Linux and Windows cannot edit the guestOS setting to another version of mac OS X/macOS.
-To get around this limitation the VMware template folder has a small program, VMX-MacOSGuest-UI.exe, 
+To get around this limitation the VMware template folder has a small program, macguest.exe, 
 that can be used to open the guest's VMX file and change the setting.
 
 ### 3.4 QEMU templates
