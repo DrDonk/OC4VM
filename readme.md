@@ -26,7 +26,8 @@ What OC4VM cannot do:
 * Boot Intel macOS on an Apple Silicon CPU
 * Use the Apple para-virtualised GPU on non-Apple hardware 
 
-The OC4VM system has been tested on an Intel Mac mini mid-2014 with these guest OSes:
+The OC4VM system has been tested on an Intel Mac mini mid-2014 and an AMD HP Prodesk 405 G4
+with these guest OSes:
 * Big Sur
 * Monterey
 * Ventura
