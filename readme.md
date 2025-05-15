@@ -1,10 +1,10 @@
-# OC4VM - OpenCore for Virtual Machines
+# OC4VM - OpenCore for VMware
 
 ## 1. Introduction
-OpenCore for Virtual Machines (OC4VM) has been built to run macOS VMs primarily on Intel 
+OpenCore for VMware (OC4VM) has been built to run macOS VMs primarily on Intel 
 based Apple Macs. It may also be used on other PC hardware using VMware Workstation. It 
 provides an OpenCore disk image that can be used to boot Intel based macOS using VMware 
-Fusion and Workstation, and the open source QEMU program.
+Fusion and Workstation.
 
 Using OpenCore allows for a flexible patching system to overcome limitations of the 
 virtualisation software. It basically creates a virtual Hackintosh, which is similar in 
@@ -37,7 +37,6 @@ with these guest OSes:
 using:
 * VMware Fusion 13.6
 * VMware Workstation 17.6
-* QEMU 9.2
 
 CPUs will need to support the following instructions:
 
@@ -64,11 +63,10 @@ OC4VM has 4 sub-folders:
 | config     | OpenCore config.plist files for reference             |
 | disks      | OpenCore boot variants in DMG, VMDK and QCOW2 formats |
 | iso        | VMware Mac OS X and macOS guest tools iso images      |
-| qemu       | Template VMs for QEMU                                 |
 | tools      | OC4VM tools to manage config.plist                    |
 | vmware     | Template VMs for VMware                               |
 
-The most import folders are the 'qemu' and 'vmware' folders. 
+The most import folder is the 'vmware' folders. 
 
 ### 3.3 VMware Templates
 
@@ -102,78 +100,15 @@ Please follow these instructions to add to an existing macOS guest.
 3. Boot to the firmware and select the OpenCore drive as the boot device.
 
 #### 3.3.3 VMware macOS Guest Tools
-OC4VM provides a copy of the VMware macOS guest tools ISO images. These are useful for 
-VMware Fusion and also QEMU/UTM. To install mount the darwin.iso file using the VMs 
-virtual CD/DVD drive. You will then need to manually install the tools inside the
+OC4VM provides a copy of the VMware macOS guest tools ISO images.
+To install mount the darwin.iso file using the VMs virtual CD/DVD drive. 
+You will then need to manually install the tools inside the
 guest OS.
 
 #### 3.3.4 VMware macOS Guest Setting
 VMware on Linux and Windows cannot edit the guestOS setting to another version of mac OS X/macOS.
 To get around this limitation the VMware template folder has a small program, macguest.exe, 
 that can be used to open the guest's VMX file and change the setting.
-
-### 3.4 QEMU templates
-
-The QEMU template is only supported on Intel based Macs running macOS. There are other 
-solutions for Linux, and QEMU fails to run macOS on Windows. It has also proved to be
-barely functional when used on Apple Silicon M-series Macs.
-
-To run the VM you need to use the qemu-macos shell script, passing in different parameters. 
-
-```
-OC4VM QEMU Runner
- NAME:
-    qemu-macos
-
- SYNOPSIS:
-	qemu-macos [-a {hvf | kvm | tcg}] [-m <memory-size>] [-d <macos-image>] [-n <number-cores>][-o <opencore-image>] [-r <recovery-image>] [-s] [-v password]
-	
- DESCRIPTION:
-	Run macOS using QEMU
-
- OPTIONS:
-	-a ACCEL              QEMU accelerator to use.
-	-c CPU                CPU type to use.
-	-d DISK-IMAGE         species a macOS drive image to use.
-	-m MEMORY             specifies amount of memory to allocate to VM.
-	-n NUM-CORES          specifies no of cores to present to guest. 
-	-o OPENCORE-IMAGE     specifies OpenCore boot image.
-	-r RECOVERY-IMAGE     specifies macOS installation/recovery image.
-	-s                    enable serial output.
-	-v VNC-PASSWORD       enable VNC output on port 5959 with password.
-HELP
-```
-
-| Option | Default        |
-|:-------|----------------|
-| -a     | hvf            |
-| -c     | max            |
-| -d     | macos.qcow2    |
-| -m     | 4GB RAM        |
-| -n     | 2              |
-| -o     | opencore.qcow2 | 
-| -r     | \<none\>       |
-| -s     | \<false\>      |
-
-#### 3.4.1 Installing macOS
-To create a new virtual machine copy either the Intel or AMD template to a new folder.
-You will need to provide a macOS installation image for the setup of the macOS guest.
-
-Start the vm using:
-
-`./qemu-macos -r <installation image>`
-
-You may want to add more memory with the -m parameter depending on your needs.
-
-Once you have installed macOS proceed to the next section.
-
-### 3.4.2 Running macOS
-
-Start the installed macOS guest using:
-
-`./qemu-macos`
-
-Again you may want to alter the memory presented to the guest VM.
 
 ## 4. Building OC4VM
 
@@ -200,7 +135,7 @@ The build artefacts will be found in the "build" folder and the release zip file
 "dist" folder.
 
 The current variables used to define the different files in OC4VM are stored in 
-oc4vm.toml and used in the OpenCore config.plist, VMware VMX and QEMU templates.
+oc4vm.toml and used in the OpenCore config.plist and VMware VMX template.
 
 | Name        | Type            | Description                                   |
 |:------------|-----------------|-----------------------------------------------|

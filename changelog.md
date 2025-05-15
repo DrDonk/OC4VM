@@ -2,7 +2,8 @@
 
 All dates are UK DD/MM/YY format.
 
-## dd/mm/yy 1.0.4
+## dd/mm/yy 1.1.0
+* Removed QEMU support as it problematic and not stable
 * Added macguest.exe to change guest OS settings in VMware Workstation
 
 ## 06/05/25 1.0.3
