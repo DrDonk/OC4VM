@@ -2,7 +2,7 @@
 
 All dates are UK DD/MM/YY format.
 
-## dd/mm/yy 1.1.0
+## 16/05/25 1.1.0
 * Removed QEMU support as it is problematic and not stable
 * Added macguest.exe to change guest OS settings in VMware Workstation
 * Upgraded OpenCore to 1.0.4

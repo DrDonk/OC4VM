@@ -61,7 +61,7 @@ OC4VM has 4 sub-folders:
 | Folder     | Function                                              |
 |:-----------|-------------------------------------------------------|
 | config     | OpenCore config.plist files for reference             |
-| disks      | OpenCore boot variants in DMG, VMDK and QCOW2 formats |
+| disks      | OpenCore boot variants in DMG and VMDK formats        |
 | iso        | VMware Mac OS X and macOS guest tools iso images      |
 | tools      | OC4VM tools to manage config.plist                    |
 | vmware     | Template VMs for VMware                               |
