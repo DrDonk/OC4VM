@@ -1321,7 +1321,7 @@
     <key>PlatformInfo</key>
     <dict>
         <key>Automatic</key>
-        <true/>
+        <false/>
 		<key>CustomMemory</key>
 		<false/>
         <key>Generic</key>
@@ -1329,30 +1329,30 @@
             <key>AdviseFeatures</key>
             <false/>
             <key>MLB</key>
-            <string>C07343102GUKXPGCB</string>
+            <string></string>
             <key>MaxBIOSVersion</key>
             <false/>
             <key>ProcessorType</key>
             <integer>0</integer>
             <key>ROM</key>
-            <string>66C9759989AC</string>
+            <string></string>
             <key>SpoofVendor</key>
             <true/>
             <key>SystemMemoryStatus</key>
             <string>Auto</string>
             <key>SystemProductName</key>
-            <string>Macmini8,1</string>
+            <string></string>
             <key>SystemSerialNumber</key>
-            <string>C07LL5Y8JYVX</string>
+            <string></string>
             <key>SystemUUID</key>
-            <string>5BA4C550-5437-4998-9C6D-9DAD1589758F</string>
+            <string></string>
         </dict>
         <key>UpdateDataHub</key>
-        <true/>
+        <false/>
         <key>UpdateNVRAM</key>
-        <true/>
+        <false/>
         <key>UpdateSMBIOS</key>
-        <true/>
+        <false/>
         <key>UpdateSMBIOSMode</key>
         <string>Create</string>
         <key>UseRawUuidEncoding</key>

@@ -20,7 +20,7 @@ will raise an error if the config.plist file cannot be found on the boot drive.
 This utility alters the AMD cores patch settings that are stored in config.plist.
 
 Note: You must ensure the guest VM cores match the setting when you restart the VM
-or you willlikely get a kernel panic.
+or you will likely get a kernel panic.
 
 ```
 Usage: amdcpu <cores>
@@ -43,12 +43,6 @@ Options:
     -set value      Set the boot-args variable
     -h              Print this help message
 ```
-
-## regen
-This utility regenerates serial number, MLB, ROM and UUID for the emulated system which is a 
-Macmini8,1 (Mac mini 2018 model).
-
-Note: You will need to restart the system for the settings to take effect.
 
 ## siputil
 This utility alters the macOS kernel csrconfig SIP settings that are stored in config.plist. 

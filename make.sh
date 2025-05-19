@@ -79,13 +79,13 @@ chmod +x ./build/tools/amdcpu
     ./tools/bootargs
 chmod +x ./build/tools/bootargs
 
-./utilities/minijinja-cli \
-    --format=toml \
-    -D VERSION=$VERSION \
-    -D COMMIT=$COMMIT \
-    -o ./build/tools/regen \
-    ./tools/regen
-chmod +x ./build/tools/regen
+# ./utilities/minijinja-cli \
+#     --format=toml \
+#     -D VERSION=$VERSION \
+#     -D COMMIT=$COMMIT \
+#     -o ./build/tools/regen \
+#     ./tools/regen
+# chmod +x ./build/tools/regen
 
 ./utilities/minijinja-cli \
     --format=toml \
@@ -107,7 +107,7 @@ chmod +x ./build/tools/vmhide
 
 cp -v ./tools/cpuid ./build/tools/cpuid
 cp -v ./tools/hostcaps ./build/tools/hostcaps
-cp -v ./tools/macserial ./build/tools/macserial
+# cp -v ./tools/macserial ./build/tools/macserial
 
 VARIANTS=("${(f)$(./utilities/stoml oc4vm.toml . | tr ' ' '\n')}")
 for VARIANT in $VARIANTS

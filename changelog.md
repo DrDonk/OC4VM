@@ -2,12 +2,14 @@
 
 All dates are UK DD/MM/YY format.
 
-## 16/05/25 1.1.0
+## xx/05/25 1.1.0
+* Re-branded as OpenCore 4 VMware
 * Removed QEMU support as it is problematic and not stable
-* Added macguest.exe to change guest OS settings in VMware Workstation
+* Added macguest.exe to change guest OS settings in Windows VMware Workstation
 * Upgraded OpenCore to 1.0.4
 * Upgraded VirtualSMC to 1.3.6
 * Upgraded AppleALC to 1.9.4
+* Moved Apple model spoofing to the VMware VMX file
 
 ## 06/05/25 1.0.3
 * macserial utility was missing from the tools folder on the images
