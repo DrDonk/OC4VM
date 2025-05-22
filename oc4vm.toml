@@ -62,7 +62,7 @@ DEBUG = '0'
 DESCRIPTION = 'macOS AMD Release OC'
 DMG = 'release'
 RESOLUTION = '1440x900@32'
-TIMEOUT = '0'
+TIMEOUT = '5'
 
 [amd-verbose]
 BUILD = '1'
