@@ -109,7 +109,8 @@ Useful for AMD deugging using KDK:
 
 ### VMware machine spoofing
 
-Spoof Mac mini 2018 in VMware VMX, not normally needed as done in OpenCore.
+Spoof Mac mini 2018 in VMware VMX, otherwise the guest machine will hold standard VMware virtual
+chassis details as seen when using Fusion on Apple Mac and macOS.
 ```
 # Mac mini 2018
 board-id = "Mac-7BA5B2DFE22DDD8C"
@@ -124,36 +125,66 @@ serialNumber = "C07W20B5JYVX"
 serialNumber.reflectHost = "FALSE"
 smbios.reflectHost = "TRUE"
 ```
+### New guestOS table patch
+This patch allows all guest OS familes and types to by displayed on Windows and Linux. It's a simpler patch 
+than my patcher in the Unlocker. It is not essential but used for testing the OC4VM code.
 
-## QEMU
-### QEMU Socket Calculations
+VMware Workstation 17.6.3 for Windows vmwarebase.dll 
 
-| # of cores | QEMU SMP                                                          |
-|------------|-------------------------------------------------------------------|
-| 1 2 4 8    | SMP="cpus=$CPU_CORES,sockets=1,dies=1,cores=$CPU_CORES,threads=1" |
-| 6 7        | SMP="cpus=$CPU_CORES,sockets=3,dies=1,cores=2,threads=1"          |
-| 10 11      | SMP="cpus=$CPU_CORES,sockets=5,dies=1,cores=2,threads=1"          |
-| 12 13      | SMP="cpus=$CPU_CORES,sockets=3,dies=1,cores=4,threads=1"          |
-| 14 15      | SMP="cpus=$CPU_CORES,sockets=7,dies=1,cores=2,threads=1"          |
-| 16 32 64   | SMP="cpus=$CPU_CORES,sockets=1,dies=1,cores=$CPU_CORES,threads=1" |
+```
+Windows unpatched
+                         LAB_103731ad                              XREF[1]:   1037319e(j)  
+      103731ad c6 85 e4      MOV       byte ptr [EBP + local_120],0x1
+               fe ff ff 
+               01
+      103731b4 eb 07         JMP       LAB_103731bd
+                         LAB_103731b6                              XREF[3]:   1037318b(j), 10373194(j), 
+                                                                               103731ab(j)  
+      103731b6 c6 85 e4      MOV       byte ptr [EBP + local_120],0x0
+               fe ff ff 
+               00
+```
 
-NOTE: It is much simpler just to use the follwoing:
+```
+Windows patched
+                         LAB_103731ad                              XREF[1]:   1037319e(j)  
+      103731ad c6 85 e4      MOV       byte ptr [EBP + local_120],0x1
+               fe ff ff 
+               01
+      103731b4 eb 07         JMP       LAB_103731bd
+                         LAB_103731b6                              XREF[3]:   1037318b(j), 10373194(j), 
+                                                                               103731ab(j)  
+      103731b6 c6 85 e4      MOV       byte ptr [EBP + local_120],0x1
+               fe ff ff 
+               01
+```
 
-`-smp < Core Count >`
+Find:    `c6 85 e4 fe ff ff 01 eb 07 c6 85 e4 fe ff ff 00`
 
-### QEMU Force VendorId
-`-cpu $CPU,pdpe1gb=off,vmware-cpuid-freq=on,vendor=GenuineIntel,check`
+Replace: `c6 85 e4 fe ff ff 01 eb 07 c6 85 e4 fe ff ff 01`
 
-`-cpu $CPU,pdpe1gb=off,vmware-cpuid-freq=on,vendor=AuthenticAMD,check`
+VMware Workstation 17.6.3 for Linux libvmwarebase.dlsol 
 
-### QEMU on Windows
-Windows enable WHPX:
+```
+Linux unpatched
 
-`Dism /Online /Enable-Feature:HypervisorPlatform`
+      00624224 48 8b 43      MOV       RAX,qword ptr [RBX + 0x40]=>DAT_009aab60   = 0000000F77150690h
+               40
+      00624228 31 d2         XOR       EDX,EDX
+      0062422a a8 01         TEST      AL,0x1
+      0062422c 74 13         JZ        LAB_00624241
 
-### QEMU host folder virtual drive
+Linux patched:
 
-`-device usb-storage,drive=fat16 -drive file=fat:rw:fat-type=16:"<full path to host folder>",id=fat16,format=raw,if=none`
+      00624224 c7 c2 01      MOV       EDX,0x1
+               00 00 00
+      0062422a a8 01         TEST      AL,0x1
+      0062422c eb 13         JMP       LAB_00624241
+```
+
+Find:    `48 8b 43 40 31 d2 a8 01 74 13`
+
+Replace: `c7 c2 01 00 00 00 a8 01 eb 13`
 
 ## Random Stuff
 
