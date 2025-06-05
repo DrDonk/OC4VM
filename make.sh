@@ -40,7 +40,7 @@ build_dmg() {
     hdiutil attach $1/opencore.dmg -noverify -nobrowse -noautoopen
     cp -rv $3 /Volumes/OPENCORE/EFI/OC
     cp -rv ./build/tools /Volumes/OPENCORE
-    cp -rv ./build/iso /Volumes/OPENCORE
+    cp -rv ./iso /Volumes/OPENCORE
     rm -rf /Volumes/OPENCORE/.fseventsd
     dot_clean -m /Volumes/OPENCORE
     SetFile -a C /Volumes/OPENCORE
