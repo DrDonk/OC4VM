@@ -44,42 +44,6 @@ Options:
     -h              Print this help message
 ```
 
-## siputil
-This utility alters the macOS kernel csrconfig SIP settings that are stored in config.plist. 
-It is very similar to the macOS csrutil command but can be run as a regular user
-in normal mode, unlike csrutil which requires recovery mode.
-
-One difference is the disable and enable commands include the 'authenticated-root' 
-sub-command of csrutil.
-
-Note: OC4VM overrides any values stored in NVRAM. You will need to restart the system
-for the settings to take effect.
-
-```
-OC4VM siputil
--------------
-
-usage: siputil <options> <command>
-Modify the System Integrity Protection configuration stored in the OpenCore config.plist.
-All configuration changes apply to the entire machine.
-
-Available options:
--h/--help       Show this help
--f/--file       Override the default config.plist location
--d/--debug      Show some additonal debugging information
-
-Available commands:
-
-    clear
-        Clear the existing configuration.
-    disable
-        Disable the protection on the machine.
-    enable
-        Enable the protection on the machine.
-    status
-        Display the current configuration.
-```
-
 ## vmhide
 vmhide tool toggkles the VMHide.kext on and off to mask the VMM bit in the guest macOS.
 

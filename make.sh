@@ -80,24 +80,6 @@ chmod +x ./build/tools/amdcpu
     ./tools/bootargs
 chmod +x ./build/tools/bootargs
 
-# ./utilities/minijinja-cli \
-#     --format=toml \
-#     -D VERSION=$VERSION \
-#     -D COMMIT=$COMMIT \
-#     -o ./build/tools/regen \
-#     ./tools/regen
-# chmod +x ./build/tools/regen
-
-./utilities/minijinja-cli \
-    --format=toml \
-    -D VERSION=$VERSION \
-    -D COMMIT=$COMMIT \
-    -o ./build/tools/siputil.go \
-    ./tools/siputil.go
-go get howett.net/plist
-env GOOS=darwin GOARCH=amd64 go build -o ./build/tools ./build/tools/siputil.go
-rm ./build/tools/siputil.go 2>&1 >/dev/null
-
 ./utilities/minijinja-cli \
     --format=toml \
     -D VERSION=$VERSION \
