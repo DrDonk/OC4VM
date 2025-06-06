@@ -9,7 +9,7 @@ The OC4VM boot drive should be mounted at:
 
 and the tools are found at:
 
-`/Volumes/OPENCORE/tools`
+`/Volumes/OPENCORE/OC4VM/tools`
 
 All these tools depend on the OC4VM boot drive being mounted at that path and
 will raise an error if the config.plist file cannot be found on the boot drive.

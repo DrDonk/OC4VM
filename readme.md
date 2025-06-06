@@ -100,10 +100,9 @@ Please follow these instructions to add to an existing macOS guest.
 3. Boot to the firmware and select the OpenCore drive as the boot device.
 
 #### 3.3.3 VMware macOS Guest Tools
-OC4VM provides a copy of the VMware macOS guest tools ISO images.
-To install mount the darwin.iso file using the VMs virtual CD/DVD drive. 
-You will then need to manually install the tools inside the
-guest OS.
+OC4VM provides a copy of the VMware macOS guest tools ISO images on the OC4VM boot disk.
+To install mount the file from /Volumes/OPENCORE/OC4VM/iso/darwin.iso inside the guest and
+install the tools.
 
 #### 3.3.4 VMware macOS Guest Setting
 VMware on Linux and Windows cannot edit the guestOS setting to another version of mac OS X/macOS.
