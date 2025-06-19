@@ -1,7 +1,7 @@
 # Random Notes
 
 ## Opencore
-#### Cores for AMD Patches
+### Cores for AMD Patches
 
 From https://github.com/AMD-OSX/AMD_Vanilla/blob/master/README.md
 
@@ -14,7 +14,7 @@ From https://github.com/AMD-OSX/AMD_Vanilla/blob/master/README.md
 > | 12.x, 13.0 to 13.2.1 | BA000000 0090 | BA < Core Count > 0000 0090 |
 > | 13.3 +               | BA000000 00   | BA < Core Count > 0000 00   |
 > 
-> From the table above substitue `< Core Count >` with the hexadecimal value matching your physical core count. Do not use your CPU's thread count. See the table below for the values matching your CPU core count.
+> From the table above substitute `< Core Count >` with the hexadecimal value matching your physical core count. Do not use your CPU's thread count. See the table below for the values matching your CPU core count.
 > 
 > 
 > | Core Count | Hexadecimal |
@@ -163,7 +163,7 @@ Find:    `c6 85 e4 fe ff ff 01 eb 07 c6 85 e4 fe ff ff 00`
 
 Replace: `c6 85 e4 fe ff ff 01 eb 07 c6 85 e4 fe ff ff 01`
 
-VMware Workstation 17.6.3 for Linux libvmwarebase.dlsol 
+VMware Workstation 17.6.3 for Linux libvmwarebase.so
 
 ```
 Linux unpatched
