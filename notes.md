@@ -64,10 +64,30 @@ Which gives these values when correclty base64 encoded:
 [kdk]<br/>
 `keepsyms=1 -lilubetaall -v -no_compat_check serial=1 debug=2 -no_panic_dialog -liludbgall -topo -cpuid kcsuffix=development`
 
-Useful for AMD deugging using KDK:
+Useful for AMD debugging using KDK:
 `avx512=0 cwad`
 
 ## VMware
+
+### VMware VMX Comments
+VMware uses "#" as the comment character, but the VMware code can re-write the VMX file with all the comments
+aggregated at the top of the file. This means the positional comments are moved and the context is lost.
+
+To bypass this issue the "_" characters are used to prefix commented out lines. VMware interprets these lines as
+valid but cannot use them due to the prefix.
+
+Example:
+
+`_smbios.reflectHost = "FALSE"`
+
+to use this edit it to:
+
+`smbios.reflectHost = "FALSE"`
+
+In addtion there are dummy section names using "__" as a prefix and suffix:
+
+`__Apple_Model__ = ""`
+
 ### VMware Mac OS X & macOS table
 
 | macOS                 | Name          | guestOS             |  GOS   |
@@ -126,7 +146,7 @@ serialNumber.reflectHost = "FALSE"
 smbios.reflectHost = "TRUE"
 ```
 ### New guestOS table patch
-This patch allows all guest OS familes and types to by displayed on Windows and Linux. It's a simpler patch 
+This patch allows all guest OS familes and types to be displayed on Windows and Linux. It's a simpler patch 
 than my patcher in the Unlocker. It is not essential but used for testing the OC4VM code.
 
 VMware Workstation 17.6.3 for Windows vmwarebase.dll 
