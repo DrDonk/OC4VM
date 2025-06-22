@@ -1,4 +1,5 @@
 # OC4VM - OpenCore for VMware
+## Please note: Tahoe is not currently supported and depends on changes to OpenCore and other components
 
 ## 1. Introduction
 OpenCore for VMware (OC4VM) has been built to run macOS VMs primarily on Intel 
