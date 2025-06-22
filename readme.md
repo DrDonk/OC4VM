@@ -35,6 +35,8 @@ with these guest OSes:
 * Sonoma
 * Sequoia
 
+**Note: Tahoe is not currently supported and will not boot**
+
 using:
 * VMware Fusion 13.6
 * VMware Workstation 17.6
@@ -81,7 +83,7 @@ Each folder contains these files:
 |:--------------|-----------------------------------|
 | opencore.vmdk | OpenCore boot virtual disk        |
 | macos.vmx     | macOS VMX settings file           |
-| macos.vmdk    | Pre-formated HFS+J virtual disk   |
+| macos.vmdk    | Pre-formatted APFS virtual disk   |
 | macos.plist   | VMware Fusion config file         |
 
 #### 3.3.1 New VM
@@ -107,8 +109,9 @@ install the tools.
 
 #### 3.3.4 VMware macOS Guest Setting
 VMware on Linux and Windows cannot edit the guestOS setting to another version of mac OS X/macOS.
-To get around this limitation the VMware template folder has a small program, macguest.exe, 
-that can be used to open the guest's VMX file and change the setting.
+To get around this limitation the VMware template folder has a small Windows program, macguest.exe, 
+that can be used to open the guest's VMX file and change the setting. Linux progrm is currently 
+under development.
 
 ## 4. Building OC4VM
 
