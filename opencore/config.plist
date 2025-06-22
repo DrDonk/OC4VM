@@ -732,7 +732,7 @@
 				<key>Count</key>
 				<integer>1</integer>
 				<key>Enabled</key>
-				<true/>
+				<false/>
 				<key>Find</key>
 				<data>4BFyAA==</data>
 				<key>Identifier</key>
@@ -1305,6 +1305,10 @@
 				<string>OC4VM_VERSION</string>
 				<string>OC4VM COMMIT</string>
 			</array>
+			<key>7C436110-AB2A-4BBB-A880-FE41995C9F82</key>
+			<array>
+				<string>boot-args</string>
+			</array>			
 		</dict>
 		<key>LegacyOverwrite</key>
 		<false/>
@@ -1324,23 +1328,23 @@
             <key>AdviseFeatures</key>
             <false/>
             <key>MLB</key>
-            <string></string>
+            <string>F5K105501CDK3F7A8</string>
             <key>MaxBIOSVersion</key>
             <false/>
             <key>ProcessorType</key>
             <integer>0</integer>
             <key>ROM</key>
-            <string></string>
+            <string>0ED6AE9B4774</string>
             <key>SpoofVendor</key>
             <true/>
             <key>SystemMemoryStatus</key>
             <string>Auto</string>
             <key>SystemProductName</key>
-            <string></string>
+            <string>VMware20,1</string>
             <key>SystemSerialNumber</key>
-            <string></string>
+            <string>F5KF6PZ9P7QM</string>
             <key>SystemUUID</key>
-            <string></string>
+            <string>5BA4C550-5437-4998-9C6D-9DAD1589758F</string>
         </dict>
         <key>UpdateDataHub</key>
         <false/>
