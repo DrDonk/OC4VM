@@ -109,7 +109,7 @@ install the tools.
 
 ### 3.5 OC4VM Guest Tools
 There are some tools written specially for use in the macOS guest. They are documented in the 
-tools.md file.
+[tools.md](tools.md) file.
 
 ### 3.6 VMware macOS Guest Setting
 VMware on Linux and Windows cannot edit the guestOS setting to another version of mac OS X/macOS.
