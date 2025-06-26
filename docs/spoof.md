@@ -3,6 +3,8 @@
 If you want to make the VM look like a specific Mac model the settings can be configued in the 
 VMware VMX file. Currently the VMX file is configured as a 2020 iMac which is still supported for Tahoe.
 
+*Note: It looks like iCloud and Apple AppStore is not working in Intel macOS VMs even with spoofing.*
+
 Supplied settings:
 
 ```
@@ -28,7 +30,10 @@ The process is:
 
 `C02CJ1YQ046M | C02014306GU00001M`
 
-7. For the ROM make up a value and insert it or use the VMs MAC address removing the ":"s. 
+7. For the ROM make up a value and insert it or use the VMs MAC address removing the ":"s.
+
+*NOTE: It looks like ROM value setting is broken using VMX or OCLP settings*
+
 8. Save the VMX file
 9. Run the VM and use System Profiler to check settings
 
