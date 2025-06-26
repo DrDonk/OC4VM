@@ -109,7 +109,7 @@ install the tools.
 
 ### 3.5 OC4VM Guest Tools
 There are some tools written specially for use in the macOS guest. They are documented in the 
-[tools.md](tools.md) file.
+[tools.md](docs/tools.md) file.
 
 ### 3.6 VMware macOS Guest Setting
 VMware on Linux and Windows cannot edit the guestOS setting to another version of mac OS X/macOS.
@@ -117,90 +117,17 @@ To get around this limitation the VMware template folder has a small Windows pro
 that can be used to open the guest's VMX file and change the setting. Linux progrm is currently 
 under development.
 
-### 3.7 Virtual Apple Mac details
+## 4. Spoofing the Virtual Apple Mac
 If you want to make the VM look like a specific Mac model the settings can be configued in the 
-VMware VMX file. Currently the VMX file is configured as a 2020 iMac which is still supported for Tahoe.
+VMware VMX file. Details are in the [spoof.md](docs/spoof.md) file.
 
-Supplied settings:
+## 5. Building OC4VM
 
-```
-__Apple_Model__ = "iMac 5K Retina 2020"
-board-id = "Mac-AF89B6D9451A490B"
-hw.model = "iMac20,2"
-_serialNumber = "C02CVXY9046M"
-_efi.nvram.var.MLB = "C02024270GU0000AD"
-_efi.nvram.var.ROM = "0ED6AE9B4774"       # !!This seems broken in current VMware builds!! 
-```
+Building must be done on macOS, either real or virtualized. Details are in the 
+[build.md](docs/build.md) file.
 
-The process is:
 
-1. Shutdown the VM
-2. Open the guest VMX file in a text editor
-3. Open a terminal/command window and change directory to the OC4VM tools folder.
-4. Remove the "_" character from the bgining of any lines you want to change.
-5. Run the version of macserial for you host OS using:
-
-`macserial -m iMac20,1 -n 1`
-
-6. Use the first number for the serial number and the second number for MLB setting.
-
-`C02CJ1YQ046M | C02014306GU00001M`
-
-7. For the ROM make up a value and insert it or use the VMs MAC address removing the ":"s. 
-8. Save the VMX file
-9. Run the VM and use System Profiler to check settings
-
-Example:
-
-```
-__Apple_Model__ = "iMac 5K Retina 2020"
-board-id = "Mac-AF89B6D9451A490B"
-hw.model = "iMac20,2"
-serialNumber = "C02CJ1YQ046M"
-efi.nvram.var.MLB = "C02014306GU00001M"
-efi.nvram.var.ROM = "112233445566"       # !!This seems broken in current VMware builds!! 
-```
-
-## 4. Building OC4VM
-
-Building must be done on macOS, either real or virtualized. The Homebrew package manager 
-will need to be installed to allow installation of the following pre-requisites. Please 
-follow the instructions at https://brew.sh.
-
-Once brew is installed run the following commands to install the required software:
-```
-brew install qemu
-brew install p7zip
-brew install go
-```
-
-Now clone the OC4VM repository using:
-```git clone https://github.com/DrDonk/OC4VM.git```
-
-Using the terminal OC4VM can be built by simply running the make.sh command from tbe 
-cloned repository.
-
-```./make.sh```
-
-The build artefacts will be found in the "build" folder and the release zip file in the 
-"dist" folder.
-
-The current variables used to define the different files in OC4VM are stored in 
-oc4vm.toml and used in the OpenCore config.plist and VMware VMX template.
-
-| Name        | Type            | Description                                   |
-|:------------|-----------------|-----------------------------------------------|
-| BUILD       | \<0/1\>         | build config switch for make.sh               |
-| AMD         | \<0/1\>         | building for AMD                              |
-| BOOTARGS    | \<string\>      | macOS NVRAM boot-args                         |
-| CSRCONFIG   | \<data\>        | base64 encoded macOS CSR SIP value            |
-| DEBUG       | \<0/1\>         | enable debug options in OpenCore              |
-| DESCRIPTION | \<string\>      | description of configuration                  |
-| DMG         | <release/debug> | specify release or debug version of OpenCore  |
-| RESOLUTION  | \<string\>      | screen resolution WxH@Bpp or Max              |
-| TIMEOUT     | \<integer\>     | timeout for OpenCore boot picker (0 disables) |
-
-## 5. Support
+## 6. Support
 If you are trying a specific combination, hypervisor/CPU/OS, please start a discussion instead
 of an issue. It is impossible for us to test all combinations out there and so
 discussions are a better place to help one another. If an actual bug or enhancement
@@ -212,7 +139,7 @@ to help diagnose the issue.
 
 Most importantly let us be supportive of each other with respectful discussions.
 
-## 6. Thanks
+## 7. Thanks
 
 Many thanks to the great developers and community around the OpenCore scene. The OC4VM 
 package uses the following:
