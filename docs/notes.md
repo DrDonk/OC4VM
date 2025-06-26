@@ -1,4 +1,6 @@
-# Random Notes
+# Research Notes
+
+These are my random notes whilst I was working on OC4VM. They may prove useful for other people.
 
 ## Opencore
 ### Cores for AMD Patches
@@ -31,7 +33,7 @@ From https://github.com/AMD-OSX/AMD_Vanilla/blob/master/README.md
 
 Which gives these values when correclty base64 encoded:
 
-| Cores | 10.13/10.14<br/>uAAAAAAA | 10.15/11.0<br/>ugAAAAAA | 12.0/13.0<br/>ugAAAACQ  | 13.3+<br/>ugAAAAA=      |
+| Cores | 10.13/10.14uAAAAAAA | 10.15/11.0ugAAAAAA | 12.0/13.0ugAAAACQ  | 13.3+ugAAAAA=      |
 |-------|--------------------------|-------------------------|-------------------------|-------------------------|
 | 1     | uAEAAAAA                 | ugEAAAAA                | ugEAAACQ                | ugEAAAA=                |
 | 2     | uAIAAAAA                 | ugIAAAAA                | ugIAAACQ                | ugIAAAA=                |
@@ -46,24 +48,25 @@ Which gives these values when correclty base64 encoded:
 
 ## macOS
 ### Useful boot-args
-[default]<br/>
-`keepsyms=1 -lilubetaall -no_compat_check -no_panic_dialog vmhState=disabled`
+```
+[default]
+keepsyms=1 -lilubetaall -no_compat_check -no_panic_dialog
 
-[stealth]<br/>      
-`keepsyms=1 -lilubetaall -no_compat_check -no_panic_dialog vmhState=enabled`
+[stealth]      
+keepsyms=1 -lilubetaall -no_compat_check -no_panic_dialog
 
-[verbose]<br/>
-`keepsyms=1 -lilubetaall -no_compat_check -no_panic_dialog vmhState=disabled -v`
+[verbose]
+keepsyms=1 -lilubetaall -no_compat_check -no_panic_dialog -v
 
-[trace]<br/>
-`keepsyms=1 -lilubetaall -no_compat_check -no_panic_dialog vmhState=disabled -v serial=1`
+[trace]
+keepsyms=1 -lilubetaall -no_compat_check -no_panic_dialog -v serial=1
 
-[debug]<br/>
-`keepsyms=1 -lilubetaall -no_compat_check -no_panic_dialog vmhState=disabled -v serial=1 debug=2`
+[debug]
+keepsyms=1 -lilubetaall -no_compat_check -no_panic_dialog -v serial=1 debug=2
 
-[kdk]<br/>
-`keepsyms=1 -lilubetaall -v -no_compat_check serial=1 debug=2 -no_panic_dialog -liludbgall -topo -cpuid kcsuffix=development`
-
+[kdk]
+keepsyms=1 -lilubetaall -v -no_compat_check serial=1 debug=2 -no_panic_dialog -liludbgall -topo -cpuid kcsuffix=development
+```
 Useful for AMD debugging using KDK:
 `avx512=0 cwad`
 
@@ -127,24 +130,6 @@ In addtion there are dummy section names using "__" as a prefix and suffix:
 | 8        | 4                    | 2       |
 | 8        | 1                    | 8       |
 
-### VMware machine spoofing
-
-Spoof Mac mini 2018 in VMware VMX, otherwise the guest machine will hold standard VMware virtual
-chassis details as seen when using Fusion on Apple Mac and macOS.
-```
-# Mac mini 2018
-board-id = "Mac-7BA5B2DFE22DDD8C"
-board-id.reflectHost = "FALSE"
-efi.nvram.var.MLB = "C07801609GUKXPGJA"
-efi.nvram.var.MLB.reflectHost = "FALSE"
-efi.nvram.var.ROM = "EFA3707116CA"
-efi.nvram.var.ROM.reflectHost = "FALSE"
-hw.model = "Macmini8,1"
-hw.model.reflectHost = "FALSE"
-serialNumber = "C07W20B5JYVX"
-serialNumber.reflectHost = "FALSE"
-smbios.reflectHost = "TRUE"
-```
 ### New guestOS table patch
 This patch allows all guest OS familes and types to be displayed on Windows and Linux. It's a simpler patch 
 than my patcher in the Unlocker. It is not essential but used for testing the OC4VM code.
@@ -215,6 +200,8 @@ Encode a base64 encoded binary:
 Decode a base64 encoded binary:
 
 `print AAAf/w== | base64 -D | xxd`
+
+Examples from kernel patching section of config.plist:
 
 ```
 Find:        wegaAAA= -> c1e8 1a00 00 
