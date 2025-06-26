@@ -102,18 +102,22 @@ Please follow these instructions to add to an existing macOS guest.
 2. Use the guest settings to add the opencore.vmdk disk as a SATA drive.
 3. Boot to the firmware and select the OpenCore drive as the boot device.
 
-#### 3.3.3 VMware macOS Guest Tools
+### 3.4 VMware macOS Guest Tools
 OC4VM provides a copy of the VMware macOS guest tools ISO images on the OC4VM boot disk.
 To install mount the file from /Volumes/OPENCORE/OC4VM/iso/darwin.iso inside the guest and
 install the tools.
 
-#### 3.3.4 VMware macOS Guest Setting
+### 3.5 OC4VM Guest Tools
+There are some tools written specially for use in the macOS guest. They are documented in the 
+tools.md file.
+
+### 3.6 VMware macOS Guest Setting
 VMware on Linux and Windows cannot edit the guestOS setting to another version of mac OS X/macOS.
 To get around this limitation the VMware template folder has a small Windows program, macguest.exe, 
 that can be used to open the guest's VMX file and change the setting. Linux progrm is currently 
 under development.
 
-### 3.4 Virtual Apple Mac details
+### 3.7 Virtual Apple Mac details
 If you want to make the VM look like a specific Mac model the settings can be configued in the 
 VMware VMX file. Currently the VMX file is configured as a 2020 iMac which is still supported for Tahoe.
 
