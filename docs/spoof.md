@@ -30,7 +30,15 @@ The process is:
 
 `C02CJ1YQ046M | C02014306GU00001M`
 
-7. For the ROM make up a value and insert it or use the VMs MAC address removing the ":"s.
+7. For the ROM power up the VM once and then use the VMs MAC address from the VMX file.
+
+As an example:
+
+`ethernet0.generatedAddress = "00:0C:29:AA:BB:CC"`
+
+remove the ":"s and add:
+
+`efi.nvram.var.ROM = "000C29AABBCC"`
 
 *NOTE: It looks like ROM value setting is broken using VMX or OCLP settings*
 
