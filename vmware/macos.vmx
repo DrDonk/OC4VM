@@ -17,6 +17,7 @@ hw.model = "iMac20,2"
 _serialNumber = "C02CVXY9046M"
 _efi.nvram.var.MLB = "C02024270GU0000AD"
 _efi.nvram.var.ROM = "0ED6AE9B4774"       # !!This seems broken in current VMware builds!! 
+_hypervisor.cpuid.v0 = "TRUE"
 
 __CPU_Sanity_Checks__ = ""
 {% if AMD == '1' -%}

@@ -14,6 +14,7 @@ hw.model = "iMac20,2"
 _serialNumber = "C02CVXY9046M"
 _efi.nvram.var.MLB = "C02024270GU0000AD"
 _efi.nvram.var.ROM = "0ED6AE9B4774"       # !!This seems broken in current VMware builds!! 
+_hypervisor.cpuid.v0 = "FALSE"
 ```
 
 The process is:
@@ -54,4 +55,5 @@ hw.model = "iMac20,2"
 serialNumber = "C02CJ1YQ046M"
 efi.nvram.var.MLB = "C02014306GU00001M"
 efi.nvram.var.ROM = "112233445566"       # !!This seems broken in current VMware builds!! 
+hypervisor.cpuid.v0 = "FALSE"
 ```
