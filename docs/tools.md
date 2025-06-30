@@ -45,9 +45,8 @@ Options:
 ```
 
 ## vmhide
-vmhide tool toggkles the VMHide.kext on and off to mask the VMM bit in the guest macOS.
-
-More details can be found here https://github.com/Carnations-Botanica/VMHide.
+vmhide tool toggles the kern.hv_vmm_present sysctl setting on and off to mask VM status
+in the guest macOS.
 
 Note: You will need to restart the system for the settings to take effect.
 
