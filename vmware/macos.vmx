@@ -1,23 +1,23 @@
-.encoding = "UTF-8"
 # OC4VM VERSION
 # {{VERSION}}
 # {{VARIANT}}
 # {{COMMIT}}
 # SPDX-FileCopyrightText: © 2023-25 David Parsons
 # SPDX-License-Identifier: MIT
+.encoding = "UTF-8"
 
 __OC4VM_GuestInfo__ = ""
 guestinfo.oc4vm.variant = "{{VARIANT}}"
 guestinfo.oc4vm.version = "{{VERSION}}"
 guestinfo.oc4vm.revision = "{{COMMIT}}"
 
-__Apple_Model__ = "iMac 5K Retina 2020"
-board-id = "Mac-AF89B6D9451A490B"
-hw.model = "iMac20,2"
-_serialNumber = "C02CVXY9046M"
-_efi.nvram.var.MLB = "C02024270GU0000AD"
-_efi.nvram.var.ROM = "0ED6AE9B4774"       # !!This seems broken in current VMware builds!! 
-_hypervisor.cpuid.v0 = "TRUE"
+__Apple_Model__ = "Mac mini 2018"
+board-id = "Mac-7BA5B2DFE22DDD8C"
+hw.model = "Macmini8,1"
+_serialNumber = "C07LL5Y8JYVX"
+_efi.nvram.var.MLB = "C07343102GUKXPGCB"
+_efi.nvram.var.ROM = "66C9759989AC"       # !!This seems broken in current VMware builds!!
+_hypervisor.cpuid.v0 = "TRUE"             # !!Not always relaible and can cause a panic!!
 
 __CPU_Sanity_Checks__ = ""
 {% if AMD == '1' -%}

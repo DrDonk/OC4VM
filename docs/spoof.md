@@ -8,13 +8,13 @@ VMware VMX file. Currently the VMX file is configured as a 2020 iMac which is st
 Supplied settings:
 
 ```
-__Apple_Model__ = "iMac 5K Retina 2020"
-board-id = "Mac-AF89B6D9451A490B"
-hw.model = "iMac20,2"
-_serialNumber = "C02CVXY9046M"
-_efi.nvram.var.MLB = "C02024270GU0000AD"
-_efi.nvram.var.ROM = "0ED6AE9B4774"       # !!This seems broken in current VMware builds!! 
-_hypervisor.cpuid.v0 = "FALSE"
+__Apple_Model__ = "Mac mini 2018"
+board-id = "Mac-7BA5B2DFE22DDD8C"
+hw.model = "Macmini8,1"
+_serialNumber = "C07LL5Y8JYVX"
+_efi.nvram.var.MLB = "C07343102GUKXPGCB"
+_efi.nvram.var.ROM = "66C9759989AC"       # !!This seems broken in current VMware builds!!
+_hypervisor.cpuid.v0 = "TRUE"             # !!Not always relaible and can cause a panic!!
 ```
 
 The process is:
@@ -25,11 +25,11 @@ The process is:
 4. Remove the "_" character from the bgining of any lines you want to change.
 5. Run the version of macserial for you host OS using:
 
-`macserial -m iMac20,1 -n 1`
+`macserial -m Macmini8,1 -n 1`
 
 6. Use the first number for the serial number and the second number for MLB setting.
 
-`C02CJ1YQ046M | C02014306GU00001M`
+`C07ZD06BJYVX | C079374014NKXPG1M`
 
 7. For the ROM power up the VM once and then use the VMs MAC address from the VMX file.
 
@@ -49,11 +49,11 @@ remove the ":"s and add:
 Example:
 
 ```
-__Apple_Model__ = "iMac 5K Retina 2020"
-board-id = "Mac-AF89B6D9451A490B"
-hw.model = "iMac20,2"
-serialNumber = "C02CJ1YQ046M"
-efi.nvram.var.MLB = "C02014306GU00001M"
-efi.nvram.var.ROM = "112233445566"       # !!This seems broken in current VMware builds!! 
-hypervisor.cpuid.v0 = "FALSE"
+__Apple_Model__ = "Mac mini 2018"
+board-id = "Mac-7BA5B2DFE22DDD8C"
+hw.model = "Macmini8,1"
+serialNumber = "C07ZD06BJYVX"
+efi.nvram.var.MLB = "C079374014NKXPG1M"
+efi.nvram.var.ROM = "000C29AABBCC"       # !!This seems broken in current VMware builds!!
+hypervisor.cpuid.v0 = "TRUE"             # !!Not always relaible and can cause a panic!!
 ```
