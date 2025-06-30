@@ -107,7 +107,7 @@
 				<key>BundlePath</key>
 				<string>Lilu.kext</string>
 				<key>Comment</key>
-				<string>Kernel Patcher</string>
+				<string>OCVM-KEXT-01: Kernel Patcher</string>
 				<key>Enabled</key>
 				<true/>
 				<key>ExecutablePath</key>
@@ -125,7 +125,7 @@
 				<key>BundlePath</key>
 				<string>VirtualSMC.kext</string>
 				<key>Comment</key>
-				<string>SMC emulator</string>
+				<string>OCVM-KEXT-02: SMC emulator</string>
 				<key>Enabled</key>
 				<true/>
 				<key>ExecutablePath</key>
@@ -141,7 +141,7 @@
 				<key>Arch</key>
 				<string>x86_64</string>
 				<key>BundlePath</key>
-				<string>DebugEnhancer.kext</string>
+				<string>OCVM-KEXT-03: DebugEnhancer.kext</string>
 				<key>Comment</key>
 				<string>Debug Enhancer</string>
 				<key>Enabled</key>
@@ -161,7 +161,7 @@
 				<key>BundlePath</key>
 				<string>Intel82574L.kext</string>
 				<key>Comment</key>
-				<string>Intel82574L Ethernet Driver</string>
+				<string>OCVM-KEXT-04: Intel82574L Ethernet Driver</string>
 				<key>Enabled</key>
 				<true/>
 				<key>ExecutablePath</key>
@@ -199,7 +199,7 @@
                 <key>Base</key>
                 <string></string>
                 <key>Comment</key>
-                <string>Sonoma VM BT Enabler - PART 1 of 2 - Patch kern.hv_vmm_present=0</string>
+                <string>OCVM-VMM-01: Sonoma VM BT Enabler - PART 1 of 2 - Patch kern.hv_vmm_present=0</string>
                 <key>Count</key>
                 <integer>1</integer>
                 <key>Enabled</key>
@@ -229,7 +229,7 @@
                 <key>Base</key>
                 <string></string>
                 <key>Comment</key>
-                <string>Sonoma VM BT Enabler - PART 2 of 2 - Patch kern.hv_vmm_present=0</string>
+                <string>OCVM-VMM-02: Sonoma VM BT Enabler - PART 2 of 2 - Patch kern.hv_vmm_present=0</string>
                 <key>Count</key>
                 <integer>1</integer>
                 <key>Enabled</key>
@@ -260,7 +260,7 @@
 				<key>Base</key>
 				<string>_cpuid_set_info</string>
 				<key>Comment</key>
-				<string>algrey | Force cpuid_cores_per_package to constant (user-specified) | 10.13-10.14</string>
+				<string>OCVM-AMD-01: algrey | Force cpuid_cores_per_package to constant (user-specified) | 10.13-10.14</string>
 				<key>Count</key>
 				<integer>1</integer>
 				<key>Enabled</key>
@@ -290,7 +290,7 @@
 				<key>Base</key>
 				<string>_cpuid_set_info</string>
 				<key>Comment</key>
-				<string>algrey | Force cpuid_cores_per_package to constant (user-specified) | 10.15-11.0</string>
+				<string>OCVM-AMD-02: algrey | Force cpuid_cores_per_package to constant (user-specified) | 10.15-11.0</string>
 				<key>Count</key>
 				<integer>1</integer>
 				<key>Enabled</key>
@@ -320,7 +320,7 @@
 				<key>Base</key>
 				<string>_cpuid_set_info</string>
 				<key>Comment</key>
-				<string>algrey | Force cpuid_cores_per_package to constant (user-specified) | 12.0-13.2</string>
+				<string>OCVM-AMD-03: algrey | Force cpuid_cores_per_package to constant (user-specified) | 12.0-13.2</string>
 				<key>Count</key>
 				<integer>1</integer>
 				<key>Enabled</key>
@@ -350,7 +350,7 @@
 				<key>Base</key>
 				<string>_cpuid_set_info</string>
 				<key>Comment</key>
-				<string>algrey | Force cpuid_cores_per_package to constant (user-specified) | 13.3+</string>
+				<string>OCVM-AMD-04: algrey | Force cpuid_cores_per_package to constant (user-specified) | 13.3+</string>
 				<key>Count</key>
 				<integer>1</integer>
 				<key>Enabled</key>
@@ -380,7 +380,7 @@
 				<key>Base</key>
 				<string></string>
 				<key>Comment</key>
-				<string>algrey | _commpage_populate | Remove rdmsr | 10.13+</string>
+				<string>OCVM-AMD-05: algrey | _commpage_populate | Remove rdmsr | 10.13+</string>
 				<key>Count</key>
 				<integer>1</integer>
 				<key>Enabled</key>
@@ -410,7 +410,7 @@
 				<key>Base</key>
 				<string></string>
 				<key>Comment</key>
-				<string>algrey | _cpuid_set_cache_info | Set CPUID proper instead of 4 | 10.13+</string>
+				<string>OCVM-AMD-06: algrey | _cpuid_set_cache_info | Set CPUID proper instead of 4 | 10.13+</string>
 				<key>Count</key>
 				<integer>1</integer>
 				<key>Enabled</key>
@@ -440,7 +440,7 @@
 				<key>Base</key>
 				<string></string>
 				<key>Comment</key>
-				<string>algrey | _cpuid_set_generic_info | Remove wrmsr(0x8B) | 10.13+</string>
+				<string>OCVM-AMD-07: algrey | _cpuid_set_generic_info | Remove wrmsr(0x8B) | 10.13+</string>
 				<key>Count</key>
 				<integer>1</integer>
 				<key>Enabled</key>
@@ -470,7 +470,7 @@
 				<key>Base</key>
 				<string></string>
 				<key>Comment</key>
-				<string>algrey | _cpuid_set_generic_info | Replace rdmsr(0x8B) with constant 186 | 10.13+</string>
+				<string>OCVM-AMD-08: algrey | _cpuid_set_generic_info | Replace rdmsr(0x8B) with constant 186 | 10.13+</string>
 				<key>Count</key>
 				<integer>1</integer>
 				<key>Enabled</key>
@@ -500,7 +500,7 @@
 				<key>Base</key>
 				<string></string>
 				<key>Comment</key>
-				<string>algrey | _cpuid_set_generic_info | Set flag=1 | 10.13+</string>
+				<string>OCVM-AMD-09: algrey | _cpuid_set_generic_info | Set flag=1 | 10.13+</string>
 				<key>Count</key>
 				<integer>1</integer>
 				<key>Enabled</key>
@@ -530,7 +530,7 @@
 				<key>Base</key>
 				<string></string>
 				<key>Comment</key>
-				<string>algrey | _cpuid_set_generic_info | Disable check to allow leaf7 | 10.13+</string>
+				<string>OCVM-AMD-10: algrey | _cpuid_set_generic_info | Disable check to allow leaf7 | 10.13+</string>
 				<key>Count</key>
 				<integer>1</integer>
 				<key>Enabled</key>
@@ -560,7 +560,7 @@
 				<key>Base</key>
 				<string></string>
 				<key>Comment</key>
-				<string>algrey | _cpuid_set_generic_info | Disable check to allow leaf7 | 15.x</string>
+				<string>OCVM-AMD-11: algrey | _cpuid_set_generic_info | Disable check to allow leaf7 | 15.x</string>
 				<key>Count</key>
 				<integer>1</integer>
 				<key>Enabled</key>
@@ -590,7 +590,7 @@
 				<key>Base</key>
 				<string></string>
 				<key>Comment</key>
-				<string>algrey | _cpuid_set_info | GenuineIntel to AuthenticAMD | 10.13-11.0</string>
+				<string>OCVM-AMD-12: algrey | _cpuid_set_info | GenuineIntel to AuthenticAMD | 10.13-11.0</string>
 				<key>Count</key>
 				<integer>1</integer>
 				<key>Enabled</key>
@@ -620,7 +620,7 @@
 				<key>Base</key>
 				<string>_cpuid_set_info</string>
 				<key>Comment</key>
-				<string>Goldfish64, algrey | Bypass GenuineIntel check panic | 12.0+</string>
+				<string>OCVM-AMD-13: Goldfish64, algrey | Bypass GenuineIntel check panic | 12.0+</string>
 				<key>Count</key>
 				<integer>1</integer>
 				<key>Enabled</key>
@@ -650,7 +650,7 @@
 				<key>Base</key>
 				<string></string>
 				<key>Comment</key>
-				<string>algrey | _cpuid_set_cpufamily | Force CPUFAMILY_INTEL_PENRYN | 10.13-11.2</string>
+				<string>OCVM-AMD-14: algrey | _cpuid_set_cpufamily | Force CPUFAMILY_INTEL_PENRYN | 10.13-11.2</string>
 				<key>Count</key>
 				<integer>1</integer>
 				<key>Enabled</key>
@@ -680,7 +680,7 @@
 				<key>Base</key>
 				<string>_cpuid_set_info </string>
 				<key>Comment</key>
-				<string>algrey | _cpuid_set_cpufamily | Force CPUFAMILY_INTEL_PENRYN | 11.3+</string>
+				<string>OCVM-AMD-15: algrey | _cpuid_set_cpufamily | Force CPUFAMILY_INTEL_PENRYN | 11.3+</string>
 				<key>Count</key>
 				<integer>1</integer>
 				<key>Enabled</key>
@@ -710,7 +710,7 @@
 				<key>Base</key>
 				<string></string>
 				<key>Comment</key>
-				<string>algrey | _i386_init | Remove 3 rdmsr calls | 10.13+</string>
+				<string>OCVM-AMD-16: algrey | _i386_init | Remove 3 rdmsr calls | 10.13+</string>
 				<key>Count</key>
 				<integer>0</integer>
 				<key>Enabled</key>
@@ -740,7 +740,7 @@
 				<key>Base</key>
 				<string></string>
 				<key>Comment</key>
-				<string>algrey, XLNC | Remove version check and panic | 10.13+</string>
+				<string>OCVM-AMD-17: algrey, XLNC | Remove version check and panic | 10.13+</string>
 				<key>Count</key>
 				<integer>1</integer>
 				<key>Enabled</key>
@@ -770,7 +770,7 @@
 				<key>Base</key>
 				<string>__ZN11IOPCIBridge13probeBusGatedEP14probeBusParams</string>
 				<key>Comment</key>
-				<string>CaseySJ | probeBusGated | Disable 10 bit tags | 12.0+</string>
+				<string>OCVM-AMD-18: CaseySJ | probeBusGated | Disable 10 bit tags | 12.0+</string>
 				<key>Count</key>
 				<integer>1</integer>
 				<key>Enabled</key>
@@ -800,7 +800,7 @@
 				<key>Base</key>
 				<string>__ZN17IOPCIConfigurator18IOPCIIsHotplugPortEP16IOPCIConfigEntry</string>
 				<key>Comment</key>
-				<string>CaseySJ | IOPCIIsHotplugPort | Fix PCI bus enumeration on AM5 | 13.0+</string>
+				<string>OCVM-AMD-19: CaseySJ | IOPCIIsHotplugPort | Fix PCI bus enumeration on AM5 | 13.0+</string>
 				<key>Count</key>
 				<integer>1</integer>
 				<key>Enabled</key>
@@ -830,7 +830,7 @@
 				<key>Base</key>
 				<string></string>
 				<key>Comment</key>
-				<string>Visual | thread_quantum_expire, thread_unblock, thread_invoke | Remove non-monotonic time panic | 12.0+</string>
+				<string>OCVM-AMD-20: Visual | thread_quantum_expire, thread_unblock, thread_invoke | Remove non-monotonic time panic | 12.0+</string>
 				<key>Count</key>
 				<integer>3</integer>
 				<key>Enabled</key>
@@ -860,7 +860,7 @@
 				<key>Base</key>
 				<string></string>
 				<key>Comment</key>
-				<string>Visual | thread_invoke, thread_dispatch | Remove non-monotonic time panic | 12.0+</string>
+				<string>OCVM-AMD-21: Visual | thread_invoke, thread_dispatch | Remove non-monotonic time panic | 12.0+</string>
 				<key>Count</key>
 				<integer>2</integer>
 				<key>Enabled</key>
@@ -890,7 +890,7 @@
 				<key>Base</key>
 				<string></string>
 				<key>Comment</key>
-				<string>algrey | _mtrr_update_action | fix PAT | 10.13+</string>
+				<string>OCVM-AMD-22: algrey | _mtrr_update_action | fix PAT | 10.13+</string>
 				<key>Count</key>
 				<integer>0</integer>
 				<key>Enabled</key>
@@ -920,7 +920,7 @@
 				<key>Base</key>
 				<string></string>
 				<key>Comment</key>
-				<string>Shaneee | _mtrr_update_action | Fix PAT | 10.13+</string>
+				<string>OCVM-AMD-23: Shaneee | _mtrr_update_action | Fix PAT | 10.13+</string>
 				<key>Count</key>
 				<integer>0</integer>
 				<key>Enabled</key>
@@ -950,7 +950,7 @@
 				<key>Base</key>
 				<string></string>
 				<key>Comment</key>
-				<string>Algrey / Zormeister | _mtrr_update_action | Fix PAT | 15+</string>
+				<string>OCVM-AMD-24: Algrey / Zormeister | _mtrr_update_action | Fix PAT | 15+</string>
 				<key>Count</key>
 				<integer>0</integer>
 				<key>Enabled</key>
@@ -980,7 +980,7 @@
 				<key>Base</key>
 				<string></string>
 				<key>Comment</key>
-				<string>Shaneee / Zormeister | _mtrr_update_action | Fix PAT | 15+</string>
+				<string>OCVM-AMD-25: Shaneee / Zormeister | _mtrr_update_action | Fix PAT | 15+</string>
 				<key>Count</key>
 				<integer>0</integer>
 				<key>Enabled</key>
@@ -1012,7 +1012,7 @@
 				<key>Base</key>
 				<string>_AcpiOsVprintf</string>
 				<key>Comment</key>
-				<string>Disable ACPI logging</string>
+				<string>OCVM-DBG-01: Disable ACPI logging</string>
 				<key>Count</key>
 				<integer>0</integer>
 				<key>Enabled</key>
@@ -1042,7 +1042,7 @@
 				<key>Base</key>
 				<string>_panic</string>
 				<key>Comment</key>
-				<string>Send panic string to serial port</string>
+				<string>OCVM-DBG-02: Send panic string to serial port</string>
 				<key>Count</key>
 				<integer>1</integer>
 				<key>Enabled</key>
@@ -1072,7 +1072,7 @@
 				<key>Base</key>
 				<string>_kernel_debug_string_early</string>
 				<key>Comment</key>
-				<string>Send early prints to serial port</string>
+				<string>OCVM-DBG-03: Send early prints to serial port</string>
 				<key>Count</key>
 				<integer>1</integer>
 				<key>Enabled</key>
@@ -1102,7 +1102,7 @@
 				<key>Base</key>
 				<string>_disable_serial_output</string>
 				<key>Comment</key>
-				<string>Enable early serial output on RELEASE kernel</string>
+				<string>OCVM-DBG-04: Enable early serial output on RELEASE kernel</string>
 				<key>Count</key>
 				<integer>1</integer>
 				<key>Enabled</key>
