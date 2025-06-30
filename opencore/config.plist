@@ -141,7 +141,7 @@
 				<key>Arch</key>
 				<string>x86_64</string>
 				<key>BundlePath</key>
-				<string>DebugEnhancer.kext</string>
+				<string>OCVM-KEXT-03: DebugEnhancer.kext</string>
 				<key>Comment</key>
 				<string>OCVM-KEXT-03: Debug Enhancer</string>
 				<key>Enabled</key>
