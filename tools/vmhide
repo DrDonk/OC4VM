@@ -33,12 +33,12 @@ check_prefixes () {
 
 set_state() {
     local value="$1"
+    echo Setting vmhide state $i: $value
 	count=$(plutil -extract Kernel.Patch raw -expect array -- "${PLIST_FILE}")
 	for i in {1..$count}; do
 		# $(($i - 1)) converts 1-based index to 0-based
 		patch=$(plutil -extract Kernel.Patch.$((i - 1)).Comment raw -expect string -- "${PLIST_FILE}")
 		if check_prefixes "$patch"; then
-			echo Setting vmhide state $i: $value
 			plutil -replace Kernel.Patch.$((i - 1)).Enabled -bool ${value} -- "${PLIST_FILE}"
 			# plutil -extract Kernel.Patch.$((i - 1)).Enabled raw -expect bool -- "${PLIST_FILE}"
 		else
