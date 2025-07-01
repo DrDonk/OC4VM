@@ -2,7 +2,7 @@
 
 All dates are UK DD/MM/YY format.
 
-## xx/06/25 1.1.0
+## 01/07/25 1.1.0
 **This is a breaking release and should only be used to create new VMs**
 * Re-branded as OpenCore 4 VMware
 * Removed QEMU support as it is problematic and not stable
@@ -12,6 +12,8 @@ All dates are UK DD/MM/YY format.
 * Upgraded AppleALC to 1.9.4
 * Moved Apple model spoofing to the VMware VMX file
 * Apple spoofing disabled by default
+* Hiding VM is now done via kernel patches
+* ESXi compatible VMDK now created in disks folder
 
 ## 06/05/25 1.0.3
 * macserial utility was missing from the tools folder on the images
