@@ -32,10 +32,11 @@ msg_status "Version: $VERSION Commit: $COMMIT"
 # Build the DMG & VMDK
 build_dmg() {
 
-    # Make a copy of base image
+    # Make a copy of base image and ESXi descriptor file
     mkdir -v -p $1
     cp -v ./opencore/dmg/$2/opencore.dmg $1/
-
+    cp -v ./opencore/dmg/$2/opencore-esxi.vmdk $1/
+    
     # Attach blank DMG and create OC setup
     hdiutil attach $1/opencore.dmg -noverify -nobrowse -noautoopen
     cp -rv $3 /Volumes/OPENCORE/EFI/OC
