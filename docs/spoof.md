@@ -1,9 +1,13 @@
 # Spoofing Virtual Apple Mac Model
 
 If you want to make the VM look like a specific Mac model the settings can be configued in the 
-VMware VMX file. Currently the VMX file is configured as a 2020 iMac which is still supported for Tahoe.
+VMware VMX file. Currently the VMX file is configured as a 2018 Mac mini which is supported in Sequoia.
 
-*Note: It looks like iCloud and Apple AppStore is not working in Intel macOS VMs even with spoofing.*
+*Note: It iCloud and Apple AppStore can be problematic in Intel macOS VMs even with spoofing.*
+
+**It is important that you do not enable the commented out lines until after macOS has been installed as 
+it can cause a failure during installation when the macOS installer thinks it is on a real Mac and 
+tries to do firmware updates.**
 
 Supplied settings:
 
@@ -13,8 +17,9 @@ board-id = "Mac-7BA5B2DFE22DDD8C"
 hw.model = "Macmini8,1"
 _serialNumber = "C07LL5Y8JYVX"
 _efi.nvram.var.MLB = "C07343102GUKXPGCB"
-_efi.nvram.var.ROM = "66C9759989AC"       # !!This seems broken in current VMware builds!!
-_hypervisor.cpuid.v0 = "TRUE"             # !!Not always relaible and can cause a panic!!
+_efi.nvram.var.ROM = "%66%C9%75%99%89%AC"       
+_system-id.enable = "TRUE"
+_hypervisor.cpuid.v0 = "FALSE"             # !!Not always reliable and can cause a panic!!
 ```
 
 The process is:
@@ -37,11 +42,9 @@ As an example:
 
 `ethernet0.generatedAddress = "00:0C:29:AA:BB:CC"`
 
-remove the ":"s and add:
+remove the ":"s and add "%" every 2 characters:
 
-`efi.nvram.var.ROM = "000C29AABBCC"`
-
-*NOTE: It looks like ROM value setting is broken using VMX or OCLP settings*
+`efi.nvram.var.ROM = "%00%0C%29%AA%BB%CC"`
 
 8. Save the VMX file
 9. Run the VM and use System Profiler to check settings
@@ -54,6 +57,13 @@ board-id = "Mac-7BA5B2DFE22DDD8C"
 hw.model = "Macmini8,1"
 serialNumber = "C07ZD06BJYVX"
 efi.nvram.var.MLB = "C079374014NKXPG1M"
-efi.nvram.var.ROM = "000C29AABBCC"       # !!This seems broken in current VMware builds!!
-hypervisor.cpuid.v0 = "TRUE"             # !!Not always relaible and can cause a panic!!
+efi.nvram.var.ROM = "%00%0C%29%AA%BB%CC"
+system-id.enable = "TRUE"
+hypervisor.cpuid.v0 = "FALSE"             # !!Not always relaible and can cause a panic!!
 ```
+
+10. Power on and test the system
+
+## **Thanks**
+
+Thanks to **tamta0** for providing more details for ROM and SmUUID spoofing settings.

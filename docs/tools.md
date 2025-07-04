@@ -44,6 +44,12 @@ Options:
     -h              Print this help message
 ```
 
+## regen
+This utility regenerates serial number, MLB, and ROM for the emulated system which is a 
+Macmini8,1 (Mac mini 2018 model).
+
+Note: You will need to restart the system for the settings to take effect.
+
 ## vmhide
 vmhide tool toggles the kern.hv_vmm_present sysctl setting on and off to mask VM status
 in the guest macOS.

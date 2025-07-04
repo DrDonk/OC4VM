@@ -18,7 +18,7 @@ _serialNumber = "C07LL5Y8JYVX"
 _efi.nvram.var.MLB = "C07343102GUKXPGCB"
 _efi.nvram.var.ROM = "%66%C9%75%99%89%AC"       
 _system-id.enable = "TRUE"
-_hypervisor.cpuid.v0 = "TRUE"             # !!Not always reliable and can cause a panic!!
+_hypervisor.cpuid.v0 = "FALSE"             # !!Not always reliable and can cause a panic!!
 
 __CPU_Sanity_Checks__ = ""
 {% if AMD == '1' -%}
