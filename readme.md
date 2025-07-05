@@ -151,7 +151,6 @@ package uses the following:
 * VirtualSMC - https://github.com/acidanthera/VirtualSMC
 * AppleHDA - https://github.com/acidanthera/AppleHDA
 * AMD_Vanilla - https://github.com/AMD-OSX/AMD_Vanilla
-* VMHide - https://github.com/Carnations-Botanica/VMHide
 * minijinja - https://github.com/mitsuhiko/minijinja
 * stoml - https://github.com/freshautomations/stoml
 
