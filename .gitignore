@@ -130,7 +130,5 @@ dmypy.json
 
 # Dave
 dist/
-#Software/
-Research/
-tests/
+private/
 ._.*
