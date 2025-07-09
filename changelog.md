@@ -7,6 +7,8 @@ All dates are UK DD/MM/YY format.
 * New version of regen tool which is used for VMX spoofing
 * Removed unused KEXTs
 * Removed some unused VMX settings
+* Set VM default resolution to 1440x900
+* Disable VM secure boot for macOS VMs
 
 ## 01/07/25 1.1.0
 **This is a breaking release and should only be used to create new VMs**
