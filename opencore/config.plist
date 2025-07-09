@@ -1338,6 +1338,13 @@
 				<key>OC4VM COMMIT</key>
 				<string>{{COMMIT}}</string>
 			</dict>
+		    <key>AC20C489-DD86-4E99-992C-B7C742C1DDA9</key>
+			<dict>
+			    <key>height</key>
+				<data>hAMAAA==</data>
+			    <key>width</key>
+				<data>oAUAAA==</data>
+			</dict>
 		</dict>
 		<key>Delete</key>
 		<dict>
