@@ -182,6 +182,7 @@ cp -v notes.md ./build/
 cp -v tools.md ./build/
 cp -v LICENSE ./build/
 cp -vr ./iso ./build/
+cp -vr ./docs ./build
 
 msg_status "\nStep 6. Zipping OC4VM Release"
 rm ./dist/oc4vm-$VERSION.* 2>&1 >/dev/null
