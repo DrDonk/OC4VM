@@ -2,19 +2,19 @@
 ## Please note: Tahoe is not currently supported and depends on changes to OpenCore and other components
 
 ## 1. Introduction
-OpenCore for VMware (OC4VM) has been built to run macOS VMs primarily on Intel 
-based Apple Macs. It may also be used on other PC hardware using VMware Workstation. It 
-provides an OpenCore disk image that can be used to boot Intel based macOS using VMware 
+OpenCore for VMware (OC4VM) has been built to run macOS VMs primarily on Intel
+based Apple Macs. It may also be used on other PC hardware using VMware Workstation. It
+provides an OpenCore disk image that can be used to boot Intel based macOS using VMware
 Fusion and Workstation.
 
-Using OpenCore allows for a flexible patching system to overcome limitations of the 
-virtualisation software. It basically creates a virtual Hackintosh, which is similar in 
-implementation to the OpenCore Legacy Patcher used to run unsupported macOS versions on 
+Using OpenCore allows for a flexible patching system to overcome limitations of the
+virtualisation software. It basically creates a virtual Hackintosh, which is similar in
+implementation to the OpenCore Legacy Patcher used to run unsupported macOS versions on
 older Apple Mac computers.
 
-It is also a replacement for the Unlocker and does not require patching VMware, but that 
-is not the primary purpose of OC4VM which was originally created to fix issues on VMware 
-Fusion when running macOS guests. 
+It is also a replacement for the Unlocker and does not require patching VMware, but that
+is not the primary purpose of OC4VM which was originally created to fix issues on VMware
+Fusion when running macOS guests.
 
 ## 2. Functionality
 What OC4VM can do?
@@ -25,7 +25,8 @@ What OC4VM can do?
 
 What OC4VM cannot do:
 * Boot Intel macOS on an Apple Silicon CPU
-* Use the Apple para-virtualised GPU on non-Apple hardware 
+* Use the Apple para-virtualised GPU on non-Apple hardware
+* Use the Apple para-virtualised GPU on older Macs using OCLP and macOS Sonoma or later
 
 The OC4VM system has been tested on an Intel Mac mini mid-2014 and an AMD HP Prodesk 405 G4
 with these guest OSes:
@@ -35,7 +36,7 @@ with these guest OSes:
 * Sonoma
 * Sequoia
 
-**Note: Tahoe is not currently supported and will not boot**
+**Note: Tahoe is not currently supported**
 
 using:
 * VMware Fusion 13.6
@@ -59,22 +60,23 @@ CPUs will need to support the following instructions:
 
 ### 3.2 Folder Contents
 
-OC4VM has 4 sub-folders:
+OC4VM has 6 sub-folders:
 
 | Folder     | Function                                              |
 |:-----------|-------------------------------------------------------|
 | config     | OpenCore config.plist files for reference             |
 | disks      | OpenCore boot variants in DMG and VMDK formats        |
+| docs       | Documents in Markdown format                          |
 | iso        | VMware Mac OS X and macOS guest tools iso images      |
 | tools      | OC4VM tools to manage config.plist                    |
 | vmware     | Template VMs for VMware                               |
 
-The most import folder is the 'vmware' folders. 
+The most import folder is the 'vmware' folders.
 
 ### 3.3 VMware Templates
 
-The 'vmware' folder contains 2 folders with a VM template for VMware macOS virtual 
-machines. The folders are for AMD and Intel CPUs. You will need to use the one that 
+The 'vmware' folder contains 2 folders with a VM template for VMware macOS virtual
+machines. The folders are for AMD and Intel CPUs. You will need to use the one that
 matches the host CPU.
 
 Each folder contains these files:
@@ -108,22 +110,22 @@ To install mount the file from /Volumes/OPENCORE/OC4VM/iso/darwin.iso inside the
 install the tools.
 
 ### 3.5 OC4VM Guest Tools
-There are some tools written specially for use in the macOS guest. They are documented in the 
+There are some tools written specially for use in the macOS guest. They are documented in the
 [tools.md](docs/tools.md) file.
 
 ### 3.6 VMware macOS Guest Setting
 VMware on Linux and Windows cannot edit the guestOS setting to another version of mac OS X/macOS.
-To get around this limitation the VMware template folder has a small Windows program, macguest.exe, 
-that can be used to open the guest's VMX file and change the setting. Linux progrm is currently 
+To get around this limitation the VMware template folder has a small Windows program, macguest.exe,
+that can be used to open the guest's VMX file and change the setting. Linux progrm is currently
 under development.
 
 ## 4. Spoofing the Virtual Apple Mac
-If you want to make the VM look like a specific Mac model the settings can be configued in the 
+If you want to make the VM look like a specific Mac model the settings can be configued in the
 VMware VMX file. Details are in the [spoof.md](docs/spoof.md) file.
 
 ## 5. Building OC4VM
 
-Building must be done on macOS, either real or virtualized. Details are in the 
+Building must be done on macOS, either real or virtualized. Details are in the
 [build.md](docs/build.md) file.
 
 
@@ -131,7 +133,7 @@ Building must be done on macOS, either real or virtualized. Details are in the
 If you are trying a specific combination, hypervisor/CPU/OS, please start a discussion instead
 of an issue. It is impossible for us to test all combinations out there and so
 discussions are a better place to help one another. If an actual bug or enhancement
-is identified whilst discussing a specific scenario an issue can then be created 
+is identified whilst discussing a specific scenario an issue can then be created
 to track it. Better still a pull request with a fix would be useful.
 
 Any obvious bugs should be logged as an issue. Please give all relevant information
@@ -141,15 +143,13 @@ Most importantly let us be supportive of each other with respectful discussions.
 
 ## 7. Thanks
 
-Many thanks to the great developers and community around the OpenCore scene. The OC4VM 
+Many thanks to the great developers and community around the OpenCore scene. The OC4VM
 package uses the following:
 
 * OpenCore - https://github.com/acidanthera/OpenCorePkg
 * Lilu - https://github.com/acidanthera/Lilu
-* CryptexFixup - https://github.com/acidanthera/CryptexFixup
 * DebugEnhancer - https://github.com/acidanthera/DebugEnhancer
 * VirtualSMC - https://github.com/acidanthera/VirtualSMC
-* AppleHDA - https://github.com/acidanthera/AppleHDA
 * AMD_Vanilla - https://github.com/AMD-OSX/AMD_Vanilla
 * minijinja - https://github.com/mitsuhiko/minijinja
 * stoml - https://github.com/freshautomations/stoml
