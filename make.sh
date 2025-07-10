@@ -36,7 +36,7 @@ build_dmg() {
     mkdir -v -p $1
     cp -v ./opencore/dmg/$2/opencore.dmg $1/
     cp -v ./opencore/dmg/$2/opencore-esxi.vmdk $1/
-    
+
     # Attach blank DMG and create OC setup
     hdiutil attach $1/opencore.dmg -noverify -nobrowse -noautoopen
     cp -rv $3 /Volumes/OPENCORE/EFI/OC
@@ -176,6 +176,7 @@ done
 
 msg_status "\nStep 4. Copying misc files"
 cp -v ./vmware/macguest.exe ./build/vmware/
+cp -v ./vmware/macguest.sh ./build/vmware/
 cp -v readme.md ./build/
 cp -v notes.md ./build/
 cp -v tools.md ./build/
