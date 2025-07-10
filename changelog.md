@@ -2,13 +2,14 @@
 
 All dates are UK DD/MM/YY format.
 
-## xx/07/25 1.1.1
+## 10/07/25 1.1.1
 * Updated the VMX spoof settings thanks to **tamta0** (see docs/spoof.md)
 * New version of regen tool which is used for VMX spoofing
 * Removed unused KEXTs
 * Removed some unused VMX settings
 * Set VM default resolution to 1440x900
 * Disable VM secure boot for macOS VMs
+* Added macguest command for Linux
 
 ## 01/07/25 1.1.0
 **This is a breaking release and should only be used to create new VMs**
