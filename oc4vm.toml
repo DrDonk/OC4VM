@@ -29,18 +29,18 @@ RESOLUTION = '1440x900@32'
 TIMEOUT = '5'
 
 [intel-verbose]
-BUILD = '1' 
+BUILD = '1'
 AMD = '0'
 BOOTARGS = 'keepsyms=1 -lilubetaall -v -no_compat_check -no_panic_dialog -liludbgall'
 CSRCONFIG = 'AAAAAA=='
 DEBUG = '0'
 DESCRIPTION = 'macOS Intel Verbose OC'
-DMG = 'debug'
+DMG = 'release'
 RESOLUTION = '1440x900@32'
 TIMEOUT = '0'
 
 [intel-debug]
-BUILD = '1' 
+BUILD = '1'
 AMD = '0'
 BOOTARGS = 'keepsyms=1 -lilubetaall -v -no_compat_check -no_panic_dialog -liludbgall serial=1 debug=2 -topo -cpuid'
 CSRCONFIG = 'AAAAAA=='
@@ -71,7 +71,7 @@ BOOTARGS = 'keepsyms=1 -lilubetaall -v -no_compat_check -no_panic_dialog -liludb
 CSRCONFIG = 'AAAAAA=='
 DEBUG = '0'
 DESCRIPTION = 'macOS AMD Verbose OC'
-DMG = 'debug'
+DMG = 'release'
 RESOLUTION = '1440x900@32'
 TIMEOUT = '0'
 
