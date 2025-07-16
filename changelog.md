@@ -2,6 +2,10 @@
 
 All dates are UK DD/MM/YY format.
 
+## dd/07/25 1.1.2
+* Updated OC to 1.0.5
+* Updated KEXTs to match OC 1.0.5
+
 ## 10/07/25 1.1.1
 * Updated the VMX spoof settings thanks to **tamta0** (see docs/spoof.md)
 * New version of regen tool which is used for VMX spoofing
