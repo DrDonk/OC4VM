@@ -178,8 +178,6 @@ msg_status "\nStep 4. Copying misc files"
 cp -v ./vmware/macguest.exe ./build/vmware/
 cp -v ./vmware/macguest.sh ./build/vmware/
 cp -v readme.md ./build/
-cp -v notes.md ./build/
-cp -v tools.md ./build/
 cp -v LICENSE ./build/
 cp -vr ./iso ./build/
 cp -vr ./docs ./build
