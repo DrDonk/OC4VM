@@ -86,6 +86,14 @@ chmod +x ./build/tools/bootargs
     --format=toml \
     -D VERSION=$VERSION \
     -D COMMIT=$COMMIT \
+    -o ./build/tools/shrinkdisk \
+    ./tools/shrinkdisk
+chmod +x ./build/tools/shrinkdisk
+
+./utilities/minijinja-cli \
+    --format=toml \
+    -D VERSION=$VERSION \
+    -D COMMIT=$COMMIT \
     -o ./build/tools/vmhide \
     ./tools/vmhide
 chmod +x ./build/tools/vmhide
