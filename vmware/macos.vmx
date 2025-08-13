@@ -12,13 +12,15 @@ guestinfo.oc4vm.version = "{{VERSION}}"
 guestinfo.oc4vm.revision = "{{COMMIT}}"
 
 __Apple_Model__ = "Mac mini 2018"
+__WARNING__ = "DO NOT UNCOMMENT UNTIL AFTER macOS INSTALLED"
 board-id = "Mac-7BA5B2DFE22DDD8C"
-hw.model = "Macmini8,1"
+_hw.model = "Macmini8,1"
+_system-id.enable = "TRUE"
+_hypervisor.cpuid.v0 = "FALSE"             # !!Not always reliable and can cause a panic!!
+__IMPORTANT__ = "These are samples and MUST be replaced wirh unique values"
 _serialNumber = "C07LL5Y8JYVX"
 _efi.nvram.var.MLB = "C07343102GUKXPGCB"
 _efi.nvram.var.ROM = "%66%C9%75%99%89%AC"
-_system-id.enable = "TRUE"
-_hypervisor.cpuid.v0 = "FALSE"             # !!Not always reliable and can cause a panic!!
 
 __CPU_Sanity_Checks__ = ""
 {% if AMD == '1' -%}
@@ -89,12 +91,11 @@ sata0:1.fileName = "macos.vmdk"
 sata0:1.present = "TRUE"
 sata0:2.autodetect = "TRUE"
 sata0:2.deviceType = "cdrom-raw"
-sata0:2.fileName = "auto detect"
 sata0:2.present = "TRUE"
 sata0:2.startConnected = "FALSE"
 sata0.present = "TRUE"
-smc.present = "FALSE"                     # SMC is emulated in OpenCore
 smbios.restrictSerialCharset = "TRUE"
+smc.present = "FALSE"                     # SMC is emulated in OpenCore
 sound.autoDetect = "TRUE"
 sound.fileName = "-1"
 sound.present = "TRUE"
