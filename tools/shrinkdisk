@@ -22,13 +22,13 @@ msg_error() {
 msg_status "OC4VM VMware Disk Shrink"
 msg_status "Writing temporary zero filled file"
 msg_warning "Ignore any disk space errors"
-dd if=/dev/zero of=~/zerofile bs=16M count=10000000
+dd if=/dev/zero of=zerofile bs=16m count=10000000
 sync
 msg_status "Deleting temporary zero filled file"
 rm ~/zerofile
 sync
-msg_warning "VMware shrink process called"
-/Library/Applications\ Support/VMware\ Tools/vmware-tools-daemon --cmd="disk.shrink"
+msg_warning "VMware disk shrinking started"
+/Library/Application\ Support/VMware\ Tools/vmware-tools-daemon --cmd="disk.shrink"
 msg_status "VMware disk shrinking completed"
 
 exit 0

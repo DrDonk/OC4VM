@@ -21,6 +21,11 @@ rom=$(xxd -l6 -p /dev/random | tr -d '\n' | tr '[:lower:]' '[:upper:]' | sed 's/
 echo "OC4VM regen"
 echo "-----------"
 echo "Regenerating Mac identifiers..."
+echo "Overwite all these settings in the VMX file.
+echo "Start"
+echo ""
+echo "__Default_Model__ = \"VMware20,1\""
+echo "_board-id = \"VMM-x86_64\""
 echo ""
 echo "__Apple_Model__ = \"Mac mini 2018\""
 echo "board-id = \"Mac-7BA5B2DFE22DDD8C\""
@@ -30,3 +35,5 @@ echo "efi.nvram.var.MLB = \"$mlb\""
 echo "efi.nvram.var.ROM = \"$rom\""
 echo "system-id.enable = \"TRUE\""
 echo "hypervisor.cpuid.v0 = \"TRUE\""             # !!Not always reliable and can cause a panic!!
+echo ""
+echo "End"
