@@ -1,16 +1,19 @@
 # Spoofing Virtual Apple Mac Model
 
 If you want to make the VM look like a specific Mac model the settings can be configued in the
-VMware VMX file. The default configration presents the VM as a VMware virtual machine which macOS
-is aware of when working with updates.
+VMware VMX file.
 
 *Note: iCloud and Apple AppStore can be problematic in Intel macOS VMs even with spoofing.*
+
+Currently the VMX file example is configured as a regular VMware virtual machine (VMware20,1) which is supported in all recent
+version of macOS.
+
+If you want to mimic a real Mac 2018 Mac mini (Macmini8,1) is recommended.
 
 **It is important that you do not enable the commented out lines until after macOS has been installed as
 it can cause a failure during installation when the macOS installer thinks it is on a real Mac and
 tries to do firmware updates.**
 
-Currently the VMX file example is configured as a 2018 Mac mini which is supported in Sequoia.
 
 ```
 __Default_Model__ = "VMware20,1"
@@ -27,7 +30,7 @@ _efi.nvram.var.MLB = "C07343102GUKXPGCB"
 _efi.nvram.var.ROM = "%66%C9%75%99%89%AC"
 ```
 
-The process is:
+The process to mimic a Mac mini 2018 is:
 
 1. Shutdown the VM
 2. Open the guest VMX file in a text editor
