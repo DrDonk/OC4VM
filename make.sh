@@ -40,8 +40,8 @@ build_dmg() {
     # Attach blank DMG and create OC setup
     hdiutil attach $1/opencore.dmg -noverify -nobrowse -noautoopen
     cp -rv $3 /Volumes/OPENCORE/EFI/OC
-    mkdir -v /Volumes/OPENCORE/OC4VM
-    cp -rv ./build/tools /Volumes/OPENCORE/OC4VM
+    mkdir -v -p /Volumes/OPENCORE/OC4VM/tools
+    cp -rv ./build/tools/guest /Volumes/OPENCORE/OC4VM/tools
     cp -rv ./iso /Volumes/OPENCORE/OC4VM
     rm -rf /Volumes/OPENCORE/.fseventsd
     dot_clean -m /Volumes/OPENCORE
@@ -64,53 +64,26 @@ rm -rfv ./build 2>&1 >/dev/null
 msg_status "Step 0. Compile tools"
 
 # Fixup version/commit in tools scripts
-mkdir -p ./build/tools 2>&1 >/dev/null
+mkdir -p ./build/tools/guest 2>&1 >/dev/null
+mkdir -p ./build/tools/host 2>&1 >/dev/null
 
 ./utilities/minijinja-cli \
     --format=toml \
     -D VERSION=$VERSION \
     -D COMMIT=$COMMIT \
-    -o ./build/tools/amdcpu \
-    ./tools/amdcpu
-chmod +x ./build/tools/amdcpu
+    -o ./build/tools/guest/amdcpu \
+    ./tools/guest/amdcpu
+chmod +x ./build/tools/guest/amdcpu
 
 ./utilities/minijinja-cli \
     --format=toml \
     -D VERSION=$VERSION \
     -D COMMIT=$COMMIT \
-    -o ./build/tools/bootargs \
-    ./tools/bootargs
-chmod +x ./build/tools/bootargs
+    -o ./build/tools/guest/bootargs \
+    ./tools/guest/bootargs
+chmod +x ./build/tools/guest/bootargs
 
-# ./utilities/minijinja-cli \
-#     --format=toml \
-#     -D VERSION=$VERSION \
-#     -D COMMIT=$COMMIT \
-#     -o ./build/tools/regen \
-#     ./tools/regen
-# chmod +x ./build/tools/regen
-
-# ./utilities/minijinja-cli \
-#     --format=toml \
-#     -D VERSION=$VERSION \
-#     -D COMMIT=$COMMIT \
-#     -o ./build/tools/shrinkdisk \
-#     ./tools/shrinkdisk
-# chmod +x ./build/tools/shrinkdisk
-
-# ./utilities/minijinja-cli \
-#     --format=toml \
-#     -D VERSION=$VERSION \
-#     -D COMMIT=$COMMIT \
-#     -o ./build/tools/vmhide \
-#     ./tools/vmhide
-# chmod +x ./build/tools/vmhide
-
-cp -v ./tools/cpuid ./build/tools/cpuid
-cp -v ./tools/hostcaps ./build/tools/hostcaps
-cp -v ./tools/macserial ./build/tools/macserial
-cp -v ./tools/macserial.exe ./build/tools/macserial.exe
-cp -v ./tools/macserial.linux ./build/tools/macserial.linux
+cp -v ./tools/host/* ./build/tools/host/
 
 VARIANTS=("${(f)$(./utilities/stoml oc4vm.toml . | tr ' ' '\n')}")
 for VARIANT in $VARIANTS
@@ -197,6 +170,20 @@ cp -v readme.md ./build/
 cp -v LICENSE ./build/
 cp -vr ./iso ./build/
 cp -vr ./docs ./build
+
+msg_status "\nStep 5. Creating HTML Documents"
+
+cp -v readme.md ./build/readme.md
+cp -v changelog.md ./build/changelog.md
+cp -vr ./docs ./build
+# TODO: Parameterise this and create a function
+pandoc --verbose -f gfm -t html5 ./build/readme.md     -o ./build/readme.html     --css=style.css --lua-filter=links-to-html.lua --embed-resources --standalone --metadata title="OC4VM ReadMe"
+pandoc --verbose -f gfm -t html5 ./build/changelog.md  -o ./build/changelog.html  --css=style.css --lua-filter=links-to-html.lua --embed-resources --standalone --metadata title="OC4VM Change Log"
+pandoc --verbose -f gfm -t html5 ./build/docs/build.md -o ./build/docs/build.html --css=style.css --lua-filter=links-to-html.lua --embed-resources --standalone --metadata title="OC4VM Build"
+pandoc --verbose -f gfm -t html5 ./build/docs/faq.md   -o ./build/docs/faq.html   --css=style.css --lua-filter=links-to-html.lua --embed-resources --standalone --metadata title="OC4VM FAQ"
+pandoc --verbose -f gfm -t html5 ./build/docs/notes.md -o ./build/docs/notes.html --css=style.css --lua-filter=links-to-html.lua --embed-resources --standalone --metadata title="OC4VM Notes"
+pandoc --verbose -f gfm -t html5 ./build/docs/spoof.md -o ./build/docs/spoof.html --css=style.css --lua-filter=links-to-html.lua --embed-resources --standalone --metadata title="OC4VM Spoofing"
+pandoc --verbose -f gfm -t html5 ./build/docs/tools.md -o ./build/docs/tools.html --css=style.css --lua-filter=links-to-html.lua --embed-resources --standalone --metadata title="OC4VM Tools"
 
 msg_status "\nStep 6. Zipping OC4VM Release"
 rm ./dist/oc4vm-$VERSION.* 2>&1 >/dev/null
