@@ -3,10 +3,13 @@
 All dates are UK DD/MM/YY format.
 
 ## dd/09/25 1.2.0
+**Tahoe support is now available but be aware it runs slowly and there are no Liquid Glass effects as 
+there is no guest GPU available to render them**
 * Support for macOS 26 Tahoe
 * Updated OC to 1.0.5
 * Updated KEXTs to match OC 1.0.5
 * Updates in VMX file to spoofing section
+* Documents and notes now delivered as HTML
 
 ## 10/07/25 1.1.1
 * Updated the VMX spoof settings thanks to **tamta0** (see docs/spoof.md)
