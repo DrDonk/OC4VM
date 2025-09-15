@@ -2,7 +2,8 @@
 
 All dates are UK DD/MM/YY format.
 
-## dd/08/25 1.2.0
+## dd/09/25 1.2.0
+* Support for macOS 26 Tahoe
 * Updated OC to 1.0.5
 * Updated KEXTs to match OC 1.0.5
 * Updates in VMX file to spoofing section

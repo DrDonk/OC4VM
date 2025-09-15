@@ -58,6 +58,29 @@ build_dmg() {
     fi
 }
 
+pandoc_convert() {
+    local input_file="$1"
+    local output_file="$2"
+    local title="$3"
+
+    # Execute pandoc conversion
+    echo "Converting: $input_file -> $output_file"
+    pandoc -f gfm \
+        -t html5 "$input_file" \
+        -o "$output_file" \
+        --css=style.css \
+        --lua-filter=links-to-html.lua \
+        --embed-resources \
+        --standalone \
+        --metadata title="$title"
+
+    if [[ $? -eq 0 ]]; then
+        echo "✓ Successfully converted: $output_file"
+    else
+        echo "✗ Failed to convert: $input_file"
+    fi
+}
+
 # Clear previous build
 rm -rfv ./build 2>&1 >/dev/null
 
@@ -164,26 +187,18 @@ do
 done
 
 msg_status "\nStep 4. Copying misc files"
-cp -v ./vmware/macguest.exe ./build/vmware/
-cp -v ./vmware/macguest.sh ./build/vmware/
-cp -v readme.md ./build/
 cp -v LICENSE ./build/
 cp -vr ./iso ./build/
-cp -vr ./docs ./build
 
 msg_status "\nStep 5. Creating HTML Documents"
 
-cp -v readme.md ./build/readme.md
-cp -v changelog.md ./build/changelog.md
-cp -vr ./docs ./build
-# TODO: Parameterise this and create a function
-pandoc --verbose -f gfm -t html5 ./build/readme.md     -o ./build/readme.html     --css=style.css --lua-filter=links-to-html.lua --embed-resources --standalone --metadata title="OC4VM ReadMe"
-pandoc --verbose -f gfm -t html5 ./build/changelog.md  -o ./build/changelog.html  --css=style.css --lua-filter=links-to-html.lua --embed-resources --standalone --metadata title="OC4VM Change Log"
-pandoc --verbose -f gfm -t html5 ./build/docs/build.md -o ./build/docs/build.html --css=style.css --lua-filter=links-to-html.lua --embed-resources --standalone --metadata title="OC4VM Build"
-pandoc --verbose -f gfm -t html5 ./build/docs/faq.md   -o ./build/docs/faq.html   --css=style.css --lua-filter=links-to-html.lua --embed-resources --standalone --metadata title="OC4VM FAQ"
-pandoc --verbose -f gfm -t html5 ./build/docs/notes.md -o ./build/docs/notes.html --css=style.css --lua-filter=links-to-html.lua --embed-resources --standalone --metadata title="OC4VM Notes"
-pandoc --verbose -f gfm -t html5 ./build/docs/spoof.md -o ./build/docs/spoof.html --css=style.css --lua-filter=links-to-html.lua --embed-resources --standalone --metadata title="OC4VM Spoofing"
-pandoc --verbose -f gfm -t html5 ./build/docs/tools.md -o ./build/docs/tools.html --css=style.css --lua-filter=links-to-html.lua --embed-resources --standalone --metadata title="OC4VM Tools"
+pandoc_convert ./readme.md     ./build/readme.html      "OC4VM ReadMe"
+pandoc_convert ./changelog.md  ./build/changelog.html   "OC4VM Change Log"
+pandoc_convert ./docs/build.md ./build//docs/build.html "OC4VM Build"
+pandoc_convert ./docs/faq.md   ./build/docs/faq.html    "OC4VM FAQ"
+pandoc_convert ./docs/notes.md ./build/docs/notes.html  "OC4VM Notes"
+pandoc_convert ./docs/spoof.md ./build/docs/spoof.html  "OC4VM Spoofing"
+pandoc_convert ./docs/tools.md ./build/docs/tools.html  "OC4VM Tools"
 
 msg_status "\nStep 6. Zipping OC4VM Release"
 rm ./dist/oc4vm-$VERSION.* 2>&1 >/dev/null

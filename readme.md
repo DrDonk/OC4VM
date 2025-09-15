@@ -1,5 +1,4 @@
 # OC4VM - OpenCore for VMware
-## Please note: Tahoe is not currently supported and depends on changes to OpenCore and other components
 
 ## 1. Introduction
 OpenCore for VMware (OC4VM) has been built to run macOS VMs primarily on Intel
@@ -28,19 +27,18 @@ What OC4VM cannot do:
 * Use the Apple para-virtualised GPU on non-Apple hardware
 * Use the Apple para-virtualised GPU on older Macs using OCLP and macOS Sonoma or later
 
-The OC4VM system has been tested on an Intel Mac mini mid-2014 and an AMD HP Prodesk 405 G4
+The OC4VM system has been tested on an Intel Mac mini mid-2014 and an AMD Ryzen based HP T740
 with these guest OSes:
 * Big Sur
 * Monterey
 * Ventura
 * Sonoma
 * Sequoia
-
-**Note: Tahoe is not currently supported**
+* Tahoe
 
 using:
 * VMware Fusion 13.6
-* VMware Workstation 17.6
+* VMware Workstation 17.6 (Windows and Linux)
 
 CPUs will need to support the following instructions:
 
@@ -97,19 +95,30 @@ ISO or virtual disk to point to the installation media.
 
 Power on and install macOS as normal.
 
-#### 3.3.2 Existing VM
+#### 3.3.2 Existing macOS VM
 Please follow these instructions to add to an existing macOS guest.
 
-1. Copy the opencore.vmdk from the template folder to the existing VMs folder.
-2. Use the guest settings to add the opencore.vmdk disk as a SATA drive.
-3. Boot to the firmware and select the OpenCore drive as the boot device.
+1. Make sure the VM is shutdown.
+2. Copy the opencore.vmdk from the template folder to the existing VMs folder.
+3. Use the guest settings to add the opencore.vmdk disk as a SATA drive.
+4. Boot to the firmware and select the OpenCore drive as the boot device.
+
+#### 3.3.3 Upgrading OC4VM VM
+To upgrade the exisitng OC4VM enabled VM you will need to do these steps:
+
+1. Make sure the VM is shutdown.
+2. If there are any snapshots they must be removed.
+3. Copy the new opencore.vmdk from the template folder to VM folder.
+4. (Optionally) There may be changes to the template VMX file you may want to
+add to the VM. You will have to check the differences and copy any changed lines you want
+to the existing VMX file.
 
 ### 3.4 VMware macOS Guest Tools
-OC4VM provides a copy of the VMware macOS guest tools [ISO](https://packages-prod.broadcom.com/tools/frozen/darwin/darwin.iso) 
+OC4VM provides a copy of the VMware macOS guest tools [ISO](https://packages-prod.broadcom.com/tools/frozen/darwin/darwin.iso)
 images on the OC4VM boot disk. To install mount the file from /Volumes/OPENCORE/OC4VM/iso/darwin.iso inside the guest and
 install the tools.
 
-### 3.5 OC4VM Guest Tools
+### 3.5 OC4VM Guest & Host Tools
 There are some tools written specially for use in the macOS guest. They are documented in the
 [tools.md](docs/tools.md) file.
 

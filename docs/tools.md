@@ -43,3 +43,9 @@ Options:
     -set value      Set the boot-args variable
     -h              Print this help message
 ```
+
+## macguest
+
+VMware doews not allow macOS guests to be selected in the user interface if it is not
+VMware Fusion. So VMware Workstation does not enable this guest type unless patched with
+my Unlocker.
