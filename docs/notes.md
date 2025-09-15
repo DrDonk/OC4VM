@@ -8,17 +8,17 @@ These are my random notes whilst I was working on OC4VM. They may prove useful f
 From https://github.com/AMD-OSX/AMD_Vanilla/blob/master/README.md
 
 > The Core Count patch needs to be modified to boot your system. Find the four `algrey - Force cpuid_cores_per_package` patches and alter the `Replace` value only.
-> 
+>
 > |   macOS Version      | Replace Value | New Value                   |
 > |----------------------|---------------|-----------------------------|
 > | 10.13.x, 10.14.x     | B8000000 0000 | B8 < Core Count > 0000 0000 |
 > | 10.15.x, 11.x        | BA000000 0000 | BA < Core Count > 0000 0000 |
 > | 12.x, 13.0 to 13.2.1 | BA000000 0090 | BA < Core Count > 0000 0090 |
 > | 13.3 +               | BA000000 00   | BA < Core Count > 0000 00   |
-> 
+>
 > From the table above substitute `< Core Count >` with the hexadecimal value matching your physical core count. Do not use your CPU's thread count. See the table below for the values matching your CPU core count.
-> 
-> 
+>
+>
 > | Core Count | Hexadecimal |
 > |------------|-------------|
 > |   4 Core   |     `04`    |
@@ -28,13 +28,14 @@ From https://github.com/AMD-OSX/AMD_Vanilla/blob/master/README.md
 > |   16 Core  |     `10`    |
 > |   24 Core  |     `18`    |
 > |   32 Core  |     `20`    |
-> 
+>
 > So for example, a user with a 6-core processor should use these `Replace` values: `B8 06 0000 0000` / `BA 06 0000 0000` / `BA 06 0000 0090` / `BA 06 0000 00`
 
 Which gives these values when correclty base64 encoded:
 
-| Cores | 10.13/10.14uAAAAAAA | 10.15/11.0ugAAAAAA | 12.0/13.0ugAAAACQ  | 13.3+ugAAAAA=      |
+| Cores | 10.13/10.14              | 10.15/11.0              | 12.0/13.0               | 13.3+                   |
 |-------|--------------------------|-------------------------|-------------------------|-------------------------|
+| 0     | uAAAAAAA                 | ugAAAAAA                | ugAAAACQ                | ugAAAAA=                |
 | 1     | uAEAAAAA                 | ugEAAAAA                | ugEAAACQ                | ugEAAAA=                |
 | 2     | uAIAAAAA                 | ugIAAAAA                | ugIAAACQ                | ugIAAAA=                |
 | 4     | uAQAAAAA                 | ugQAAAAA                | ugQAAACQ                | ugQAAAA=                |
@@ -52,7 +53,7 @@ Which gives these values when correclty base64 encoded:
 [default]
 keepsyms=1 -lilubetaall -no_compat_check -no_panic_dialog
 
-[stealth]      
+[stealth]
 keepsyms=1 -lilubetaall -no_compat_check -no_panic_dialog
 
 [verbose]
@@ -68,6 +69,7 @@ keepsyms=1 -lilubetaall -no_compat_check -no_panic_dialog -v serial=1 debug=2
 keepsyms=1 -lilubetaall -v -no_compat_check serial=1 debug=2 -no_panic_dialog -liludbgall -topo -cpuid kcsuffix=development
 ```
 Useful for AMD debugging using KDK:
+
 `avx512=0 cwad`
 
 ## VMware
@@ -131,36 +133,36 @@ In addtion there are dummy section names using "__" as a prefix and suffix:
 | 8        | 1                    | 8       |
 
 ### New guestOS table patch
-This patch allows all guest OS familes and types to be displayed on Windows and Linux. It's a simpler patch 
+This patch allows all guest OS familes and types to be displayed on Windows and Linux. It's a simpler patch
 than my patcher in the Unlocker. It is not essential but used for testing the OC4VM code.
 
-VMware Workstation 17.6.3 for Windows vmwarebase.dll 
+VMware Workstation 17.6.3 for Windows vmwarebase.dll
 
 ```
 Windows unpatched
-                         LAB_103731ad                              XREF[1]:   1037319e(j)  
+                         LAB_103731ad                              XREF[1]:   1037319e(j)
       103731ad c6 85 e4      MOV       byte ptr [EBP + local_120],0x1
-               fe ff ff 
+               fe ff ff
                01
       103731b4 eb 07         JMP       LAB_103731bd
-                         LAB_103731b6                              XREF[3]:   1037318b(j), 10373194(j), 
-                                                                               103731ab(j)  
+                         LAB_103731b6                              XREF[3]:   1037318b(j), 10373194(j),
+                                                                               103731ab(j)
       103731b6 c6 85 e4      MOV       byte ptr [EBP + local_120],0x0
-               fe ff ff 
+               fe ff ff
                00
 ```
 
 ```
 Windows patched
-                         LAB_103731ad                              XREF[1]:   1037319e(j)  
+                         LAB_103731ad                              XREF[1]:   1037319e(j)
       103731ad c6 85 e4      MOV       byte ptr [EBP + local_120],0x1
-               fe ff ff 
+               fe ff ff
                01
       103731b4 eb 07         JMP       LAB_103731bd
-                         LAB_103731b6                              XREF[3]:   1037318b(j), 10373194(j), 
-                                                                               103731ab(j)  
+                         LAB_103731b6                              XREF[3]:   1037318b(j), 10373194(j),
+                                                                               103731ab(j)
       103731b6 c6 85 e4      MOV       byte ptr [EBP + local_120],0x1
-               fe ff ff 
+               fe ff ff
                01
 ```
 
@@ -204,7 +206,7 @@ Decode a base64 encoded binary:
 Examples from kernel patching section of config.plist:
 
 ```
-Find:        wegaAAA= -> c1e8 1a00 00 
+Find:        wegaAAA= -> c1e8 1a00 00
 Mask:        //3/AAA= -> fffd ff00 00
 Replace:     uggAAAA= -> ba08 0000 00
 ReplaceMask: //////8= -> ffff ffff ff
