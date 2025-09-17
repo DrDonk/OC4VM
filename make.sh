@@ -107,6 +107,7 @@ chmod +x ./build/tools/guest/amdcpu
 chmod +x ./build/tools/guest/bootargs
 
 cp -v ./tools/host/* ./build/tools/host/
+chmod +x ./build/tools/host/*
 
 VARIANTS=("${(f)$(./utilities/stoml oc4vm.toml . | tr ' ' '\n')}")
 for VARIANT in $VARIANTS

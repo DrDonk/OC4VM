@@ -4,5 +4,7 @@
 <dict>
     <key>disallowUpgrade</key>
     <true/>
+    <key>fullScreenTitleBarShow</key>
+    <string>alwaysShow</string>
 </dict>
 </plist>

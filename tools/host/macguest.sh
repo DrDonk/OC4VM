@@ -150,7 +150,7 @@ main() {
             # Clear the VMX_FILE variable so subsequent loops will use the selector
             VMX_FILE=""
         else
-            vmx_path=$(gum file --file --header "Select VMX file" --height 10)
+            vmx_path=$(gum file --file --height 10)
             if [ -z "$vmx_path" ]; then
                 exit 0
             fi
