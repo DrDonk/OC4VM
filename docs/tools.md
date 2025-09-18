@@ -1,7 +1,5 @@
-# OC4VM - Tools
+# OC4VM - Guest Tools
 
-
-## OC4VM Guest Tools
 The OpenCore boot disk constains some useful tools to modify
 the OpenCore configuration file config.plist.
 
@@ -17,7 +15,7 @@ All these tools depend on the OC4VM boot drive being mounted at that path and
 will raise an error if the config.plist file cannot be found on the boot drive.
 
 
-### amdcpu
+## amdcpu
 
 This utility alters the AMD cores patch settings that are stored in config.plist.
 
@@ -29,7 +27,7 @@ Usage: amdcpu <cores>
 Valid values: 1, 2, 4, 8, 16, 24, 32, 64
 ```
 
-### bootargs
+## bootargs
 
 This utility alters the macOS kernel boot-args that are stored in config.plist.
 
@@ -46,18 +44,3 @@ Options:
     -h              Print this help message
 ```
 
-## OC4VM Host Tools
-## macguest
-
-VMware does not allow macOS guests to be selected in the user interface if it is not
-VMware Fusion. So VMware Workstation does not enable this guest type unless patched with
-my Unlocker.
-
-This tool available for Linux and Windows allows the guest setting to be altered outside of
-VMware. 
-
-### Linux
-
-### Windows
-
-PowerShell script or executable.
