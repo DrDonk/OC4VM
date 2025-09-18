@@ -2,7 +2,7 @@
 
 All dates are UK DD/MM/YY format.
 
-## dd/09/25 1.2.0
+## 18/09/25 1.2.0
 **Tahoe support is now available but be aware it runs slowly and there are no Liquid Glass effects as 
 there is no guest GPU available to render them**
 * Support for macOS 26 Tahoe
