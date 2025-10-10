@@ -53,7 +53,7 @@ EOF
 get_guest_os() {
     local vmx_path="$1"
     if [ ! -f "$vmx_path" ]; then
-        gum style --foreground 1 "Error: VMX file not found!"
+        gum style --foreground 1 "Error: VMX file not found"
         return 1
     fi
 
@@ -71,7 +71,7 @@ get_guest_os() {
 set_guest_os() {
     local vmx_path="$1"
     local new_os="$2"
-    
+
     # Create backup
     if [ ! -f "${vmx_path}.bak" ]; then
         cp "$vmx_path" "${vmx_path}.bak" || {
@@ -140,9 +140,6 @@ main() {
 
     while true; do
         clear
-        gum style --border normal --margin "1" --padding "1 2" --border-foreground 212 \
-            "VMware macOS guestOS Configuration Tool"
-
         # Get VMX file path (either from argument or via selector)
         local vmx_path
         if [ -n "$VMX_FILE" ]; then
@@ -150,11 +147,15 @@ main() {
             # Clear the VMX_FILE variable so subsequent loops will use the selector
             VMX_FILE=""
         else
-            vmx_path=$(gum file --file --height 10)
+            vmx_path=$(gum file --padding "3 3" --header.foreground 212 --header="VMware macOS guestOS Configuration Tool
+Select VMX file:" --file)
             if [ -z "$vmx_path" ]; then
                 exit 0
             fi
         fi
+
+        gum style --border normal --margin "1" --padding "1 2" --border-foreground 212 \
+            "VMware macOS guestOS Configuration Tool"
 
         # Get current setting
         local current_os=$(get_guest_os "$vmx_path")
@@ -164,7 +165,7 @@ main() {
 
         # Get display name for current OS
         local display_name=$(jq -r ".\"${current_os}\" // empty" /tmp/macos_versions.json)
-        
+
         # Show current setting
         if [ -n "$display_name" ]; then
             gum style --margin "1" "Current guestOS: $display_name ($current_os)"
@@ -194,7 +195,7 @@ main() {
 
         # Make the change
         if set_guest_os "$vmx_path" "$new_os"; then
-            gum style --foreground 2 "guestOS updated successfully!"
+            gum style --foreground 2 "guestOS updated successfully"
         else
             gum style --foreground 1 "Failed to update guestOS"
         fi
