@@ -12,7 +12,8 @@ guestinfo.oc4vm.version = "{{VERSION}}"
 guestinfo.oc4vm.revision = "{{COMMIT}}"
 
 # >>> Start Spoofing <<<
-
+board-id = "VMM-x86_64"
+hw.model = "VMware20,1"
 # >>> End Spoofing <<<
 
 __CPU_Sanity_Checks__ = ""
