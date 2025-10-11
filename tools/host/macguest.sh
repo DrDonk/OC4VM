@@ -18,6 +18,7 @@ check_dependencies() {
             echo " - $cmd"
         done
         echo "Please install them before running this script."
+        echo "Brew is the recommended way to install gum"
         exit 1
     fi
 }
