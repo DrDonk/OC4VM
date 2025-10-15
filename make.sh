@@ -195,7 +195,7 @@ msg_status "\nStep 5. Creating HTML Documents"
 
 pandoc_convert ./readme.md     ./build/readme.html      "OC4VM ReadMe"
 pandoc_convert ./changelog.md  ./build/changelog.html   "OC4VM Change Log"
-pandoc_convert ./docs/build.md ./build/docs/build.html "OC4VM Build"
+pandoc_convert ./docs/build.md ./build/docs/build.html  "OC4VM Build"
 pandoc_convert ./docs/faq.md   ./build/docs/faq.html    "OC4VM FAQ"
 pandoc_convert ./docs/notes.md ./build/docs/notes.html  "OC4VM Notes"
 pandoc_convert ./docs/spoof.md ./build/docs/spoof.html  "OC4VM Spoofing"
