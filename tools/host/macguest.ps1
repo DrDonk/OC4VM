@@ -6,6 +6,7 @@ Add-Type -AssemblyName System.Drawing
 
 # macOS version mapping (without TPM references)
 $macOSVersionMap = [ordered]@{
+    "darwin25-64" = "macOS 26.0 (Tahoe)"
     "darwin24-64" = "macOS 15.0 (Sequoia)"
     "darwin23-64" = "macOS 14.0 (Sonoma)"
     "darwin22-64" = "macOS 13.0 (Ventura)"

@@ -27,6 +27,7 @@ check_dependencies() {
 setup_version_map() {
     cat <<EOF > /tmp/macos_versions.json
 {
+    "darwin25-64": "macOS 26.0 (Tahoe)",
     "darwin24-64": "macOS 15.0 (Sequoia)",
     "darwin23-64": "macOS 14.0 (Sonoma)",
     "darwin22-64": "macOS 13.0 (Ventura)",
@@ -41,11 +42,11 @@ setup_version_map() {
     "darwin13-64": "OS X 10.9 (Mavericks)",
     "darwin12-64": "OS X 10.8 (Mountain Lion)",
     "darwin11-64": "Mac OS X 10.7 (Lion)",
-    "darwin11": "Mac OS X 10.7 (Lion 32-bit)",
+    "darwin11":    "Mac OS X 10.7 (Lion 32-bit)",
     "darwin10-64": "Mac OS X 10.6 (Snow Leopard)",
-    "darwin10": "Mac OS X 10.6 (Snow Leopard 32-bit)",
-    "darwin-64": "Mac OS X 10.5 (Leopard)",
-    "darwin": "Mac OS X 10.5 (Leopard 32-bit)"
+    "darwin10":    "Mac OS X 10.6 (Snow Leopard 32-bit)",
+    "darwin-64":   "Mac OS X 10.5 (Leopard)",
+    "darwin":      "Mac OS X 10.5 (Leopard 32-bit)"
 }
 EOF
 }
