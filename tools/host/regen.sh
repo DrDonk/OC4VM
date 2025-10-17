@@ -40,7 +40,7 @@ if [[ ! -x "$MACSERIAL_PATH" ]]; then
 fi
 
 # Generate serial and MLB
-input=$("$MACSERIAL_PATH" -m Macmini8,1 -n 1 $(date +"-w %U -y %Y"))
+input=$("$MACSERIAL_PATH" -m iMac19,2 -n 1 $(date +"-w %U -y %Y"))
 
 # Check if macserial executed successfully
 if [[ $? -ne 0 ]]; then
@@ -89,9 +89,9 @@ echo "Add these settings in the VMX file between lines:"
 echo "# >>> Start Spoofing <<<"
 echo "# >>> End Spoofing <<<"
 echo ""
-echo "__Apple_Model__ = \"Mac mini 2018\""
-echo "board-id = \"Mac-7BA5B2DFE22DDD8C\""
-echo "hw.model = \"Macmini8,1\""
+echo "__Apple_Model__ = \"iMac 2019\""
+echo "board-id = \"Mac-63001698E7A34814\""
+echo "hw.model = \"iMac19,2\""
 echo "serialNumber = \"$serial\""
 echo "efi.nvram.var.MLB = \"$mlb\""
 echo "efi.nvram.var.ROM = \"$rom\""

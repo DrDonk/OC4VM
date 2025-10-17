@@ -32,9 +32,9 @@ Write-Output "Add these settings in the VMX file between lines:"
 Write-Output "# >>> Start Spoofing <<<"
 Write-Output "# >>> End Spoofing <<<"
 Write-Output ""
-Write-Output '__Apple_Model__ = "Mac mini 2018"'
-Write-Output 'board-id = "Mac-7BA5B2DFE22DDD8C"'
-Write-Output 'hw.model = "Macmini8,1"'
+Write-Output '__Apple_Model__ = "iMac 2019"'
+Write-Output 'board-id = "Mac-63001698E7A34814"'
+Write-Output 'hw.model = "iMac19,2"'
 Write-Output "serialNumber = `"$serial`""
 Write-Output "efi.nvram.var.MLB = `"$mlb`""
 Write-Output "efi.nvram.var.ROM = `"$rom`""
