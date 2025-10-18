@@ -1,3 +1,5 @@
+#!/usr/bin/env pwsh
+# {{VERSION}}-{{COMMIT}}
 # SPDX-FileCopyrightText: © 2023-25 David Parsons
 # SPDX-License-Identifier: MIT
 

@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# {{VERSION}}-{{COMMIT}}
 # SPDX-FileCopyrightText: © 2023-25 David Parsons
 # SPDX-License-Identifier: MIT
-# macOS GuestOS Configuration Tool (Shell Script with gum)
 
 # Check if required tools are installed
 check_dependencies() {

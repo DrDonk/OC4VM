@@ -41,7 +41,7 @@ build_dmg() {
     hdiutil attach $1/opencore.dmg -noverify -nobrowse -noautoopen
     cp -rv $3 /Volumes/OPENCORE/EFI/OC
     mkdir -v -p /Volumes/OPENCORE/OC4VM/tools
-    cp -rv ./build/tools/guest /Volumes/OPENCORE/OC4VM/tools
+    cp -rv ./build/tools/guest/* /Volumes/OPENCORE/OC4VM/tools
     cp -rv ./iso /Volumes/OPENCORE/OC4VM
     rm -rf /Volumes/OPENCORE/.fseventsd
     dot_clean -m /Volumes/OPENCORE
@@ -90,13 +90,13 @@ msg_status "Step 0. Compile tools"
 mkdir -p ./build/tools/guest 2>&1 >/dev/null
 mkdir -p ./build/tools/host 2>&1 >/dev/null
 
+# Build guest tools
 ./utilities/minijinja-cli \
     --format=toml \
     -D VERSION=$VERSION \
     -D COMMIT=$COMMIT \
     -o ./build/tools/guest/amdcpu \
     ./tools/guest/amdcpu
-chmod +x ./build/tools/guest/amdcpu
 
 ./utilities/minijinja-cli \
     --format=toml \
@@ -104,9 +104,53 @@ chmod +x ./build/tools/guest/amdcpu
     -D COMMIT=$COMMIT \
     -o ./build/tools/guest/bootargs \
     ./tools/guest/bootargs
-chmod +x ./build/tools/guest/bootargs
 
-cp -v ./tools/host/* ./build/tools/host/
+./utilities/minijinja-cli \
+    --format=toml \
+    -D VERSION=$VERSION \
+    -D COMMIT=$COMMIT \
+    -o ./build/tools/guest/sysinfo \
+    ./tools/guest/sysinfo
+
+cp -v ./tools/guest/macserial ./build/tools/guest
+chmod +x ./build/tools/guest/*
+
+# Build host tools
+./utilities/minijinja-cli \
+    --format=toml \
+    -D VERSION=$VERSION \
+    -D COMMIT=$COMMIT \
+    -D COMMIT=$COMMIT \
+    -s comment-start="{|" \
+    -s comment-end="|}" \
+    -o ./build/tools/host/macguest.sh \
+    ./tools/host/macguest.sh
+
+./utilities/minijinja-cli \
+    --format=toml \
+    -D VERSION=$VERSION \
+    -D COMMIT=$COMMIT \
+    -o ./build/tools/host/macguest.ps1 \
+    ./tools/host/macguest.ps1
+
+./utilities/minijinja-cli \
+    --format=toml \
+    -D VERSION=$VERSION \
+    -D COMMIT=$COMMIT \
+    -s comment-start="{|" \
+    -s comment-end="|}" \
+    -o ./build/tools/host/regen.sh \
+    ./tools/host/regen.sh
+
+./utilities/minijinja-cli \
+    --format=toml \
+    -D VERSION=$VERSION \
+    -D COMMIT=$COMMIT \
+    -o ./build/tools/host/regen.ps1 \
+    ./tools/host/regen.ps1
+
+cp -v ./tools/host/macguest.exe ./build/tools/host/
+cp -v ./tools/host/macserial.* ./build/tools/host
 chmod +x ./build/tools/host/*
 
 VARIANTS=("${(f)$(./utilities/stoml oc4vm.toml . | tr ' ' '\n')}")
