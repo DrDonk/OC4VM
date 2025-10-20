@@ -149,7 +149,7 @@ main() {
             # Clear the VMX_FILE variable so subsequent loops will use the selector
             VMX_FILE=""
         else
-            vmx_path=$(gum file --padding "3 3" --header.foreground 212 --header="VMware macOS guestOS Configuration Tool
+            vmx_path=$(gum file --padding "3 3" --header.foreground 212 --header "VMware macOS guestOS Configuration Tool
 Select VMX file:" --file)
             if [ -z "$vmx_path" ]; then
                 exit 0
