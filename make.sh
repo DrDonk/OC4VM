@@ -16,6 +16,7 @@ msg_warning() {
 
 msg_error() {
   echo "\033[0;31m$1\033[0m"
+  exit 1
 }
 
 # Bail out if not macOS
@@ -75,9 +76,9 @@ pandoc_convert() {
         --metadata title="$title"
 
     if [[ $? -eq 0 ]]; then
-        echo "✓ Successfully converted: $output_file"
+        msg_status "✓ Successfully converted: $output_file"
     else
-        echo "✗ Failed to convert: $input_file"
+        msg_error "✗ Failed to convert: $input_file"
     fi
 }
 
