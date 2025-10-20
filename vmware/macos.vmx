@@ -11,11 +11,6 @@ guestinfo.oc4vm.variant = "{{VARIANT}}"
 guestinfo.oc4vm.version = "{{VERSION}}"
 guestinfo.oc4vm.revision = "{{COMMIT}}"
 
-# >>> Start Spoofing <<<
-board-id = "VMM-x86_64"
-hw.model = "VMware20,1"
-# >>> End Spoofing <<<
-
 __CPU_Sanity_Checks__ = ""
 {% if AMD == '1' -%}
 featMask.vm.cpuid.AMD = "Min:1"           # Check CPU as OC4VM has Intel and AMD variants
