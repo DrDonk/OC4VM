@@ -59,6 +59,20 @@ build_dmg() {
     fi
 }
 
+run_jinja(){
+    local input_file="$1"
+    local output_file="$2"
+    ./utilities/minijinja-cli \
+        --format=toml \
+        -D VERSION=$VERSION \
+        -D COMMIT=$COMMIT \
+        -D COMMIT=$COMMIT \
+        -s comment-start="{|" \
+        -s comment-end="|}" \
+        -o $output_file \
+        $input_file
+}
+
 pandoc_convert() {
     local input_file="$1"
     local output_file="$2"
@@ -89,71 +103,38 @@ msg_status "Step 0. Compile tools"
 
 # Fixup version/commit in tools scripts
 mkdir -p ./build/tools/guest 2>&1 >/dev/null
-mkdir -p ./build/tools/host 2>&1 >/dev/null
+mkdir -p ./build/tools/host/linux 2>&1 >/dev/null
+mkdir -p ./build/tools/host/macos 2>&1 >/dev/null
+mkdir -p ./build/tools/host/windows 2>&1 >/dev/null
 
 # Build guest tools
-./utilities/minijinja-cli \
-    --format=toml \
-    -D VERSION=$VERSION \
-    -D COMMIT=$COMMIT \
-    -o ./build/tools/guest/amdcpu \
-    ./tools/guest/amdcpu
-
-./utilities/minijinja-cli \
-    --format=toml \
-    -D VERSION=$VERSION \
-    -D COMMIT=$COMMIT \
-    -o ./build/tools/guest/bootargs \
-    ./tools/guest/bootargs
-
-./utilities/minijinja-cli \
-    --format=toml \
-    -D VERSION=$VERSION \
-    -D COMMIT=$COMMIT \
-    -o ./build/tools/guest/sysinfo \
-    ./tools/guest/sysinfo
-
-cp -v ./tools/guest/macserial ./build/tools/guest
+run_jinja ./tools/guest/amdcpu ./build/tools/guest/amdcpu
+run_jinja  ./tools/guest/bootargs ./build/tools/guest/bootargs 
+run_jinja  ./tools/guest/sysinfo ./build/tools/guest/sysinfo 
+cp -v ./tools/guest/macserial ./build/tools/guest/macserial
 chmod +x ./build/tools/guest/*
 
 # Build host tools
-./utilities/minijinja-cli \
-    --format=toml \
-    -D VERSION=$VERSION \
-    -D COMMIT=$COMMIT \
-    -D COMMIT=$COMMIT \
-    -s comment-start="{|" \
-    -s comment-end="|}" \
-    -o ./build/tools/host/macguest.sh \
-    ./tools/host/macguest.sh
+# - Linux
+run_jinja ./tools/host/linux/macguest.sh ./build/tools/host/linux/macguest.sh
+run_jinja ./tools/host/linux/regen.sh ./build/tools/host/linux/regen.sh
+cp -v ./tools/host/linux/macserial ./build/tools/host/linux/macserial
+cp -v ./tools/host/linux/vmxtool ./build/tools/host/linux/vmxtool
 
-./utilities/minijinja-cli \
-    --format=toml \
-    -D VERSION=$VERSION \
-    -D COMMIT=$COMMIT \
-    -o ./build/tools/host/macguest.ps1 \
-    ./tools/host/macguest.ps1
+# - macOS
+run_jinja ./tools/host/macos/macguest.sh ./build/tools/host/macos/macguest.sh
+run_jinja ./tools/host/macos/regen.sh ./build/tools/host/macos/regen.sh
+cp -v ./tools/host/macos/macserial ./build/tools/host/macos/macserial
+cp -v ./tools/host/macos/vmxtool ./build/tools/host/macos/vmxtool
 
-./utilities/minijinja-cli \
-    --format=toml \
-    -D VERSION=$VERSION \
-    -D COMMIT=$COMMIT \
-    -s comment-start="{|" \
-    -s comment-end="|}" \
-    -o ./build/tools/host/regen.sh \
-    ./tools/host/regen.sh
+# - Windows
+run_jinja ./tools/host/windows/macguest.ps1 ./build/tools/host/windows/macguest.ps1
+run_jinja ./tools/host/windows/regen.ps1 ./build/tools/host/windows/regen.ps1
+cp -v ./tools/host/windows/macguest.exe ./build/tools/host/windows/macguest.exe
+cp -v ./tools/host/windows/macserial.exe ./build/tools/host/windows/macserial.exe
+cp -v ./tools/host/windows/vmxtool.exe ./build/tools/host/windows/vmxtool.exe
 
-./utilities/minijinja-cli \
-    --format=toml \
-    -D VERSION=$VERSION \
-    -D COMMIT=$COMMIT \
-    -o ./build/tools/host/regen.ps1 \
-    ./tools/host/regen.ps1
-
-cp -v ./tools/host/macguest.exe ./build/tools/host/
-cp -v ./tools/host/macserial.* ./build/tools/host
-chmod +x ./build/tools/host/*
-
+# Build OC4VM disk images
 VARIANTS=("${(f)$(./utilities/stoml oc4vm.toml . | tr ' ' '\n')}")
 for VARIANT in $VARIANTS
 do
@@ -204,10 +185,10 @@ do
     build_dmg ./build/disks/$VARIANT $DMG ./build/config/$VARIANT/config.plist
 done
 
+# Build the VMware templates
 VARIANTS=("intel" "amd")
 for VARIANT in $VARIANTS
 do
-    # Build the VMware templates
     msg_status "Step 3. Create VMware templates"
     mkdir -p ./build/vmware/$VARIANT 2>&1 >/dev/null
     cp -v ./vmware/macos.plist ./build/vmware/$VARIANT 2>&1 >/dev/null
@@ -252,3 +233,5 @@ rm ./dist/oc4vm-$VERSION.* 2>&1 >/dev/null
 cd ./dist
 shasum -a 512 oc4vm-$VERSION.zip > oc4vm-$VERSION.sha512
 cd ..
+
+eza -alT ./build
