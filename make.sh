@@ -71,6 +71,7 @@ run_jinja(){
         -s comment-end="|}" \
         -o $output_file \
         $input_file
+    chmod +x $output_file
 }
 
 pandoc_convert() {
@@ -109,8 +110,8 @@ mkdir -p ./build/tools/host/windows 2>&1 >/dev/null
 
 # Build guest tools
 run_jinja ./tools/guest/amdcpu ./build/tools/guest/amdcpu
-run_jinja  ./tools/guest/bootargs ./build/tools/guest/bootargs 
-run_jinja  ./tools/guest/sysinfo ./build/tools/guest/sysinfo 
+run_jinja  ./tools/guest/bootargs ./build/tools/guest/bootargs
+run_jinja  ./tools/guest/sysinfo ./build/tools/guest/sysinfo
 cp -v ./tools/guest/macserial ./build/tools/guest/macserial
 chmod +x ./build/tools/guest/*
 
