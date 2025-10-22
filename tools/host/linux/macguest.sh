@@ -3,52 +3,54 @@
 # SPDX-FileCopyrightText: © 2023-25 David Parsons
 # SPDX-License-Identifier: MIT
 
+# Enable debug mode if DEBUG environment variable is set to any non-empty value
+[[ -n "$DEBUG" ]] && set -x
+
+# Get script directory
+SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
+
 # Check if required tools are installed
 check_dependencies() {
-    local missing=()
-    for cmd in gum jq; do
-        if ! command -v "$cmd" &> /dev/null; then
-            missing+=("$cmd")
-        fi
-    done
-
-    if [ ${#missing[@]} -gt 0 ]; then
-        echo "The following required tools are missing:"
-        for cmd in "${missing[@]}"; do
-            echo " - $cmd"
-        done
-        echo "Please install them before running this script."
-        echo "Brew is the recommended way to install gum"
+    # Setup essential file paths
+    GUM_BIN="gum"
+    GUM_PATH="$SCRIPT_DIR/$GUM_BIN"
+    VMXTOOL_BIN="vmxtool"
+    VMXTOOL_PATH="$SCRIPT_DIR/$VMXTOOL_BIN"
+    DATA="guestos.dat"
+    DATA_PATH="$SCRIPT_DIR/$DATA"
+    
+    # Check if gum binary exists and is executable
+    if [[ ! -f "$GUM_PATH" ]]; then
+        echo "Error: $GUM_BIN not found at $GUM_PATH" >&2
+        echo "Please ensure the macserial binary is in the same directory as this script" >&2
         exit 1
     fi
-}
-
-# macOS version mapping
-setup_version_map() {
-    cat <<EOF > /tmp/macos_versions.json
-{
-    "darwin25-64": "macOS 26.0 (Tahoe)",
-    "darwin24-64": "macOS 15.0 (Sequoia)",
-    "darwin23-64": "macOS 14.0 (Sonoma)",
-    "darwin22-64": "macOS 13.0 (Ventura)",
-    "darwin21-64": "macOS 12.0 (Monterey)",
-    "darwin20-64": "macOS 11.0 (Big Sur)",
-    "darwin19-64": "macOS 10.15 (Catalina)",
-    "darwin18-64": "macOS 10.14 (Mojave)",
-    "darwin17-64": "macOS 10.13 (High Sierra)",
-    "darwin16-64": "MacOS 10.12 (Sierra)",
-    "darwin15-64": "OS X 10.11 (El Capitan)",
-    "darwin14-64": "OS X 10.10 (Yosemite)",
-    "darwin13-64": "OS X 10.9 (Mavericks)",
-    "darwin12-64": "OS X 10.8 (Mountain Lion)",
-    "darwin11-64": "Mac OS X 10.7 (Lion)",
-    "darwin11":    "Mac OS X 10.7 (Lion 32-bit)",
-    "darwin10-64": "Mac OS X 10.6 (Snow Leopard)",
-    "darwin10":    "Mac OS X 10.6 (Snow Leopard 32-bit)",
-    "darwin-64":   "Mac OS X 10.5 (Leopard)",
-    "darwin":      "Mac OS X 10.5 (Leopard 32-bit)"
-}
-EOF
+    
+    if [[ ! -x "$GUM_PATH" ]]; then
+        echo "Error: $GUM_BIN is not executable" >&2
+        echo "Please run: chmod +x '$GUM_PATH'" >&2
+        exit 1
+    fi
+    
+    # Check if vmxtool binary exists and is executable
+    if [[ ! -f "$VMXTOOL_PATH" ]]; then
+        echo "Error: $VMXTOOL_BIN not found at $VMXTOOL_PATH" >&2
+        echo "Please ensure the vmxtool binary is in the same directory as this script" >&2
+        exit 1
+    fi
+    
+    if [[ ! -x "$VMXTOOL_PATH" ]]; then
+        echo "Error: $VMXTOOL_BIN is not executable" >&2
+        echo "Please run: chmod +x '$VMXTOOL_PATH'" >&2
+        exit 1
+    fi
+    
+    # Check if vmxtool binary exists and is executable
+    if [[ ! -f "$DATA_PATH" ]]; then
+        echo "Error: $DATA not found at $DATA_PATH" >&2
+        echo "Please ensure the guestos.dat file is in the same directory as this script" >&2
+        exit 1
+    fi
 }
 
 # Get current guestOS from VMX file
@@ -59,13 +61,12 @@ get_guest_os() {
         return 1
     fi
 
-    local guest_os_line=$(grep -E '^guestOS\s*=\s*"' "$vmx_path" | head -1)
-    if [ -z "$guest_os_line" ]; then
-        gum style --foreground 1 "Error: guestOS setting not found in VMX file"
+    local guest_os=$($VMXTOOL_PATH query "$vmx_path" guestOS)
+    if [ $? -eq 1 ]; then
+        gum style --foreground 1 $guest_os
         return 1
     fi
 
-    local guest_os=$(echo "$guest_os_line" | sed -E 's/^guestOS[[:space:]]*=[[:space:]]*"([^"]+)".*/\1/')
     echo "$guest_os"
 }
 
@@ -83,13 +84,14 @@ set_guest_os() {
     fi
 
     # Update the file
-    sed -i.bak -E "s/^guestOS[[:space:]]*=.*/guestOS = \"${new_os}\"/" "$vmx_path" || {
-        gum style --foreground 1 "Error: Failed to update VMX file"
+    local output=$($VMXTOOL_PATH set "$vmx_path" guestOS=$new_os)
+    if [ $? -eq 1 ]; then
+        gum style --foreground 1 $output
         return 1
-    }
-
+    fi
+    
     # Verify change
-    local updated_os=$(get_guest_os "$vmx_path")
+    updated_os=$(get_guest_os "${vmx_path}")
     if [ "$updated_os" != "$new_os" ]; then
         gum style --foreground 1 "Error: Failed to update guestOS setting"
         return 1
@@ -149,7 +151,7 @@ main() {
             # Clear the VMX_FILE variable so subsequent loops will use the selector
             VMX_FILE=""
         else
-            vmx_path=$(gum file --padding "3 3" --header.foreground 212 --header="VMware macOS guestOS Configuration Tool
+            vmx_path=$(gum file --padding "3 3" --header.foreground 212 --header "VMware macOS guestOS Configuration Tool
 Select VMX file:" --file)
             if [ -z "$vmx_path" ]; then
                 exit 0
@@ -166,7 +168,7 @@ Select VMX file:" --file)
         fi
 
         # Get display name for current OS
-        local display_name=$(jq -r ".\"${current_os}\" // empty" /tmp/macos_versions.json)
+        local display_name=$($VMXTOOL_PATH query $DATA $current_os)
 
         # Show current setting
         if [ -n "$display_name" ]; then
@@ -176,21 +178,15 @@ Select VMX file:" --file)
         fi
 
         # Select new OS version
-        local versions=()
-        while IFS= read -r line; do
-            versions+=("$line")
-        done < <(jq -r 'to_entries[] | "\(.value) (\(.key))"' /tmp/macos_versions.json)
-
-        local selected=$(printf "%s\n" "${versions[@]}" | gum choose --header "Select new macOS version:")
-
+        local selected=$(gum table --height 21 --columns "guestOS,Name" --separator = --file $DATA_PATH)
         if [ -z "$selected" ]; then
             gum confirm "Try another file?" && continue || exit 0
         fi
 
         # Extract the key from selection (part in parentheses)
-        local new_os=$(echo "$selected" | sed -E 's/.*\(([^)]+)\)$/\1/')
-
-        # Confirm change
+        local new_os=${selected%%=*}
+        local new_display_name=$(echo "$selected" | cut -d'=' -f2 | xargs)
+        
         gum confirm "Change guestOS from '$current_os' to '$new_os'?" || {
             gum confirm "Try another file?" && continue || exit 0
         }
@@ -205,7 +201,6 @@ Select VMX file:" --file)
         gum confirm "Make another change?" || break
     done
 
-    rm /tmp/macos_versions.json
 }
 
 main "$@"
