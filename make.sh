@@ -100,7 +100,7 @@ pandoc_convert() {
 # Clear previous build
 rm -rfv ./build 2>&1 >/dev/null
 
-msg_status "Step 0. Compile tools"
+msg_status "Step 1. Compile tools"
 
 # Fixup version/commit in tools scripts
 mkdir -p ./build/tools/guest 2>&1 >/dev/null
@@ -160,7 +160,7 @@ do
     fi
 
     # Build config.plist
-    msg_status "Step 1. Create config.plist"
+    msg_status "Step 2. Create config.plist for $VARIANT"
     mkdir -p ./build/config/$VARIANT 2>&1 >/dev/null
     ./utilities/minijinja-cli \
         --format=toml \
@@ -186,7 +186,7 @@ do
     fi
 
     # Build the OpenCore DMG/vmdk files
-    msg_status "Step 2. Create disk images DMG/VMDK/QCOW2"
+    msg_status "Step 3. Create disk images DMG/VMDK/QCOW2 for $VARIANT"
     mkdir -p ./build/disks/$VARIANT
     DMG=$(./utilities/stoml oc4vm.toml $VARIANT.DMG)
     build_dmg ./build/disks/$VARIANT $DMG ./build/config/$VARIANT/config.plist
@@ -196,7 +196,7 @@ done
 VARIANTS=("intel" "amd")
 for VARIANT in $VARIANTS
 do
-    msg_status "Step 3. Create VMware templates"
+    msg_status "Step 4. Create VMware templates for $VARIANT"
     mkdir -p ./build/vmware/$VARIANT 2>&1 >/dev/null
     cp -v ./vmware/macos.plist ./build/vmware/$VARIANT 2>&1 >/dev/null
     cp -v ./vmware/macos.vmdk ./build/vmware/$VARIANT 2>&1 >/dev/null
@@ -220,11 +220,11 @@ do
 
 done
 
-msg_status "\nStep 4. Copying misc files"
+msg_status "\nStep 5. Copying misc files"
 cp -v LICENSE ./build/
 cp -vr ./iso ./build/
 
-msg_status "\nStep 5. Creating HTML Documents"
+msg_status "\nStep 6. Creating HTML Documents"
 
 pandoc_convert ./readme.md     ./build/readme.html      "OC4VM ReadMe"
 pandoc_convert ./changelog.md  ./build/changelog.html   "OC4VM Change Log"
@@ -234,7 +234,7 @@ pandoc_convert ./docs/notes.md ./build/docs/notes.html  "OC4VM Notes"
 pandoc_convert ./docs/spoof.md ./build/docs/spoof.html  "OC4VM Spoofing"
 pandoc_convert ./docs/tools.md ./build/docs/tools.html  "OC4VM Tools"
 
-msg_status "\nStep 6. Zipping OC4VM Release"
+msg_status "\nStep 7. Zipping OC4VM Release"
 rm ./dist/oc4vm-$VERSION.* 2>&1 >/dev/null
 7z a ./dist/oc4vm-$VERSION.zip ./build/*
 cd ./dist
