@@ -1,1 +1,1 @@
- Invoke-ps2exe -inputFile .\macguest.ps1 -outputFile .\macguest.exe -x64 -noConsole -title "VMware guestOS Tool" -product "OC4VM" -copyright "(c) 2023-2025 David Parsons" -noOutput -noError -exitOnCancel
+Invoke-ps2exe -inputFile .\macguest.ps1 -outputFile .\macguest.exe -x64 -noConsole -title "VMware guestOS Tool" -product "OC4VM" -copyright "(c) 2023-2025 David Parsons" -noOutput -noError -exitOnCancel
