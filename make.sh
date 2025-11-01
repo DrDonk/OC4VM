@@ -35,11 +35,10 @@ build_dmg() {
 
     # Make a copy of base image and ESXi descriptor file
     mkdir -v -p $1
-    cp -v ./opencore/dmg/$2/opencore.dmg $1/
-    cp -v ./opencore/dmg/$2/opencore-esxi.vmdk $1/
+    cp -v ./opencore/dmg/$2/opencore.iso $1/
 
     # Attach blank DMG and create OC setup
-    hdiutil attach $1/opencore.dmg -noverify -nobrowse -noautoopen
+    hdiutil attach $1/opencore.iso -noverify -nobrowse -noautoopen
     cp -rv $3 /Volumes/OPENCORE/EFI/OC
     mkdir -v -p /Volumes/OPENCORE/OC4VM/tools
     cp -rv ./build/tools/guest/* /Volumes/OPENCORE/OC4VM/tools
@@ -48,15 +47,6 @@ build_dmg() {
     dot_clean -m /Volumes/OPENCORE
     SetFile -a C /Volumes/OPENCORE
     hdiutil detach /Volumes/OPENCORE -force
-
-    # Convert DMG to VMDK & QCOW2
-    qemu-img convert -f raw -O vmdk $1/opencore.dmg $1/opencore.vmdk 2>&1 >/dev/null
-    qemu-img check -f vmdk $1/opencore.vmdk
-    if [[ -f "$1/opencore.vmdk" ]]; then
-        msg_status "VMware vmdk file is available at $1/opencore.vmdk"
-    else
-        msg_error "Build failure! opencore.vmdk file not found!"
-    fi
 }
 
 run_jinja(){
@@ -109,8 +99,6 @@ mkdir -p ./build/tools/host/macos 2>&1 >/dev/null
 mkdir -p ./build/tools/host/windows 2>&1 >/dev/null
 
 # Build guest tools
-run_jinja ./tools/guest/amdcpu ./build/tools/guest/amdcpu
-run_jinja  ./tools/guest/bootargs ./build/tools/guest/bootargs
 run_jinja  ./tools/guest/sysinfo ./build/tools/guest/sysinfo
 cp -v ./tools/guest/macserial ./build/tools/guest/macserial
 chmod +x ./build/tools/guest/*
@@ -123,14 +111,14 @@ cp -v ./tools/host/linux/macserial ./build/tools/host/linux/macserial
 cp -v ./tools/host/linux/vmxtool ./build/tools/host/linux/vmxtool
 cp -v ./tools/host/linux/gum ./build/tools/host/linux/gum
 cp -v ./tools/host/linux/guestos.dat ./build/tools/host/linux/guestos.dat
+chmod +x ./build/tools/host/linux/*
 
 # - macOS
-run_jinja ./tools/host/macos/macguest.sh ./build/tools/host/macos/macguest.sh
 run_jinja ./tools/host/macos/regen.sh ./build/tools/host/macos/regen.sh
 cp -v ./tools/host/macos/macserial ./build/tools/host/macos/macserial
 cp -v ./tools/host/macos/vmxtool ./build/tools/host/macos/vmxtool
 cp -v ./tools/host/macos/gum ./build/tools/host/macos/gum
-cp -v ./tools/host/macos/guestos.dat ./build/tools/host/macos/guestos.dat
+chmod +x ./build/tools/host/macos/*
 
 # - Windows
 run_jinja ./tools/host/windows/macguest.ps1 ./build/tools/host/windows/macguest.ps1
@@ -200,7 +188,8 @@ do
     mkdir -p ./build/vmware/$VARIANT 2>&1 >/dev/null
     cp -v ./vmware/macos.plist ./build/vmware/$VARIANT 2>&1 >/dev/null
     cp -v ./vmware/macos.vmdk ./build/vmware/$VARIANT 2>&1 >/dev/null
-    cp -v ./build/disks/$VARIANT/opencore.vmdk ./build/vmware/$VARIANT
+    cp -v ./vmware/macos.nvram ./build/vmware/$VARIANT 2>&1 >/dev/null
+    cp -v ./build/disks/$VARIANT/opencore.iso ./build/vmware/$VARIANT
 
     if [[ $VARIANT == 'amd' ]]; then
         AMD=1
