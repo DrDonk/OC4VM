@@ -2,7 +2,7 @@
 
 All dates are UK DD/MM/YY format.
 
-## xx/10/25 1.2.1
+## xx/11/25 2.0.0
 **All spoofing of hardware should use iMac 2019 to ensure maximum compatibilty with macOS upgrades
 and avoid models with T1 or T2 security chips. The iMac 2019 supports Catalina to Sequoia, and can also
 run Tahoe.**
