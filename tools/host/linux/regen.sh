@@ -8,23 +8,10 @@
 
 # Get script directory
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
-
-# Determine the correct macserial binary based on OS
-case "$(uname -s)" in
-    Darwin)
-        MACSERIAL_BIN="macserial.macos"
-        ;;
-    Linux)
-        MACSERIAL_BIN="macserial.linux"
-        ;;
-    *)
-        echo "Error: Unsupported operating system" >&2
-        echo "This script only supports macOS and Linux" >&2
-        exit 1
-        ;;
-esac
-
+MACSERIAL_BIN="macserial"
 MACSERIAL_PATH="$SCRIPT_DIR/$MACSERIAL_BIN"
+VMXTOOL_BIN="vmxtool"
+VMXTOOL_PATH="$SCRIPT_DIR/$VMXTOOL_BIN"
 
 # Check if macserial binary exists and is executable
 if [[ ! -f "$MACSERIAL_PATH" ]]; then
@@ -36,6 +23,19 @@ fi
 if [[ ! -x "$MACSERIAL_PATH" ]]; then
     echo "Error: $MACSERIAL_BIN is not executable" >&2
     echo "Please run: chmod +x '$MACSERIAL_PATH'" >&2
+    exit 1
+fi
+
+# Check if macserial binary exists and is executable
+if [[ ! -f "$VMXTOOL_PATH" ]]; then
+    echo "Error: $VMXTOOL_BIN not found at $VMXTOOL_PATH" >&2
+    echo "Please ensure the macserial binary is in the same directory as this script" >&2
+    exit 1
+fi
+
+if [[ ! -x "$VMXTOOL_PATH" ]]; then
+    echo "Error: $VMXTOOL_BIN is not executable" >&2
+    echo "Please run: chmod +x '$VMXTOOL_PATH'" >&2
     exit 1
 fi
 
@@ -85,9 +85,7 @@ fi
 echo "OC4VM regen"
 echo "-----------"
 echo "Regenerating Mac identifiers..."
-echo "Add these settings in the VMX file between lines:"
-echo "# >>> Start Spoofing <<<"
-echo "# >>> End Spoofing <<<"
+echo "Adding these settings to VMX file:"
 echo ""
 echo "__Apple_Model__ = \"iMac 2019\""
 echo "board-id = \"Mac-63001698E7A34814\""
@@ -95,7 +93,19 @@ echo "hw.model = \"iMac19,2\""
 echo "serialNumber = \"$serial\""
 echo "efi.nvram.var.MLB = \"$mlb\""
 echo "efi.nvram.var.ROM = \"$rom\""
-echo "system-id.enable = \"TRUE\""
-echo "hypervisor.cpuid.v0 = \"TRUE\""             # !!Not always reliable and can cause a panic!!
+echo "hypervisor.cpuid.v0 = \"FALSE\""
 echo ""
-echo "End"
+echo "Running vmxtool to update file."
+
+VMX_FILE="test.vmx"
+if [[ ! -f "$VMX_PATH" ]]; then
+    echo "Error: VMX file $VMXPATH not found" >&2
+    exit 1
+fi
+"$VMXTOOL_PATH" set $VMX_FILE __Apple_Model__ = "iMac 2019"
+"$VMXTOOL_PATH" set $VMX_FILE board-id = "Mac-63001698E7A34814"
+"$VMXTOOL_PATH" set $VMX_FILE hw.model = "iMac19,2"
+"$VMXTOOL_PATH" set $VMX_FILE serialNumber = "$serial"
+"$VMXTOOL_PATH" set $VMX_FILE efi.nvram.var.MLB = "$mlb"
+"$VMXTOOL_PATH" set $VMX_FILE efi.nvram.var.ROM = "$rom"
+"$VMXTOOL_PATH" set $VMX_FILE hypervisor.cpuid.v0 = "FALSE"

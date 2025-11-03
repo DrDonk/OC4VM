@@ -38,7 +38,6 @@ Write-Output 'hw.model = "iMac19,2"'
 Write-Output "serialNumber = `"$serial`""
 Write-Output "efi.nvram.var.MLB = `"$mlb`""
 Write-Output "efi.nvram.var.ROM = `"$rom`""
-Write-Output 'system-id.enable = "TRUE"'
-Write-Output 'hypervisor.cpuid.v0 = "TRUE"             # !!Not always reliable and can cause a panic!!'
+Write-Output 'hypervisor.cpuid.v0 = "TRUE"'
 Write-Output ""
 Write-Output "End"
