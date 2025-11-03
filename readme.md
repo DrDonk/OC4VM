@@ -37,8 +37,8 @@ with these guest OSes:
 * Tahoe
 
 using:
-* VMware Fusion 13.6
-* VMware Workstation 17.6 (Windows and Linux)
+* VMware Fusion Pro 25H2
+* VMware Workstation Pro 25H2 (Windows and Linux)
 
 CPUs will need to support the following instructions:
 

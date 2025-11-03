@@ -1,12 +1,19 @@
 # Spoofing Virtual Apple Mac Model
 
+Outline
+  1. Introduction - why do thia
+  2. Levels of spoofing - model +/- VMM
+  3. Recommended model - iMac
+  4. Models to avoid if VMM hidden
+  5. How to update new VMX file.
+
 If you want to make the VM look like a specific Mac model the settings can be configued in the
 VMware VMX file.
 
 *Note: iCloud and Apple AppStore can be problematic in Intel macOS VMs even with spoofing.*
 
-Currently the VMX file example is configured as a regular VMware virtual machine (VMware20,1) which is supported in all recent
-version of macOS.
+Currently the VMX file example is configured as a regular VMware virtual machine (VMware20,1) 
+which is supported in all recent versions of macOS.
 
 If you want to mimic a real Mac 2018 Mac mini (Macmini8,1) is recommended.
 
@@ -14,21 +21,28 @@ If you want to mimic a real Mac 2018 Mac mini (Macmini8,1) is recommended.
 it can cause a failure during installation when the macOS installer thinks it is on a real Mac and
 tries to do firmware updates.**
 
+T1 enabled Macs
+* 2016-2017 13″ & 15″ Macbook Pro
 
-```
-__Default_Model__ = "VMware20,1"
-board-id = "VMM-x86_64"
+T2 enabled Macs
+* 2019-2020 16″ MacBook Pro
+* 2018-2019 13″ & 15″ Macbook Pro
+* 2018-2020 MacBook Air
+* 2018 Mac Mini
+* 2020 iMac
+* 2017 iMac Pro
+* 2019 Mac Pro
 
-__Apple_Model__ = "Mac mini 2018"
-__WARNING__ = "DO NOT UNCOMMENT UNTIL AFTER macOS INSTALLED"
-_board-id = "Mac-7BA5B2DFE22DDD8C"
-_hw.model = "Macmini8,1"
-_hypervisor.cpuid.v0 = "FALSE"             # !!Not always reliable and can cause a panic!!
-__IMPORTANT__ = "These are samples and MUST be replaced with unique values"
-_serialNumber = "C07LL5Y8JYVX"
-_efi.nvram.var.MLB = "C07343102GUKXPGCB"
-_efi.nvram.var.ROM = "%66%C9%75%99%89%AC"
-```
+There is a command line tool available which will generate the lines for the VMX file in tools/host:
+
+* regen.sh - Linux and macOS
+* regen.ps1 - Windows PowerSHell
+* regen.cmd- Windows batch file
+
+These utilities can generate the lines for the VMX file as discussed in the next section.
+
+The details on how to generate the lines for VMX file are shown here as you may want to alter the 
+details to better match your needs.
 
 The process to mimic a Mac mini 2018 is:
 
@@ -38,9 +52,10 @@ The process to mimic a Mac mini 2018 is:
 4. Add a "_" character to the line:
 
 ```
-__Default_Model__ = "VMware20,1"
+# >>> Start Spoofing <<<
 board-id = "VMM-x86_64"
-
+hw.model = "VMware20,1"
+# >>> End Spoofing <<<
 ```
 
 so it looks like this:
@@ -90,7 +105,7 @@ _board-id = "VMM-x86_64"
 __Apple_Model__ = "Mac mini 2018"
 board-id = "Mac-7BA5B2DFE22DDD8C"
 hw.model = "Macmini8,1"
-_hypervisor.cpuid.v0 = "FALSE"             # !!Not always relaible and can cause a panic!!
+_hypervisor.cpuid.v0 = "FALSE"             # !!Not always reliable and can cause a panic!!
 serialNumber = "C07ZD06BJYVX"
 efi.nvram.var.MLB = "C079374014NKXPG1M"
 efi.nvram.var.ROM = "%00%0C%29%AA%BB%CC"

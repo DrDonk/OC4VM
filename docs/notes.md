@@ -116,6 +116,7 @@ In addtion there are dummy section names using "__" as a prefix and suffix:
 | macOS 13              | Ventura       | darwin22-64         | 0x5064 |
 | macOS 14              | Sonoma        | darwin23-64         | 0x5065 |
 | macOS 15              | Sequoia       | darwin24-64         | 0x5066 |
+| macOS 26              | Tahoe         | darwin25-64         | 0x5067 |
 
 ### VMware Socket Calculations
 
@@ -192,6 +193,26 @@ Linux patched:
 Find:    `48 8b 43 40 31 d2 a8 01 74 13`
 
 Replace: `c7 c2 01 00 00 00 a8 01 eb 13`
+
+### Virtual USB CD-ROM and Hard Drive
+
+```
+ehci:#.present = "TRUE"
+ehci:#.deviceType = "disk"
+ehci:#.fileName = "pathToFile.vmdk"
+ehci:#.deviceType = "cdrom"
+ehci:#.fileName = "pathToFile.iso"
+ehci:#.readonly = "FALSE"
+ehci:1.present = "TRUE"
+ehci:1.deviceType = "disk"
+ehci:1.fileName = "../usb.vmdk"
+ehci:1.readonly = "FALSE"
+# ehci:2.deviceType = "cdrom"
+# ehci:2.fileName = "pathToFile.iso"
+# ehci:2.readonly = "FALSE"
+
+where # is a number ranging from 0 to 5 (or 7 if you configure the EHCI ports in the configuration file).
+```
 
 ## Random Stuff
 

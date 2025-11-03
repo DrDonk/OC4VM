@@ -1,8 +1,12 @@
 # Building OC4VM
 
-Building must be done on macOS, either real or virtualized. The Homebrew package manager
-will need to be installed to allow installation of the following pre-requisites. Please
-follow the instructions at https://brew.sh.
+Building must be done on macOS, either real or virtualized. This is beacause the 
+format of the bootable ISO file has to be built using Apple Partition Map and HFS+.
+
+The Homebrew package manager will need to be installed to allow
+installation of the following pre-requisites. Please follow the 
+instructions at https://brew.sh. It may be possible to also use 
+Macports for these dependencies but this has not been tested.
 
 Once brew is installed run the following commands to install the required software:
 ```
@@ -31,6 +35,7 @@ oc4vm.toml and used in the OpenCore config.plist and VMware VMX template.
 | AMD         | \<0/1\>         | building for AMD                              |
 | BOOTARGS    | \<string\>      | macOS NVRAM boot-args                         |
 | CSRCONFIG   | \<data\>        | base64 encoded macOS CSR SIP value            |
+| CPUS        | \<data\>        | number of CPUs for AMD guests only            |
 | DEBUG       | \<0/1\>         | enable debug options in OpenCore              |
 | DESCRIPTION | \<string\>      | description of configuration                  |
 | DMG         | <release/debug> | specify release or debug version of OpenCore  |
