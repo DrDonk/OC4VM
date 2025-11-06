@@ -23,6 +23,7 @@ fi
 if [[ ! -x "$MACSERIAL_PATH" ]]; then
     echo "Error: $MACSERIAL_BIN is not executable" >&2
     echo "Please run: chmod +x '$MACSERIAL_PATH'" >&2
+    
     exit 1
 fi
 
@@ -98,7 +99,7 @@ echo ""
 echo "Running vmxtool to update file."
 
 VMX_FILE="$SCRIPT_DIR/test.vmx"
-if [ ! -f "$VMX_PATH" ]; then
+if [ ! -f "$VMX_FILE" ]; then
     echo "Error: VMX file $VMXPATH not found" >&2
     exit 1
 fi

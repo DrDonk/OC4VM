@@ -21,12 +21,13 @@ featMask.vm.cpuid.AVX = "Min:1"           # Check AVX 1.0 support in CPU (Sandy 
 featMask.vm.cpuid.AVX2 = "Min:1"          # Check AVX 2.0 support in CPU (Haswell and Excavator or later)
 featMask.vm.cpuid.F16C = "Min:1"          # Check F16C support in CPU (mix of CPUs)
 featMask.vm.cpuid.RDRAND = "Min:1"        # Check RDRAND support in CPU (mix of CPUs)
+hypervisor.cpuid.v0 = "TRUE"              # VMM bit is set
 
 __Hidden_USB_CD_BOOT_Device__ = ""
-ehci:0.deviceType = "cdrom-image"
-ehci:0.fileName = "opencore.iso"
-ehci:0.readonly = "TRUE"
-ehci:0.present = "TRUE"
+usb_uhci:0.deviceType = "cdrom-image"
+usb_uhci:0.fileName = "opencore.iso"
+usb_uhci:0.readonly = "TRUE"
+usb_uhci:0.present = "TRUE"
 
 __Serial_Port_Settings__ = ""
 answer.msg.serial.file.open = "Replace"

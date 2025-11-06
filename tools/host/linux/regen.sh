@@ -26,7 +26,7 @@ if [[ ! -x "$MACSERIAL_PATH" ]]; then
     exit 1
 fi
 
-# Check if macserial binary exists and is executable
+# Check if vmxtool binary exists and is executable
 if [[ ! -f "$VMXTOOL_PATH" ]]; then
     echo "Error: $VMXTOOL_BIN not found at $VMXTOOL_PATH" >&2
     echo "Please ensure the macserial binary is in the same directory as this script" >&2
