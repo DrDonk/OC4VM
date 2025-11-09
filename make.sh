@@ -56,7 +56,6 @@ run_jinja(){
         --format=toml \
         -D VERSION=$VERSION \
         -D COMMIT=$COMMIT \
-        -D COMMIT=$COMMIT \
         -s comment-start="{|" \
         -s comment-end="|}" \
         -o $output_file \
@@ -121,7 +120,6 @@ cp -v ./tools/host/macos/gum ./build/tools/host/macos/gum
 chmod +x ./build/tools/host/macos/*
 
 # - Windows
-run_jinja ./tools/host/windows/macguest.ps1 ./build/tools/host/windows/macguest.ps1
 run_jinja ./tools/host/windows/regen.ps1 ./build/tools/host/windows/regen.ps1
 cp -v ./tools/host/windows/macguest.exe ./build/tools/host/windows/macguest.exe
 cp -v ./tools/host/windows/macserial.exe ./build/tools/host/windows/macserial.exe
@@ -230,4 +228,4 @@ cd ./dist
 shasum -a 512 oc4vm-$VERSION.zip > oc4vm-$VERSION.sha512
 cd ..
 
-eza -alT ./build
+# eza -alT ./build
