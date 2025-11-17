@@ -39,6 +39,7 @@ build_dmg() {
 
     # Attach blank DMG and create OC setup
     hdiutil attach $1/opencore.iso -noverify -nobrowse -noautoopen
+    touch /Volumes/OPENCORE/oc4vm-$VARIANT-$VERSION-$COMMIT
     cp -rv $3 /Volumes/OPENCORE/EFI/OC
     mkdir -v -p /Volumes/OPENCORE/OC4VM/tools
     cp -rv ./build/tools/guest/* /Volumes/OPENCORE/OC4VM/tools
@@ -108,15 +109,12 @@ run_jinja ./tools/host/linux/macguest.sh ./build/tools/host/linux/macguest.sh
 run_jinja ./tools/host/linux/regen.sh ./build/tools/host/linux/regen.sh
 cp -v ./tools/host/linux/macserial ./build/tools/host/linux/macserial
 cp -v ./tools/host/linux/vmxtool ./build/tools/host/linux/vmxtool
-cp -v ./tools/host/linux/gum ./build/tools/host/linux/gum
-cp -v ./tools/host/linux/guestos.dat ./build/tools/host/linux/guestos.dat
 chmod +x ./build/tools/host/linux/*
 
 # - macOS
 run_jinja ./tools/host/macos/regen.sh ./build/tools/host/macos/regen.sh
 cp -v ./tools/host/macos/macserial ./build/tools/host/macos/macserial
 cp -v ./tools/host/macos/vmxtool ./build/tools/host/macos/vmxtool
-cp -v ./tools/host/macos/gum ./build/tools/host/macos/gum
 chmod +x ./build/tools/host/macos/*
 
 # - Windows
@@ -124,8 +122,6 @@ run_jinja ./tools/host/windows/regen.ps1 ./build/tools/host/windows/regen.ps1
 cp -v ./tools/host/windows/macguest.exe ./build/tools/host/windows/macguest.exe
 cp -v ./tools/host/windows/macserial.exe ./build/tools/host/windows/macserial.exe
 cp -v ./tools/host/windows/vmxtool.exe ./build/tools/host/windows/vmxtool.exe
-cp -v ./tools/host/windows/gum.exe ./build/tools/host/windows/gum.exe
-cp -v ./tools/host/windows/guestos.dat ./build/tools/host/windows/guestos.dat
 
 # Build OC4VM disk images
 VARIANTS=("${(f)$(./utilities/stoml oc4vm.toml . | tr ' ' '\n')}")
