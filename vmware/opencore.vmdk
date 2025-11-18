@@ -1,0 +1,21 @@
+# Disk DescriptorFile
+version=1
+encoding="UTF-8"
+CID=fffffffe
+parentCID=ffffffff
+isNativeSnapshot="no"
+createType="monolithicFlat"
+
+# Extent description
+RW 81920 FLAT "opencore.iso" 0
+
+# The Disk Data Base 
+#DDB
+
+ddb.adapterType = "lsilogic"
+#ddb.geometry.cylinders is not used by Mac OS.
+#ddb.geometry.heads is not used by Mac OS.
+#ddb.geometry.sectors is not used by Mac OS.
+#ddb.longContentID will be generated on the first write to the file.
+#ddb.uuid is not used by Mac OS.
+ddb.virtualHWVersion = "6"
