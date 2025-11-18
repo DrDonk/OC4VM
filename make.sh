@@ -105,14 +105,15 @@ chmod +x ./build/tools/guest/*
 
 # Build host tools
 # - Linux
-run_jinja ./tools/host/linux/macguest.sh ./build/tools/host/linux/macguest.sh
-run_jinja ./tools/host/linux/regen.sh ./build/tools/host/linux/regen.sh
+run_jinja ./tools/host/common/macguest.sh ./build/tools/host/linux/macguest.sh
+run_jinja ./tools/host/common/regen.sh ./build/tools/host/linux/regen.sh
 cp -v ./tools/host/linux/macserial ./build/tools/host/linux/macserial
 cp -v ./tools/host/linux/vmxtool ./build/tools/host/linux/vmxtool
 chmod +x ./build/tools/host/linux/*
 
 # - macOS
-run_jinja ./tools/host/macos/regen.sh ./build/tools/host/macos/regen.sh
+run_jinja ./tools/host/common/macguest.sh ./build/tools/host/macos/macguest.sh
+run_jinja ./tools/host/common/regen.sh ./build/tools/host/macos/regen.sh
 cp -v ./tools/host/macos/macserial ./build/tools/host/macos/macserial
 cp -v ./tools/host/macos/vmxtool ./build/tools/host/macos/vmxtool
 chmod +x ./build/tools/host/macos/*
