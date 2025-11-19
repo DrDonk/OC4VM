@@ -47,22 +47,6 @@ Which gives these values when correclty base64 encoded:
 | 32    | uCAAAAAA                 | uiAAAAAA                | uiAAAACQ                | uiAAAAA=                |
 | 64    | uEAAAAAA                 | ukAAAAAA                | ukAAAACQ                | ukAAAAA=                |
 
-```
-#                                     Bit Position
-#                        3           2            1           0
-#                       1098:7654:3210:9876:5432:1098:7654:3210
-# EAX/ECX Registers     ---------------------------------------
-cpuid.4.0.eax        = "0000:0000:0000:0000:0000:0001:0010:0001"   1
-cpuid.4.0.eax        = "0000:0100:0000:0000:0000:0001:0010:0001"   2
-cpuid.4.0.eax        = "0000:1100:0000:0000:0000:0001:0010:0001"   4
-cpuid.4.0.eax        = "0001:1100:0000:0000:0000:0001:0010:0001"   8
-cpuid.4.0.eax        = "0011:1100:0000:0000:0000:0001:0010:0001"  16
-cpuid.4.0.eax        = "0111:1100:0000:0000:0000:0001:0010:0001"  32
-cpuid.4.0.eax        = "1111:1100:0000:0000:0000:0001:0010:0001"  64
-
-cpuid.4.0.eax        = "0001:11--:----:----:----:----:----:----"   8
-```
-
 ## macOS
 ### Useful boot-args
 ```
@@ -84,9 +68,6 @@ keepsyms=1 -lilubetaall -no_compat_check -no_panic_dialog -v serial=1 debug=2
 [kdk]
 keepsyms=1 -lilubetaall -v -no_compat_check serial=1 debug=2 -no_panic_dialog -liludbgall -topo -cpuid kcsuffix=development
 ```
-Useful for AMD debugging using KDK:
-
-`avx512=0 cwad`
 
 ## VMware
 
