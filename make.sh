@@ -101,12 +101,14 @@ mkdir -p ./build/tools/host/windows 2>&1 >/dev/null
 # Build guest tools
 run_jinja  ./tools/guest/sysinfo ./build/tools/guest/sysinfo
 cp -v ./tools/guest/macserial ./build/tools/guest/macserial
+cp -v ./tools/guest/cpuid ./build/tools/guest/cpuid
 chmod +x ./build/tools/guest/*
 
 # Build host tools
 # - Linux
 run_jinja ./tools/host/common/macguest.sh ./build/tools/host/linux/macguest.sh
 run_jinja ./tools/host/common/regen.sh ./build/tools/host/linux/regen.sh
+cp -v ./tools/host/linux/cpuid ./build/tools/host/linux/cpuid
 cp -v ./tools/host/linux/macserial ./build/tools/host/linux/macserial
 cp -v ./tools/host/linux/vmxtool ./build/tools/host/linux/vmxtool
 chmod +x ./build/tools/host/linux/*
@@ -114,12 +116,14 @@ chmod +x ./build/tools/host/linux/*
 # - macOS
 run_jinja ./tools/host/common/macguest.sh ./build/tools/host/macos/macguest.sh
 run_jinja ./tools/host/common/regen.sh ./build/tools/host/macos/regen.sh
+cp -v ./tools/host/macos/cpuid ./build/tools/host/macos/cpuid
 cp -v ./tools/host/macos/macserial ./build/tools/host/macos/macserial
 cp -v ./tools/host/macos/vmxtool ./build/tools/host/macos/vmxtool
 chmod +x ./build/tools/host/macos/*
 
 # - Windows
 run_jinja ./tools/host/windows/regen.ps1 ./build/tools/host/windows/regen.ps1
+cp -v ./tools/host/windows/cpuid.exe ./build/tools/host/windows/cpuid.exe
 cp -v ./tools/host/windows/macguest.exe ./build/tools/host/windows/macguest.exe
 cp -v ./tools/host/windows/macserial.exe ./build/tools/host/windows/macserial.exe
 cp -v ./tools/host/windows/vmxtool.exe ./build/tools/host/windows/vmxtool.exe
