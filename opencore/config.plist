@@ -229,7 +229,7 @@
 				{%- elif CORES == '32' %}
 				<data>uCAAAAAA</data>
 				{%- else %}
-				<data>uAIAAAAA</data>
+				<data>uAAAAAAA</data>
 				{% endif %}
 				<key>ReplaceMask</key>
 				<data>//////8A</data>
@@ -271,7 +271,7 @@
 				{%- elif CORES == '32' %}
 				<data>uiAAAAAA</data>
 				{%- else %}
-				<data>ugIAAAAA</data>
+				<data>ugAAAAAA</data>
 				{% endif %}
 				<key>ReplaceMask</key>
 				<data>//////8A</data>
@@ -313,7 +313,7 @@
 				{%- elif CORES == '32' %}
 				<data>uiAAAACQ</data>
 				{%- else %}
-				<data>ugIAAACQ</data>
+				<data>ugAAAACQ</data>
 				{% endif %}
 				<key>ReplaceMask</key>
 				<data></data>
@@ -355,7 +355,7 @@
 				{%- elif CORES == '32' %}
 				<data>uiAAAAA=</data>
 				{%- else %}
-				<data>ugIAAAA=</data>
+				<data>ugAAAAA=</data>
 				{% endif %}
 				<key>ReplaceMask</key>
 				<data>//////8=</data>
