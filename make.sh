@@ -114,6 +114,8 @@ cp -v ./tools/host/linux/vmxtool ./build/tools/host/linux/vmxtool
 chmod +x ./build/tools/host/linux/*
 
 # - macOS
+run_jinja ./tools/host/common/amdcpu.sh ./build/tools/host/macos/amdcpu.sh
+run_jinja ./tools/host/common/bootargs.sh ./build/tools/host/macos/bootargs.sh
 run_jinja ./tools/host/common/macguest.sh ./build/tools/host/macos/macguest.sh
 run_jinja ./tools/host/common/regen.sh ./build/tools/host/macos/regen.sh
 cp -v ./tools/host/macos/cpuid ./build/tools/host/macos/cpuid

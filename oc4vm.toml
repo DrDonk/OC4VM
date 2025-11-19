@@ -2,17 +2,18 @@
 # SPDX-License-Identifier: MIT
 
 # Variables:
-# Name        Type            Description
-# ----        ----            -----------
-# BUILD       <0/1>           - build config switch for make.sh
-# AMD         <0/1>           - building for AMD
-# BOOTARGS    <string>        - macOS NVRAM boot-args
-# CSRCONFIG   <data>          - base64 encoded macOS CSR SIP value
-# DEBUG       <0/1>           - enable debug options in OpenCore
-# DESCRIPTION <string>        - description of configuration
-# DMG         <release/debug> - specify release or debug version of OpenCore
-# RESOLUTION  <string>        - screen resolution WxH@Bpp or Max
-# TIMEOUT     <integer>       - timeout for OpenCore boot picker (0 disables)
+# Name        Type             Description
+# ----        ----             -----------
+# BUILD       <0/1>            - build config switch for make.sh
+# AMD         <0/1>            - building for AMD
+# BOOTARGS    <string>         - macOS NVRAM boot-args
+# CORES       <2/4/8/16/32/64> - # of cores for AMD patches
+# CSRCONFIG   <data>           - base64 encoded macOS CSR SIP value
+# DEBUG       <0/1>            - enable debug options in OpenCore
+# DESCRIPTION <string>         - description of configuration
+# DMG         <release/debug>  - specify release or debug version of OpenCore
+# RESOLUTION  <string>         - screen resolution WxH@Bpp or Max
+# TIMEOUT     <integer>        - timeout for OpenCore boot picker (0 disables)
 
 #
 # Intel CPU Settings
@@ -21,6 +22,7 @@
 BUILD = '1'
 AMD = '0'
 BOOTARGS = 'keepsyms=1 -lilubetaall -no_compat_check -no_panic_dialog'
+CORES = '8'
 CSRCONFIG = 'AAAAAA=='
 DEBUG = '0'
 DESCRIPTION = 'macOS Intel Release OC'
@@ -32,6 +34,7 @@ TIMEOUT = '5'
 BUILD = '1'
 AMD = '0'
 BOOTARGS = 'keepsyms=1 -lilubetaall -v -no_compat_check -no_panic_dialog -liludbgall'
+CORES = '8'
 CSRCONFIG = 'AAAAAA=='
 DEBUG = '0'
 DESCRIPTION = 'macOS Intel Verbose OC'
@@ -43,6 +46,7 @@ TIMEOUT = '0'
 BUILD = '1'
 AMD = '0'
 BOOTARGS = 'keepsyms=1 -lilubetaall -v -no_compat_check -no_panic_dialog -liludbgall serial=1 debug=2 -topo -cpuid'
+CORES = '8'
 CSRCONFIG = 'AAAAAA=='
 DEBUG = '1'
 DESCRIPTION = 'macOS Intel Debug OC'
@@ -57,6 +61,7 @@ TIMEOUT = '0'
 BUILD = '1'
 AMD = '1'
 BOOTARGS = 'keepsyms=1 -lilubetaall -no_compat_check -no_panic_dialog'
+CORES = '8'
 CSRCONFIG = 'AAAAAA=='
 DEBUG = '0'
 DESCRIPTION = 'macOS AMD Release OC'
@@ -68,6 +73,7 @@ TIMEOUT = '5'
 BUILD = '1'
 AMD = '1'
 BOOTARGS = 'keepsyms=1 -lilubetaall -v -no_compat_check -no_panic_dialog -liludbgall'
+CORES = '8'
 CSRCONFIG = 'AAAAAA=='
 DEBUG = '0'
 DESCRIPTION = 'macOS AMD Verbose OC'
@@ -79,6 +85,7 @@ TIMEOUT = '0'
 BUILD = '1'
 AMD = '1'
 BOOTARGS = 'keepsyms=1 -lilubetaall -v -no_compat_check -no_panic_dialog -liludbgall serial=1 debug=2 -topo -cpuid'
+CORES = '8'
 CSRCONFIG = 'AAAAAA=='
 DEBUG = '1'
 DESCRIPTION = 'macOS AMD Debug OC'

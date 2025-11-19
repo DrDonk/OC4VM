@@ -23,6 +23,10 @@ featMask.vm.cpuid.F16C = "Min:1"          # Check F16C support in CPU (mix of CP
 featMask.vm.cpuid.RDRAND = "Min:1"        # Check RDRAND support in CPU (mix of CPUs)
 hypervisor.cpuid.v0 = "TRUE"              # VMM bit is set
 
+__CPU Cores/Sockets__ = ""
+cpuid.coresPerSocket = "{{CORES}}"
+numvcpus = "{{CORES}}"
+
 __Hidden_USB_CD_BOOT_Device__ = ""
 usb_uhci:0.deviceType = "cdrom-image"
 usb_uhci:0.fileName = "opencore.iso"
@@ -43,7 +47,6 @@ vmx.buildType = "release"                # VMware build release/debug/stats
 
 __Standard_Fusion_macOS_VMX__ = ""
 config.version = "8"
-cpuid.coresPerSocket = "2"
 displayName = "{{DESCRIPTION}}"
 ehci.present = "TRUE"
 ethernet0.addressType = "generated"
@@ -62,7 +65,6 @@ gui.fitGuestUsingNativeDisplayResolution = "FALSE"
 hpet0.present = "TRUE"
 ich7m.present = "TRUE"
 memsize = "8192"
-numvcpus = "2"
 nvram = "macos.nvram"
 pciBridge0.present = "TRUE"
 pciBridge4.functions = "8"
