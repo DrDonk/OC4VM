@@ -47,6 +47,22 @@ Which gives these values when correclty base64 encoded:
 | 32    | uCAAAAAA                 | uiAAAAAA                | uiAAAACQ                | uiAAAAA=                |
 | 64    | uEAAAAAA                 | ukAAAAAA                | ukAAAACQ                | ukAAAAA=                |
 
+```
+#                                     Bit Position
+#                        3           2            1           0
+#                       1098:7654:3210:9876:5432:1098:7654:3210
+# EAX/ECX Registers     ---------------------------------------
+cpuid.4.0.eax        = "0000:0000:0000:0000:0000:0001:0010:0001"   1
+cpuid.4.0.eax        = "0000:0100:0000:0000:0000:0001:0010:0001"   2
+cpuid.4.0.eax        = "0000:1100:0000:0000:0000:0001:0010:0001"   4
+cpuid.4.0.eax        = "0001:1100:0000:0000:0000:0001:0010:0001"   8
+cpuid.4.0.eax        = "0011:1100:0000:0000:0000:0001:0010:0001"  16
+cpuid.4.0.eax        = "0111:1100:0000:0000:0000:0001:0010:0001"  32
+cpuid.4.0.eax        = "1111:1100:0000:0000:0000:0001:0010:0001"  64
+
+cpuid.4.0.eax        = "0001:11--:----:----:----:----:----:----"   8
+```
+
 ## macOS
 ### Useful boot-args
 ```
@@ -196,22 +212,36 @@ Replace: `c7 c2 01 00 00 00 a8 01 eb 13`
 
 ### Virtual USB CD-ROM and Hard Drive
 
+
+USB2:
 ```
 ehci:#.present = "TRUE"
 ehci:#.deviceType = "disk"
 ehci:#.fileName = "pathToFile.vmdk"
+
 ehci:#.deviceType = "cdrom"
 ehci:#.fileName = "pathToFile.iso"
 ehci:#.readonly = "FALSE"
+```
+
+USB3:
+```
+ehci:#.present = "TRUE"
+ehci:#.deviceType = "disk"
+ehci:#.fileName = "pathToFile.vmdk"
+
+ehci:#.deviceType = "cdrom"
+ehci:#.fileName = "pathToFile.iso"
+ehci:#.readonly = "FALSE"
+```
+where # is a number ranging from 0 to 5 (or 7 if you configure the EHCI/USB_XHCI ports in the configuration file).
+
+```
 ehci:1.present = "TRUE"
 ehci:1.deviceType = "disk"
 ehci:1.fileName = "../usb.vmdk"
 ehci:1.readonly = "FALSE"
-# ehci:2.deviceType = "cdrom"
-# ehci:2.fileName = "pathToFile.iso"
-# ehci:2.readonly = "FALSE"
 
-where # is a number ranging from 0 to 5 (or 7 if you configure the EHCI ports in the configuration file).
 ```
 
 ## Random Stuff
@@ -227,8 +257,8 @@ Decode a base64 encoded binary:
 Examples from kernel patching section of config.plist:
 
 ```
-Find:        wegaAAA= -> c1e8 1a00 00
-Mask:        //3/AAA= -> fffd ff00 00
-Replace:     uggAAAA= -> ba08 0000 00
-ReplaceMask: //////8= -> ffff ffff ff
+Find:        wegaAAA= -> c1 e81a 0000 - 1100 0001 1110 1000 0001 1010 0000 0000 0000 0000 
+Mask:        //3/AAA= -> ff fdff 0000 - 1111 1111 1111 1101 1111 1111 0000 0000 0000 0000 
+Replace:     uggAAAA= -> ba 0800 0000 - 1011 1010 0000 0000 0000 0000 0000 0000 0000 0000
+ReplaceMask: //////8= -> ff ffff ffff - 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111
 ```
