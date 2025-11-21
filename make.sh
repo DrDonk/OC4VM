@@ -99,7 +99,9 @@ mkdir -p ./build/tools/host/macos 2>&1 >/dev/null
 mkdir -p ./build/tools/host/windows 2>&1 >/dev/null
 
 # Build guest tools
-run_jinja  ./tools/guest/sysinfo ./build/tools/guest/sysinfo
+run_jinja ./tools/guestn/amdcpu.sh ./build/tools/guest/amdcpu.sh
+run_jinja ./tools/guest/bootargs.sh ./build/tools/guest/bootargs.sh
+run_jinja ./tools/guest/sysinfo ./build/tools/guest/sysinfo
 cp -v ./tools/guest/macserial ./build/tools/guest/macserial
 cp -v ./tools/guest/cpuid ./build/tools/guest/cpuid
 chmod +x ./build/tools/guest/*
@@ -114,8 +116,6 @@ cp -v ./tools/host/linux/vmxtool ./build/tools/host/linux/vmxtool
 chmod +x ./build/tools/host/linux/*
 
 # - macOS
-run_jinja ./tools/host/common/amdcpu.sh ./build/tools/host/macos/amdcpu.sh
-run_jinja ./tools/host/common/bootargs.sh ./build/tools/host/macos/bootargs.sh
 run_jinja ./tools/host/common/macguest.sh ./build/tools/host/macos/macguest.sh
 run_jinja ./tools/host/common/regen.sh ./build/tools/host/macos/regen.sh
 cp -v ./tools/host/macos/cpuid ./build/tools/host/macos/cpuid
