@@ -47,6 +47,27 @@ Which gives these values when correclty base64 encoded:
 | 32    | uCAAAAAA                 | uiAAAAAA                | uiAAAACQ                | uiAAAAA=                |
 | 64    | uEAAAAAA                 | ukAAAAAA                | ukAAAACQ                | ukAAAAA=                |
 
+### Patch List
+
+Depending on the specific property list you use for your target OS X installation, you can get any of the following patches that are backported from High Sierra, or new to the scene with Legacy OS X:
+
+| Function/Target | Patch Name | Comment |
+| --- | --- | --- |
+| _cpuid_set_generic_info | Remove wrmsr(0x8B) | None |
+| _cpuid_set_generic_info | Replace rdmsr(0x8B) with constant 186 | None |
+| _cpuid_set_generic_info | Set flag=1 | None |
+| _cpuid_set_generic_info | Disable check for Leaf 7 | None |
+| _cpuid_set_cpufamily | Force CPUFAMILY_INTEL_PENRYN | None |
+| _cpuid_set_cache_info | CPUID 0x8000001d instead of 4 | AMD uses a different Leaf than Intel. |
+| _cpuid_set_info | cpuid_cores_per_package set to const | Manually set because detection fails on AMD |
+| _commpage_populate | Remove rdmsr | None |
+| _i386_init/_commpage_populate/_pstate_trace | Remove rdmsr calls | Various places. |
+| _lapic_init | Remove version check panic | None |
+| _mtrr_update_action | Set PAT MSR to 00070106h | This patch is only for 10.10+ |
+| _panic_epilogue | Prevent instant reboot on panic | Allows for the CPU halt to be avoided |
+| mp.c | Increase TSC sync delta margin to prevent panic call | On 10.9- TSC Sync issues are so dangerous that they can cause instant panic and reboots. |
+| String Replace | GenuineIntel to AuthenticAMD | None |
+
 ## macOS
 ### Useful boot-args
 ```
