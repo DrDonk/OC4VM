@@ -894,9 +894,9 @@
 				<key>Mask</key>
 				<data></data>
 				<key>MaxKernel</key>
-				<string>18.5.0</string>
+				<string></string>
 				<key>MinKernel</key>
-				<string>18.5.0</string>
+				<string></string>
 				<key>Replace</key>
 				<data>ww==</data>
 				<key>ReplaceMask</key>
