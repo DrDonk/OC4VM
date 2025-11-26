@@ -65,7 +65,6 @@ Depending on the specific property list you use for your target OS X installatio
 | _lapic_init | Remove version check panic | None |
 | _mtrr_update_action | Set PAT MSR to 00070106h | This patch is only for 10.10+ |
 | _panic_epilogue | Prevent instant reboot on panic | Allows for the CPU halt to be avoided |
-| mp.c | Increase TSC sync delta margin to prevent panic call | On 10.9- TSC Sync issues are so dangerous that they can cause instant panic and reboots. |
 | String Replace | GenuineIntel to AuthenticAMD | None |
 
 ## macOS
