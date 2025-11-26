@@ -13,7 +13,10 @@ guestinfo.oc4vm.revision = "{{COMMIT}}"
 
 __CPU_Sanity_Checks__ = ""
 {% if AMD == '1' -%}
-featMask.vm.cpuid.AMD = "Min:1"           # Check CPU as OC4VM has Intel and AMD variants
+featMask.vm.cpuid.AMD = "Min:1"           # Check CPU as OC4VM has Intel and AMD 
+featMask.vm.cpuid.FAMILY = "Val:6"        # Haswell-S (Desktop): Family 6, Model 60 (3C), Stepping 3
+featMask.vm.cpuid.MODEL = "Val:60"        #
+featMask.vm.cpuid.STEPPING = "Val:3"      # 
 {%- else -%}
 featMask.vm.cpuid.INTEL = "Min:1"         # Check CPU as OC4VM has Intel and AMD variants
 {%- endif %}
