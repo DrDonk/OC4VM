@@ -35,11 +35,12 @@ cpuid.coresPerSocket = "2"
 numvcpus = "2"
 {%- endif %}
 
-__Hidden_USB_CD_BOOT_Device__ = ""
+__Hidden_USB_BOOT_Device__ = ""
 usb_uhci:0.deviceType = "cdrom-image"
 usb_uhci:0.fileName = "opencore.iso"
-usb_uhci:0.readonly = "TRUE"
+usb_xhci:0.mode = "independent-persistent"
 usb_uhci:0.present = "TRUE"
+usb_uhci:0.readonly = "TRUE"
 
 __Serial_Port_Settings__ = ""
 answer.msg.serial.file.open = "Replace"
