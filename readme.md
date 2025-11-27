@@ -79,12 +79,13 @@ matches the host CPU.
 
 Each folder contains these files:
 
-| File          | Function                          |
-|:--------------|-----------------------------------|
-| opencore.vmdk | OpenCore boot virtual disk        |
-| macos.vmx     | macOS VMX settings file           |
-| macos.vmdk    | Pre-formatted APFS virtual disk   |
-| macos.plist   | VMware Fusion config file         |
+| File          | Function                                 |
+|:--------------|------------------------------------------|
+| opencore.iso  | OpenCore boot ISO image                  |
+| macos.nvram   | Preconfigured nvram settings             |
+| macos.vmx     | macOS VMX settings file                  |
+| macos.vmdk    | Pre-formatted APFS virtual disk          |
+| macos.plist   | VMware Fusion config file                |
 
 #### 3.3.1 New VM
 To create a new virtual machine copy either the Intel or AMD template to a new folder.
@@ -99,17 +100,16 @@ Power on and install macOS as normal.
 Please follow these instructions to add to an existing macOS guest.
 
 1. Make sure the VM is shutdown.
-2. Copy the opencore.vmdk from the template folder to the existing VMs folder.
-3. Use the guest settings to add the opencore.vmdk disk as a SATA drive.
+2. Copy the opencore.iso from the template folder to the existing VMs folder.
+3. Use the guest settings to add the opencore.iso file as a CD drive.
 4. Boot to the firmware and select the OpenCore drive as the boot device.
 
 #### 3.3.3 Upgrading OC4VM VM
 To upgrade the exisitng OC4VM enabled VM you will need to do these steps:
 
 1. Make sure the VM is shutdown.
-2. If there are any snapshots they must be removed.
-3. Copy the new opencore.vmdk from the template folder to VM folder.
-4. (Optionally) There may be changes to the template VMX file you may want to
+2. Copy the new opencore.iso from the template folder to VM folder.
+3. (Optionally) There may be changes to the template VMX file you may want to
 add to the VM. You will have to check the differences and copy any changed lines you want
 to the existing VMX file.
 
