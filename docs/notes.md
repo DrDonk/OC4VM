@@ -3,7 +3,29 @@
 These are my random notes whilst I was working on OC4VM. They may prove useful for other people.
 
 ## Opencore
+List of AMD patches in config.plist and their current status in OC4VM
+
+| Function/Target                             | Patch Name                            | Comment                                     |
+| ------------------------------------------- | --------------------------------------| ------------------------------------------- |
+| _cpuid_set_info                             | cpuid_cores_per_package set to const  | Not used                                    |
+| _cpuid_set_info                             | GenuineIntel to AuthenticAMD          | None                                        |
+| _cpuid_set_generic_info                     | Remove wrmsr(0x8B)                    | Probably not needed                         |
+| _cpuid_set_generic_info                     | Replace rdmsr(0x8B) with constant 186 | Probably not needed                         |
+| _cpuid_set_generic_info                     | Set flag=1                            | Probably not needed                         |
+| _cpuid_set_generic_info                     | Disable check for Leaf 7              | None                                        |
+| _cpuid_set_cpufamily                        | Force CPUFAMILY_INTEL_PENRYN          | Not used                                    |
+| _cpuid_set_cache_info                       | CPUID 0x8000001d instead of 4         | Swap leaves from Intel to AMD specific one  |
+| _commpage_populate                          | Remove rdmsr                          | None                                        |
+| _i386_init/_commpage_populate/_pstate_trace | Remove rdmsr calls                    | Probably not needed                         |
+| _lapic_init                                 | Remove version check panic            | None                                        |
+| _mtrr_update_action                         | Set PAT MSR to 00070106h              | Probably not needed                         |
+
 ### Cores for AMD Patches
+
+Cores foer AMD CPUs can now be set in VMware usiung the UI in the same way as for Intel CPUs.
+However using multiples of 2 is the best way to use AMD systems as 3/6/12 cores causes macOS kenrel panics.
+
+*NOTE: These are no longer used but kept for reference.*
 
 From https://github.com/AMD-OSX/AMD_Vanilla/blob/master/README.md
 
@@ -16,7 +38,8 @@ From https://github.com/AMD-OSX/AMD_Vanilla/blob/master/README.md
 > | 12.x, 13.0 to 13.2.1 | BA000000 0090 | BA < Core Count > 0000 0090 |
 > | 13.3 +               | BA000000 00   | BA < Core Count > 0000 00   |
 >
-> From the table above substitute `< Core Count >` with the hexadecimal value matching your physical core count. Do not use your CPU's thread count. See the table below for the values matching your CPU core count.
+> From the table above substitute `< Core Count >` with the hexadecimal value matching your physical core count. Do not use your CPU's thread count. 
+> See the table below for the values matching your CPU core count.
 >
 >
 > | Core Count | Hexadecimal |
@@ -31,7 +54,7 @@ From https://github.com/AMD-OSX/AMD_Vanilla/blob/master/README.md
 >
 > So for example, a user with a 6-core processor should use these `Replace` values: `B8 06 0000 0000` / `BA 06 0000 0000` / `BA 06 0000 0090` / `BA 06 0000 00`
 
-Which gives these values when correclty base64 encoded:
+Which gives these values when correctly base64 encoded:
 
 | Cores | 10.13/10.14              | 10.15/11.0              | 12.0/13.0               | 13.3+                   |
 |-------|--------------------------|-------------------------|-------------------------|-------------------------|
@@ -48,24 +71,6 @@ Which gives these values when correclty base64 encoded:
 | 64    | uEAAAAAA                 | ukAAAAAA                | ukAAAACQ                | ukAAAAA=                |
 
 ### Patch List
-
-Depending on the specific property list you use for your target OS X installation, you can get any of the following patches that are backported from High Sierra, or new to the scene with Legacy OS X:
-
-| Function/Target | Patch Name | Comment |
-| --- | --- | --- |
-| _cpuid_set_generic_info | Remove wrmsr(0x8B) | None |
-| _cpuid_set_generic_info | Replace rdmsr(0x8B) with constant 186 | None |
-| _cpuid_set_generic_info | Set flag=1 | None |
-| _cpuid_set_generic_info | Disable check for Leaf 7 | None |
-| _cpuid_set_cpufamily | Force CPUFAMILY_INTEL_PENRYN | None |
-| _cpuid_set_cache_info | CPUID 0x8000001d instead of 4 | AMD uses a different Leaf than Intel. |
-| _cpuid_set_info | cpuid_cores_per_package set to const | Manually set because detection fails on AMD |
-| _commpage_populate | Remove rdmsr | None |
-| _i386_init/_commpage_populate/_pstate_trace | Remove rdmsr calls | Various places. |
-| _lapic_init | Remove version check panic | None |
-| _mtrr_update_action | Set PAT MSR to 00070106h | This patch is only for 10.10+ |
-| _panic_epilogue | Prevent instant reboot on panic | Allows for the CPU halt to be avoided |
-| String Replace | GenuineIntel to AuthenticAMD | None |
 
 ## macOS
 ### Useful boot-args
@@ -90,6 +95,39 @@ keepsyms=1 -lilubetaall -v -no_compat_check serial=1 debug=2 -no_panic_dialog -l
 ```
 
 ## VMware
+
+### Virtual USB CD-ROM and Hard Drive
+
+USB2:
+```
+ehci:#.present = "TRUE"
+ehci:#.deviceType = "disk"
+ehci:#.fileName = "pathToFile.vmdk"
+
+ehci:#.deviceType = "cdrom"
+ehci:#.fileName = "pathToFile.iso"
+ehci:#.readonly = "FALSE"
+```
+
+USB3:
+```
+ehci:#.present = "TRUE"
+ehci:#.deviceType = "disk"
+ehci:#.fileName = "pathToFile.vmdk"
+
+ehci:#.deviceType = "cdrom"
+ehci:#.fileName = "pathToFile.iso"
+ehci:#.readonly = "FALSE"
+```
+where # is a number ranging from 0 to 5 (or 7 if you configure the EHCI/USB_XHCI ports in the configuration file).
+
+```
+ehci:1.present = "TRUE"
+ehci:1.deviceType = "disk"
+ehci:1.fileName = "../usb.vmdk"
+ehci:1.readonly = "FALSE"
+
+```
 
 ### VMware VMX Comments
 VMware uses "#" as the comment character, but the VMware code can re-write the VMX file with all the comments
@@ -211,39 +249,7 @@ Find:    `48 8b 43 40 31 d2 a8 01 74 13`
 
 Replace: `c7 c2 01 00 00 00 a8 01 eb 13`
 
-### Virtual USB CD-ROM and Hard Drive
 
-
-USB2:
-```
-ehci:#.present = "TRUE"
-ehci:#.deviceType = "disk"
-ehci:#.fileName = "pathToFile.vmdk"
-
-ehci:#.deviceType = "cdrom"
-ehci:#.fileName = "pathToFile.iso"
-ehci:#.readonly = "FALSE"
-```
-
-USB3:
-```
-ehci:#.present = "TRUE"
-ehci:#.deviceType = "disk"
-ehci:#.fileName = "pathToFile.vmdk"
-
-ehci:#.deviceType = "cdrom"
-ehci:#.fileName = "pathToFile.iso"
-ehci:#.readonly = "FALSE"
-```
-where # is a number ranging from 0 to 5 (or 7 if you configure the EHCI/USB_XHCI ports in the configuration file).
-
-```
-ehci:1.present = "TRUE"
-ehci:1.deviceType = "disk"
-ehci:1.fileName = "../usb.vmdk"
-ehci:1.readonly = "FALSE"
-
-```
 
 ## Random Stuff
 
