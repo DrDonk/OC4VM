@@ -27,13 +27,8 @@ featMask.vm.cpuid.RDRAND = "Min:1"        # Check RDRAND support in CPU (mix of 
 hypervisor.cpuid.v0 = "TRUE"              # VMM bit is set
 
 __CPU Cores/Sockets__ = ""
-{% if AMD == '1' -%}
-cpuid.coresPerSocket = "{{CORES}}"
-numvcpus = "{{CORES}}"
-{%- else -%}
 cpuid.coresPerSocket = "2"
 numvcpus = "2"
-{%- endif %}
 
 __Hidden_USB_BOOT_Device__ = ""
 usb_uhci:0.deviceType = "cdrom-image"

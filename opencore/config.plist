@@ -218,19 +218,7 @@
 				<key>MinKernel</key>
 				<string>17.0.0</string>
 				<key>Replace</key>
-				{%- if CORES == '2' %}
 				<data>uAIAAAAA</data>
-				{%- elif CORES == '4' %}
-				<data>uAQAAAAA</data>
-				{%- elif CORES == '8' %}
-				<data>uAgAAAAA</data>
-				{%- elif CORES == '16' %}
-				<data>uBAAAAAA</data>
-				{%- elif CORES == '32' %}
-				<data>uCAAAAAA</data>
-				{%- else %}
-				<data>uAAAAAAA</data>
-				{% endif %}
 				<key>ReplaceMask</key>
 				<data>//////8A</data>
 				<key>Skip</key>
@@ -260,19 +248,7 @@
 				<key>MinKernel</key>
 				<string>19.0.0</string>
 				<key>Replace</key>
-				{%- if CORES == '2' %}
 				<data>ugIAAAAA</data>
-				{%- elif CORES == '4' %}
-				<data>ugQAAAAA</data>
-				{%- elif CORES == '8' %}
-				<data>uggAAAAA</data>
-				{%- elif CORES == '16' %}
-				<data>uhAAAAAA</data>
-				{%- elif CORES == '32' %}
-				<data>uiAAAAAA</data>
-				{%- else %}
-				<data>ugAAAAAA</data>
-				{% endif %}
 				<key>ReplaceMask</key>
 				<data>//////8A</data>
 				<key>Skip</key>
@@ -302,19 +278,7 @@
 				<key>MinKernel</key>
 				<string>21.0.0</string>
 				<key>Replace</key>
-				{%- if CORES == '2' %}
 				<data>ugIAAACQ</data>
-				{%- elif CORES == '4' %}
-				<data>ugQAAACQ</data>
-				{%- elif CORES == '8' %}
-				<data>uggAAACQ</data>
-				{%- elif CORES == '16' %}
-				<data>uhAAAACQ</data>
-				{%- elif CORES == '32' %}
-				<data>uiAAAACQ</data>
-				{%- else %}
-				<data>ugAAAACQ</data>
-				{% endif %}
 				<key>ReplaceMask</key>
 				<data></data>
 				<key>Skip</key>
@@ -344,19 +308,7 @@
 				<key>MinKernel</key>
 				<string>22.4.0</string>
 				<key>Replace</key>
-				{%- if CORES == '2' %}
 				<data>ugIAAAA=</data>
-				{%- elif CORES == '4' %}
-				<data>ugQAAAA=</data>
-				{%- elif CORES == '8' %}
-				<data>uggAAAA=</data>
-				{%- elif CORES == '16' %}
-				<data>uhAAAAA=</data>
-				{%- elif CORES == '32' %}
-				<data>uiAAAAA=</data>
-				{%- else %}
-				<data>ugAAAAA=</data>
-				{% endif %}
 				<key>ReplaceMask</key>
 				<data>//////8=</data>
 				<key>Skip</key>
