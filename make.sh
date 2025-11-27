@@ -188,7 +188,7 @@ do
     cp -v ./vmware/macos.plist ./build/vmware/$VARIANT 2>&1 >/dev/null
     cp -v ./vmware/macos.vmdk ./build/vmware/$VARIANT 2>&1 >/dev/null
     cp -v ./vmware/macos.nvram ./build/vmware/$VARIANT 2>&1 >/dev/null
-    cp -v ./vmware/opencore.vmdk ./build/vmware/$VARIANT 2>&1 >/dev/null
+    # cp -v ./vmware/opencore.vmdk ./build/vmware/$VARIANT 2>&1 >/dev/null
     cp -v ./build/disks/$VARIANT/opencore.iso ./build/vmware/$VARIANT
 
     if [[ $VARIANT == 'amd' ]]; then
@@ -200,7 +200,6 @@ do
     ./utilities/minijinja-cli \
         --format=toml \
         -D VERSION=$VERSION \
-        -D VARIANT=${VARIANT:u} \
         -D COMMIT=$COMMIT \
         -D DESCRIPTION="macOS ${VARIANT:u}" \
         -D AMD=$AMD \
