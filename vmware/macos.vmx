@@ -1,22 +1,27 @@
 # OC4VM VERSION
 # {{VERSION}}
-# {{VARIANT}}
 # {{COMMIT}}
 # SPDX-FileCopyrightText: © 2023-25 David Parsons
 # SPDX-License-Identifier: MIT
 .encoding = "UTF-8"
 
 __OC4VM_GuestInfo__ = ""
-guestinfo.oc4vm.variant = "{{VARIANT}}"
 guestinfo.oc4vm.version = "{{VERSION}}"
 guestinfo.oc4vm.revision = "{{COMMIT}}"
 
-__CPU_Sanity_Checks__ = ""
+__macOS_Settings__ = ""
+guestOS = "darwin24-64"                   # Set macOS guest version
+smc.present = "FALSE"                     # SMC is emulated in OpenCore
+system-id.enable = "TRUE"                 # Pass system UUID into guest
+
+__CPU_Settings__ = ""7
+cpuid.coresPerSocket = "2"
+numvcpus = "2"
 {% if AMD == '1' -%}
 featMask.vm.cpuid.AMD = "Min:1"           # Check CPU as OC4VM has Intel and AMD 
 featMask.vm.cpuid.FAMILY = "Val:6"        # Haswell-S (Desktop): Family 6, Model 60 (3C), Stepping 3
-featMask.vm.cpuid.MODEL = "Val:60"        #
-featMask.vm.cpuid.STEPPING = "Val:3"      # 
+featMask.vm.cpuid.MODEL = "Val:60"        # Needed to present correct CPU topology
+featMask.vm.cpuid.STEPPING = "Val:3"      # to the macOS guest
 {%- else -%}
 featMask.vm.cpuid.INTEL = "Min:1"         # Check CPU as OC4VM has Intel and AMD variants
 {%- endif %}
@@ -25,17 +30,16 @@ featMask.vm.cpuid.AVX2 = "Min:1"          # Check AVX 2.0 support in CPU (Haswel
 featMask.vm.cpuid.F16C = "Min:1"          # Check F16C support in CPU (mix of CPUs)
 featMask.vm.cpuid.RDRAND = "Min:1"        # Check RDRAND support in CPU (mix of CPUs)
 hypervisor.cpuid.v0 = "TRUE"              # VMM bit is set
-
-__CPU Cores/Sockets__ = ""
-cpuid.coresPerSocket = "2"
-numvcpus = "2"
+vhv.enable = "FALSE"                      # Disable nested virtualisation
+vpmc.enable = "FALSE"                     # Disable virtual performance counters
+vvtd.enable = "FALSE"                     # Disbale virtual VT-D
 
 __Hidden_USB_BOOT_Device__ = ""
-usb_uhci:0.deviceType = "cdrom-image"
-usb_uhci:0.fileName = "opencore.iso"
+usb_xhci:0.deviceType = "cdrom-image"
+usb_xhci:0.fileName = "opencore.iso"
 usb_xhci:0.mode = "independent-persistent"
-usb_uhci:0.present = "TRUE"
-usb_uhci:0.readonly = "TRUE"
+usb_xhci:0.present = "TRUE"
+usb_xhci:0.readonly = "TRUE"
 
 __Serial_Port_Settings__ = ""
 answer.msg.serial.file.open = "Replace"
@@ -45,6 +49,17 @@ serial0.present = "FALSE"
 serial0.startConnected = "FALSE"
 serial0.tryNoRxLoss = "FALSE"
 serial0.yieldOnMsrRead = "TRUE"
+
+__UEFI_Settings__ = "Remove secure boot"
+uefi.allowAuthBypass = "TRUE"
+uefi.secureBoot.available = "FALSE"
+uefi.secureBoot.enabled = "FALSE"
+uefi.secureBoot.dbDefault.present = "FALSE"
+uefi.secureBoot.dbrDefault.present = "FALSE"
+uefi.secureBoot.dbtDefault.present = "FALSE"
+uefi.secureBoot.dbxDefault.present = "FALSE"
+uefi.secureBoot.KEKDefault.present = "FALSE"
+uefi.secureBoot.PKDefault.present = "FALSE"
 
 __VMware_Build__ = ""
 vmx.buildType = "release"                # VMware build release/debug/stats
@@ -64,7 +79,6 @@ extendedConfigFile = "macos.vmxf"
 firmware = "efi"
 floppy0.present = "FALSE"
 floppy0.startConnected = "FALSE"
-guestOS = "darwin24-64"
 gui.fitGuestUsingNativeDisplayResolution = "FALSE"
 hpet0.present = "TRUE"
 ich7m.present = "TRUE"
@@ -97,23 +111,12 @@ sata0:1.fileName = "auto detect"
 sata0:1.present = "TRUE"
 sata0:1.startConnected = "FALSE"
 smbios.restrictSerialCharset = "TRUE"
-smc.present = "FALSE"                     # SMC is emulated in OpenCore
 sound.autoDetect = "TRUE"
 sound.fileName = "-1"
 sound.present = "TRUE"
 sound.virtualDev = "hdaudio"
-system-id.enable = "TRUE"
 tools.syncTime = "TRUE"
 tools.upgrade.policy = "upgradeAtPowerCycle"
-uefi.allowAuthBypass = "TRUE"
-uefi.secureBoot.available = "FALSE"
-uefi.secureBoot.enabled = "FALSE"
-uefi.secureBoot.dbDefault.present = "FALSE"
-uefi.secureBoot.dbrDefault.present = "FALSE"
-uefi.secureBoot.dbtDefault.present = "FALSE"
-uefi.secureBoot.dbxDefault.present = "FALSE"
-uefi.secureBoot.KEKDefault.present = "FALSE"
-uefi.secureBoot.PKDefault.present = "FALSE"
 ulm.disableMitigations = "TRUE"
 usb_xhci.present = "TRUE"
 usb.present = "TRUE"
@@ -121,8 +124,5 @@ usb.vbluetooth.startConnected = "FALSE"
 virtualHW.productCompatibility = "hosted"
 virtualHW.version = "22"
 vmci0.present = "TRUE"
-vhv.enable = "FALSE"
-vpmc.enable = "FALSE"
-vvtd.enable = "FALSE"
 
 __VMware_added_settings__ = ""
