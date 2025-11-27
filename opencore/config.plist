@@ -873,8 +873,7 @@
 				<integer>0</integer>
 			</dict>
 {%- endif %}
-{%- if DEBUG == '1' %}
-			<dict>
+            <dict>
 				<key>Arch</key>
 				<string>Any</string>
 				<key>Base</key>
@@ -904,6 +903,7 @@
 				<key>Skip</key>
 				<integer>0</integer>
 			</dict>
+{%- if DEBUG == '1' %}
 			<dict>
 				<key>Arch</key>
 				<string>x86_64</string>
