@@ -39,9 +39,9 @@ if [[ ! -x "$VMXTOOL_PATH" ]]; then
     exit 1
 fi
 
-VMX_FILE="$1"
-if [[ ! -f "$VMX_PATH" ]]; then
-    echo "Error: VMX file $VMXPATH not found" >&2
+VMXFILE="$1"
+if [[ ! -f "$VMXPATH" ]]; then
+    echo "Error: VMX file $VMXFILE not found" >&2
     exit 1
 fi
 
@@ -102,9 +102,9 @@ echo "efi.nvram.var.ROM = \"$rom\""
 echo ""
 echo "Running vmxtool to update file..."
 
-"$VMXTOOL_PATH" set "$VMX_FILE" __Apple_Model__ = "iMac 2019"
-"$VMXTOOL_PATH" set "$VMX_FILE" board-id = "Mac-63001698E7A34814"
-"$VMXTOOL_PATH" set "$VMX_FILE" hw.model = "iMac19,2"
-"$VMXTOOL_PATH" set "$VMX_FILE" serialNumber = "$serial"
-"$VMXTOOL_PATH" set "$VMX_FILE" efi.nvram.var.MLB = "$mlb"
-"$VMXTOOL_PATH" set "$VMX_FILE" efi.nvram.var.ROM = "$rom"
+"$VMXTOOL_PATH" set "$VMXFILE" __Apple_Model__="iMac 2019"
+"$VMXTOOL_PATH" set "$VMXFILE" board-id="Mac-63001698E7A34814"
+"$VMXTOOL_PATH" set "$VMXFILE" hw.model="iMac19,2"
+"$VMXTOOL_PATH" set "$VMXFILE" serialNumber="$serial"
+"$VMXTOOL_PATH" set "$VMXFILE" efi.nvram.var.MLB="$mlb"
+"$VMXTOOL_PATH" set "$VMXFILE" efi.nvram.var.ROM="$rom"
