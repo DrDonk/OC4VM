@@ -99,8 +99,6 @@ mkdir -p ./build/tools/host/macos 2>&1 >/dev/null
 mkdir -p ./build/tools/host/windows 2>&1 >/dev/null
 
 # Build guest tools
-run_jinja ./tools/guest/amdcpu.sh ./build/tools/guest/amdcpu.sh
-run_jinja ./tools/guest/bootargs.sh ./build/tools/guest/bootargs.sh
 run_jinja ./tools/guest/sysinfo ./build/tools/guest/sysinfo
 cp -v ./tools/guest/macserial ./build/tools/guest/macserial
 cp -v ./tools/guest/cpuid ./build/tools/guest/cpuid
