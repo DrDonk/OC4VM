@@ -724,23 +724,23 @@
             <key>AdviseFeatures</key>
             <false/>
             <key>MLB</key>
-            <string>F5K105501CDK3F7A8</string>
+            <string></string>
             <key>MaxBIOSVersion</key>
             <false/>
             <key>ProcessorType</key>
             <integer>0</integer>
             <key>ROM</key>
-            <string>0ED6AE9B4774</string>
+            <string></string>
             <key>SpoofVendor</key>
             <true/>
             <key>SystemMemoryStatus</key>
             <string>Auto</string>
             <key>SystemProductName</key>
-            <string>VMware20,1</string>
+            <string></string>
             <key>SystemSerialNumber</key>
-            <string>F5KF6PZ9P7QM</string>
+            <string></string>
             <key>SystemUUID</key>
-            <string>5BA4C550-5437-4998-9C6D-9DAD1589758F</string>
+            <string></string>
         </dict>
         <key>UpdateDataHub</key>
         <false/>
