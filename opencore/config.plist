@@ -178,10 +178,10 @@
 		<array/>
 		<key>Emulate</key>
 		<dict>
-			<key>Cpuid1Data</key>
-			<data></data>
+		    <key>Cpuid1Data</key>
+			<data>wwYDAAAAAAAAAAAAAAAAAA==</data>
 			<key>Cpuid1Mask</key>
-			<data></data>
+			<data>////AAAAAAAAAAAAAAAAAA==</data>
 			<key>DummyPowerManagement</key>
 			<true/>
 			<key>MaxKernel</key>
