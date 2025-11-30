@@ -255,11 +255,11 @@ Replace: `c7 c2 01 00 00 00 a8 01 eb 13`
 
 Encode a base64 encoded binary:
 
-`print 0xBA00000000 | xxd -r | base64`
+`printf "\xBA\x00\x00\x00\x00" | xxd -r | base64`
 
 Decode a base64 encoded binary:
 
-`print AAAf/w== | base64 -D | xxd`
+`printf AAAf/w== | base64 -D | xxd`
 
 Examples from kernel patching section of config.plist:
 
@@ -269,3 +269,23 @@ Mask:        //3/AAA= -> ff fdff 0000 - 1111 1111 1111 1101 1111 1111 0000 0000 
 Replace:     uggAAAA= -> ba 0800 0000 - 1011 1010 0000 0000 0000 0000 0000 0000 0000 0000
 ReplaceMask: //////8= -> ff ffff ffff - 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111
 ```
+
+
+printf "\xC3\x06\x03\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00" | xxd
+00000000: c306 0300 0000 0000 0000 0000 0000 0000  ................
+printf "\xC3\x06\x03\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00" | base64
+wwYDAAAAAAAAAAAAAAAAAA==
+printf wwYDAAAAAAAAAAAAAAAAAA== | base64 -D | xxd
+00000000: c306 0300 0000 0000 0000 0000 0000 0000  ................
+
+printf "\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00" | xxd
+00000000: ffff ff00 0000 0000 0000 0000 0000 0000  ................
+printf "\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00" | base64
+////AAAAAAAAAAAAAAAAAA==
+printf ////AAAAAAAAAAAAAAAAAA== | base64 -D | xxd
+00000000: ffff ff00 0000 0000 0000 0000 0000 0000  ................
+
+			<key>Cpuid1Data</key>
+			<data>wwYDAAAAAAAAAAAAAAAAAA==</data>
+			<key>Cpuid1Mask</key>
+			<data>////AAAAAAAAAAAAAAAAAA==</data>
