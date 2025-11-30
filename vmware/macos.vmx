@@ -17,11 +17,9 @@ system-id.enable = "TRUE"                 # Pass system UUID into guest
 __CPU_Settings__ = ""7
 cpuid.coresPerSocket = "2"
 numvcpus = "2"
+numa.autosize.once = "FALSE"              # Force NUMA node sizing at each boot
 {% if AMD == '1' -%}
-featMask.vm.cpuid.AMD = "Min:1"           # Check CPU as OC4VM has Intel and AMD 
-featMask.vm.cpuid.FAMILY = "Val:6"        # Haswell-S (Desktop): Family 6, Model 60 (3C), Stepping 3
-featMask.vm.cpuid.MODEL = "Val:60"        # Needed to present correct CPU topology
-featMask.vm.cpuid.STEPPING = "Val:3"      # to the macOS guest
+featMask.vm.cpuid.AMD = "Min:1"           # Check CPU as OC4VM has Intel and AMD variants
 {%- else -%}
 featMask.vm.cpuid.INTEL = "Min:1"         # Check CPU as OC4VM has Intel and AMD variants
 {%- endif %}
