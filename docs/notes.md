@@ -3,7 +3,17 @@
 These are my random notes whilst I was working on OC4VM. They may prove useful for other people.
 
 ## 1.0 Opencore
-### 1.1 Patch List
+
+### 1.1 Core Count for AMD CPUs
+
+Cores for AMD CPUs can now be set in VMware using the UI in the same way as for Intel CPUs.
+
+#### 1.1.1 Current Method
+The setting of the number of cores for an AMD processor needs to carefully managed as AMD CPUs
+use different methods those of an Intel CPU. To allow VMware to boot macOS on an AMD CPU OC4VM
+uses OpenCore capabilities to emulate an Intel CPU when using an AMD CPU.
+
+### 1.1.2 Patch List
 List of AMD patches in config.plist and their current status in OC4VM
 
 | Function/Target                             | Patch Name                            | Comment                                     |
@@ -21,19 +31,41 @@ List of AMD patches in config.plist and their current status in OC4VM
 | _lapic_init                                 | Remove version check panic            | Not used                                    |
 | _mtrr_update_action                         | Set PAT MSR to 00070106h              | Not used                                    |
 
-### 1.2 Core Count for AMD Patches
-
-Cores for AMD CPUs can now be set in VMware using the UI in the same way as for Intel CPUs.
-
-#### 1.2.1 Current Method
-The setting of the number of cores for an AMD processor needs to carefully managed as AMD CPUs
-use different methods those of an Intel CPU. To allow VMware to boot macOS on an AMD CPU OC4VM
-uses OpenCore capabilities to emulate an Intel CPU when using an AMD CPU.
-
-
-
-
 #### 1.2.2 Details
+
+OC changes
+
+ProvideCurrentInfo MSR 0x35
+Kernel->Emulate section Cpuid1Data and Cpuid1Mask settings mapped to Haswell CPU 
+(Alternative using VMX file but possible will not work on Windows if Hyper-V active)
+GeunuineIntel AuthenticAMD
+CPUID leaf 0x4 needs to be replaced by 0x8000001d for cache Details
+Disable a check for CPUID 0x7 leaf
+
+```
+#                                     Bit Position
+#                        3           2            1           0
+#                       1098:7654:3210:9876:5432:1098:7654:3210
+# EAX/ECX Registers     ---------------------------------------
+
+# Set CPU vendor to Intel (GenuineIntel)
+#cpuid.0.eax.amd =     "0000:0000:0000:0000:0000:0000:0000:1101"
+#cpuid.0.ebx.amd =     "0111:0101:0110:1110:0110:0101:0100:0111"
+#cpuid.0.ecx.amd =     "0110:1100:0110:0101:0111:0100:0110:1110"
+#cpuid.0.edx.amd =     "0100:1001:0110:0101:0110:1110:0110:1001"
+
+Intel Haswell identification
+cpuid.brandstring = "Intel® Core™ i5-9600K CPU @ 3.70GHz"
+
+Haswell-S (Desktop): Family 6, Model 60 (3C), Stepping 3
+cpuid.1.eax.amd = "0000:0000:0000:0011:0000:0110:1100:0011"  # 000306C3
+
+or
+
+featMask.vm.cpuid.FAMILY = "Val:6"
+featMask.vm.cpuid.MODEL = "Val:60"
+featMask.vm.cpuid.STEPPING = "Val:3"
+```
 
 #### 1.2.3 Deprecated Method
 *NOTE: These are no longer used but kept for reference.*
