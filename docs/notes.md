@@ -3,6 +3,7 @@
 These are my random notes whilst I was working on OC4VM. They may prove useful for other people.
 
 ## Opencore
+### Patch List
 List of AMD patches in config.plist and their current status in OC4VM
 
 | Function/Target                             | Patch Name                            | Comment                                     |
@@ -22,7 +23,7 @@ List of AMD patches in config.plist and their current status in OC4VM
 
 ### Cores for AMD Patches
 
-Cores foer AMD CPUs can now be set in VMware usiung the UI in the same way as for Intel CPUs.
+Cores for AMD CPUs can now be set in VMware usiung the UI in the same way as for Intel CPUs.
 However using multiples of 2 is the best way to use AMD systems as 3/6/12 cores causes macOS kenrel panics.
 
 *NOTE: These are no longer used but kept for reference.*
@@ -69,8 +70,6 @@ Which gives these values when correctly base64 encoded:
 | 28    | uBwAAAAA                 | uhwAAAAA                | uhwAAACQ                | uhwAAAA=                |
 | 32    | uCAAAAAA                 | uiAAAAAA                | uiAAAACQ                | uiAAAAA=                |
 | 64    | uEAAAAAA                 | ukAAAAAA                | ukAAAACQ                | ukAAAAA=                |
-
-### Patch List
 
 ## macOS
 ### Useful boot-args
