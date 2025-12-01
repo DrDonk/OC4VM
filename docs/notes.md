@@ -2,35 +2,40 @@
 
 These are my random notes whilst I was working on OC4VM. They may prove useful for other people.
 
-## Opencore
-### Patch List
+## 1.0 Opencore
+### 1.1 Patch List
 List of AMD patches in config.plist and their current status in OC4VM
 
 | Function/Target                             | Patch Name                            | Comment                                     |
 | ------------------------------------------- | --------------------------------------| ------------------------------------------- |
 | _cpuid_set_info                             | cpuid_cores_per_package set to const  | Not used                                    |
-| _cpuid_set_info                             | GenuineIntel to AuthenticAMD          | None                                        |
-| _cpuid_set_generic_info                     | Remove wrmsr(0x8B)                    | Probably not needed                         |
-| _cpuid_set_generic_info                     | Replace rdmsr(0x8B) with constant 186 | Probably not needed                         |
-| _cpuid_set_generic_info                     | Set flag=1                            | Probably not needed                         |
-| _cpuid_set_generic_info                     | Disable check for Leaf 7              | None                                        |
+| _cpuid_set_info                             | GenuineIntel to AuthenticAMD          | Required                                    |
+| _cpuid_set_generic_info                     | Remove wrmsr(0x8B)                    | Not used                                    |
+| _cpuid_set_generic_info                     | Replace rdmsr(0x8B) with constant 186 | Not used                                    |
+| _cpuid_set_generic_info                     | Set flag=1                            | Not used                                    |
+| _cpuid_set_generic_info                     | Disable check for Leaf 7              | Required                                    |
 | _cpuid_set_cpufamily                        | Force CPUFAMILY_INTEL_PENRYN          | Not used                                    |
-| _cpuid_set_cache_info                       | CPUID 0x8000001d instead of 4         | Swap leaves from Intel to AMD specific one  |
-| _commpage_populate                          | Remove rdmsr                          | None                                        |
-| _i386_init/_commpage_populate/_pstate_trace | Remove rdmsr calls                    | Probably not needed                         |
-| _lapic_init                                 | Remove version check panic            | None                                        |
-| _mtrr_update_action                         | Set PAT MSR to 00070106h              | Probably not needed                         |
+| _cpuid_set_cache_info                       | CPUID 0x8000001d instead of 4         | Required                                    |
+| _commpage_populate                          | Remove rdmsr                          | Not used                                    |
+| _i386_init/_commpage_populate/_pstate_trace | Remove rdmsr calls                    | Not used                                    |
+| _lapic_init                                 | Remove version check panic            | Not used                                    |
+| _mtrr_update_action                         | Set PAT MSR to 00070106h              | Not used                                    |
 
-### Cores for AMD Patches
+### 1.2 Core Count for AMD Patches
 
-Cores for AMD CPUs can now be set in VMware usiung the UI in the same way as for Intel CPUs.
-However using multiples of 2 is the best way to use AMD systems as 3/6/12 cores causes macOS kenrel panics.
+#### 1.2.1 Current Method
+The setting of the number of cores for an AMD processor needs to carefully managed as AMD CPUs
+use different methods those of an Intel CPU. To allow VMware to boot macOS on an AMD CPU
 
+Cores for AMD CPUs can now be set in VMware using the UI in the same way as for Intel CPUs.
+
+#### 1.2.2 Deprecated Method
 *NOTE: These are no longer used but kept for reference.*
 
 From https://github.com/AMD-OSX/AMD_Vanilla/blob/master/README.md
 
-> The Core Count patch needs to be modified to boot your system. Find the four `algrey - Force cpuid_cores_per_package` patches and alter the `Replace` value only.
+> The Core Count patch needs to be modified to boot your system. 
+> Find the four `algrey - Force cpuid_cores_per_package` patches and alter the `Replace` value only.
 >
 > |   macOS Version      | Replace Value | New Value                   |
 > |----------------------|---------------|-----------------------------|
@@ -39,7 +44,8 @@ From https://github.com/AMD-OSX/AMD_Vanilla/blob/master/README.md
 > | 12.x, 13.0 to 13.2.1 | BA000000 0090 | BA < Core Count > 0000 0090 |
 > | 13.3 +               | BA000000 00   | BA < Core Count > 0000 00   |
 >
-> From the table above substitute `< Core Count >` with the hexadecimal value matching your physical core count. Do not use your CPU's thread count. 
+> From the table above substitute `< Core Count >` with the hexadecimal 
+> value matching your physical core count. Do not use your CPU's thread count. 
 > See the table below for the values matching your CPU core count.
 >
 >
@@ -53,82 +59,66 @@ From https://github.com/AMD-OSX/AMD_Vanilla/blob/master/README.md
 > |   24 Core  |     `18`    |
 > |   32 Core  |     `20`    |
 >
-> So for example, a user with a 6-core processor should use these `Replace` values: `B8 06 0000 0000` / `BA 06 0000 0000` / `BA 06 0000 0090` / `BA 06 0000 00`
+> So for example, a user with a 6-core processor should use these
+>`Replace` values: `B8 06 0000 0000` / `BA 06 0000 0000` / `BA 06 0000 0090` / `BA 06 0000 00`
 
 Which gives these values when correctly base64 encoded:
 
-| Cores | 10.13/10.14              | 10.15/11.0              | 12.0/13.0               | 13.3+                   |
-|-------|--------------------------|-------------------------|-------------------------|-------------------------|
-| 0     | uAAAAAAA                 | ugAAAAAA                | ugAAAACQ                | ugAAAAA=                |
-| 1     | uAEAAAAA                 | ugEAAAAA                | ugEAAACQ                | ugEAAAA=                |
-| 2     | uAIAAAAA                 | ugIAAAAA                | ugIAAACQ                | ugIAAAA=                |
-| 4     | uAQAAAAA                 | ugQAAAAA                | ugQAAACQ                | ugQAAAA=                |
-| 8     | uAgAAAAA                 | uggAAAAA                | uggAAACQ                | uggAAAA=                |
-| 12    | uAwAAAAA                 | ugwAAAAA                | ugwAAACQ                | ugwAAAA=                |
-| 16    | uBAAAAAA                 | uhAAAAAA                | uhAAAACQ                | uhAAAAA=                |
-| 24    | uBgAAAAA                 | uhgAAAAA                | uhgAAACQ                | uhgAAAA=                |
-| 28    | uBwAAAAA                 | uhwAAAAA                | uhwAAACQ                | uhwAAAA=                |
-| 32    | uCAAAAAA                 | uiAAAAAA                | uiAAAACQ                | uiAAAAA=                |
-| 64    | uEAAAAAA                 | ukAAAAAA                | ukAAAACQ                | ukAAAAA=                |
+| Cores | 10.13/10.14 | 10.15/11.0  | 12.0/13.0   | 13.3+       |
+|-------|-------------|-------------|-------------|-------------|
+| 0     | uAAAAAAA    | ugAAAAAA    | ugAAAACQ    | ugAAAAA=    |
+| 1     | uAEAAAAA    | ugEAAAAA    | ugEAAACQ    | ugEAAAA=    |
+| 2     | uAIAAAAA    | ugIAAAAA    | ugIAAACQ    | ugIAAAA=    |
+| 4     | uAQAAAAA    | ugQAAAAA    | ugQAAACQ    | ugQAAAA=    |
+| 8     | uAgAAAAA    | uggAAAAA    | uggAAACQ    | uggAAAA=    |
+| 12    | uAwAAAAA    | ugwAAAAA    | ugwAAACQ    | ugwAAAA=    |
+| 16    | uBAAAAAA    | uhAAAAAA    | uhAAAACQ    | uhAAAAA=    |
+| 24    | uBgAAAAA    | uhgAAAAA    | uhgAAACQ    | uhgAAAA=    |
+| 28    | uBwAAAAA    | uhwAAAAA    | uhwAAACQ    | uhwAAAA=    |
+| 32    | uCAAAAAA    | uiAAAAAA    | uiAAAACQ    | uiAAAAA=    |
+| 64    | uEAAAAAA    | ukAAAAAA    | ukAAAACQ    | ukAAAAA=    |
 
-## macOS
-### Useful boot-args
+## 2.0 macOS
+### 2.1 Useful boot-args
 ```
 [default]
-keepsyms=1 -lilubetaall -no_compat_check -no_panic_dialog
-
-[stealth]
-keepsyms=1 -lilubetaall -no_compat_check -no_panic_dialog
+keepsyms=1 -lilubetaall -no_compat_check -no_panic_dialog cwad
 
 [verbose]
-keepsyms=1 -lilubetaall -no_compat_check -no_panic_dialog -v
+keepsyms=1 -lilubetaall -v -no_compat_check -no_panic_dialog -liludbgall cwad
 
 [trace]
-keepsyms=1 -lilubetaall -no_compat_check -no_panic_dialog -v serial=1
+keepsyms=1 -lilubetaall -v -no_compat_check -no_panic_dialog -liludbgall serial=1 debug=2 -topo -cpuid cwad
 
 [debug]
-keepsyms=1 -lilubetaall -no_compat_check -no_panic_dialog -v serial=1 debug=2
+keepsyms=1 -lilubetaall -v -no_compat_check -no_panic_dialog -liludbgall serial=1 debug=2 -topo -cpuid cwad
 
 [kdk]
-keepsyms=1 -lilubetaall -v -no_compat_check serial=1 debug=2 -no_panic_dialog -liludbgall -topo -cpuid kcsuffix=development
+keepsyms=1 -lilubetaall -v -no_compat_check -no_panic_dialog -liludbgall serial=1 debug=2 -topo -cpuid cwad kcsuffix=development
 ```
 
-## VMware
+## 3.0 VMware
 
-### Virtual USB CD-ROM and Hard Drive
+### 3.1 Virtual USB CD-ROM and Hard Drive
 
-USB2:
-```
-ehci:#.present = "TRUE"
-ehci:#.deviceType = "disk"
-ehci:#.fileName = "pathToFile.vmdk"
+VMware has poorly documented virtual USB CD-ROM and drive capabilities. These can be either USB 2 or 3
+depending on the settings used in the VMX file. These virtual devices cannot be added using the VMware
+user interface.
 
-ehci:#.deviceType = "cdrom"
-ehci:#.fileName = "pathToFile.iso"
-ehci:#.readonly = "FALSE"
-```
-
-USB3:
-```
-ehci:#.present = "TRUE"
-ehci:#.deviceType = "disk"
-ehci:#.fileName = "pathToFile.vmdk"
-
-ehci:#.deviceType = "cdrom"
-ehci:#.fileName = "pathToFile.iso"
-ehci:#.readonly = "FALSE"
-```
-where # is a number ranging from 0 to 5 (or 7 if you configure the EHCI/USB_XHCI ports in the configuration file).
+The general settings are:
 
 ```
-ehci:1.present = "TRUE"
-ehci:1.deviceType = "disk"
-ehci:1.fileName = "../usb.vmdk"
-ehci:1.readonly = "FALSE"
+<usb>:#.present = "TRUE"
+<usb>:#.deviceType = "disk" or "cdrom-image
+<usb>:#.fileName = "pathToFile.vmdk" or "pathToFile.iso"
+<usb>:#.readonly = "FALSE" or "TRUE"
 
+where <usb> is ehci for USB2 or usb_xhci for USB3
+where # is a number ranging from 0 to 5 (or 7 if you configure the USB ports in the configuration file).
 ```
+There are other options but those are for attaching real devices such as video camera.
 
-### VMware VMX Comments
+### 3.2 VMware VMX Comments
 VMware uses "#" as the comment character, but the VMware code can re-write the VMX file with all the comments
 aggregated at the top of the file. This means the positional comments are moved and the context is lost.
 
@@ -147,7 +137,7 @@ In addtion there are dummy section names using "__" as a prefix and suffix:
 
 `__Apple_Model__ = ""`
 
-### VMware Mac OS X & macOS table
+### 3.4 VMware Mac OS X & macOS table
 
 | macOS                 | Name          | guestOS             |  GOS   |
 |:----------------------|---------------|---------------------|--------|
@@ -172,7 +162,7 @@ In addtion there are dummy section names using "__" as a prefix and suffix:
 | macOS 15              | Sequoia       | darwin24-64         | 0x5066 |
 | macOS 26              | Tahoe         | darwin25-64         | 0x5067 |
 
-### VMware Socket Calculations
+### 3.5 VMware Socket Calculations
 
 | numvcpus | cpuid.coresPerSocket | sockets |
 |----------|----------------------|---------|
@@ -187,7 +177,19 @@ In addtion there are dummy section names using "__" as a prefix and suffix:
 | 8        | 4                    | 2       |
 | 8        | 1                    | 8       |
 
-### New guestOS table patch
+### 3.6 CPU Hacks
+
+Allow setting more cores than host supports:
+```
+numvcpus.overcommit = "TRUE"
+```
+
+Force NUMA node sizing at each boot:
+```
+numa.autosize.once = "FALSE"            
+```
+
+### 3.7 New guestOS table patch
 This patch allows all guest OS familes and types to be displayed on Windows and Linux. It's a simpler patch
 than my patcher in the Unlocker. It is not essential but used for testing the OC4VM code.
 
@@ -250,7 +252,12 @@ Replace: `c7 c2 01 00 00 00 a8 01 eb 13`
 
 
 
-## Random Stuff
+## 4.0 Random Stuff
+
+### 4.1 OpenCore DATA entries
+
+The config.plist contains entries that are labelled as DATA which 
+are base 64 encoded 
 
 Encode a base64 encoded binary:
 
@@ -269,7 +276,9 @@ Replace:     uggAAAA= -> ba 0800 0000 - 1011 1010 0000 0000 0000 0000 0000 0000 
 ReplaceMask: //////8= -> ff ffff ffff - 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111
 ```
 
+Example for kernel Emulate section Cpuid1Data and Cpuid1Mask settings:
 
+```
 printf "\xC3\x06\x03\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00" | xxd
 00000000: c306 0300 0000 0000 0000 0000 0000 0000  ................
 printf "\xC3\x06\x03\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00" | base64
@@ -283,8 +292,12 @@ printf "\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00" | base
 ////AAAAAAAAAAAAAAAAAA==
 printf ////AAAAAAAAAAAAAAAAAA== | base64 -D | xxd
 00000000: ffff ff00 0000 0000 0000 0000 0000 0000  ................
+```
+Which would require these base64 strings adding to config.plist:
 
-			<key>Cpuid1Data</key>
-			<data>wwYDAAAAAAAAAAAAAAAAAA==</data>
-			<key>Cpuid1Mask</key>
-			<data>////AAAAAAAAAAAAAAAAAA==</data>
+```
+<key>Cpuid1Data</key>
+<data>wwYDAAAAAAAAAAAAAAAAAA==</data>
+<key>Cpuid1Mask</key>
+<data>////AAAAAAAAAAAAAAAAAA==</data>
+```
