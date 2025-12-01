@@ -23,13 +23,19 @@ List of AMD patches in config.plist and their current status in OC4VM
 
 ### 1.2 Core Count for AMD Patches
 
-#### 1.2.1 Current Method
-The setting of the number of cores for an AMD processor needs to carefully managed as AMD CPUs
-use different methods those of an Intel CPU. To allow VMware to boot macOS on an AMD CPU
-
 Cores for AMD CPUs can now be set in VMware using the UI in the same way as for Intel CPUs.
 
-#### 1.2.2 Deprecated Method
+#### 1.2.1 Current Method
+The setting of the number of cores for an AMD processor needs to carefully managed as AMD CPUs
+use different methods those of an Intel CPU. To allow VMware to boot macOS on an AMD CPU OC4VM
+uses OpenCore capabilities to emulate an Intel CPU when using an AMD CPU.
+
+
+
+
+#### 1.2.2 Details
+
+#### 1.2.3 Deprecated Method
 *NOTE: These are no longer used but kept for reference.*
 
 From https://github.com/AMD-OSX/AMD_Vanilla/blob/master/README.md
