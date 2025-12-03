@@ -35,11 +35,87 @@ List of AMD patches in config.plist and their current status in OC4VM
 
 OC changes
 
-ProvideCurrentInfo MSR 0x35
-Kernel->Emulate section Cpuid1Data and Cpuid1Mask settings mapped to Haswell CPU 
-(Alternative using VMX file but possible will not work on Windows if Hyper-V active)
-GeunuineIntel AuthenticAMD
+AuthenticAMD -> GeunuineIntel
+```
+#                                     Bit Position
+#                        3           2            1           0
+#                       1098:7654:3210:9876:5432:1098:7654:3210
+# EAX/ECX Registers     ---------------------------------------
+
+# Set CPU vendor to Intel (GenuineIntel)
+cpuid.0.eax.amd      = "0000:0000:0000:0000:0000:0000:0000:1101"
+cpuid.0.ebx.amd      = "0111:0101:0110:1110:0110:0101:0100:0111"
+cpuid.0.ecx.amd      = "0110:1100:0110:0101:0111:0100:0110:1110"
+cpuid.0.edx.amd      = "0100:1001:0110:0101:0110:1110:0110:1001"
+```
+
+Kernel->Emulate section Cpuid1Data and Cpuid1Mask settings mapped to Haswell CPU.
+Alternative using VMX file but possible will not work on Windows hypervisor active.
+```
+#                                     Bit Position
+#                        3           2            1           0
+#                       1098:7654:3210:9876:5432:1098:7654:3210
+# EAX/ECX Registers     ---------------------------------------
+# Haswell-S (Desktop): Family 6, Model 60 (3C), Stepping 3
+cpuid.1.eax.amd      = "0000:0000:0000:0011:0000:0110:1100:0011"  # 000306C3
+
+or
+
+featMask.vm.cpuid.FAMILY = "Val:6"
+featMask.vm.cpuid.MODEL = "Val:60"
+featMask.vm.cpuid.STEPPING = "Val:3"
+
+Intel Haswell identification:
+cpuid.brandstring = "Intel® Core™ i5-9600K CPU @ 3.70GHz"
+
+```
+
 CPUID leaf 0x4 needs to be replaced by 0x8000001d for cache Details
+This would need to be configured on each host.
+```
+#                                     Bit Position
+#                        3           2            1           0
+#                       1098:7654:3210:9876:5432:1098:7654:3210
+# EAX/ECX Registers     ---------------------------------------
+# Possible leaf 4 override from actual host cpu:
+
+cpuid.8000001d.0.eax = "0000:0000:0000:0000:0100:0001:0010:0001"
+cpuid.8000001d.0.ebx = "0000:0001:1100:0000:0000:0000:0011:1111"
+cpuid.8000001d.0.ecx = "0000:0000:0000:0000:0000:0000:0011:1111"
+cpuid.8000001d.0.edx = "0000:0000:0000:0000:0000:0000:0000:0000"
+cpuid.8000001d.1.eax = "0000:0000:0000:0000:0100:0001:0010:0010"
+cpuid.8000001d.1.ebx = "0000:0000:1100:0000:0000:0000:0011:1111"
+cpuid.8000001d.1.ecx = "0000:0000:0000:0000:0000:0000:1111:1111"
+cpuid.8000001d.1.edx = "0000:0000:0000:0000:0000:0000:0000:0000"
+cpuid.8000001d.2.eax = "0000:0000:0000:0000:0100:0001:0100:0011"
+cpuid.8000001d.2.ebx = "0000:0001:1100:0000:0000:0000:0011:1111"
+cpuid.8000001d.2.ecx = "0000:0000:0000:0000:0000:0011:1111:1111"
+cpuid.8000001d.2.edx = "0000:0000:0000:0000:0000:0000:0000:0010"
+cpuid.8000001d.3.eax = "0000:0000:0000:0001:1100:0001:0110:0011"
+cpuid.8000001d.3.ebx = "0000:0011:1100:0000:0000:0000:0011:1111"
+cpuid.8000001d.3.ecx = "0000:0000:0000:0000:0000:1111:1111:1111"
+cpuid.8000001d.3.edx = "0000:0000:0000:0000:0000:0000:0000:0001"
+
+to:
+
+cpuid.4.0.eax        = "0000:0000:0000:0000:0100:0001:0010:0001"
+cpuid.4.0.ebx        = "0000:0001:1100:0000:0000:0000:0011:1111"
+cpuid.4.0.ecx        = "0000:0000:0000:0000:0000:0000:0011:1111"
+cpuid.4.0.edx        = "0000:0000:0000:0000:0000:0000:0000:0000"
+cpuid.4.1.eax        = "0000:0000:0000:0000:0100:0001:0010:0010"
+cpuid.4.1.ebx        = "0000:0000:1100:0000:0000:0000:0011:1111"
+cpuid.4.1.ecx        = "0000:0000:0000:0000:0000:0000:1111:1111"
+cpuid.4.1.edx        = "0000:0000:0000:0000:0000:0000:0000:0000"
+cpuid.4.2.eax        = "0000:0000:0000:0000:0100:0001:0100:0011"
+cpuid.4.2.ebx        = "0000:0001:1100:0000:0000:0000:0011:1111"
+cpuid.4.2.ecx        = "0000:0000:0000:0000:0000:0011:1111:1111"
+cpuid.4.2.edx        = "0000:0000:0000:0000:0000:0000:0000:0010"
+cpuid.4.3.eax        = "0000:0000:0000:0001:1100:0001:0110:0011"
+cpuid.4.3.ebx        = "0000:0011:1100:0000:0000:0000:0011:1111"
+cpuid.4.3.ecx        = "0000:0000:0000:0000:0000:1111:1111:1111"
+cpuid.4.3.edx        = "0000:0000:0000:0000:0000:0000:0000:0001"
+
+```
 Disable a check for CPUID 0x7 leaf
 
 ```
@@ -48,24 +124,12 @@ Disable a check for CPUID 0x7 leaf
 #                       1098:7654:3210:9876:5432:1098:7654:3210
 # EAX/ECX Registers     ---------------------------------------
 
-# Set CPU vendor to Intel (GenuineIntel)
-#cpuid.0.eax.amd =     "0000:0000:0000:0000:0000:0000:0000:1101"
-#cpuid.0.ebx.amd =     "0111:0101:0110:1110:0110:0101:0100:0111"
-#cpuid.0.ecx.amd =     "0110:1100:0110:0101:0111:0100:0110:1110"
-#cpuid.0.edx.amd =     "0100:1001:0110:0101:0110:1110:0110:1001"
-
-Intel Haswell identification
-cpuid.brandstring = "Intel® Core™ i5-9600K CPU @ 3.70GHz"
-
-Haswell-S (Desktop): Family 6, Model 60 (3C), Stepping 3
-cpuid.1.eax.amd = "0000:0000:0000:0011:0000:0110:1100:0011"  # 000306C3
-
-or
-
-featMask.vm.cpuid.FAMILY = "Val:6"
-featMask.vm.cpuid.MODEL = "Val:60"
-featMask.vm.cpuid.STEPPING = "Val:3"
 ```
+
+ProvideCurrentInfo MSR 0x35 on all CPUs.
+
+
+
 
 #### 1.2.3 Deprecated Method
 *NOTE: These are no longer used but kept for reference.*
