@@ -1,30 +1,22 @@
 # Spoofing Virtual Apple Mac Model
 
-Outline
-  1. Introduction - why do thia
-  2. Levels of spoofing - model +/- VMM
-  3. Recommended model - iMac
-  4. Models to avoid if VMM hidden
-  5. How to update new VMX file.
-
-If you want to make the VM look like a specific Mac model the settings can be configued in the
-VMware VMX file.
+If you want to make the VM look like a specific Mac model settings can be configured in the
+VMware VMX file to emulate a real Mac.
 
 *Note: iCloud and Apple AppStore can be problematic in Intel macOS VMs even with spoofing.*
 
-Currently the VMX file example is configured as a regular VMware virtual machine (VMware20,1) 
+The VMX template file is configured as a regular VMware virtual machine (VMware20,1) 
 which is supported in all recent versions of macOS.
 
-If you want to mimic a real Mac 2018 Mac mini (Macmini8,1) is recommended.
+If you want to mimic a real machine iMac 2019 (iMac19,1 or iMac19,2) is recommended.
 
-**It is important that you do not enable the commented out lines until after macOS has been installed as
-it can cause a failure during installation when the macOS installer thinks it is on a real Mac and
-tries to do firmware updates.**
+**It is important that you avoid the following Apple Mac models until after macOS has been installed as it can cause a failure during installation. This is because the macOS installer thinks it is on a
+real Mac and tries to do firmware updates.**
 
-T1 enabled Macs
+T1 enabled Macs:
 * 2016-2017 13″ & 15″ Macbook Pro
 
-T2 enabled Macs
+T2 enabled Macs:
 * 2019-2020 16″ MacBook Pro
 * 2018-2019 13″ & 15″ Macbook Pro
 * 2018-2020 MacBook Air
@@ -36,94 +28,107 @@ T2 enabled Macs
 There is a command line tool available which will generate the lines for the VMX file in tools/host:
 
 * regen.sh - Linux and macOS
-* regen.ps1 - Windows PowerSHell
-* regen.cmd- Windows batch file
-
-These utilities can generate the lines for the VMX file as discussed in the next section.
-
-The details on how to generate the lines for VMX file are shown here as you may want to alter the 
-details to better match your needs.
-
-The process to mimic a Mac mini 2018 is:
-
-1. Shutdown the VM
-2. Open the guest VMX file in a text editor
-3. Open a terminal/command window and change directory to the OC4VM tools folder
-4. Add a "_" character to the line:
+* regen.ps1 - Windows PowerShell
 
 ```
-# >>> Start Spoofing <<<
-board-id = "VMM-x86_64"
-hw.model = "VMware20,1"
-# >>> End Spoofing <<<
+Usage: regen.sh/regen.ps1 path_to_vmx_file
 ```
+The tool will show you the settings being set and write them to the specified VMX file.
 
-so it looks like this:
-
+Here is some example output:
 ```
-__Default_Model__ = "VMware20,1"
-_board-id = "VMM-x86_64"
+OC4VM regen
+-----------
+Regenerating Mac identifiers...
+Adding these settings to VMX file:
 
+__Apple_Model_Start__ = "iMac 2019"
+board-id = "Mac-63001698E7A34814"
+hw.model = "iMac19,2"
+serialNumber = "C02DR0SFJWDW"
+efi.nvram.var.MLB = "C020483004NKGQGJC"
+efi.nvram.var.ROM = "%48%F3%3E%B7%14%C9"
+__Apple_Model_End__ = "iMac 2019"
+
+Running vmxtool to update file...
 ```
-
-5. Remove the "_" character from the begining of any lines you want to change
-6. Run the version of macserial for you host OS using:
-
-```
-macserial -m Macmini8,1 -n 1
-```
-
-7. Use the first number for the serial number and the second number for MLB setting.
-
-```
-C07ZD06BJYVX | C079374014NKXPG1M
-```
-
-8. For the ROM power up the VM once and then use the VMs MAC address from the VMX file.
-
-As an example:
-
-```
-ethernet0.generatedAddress = "00:0C:29:AA:BB:CC"
-```
-
-remove the ":"s and add "%" every 2 characters:
-
-```
-efi.nvram.var.ROM = "%00%0C%29%AA%BB%CC"
-```
-
-9. Save the VMX file
-10. Run the VM and use System Profiler to check settings
-
-Example of a modified section in the VMX file:
-
-```
-__Default_Model__ = "VMware20,1"
-_board-id = "VMM-x86_64"
-
-__Apple_Model__ = "Mac mini 2018"
-board-id = "Mac-7BA5B2DFE22DDD8C"
-hw.model = "Macmini8,1"
-_hypervisor.cpuid.v0 = "FALSE"             # !!Not always reliable and can cause a panic!!
-serialNumber = "C07ZD06BJYVX"
-efi.nvram.var.MLB = "C079374014NKXPG1M"
-efi.nvram.var.ROM = "%00%0C%29%AA%BB%CC"
-```
-
 If you want to also hide the fact that macOS is running in a VM change this line:
 
 ```
-_hypervisor.cpuid.v0 = "FALSE"             # !!Not always relaible and can cause a panic!!
+hypervisor.cpuid.v0 = "TRUE"
 ```
-
 to
-
 ```
-hypervisor.cpuid.v0 = "FALSE"             # !!Not always relaible and can cause a panic!!
+hypervisor.cpuid.v0 = "FALSE"
 ```
+*Note that this is not always reliable in VMware Fusion and can cause macOS to kernel panic.*
 
-*Note that this is not always reliable and can cause macOS to kernel panic.*
+The sysinfo tool can show you the details of the changes inside the macOS guest.
+
+Settings from a default VM before regen has been used:
+```
+         Model: VMware20,1
+      Board ID: 440BX Desktop Reference Platform
+    FW Version: VMW201.00V.24866131.B64.2507211911
+ Hardware UUID: 977FB2EB-3CE3-5973-9C0A-F63172B36495
+
+ Serial Number: VMaXcEADBles
+WARN: Invalid symbol 'a' in serial!
+WARN: Invalid symbol 'c' in serial!
+WARN: Invalid symbol 'l' in serial!
+WARN: Invalid symbol 'e' in serial!
+WARN: Invalid symbol 's' in serial!
+WARN: Invalid week symbol 'c'!
+WARN: Decoded week -1 is out of valid range [1, 53]!
+       Country:  VMa - Unknown, please report!
+          Year:    X - 2018
+          Week:    c - -1
+          Line:  EAD - 1305 (copy 12)
+         Model: Bles - Unknown
+   SystemModel: Unknown, please report!
+         Valid: Unlikely
+
+     System ID: 564DF979-6BC1-2DA9-526F-A4B42E68942C
+           ROM: 564DF9796BC1
+           MLB: LalSb6S0LmiULA...
+WARN: Invalid MLB checksum!
+
+    Gq3489ugfi: E6ABE54622099326A2EC09D7D4C813AA88
+     Fyp98tpgj: 224869C683CE62A45250D7686EF90A9725
+    kbjfrfpoJU: 86CD846FF168DE2BCC7887A913DF1DB6B6
+  oycqAZloTNDm: 7E4C502DDD62FAE3AE8A88C84116C38266
+  abKPld1EcMni: E359A16C151FBBD57D0113BB6E065EB7D2
+
+Version 2.1.8. Use -h argument to see usage options.
+```
+After spoofing settings added to VMX file:
+```
+         Model: iMac19,2
+      Board ID: Mac-63001698E7A34814
+    FW Version: VMW201.00V.24866131.B64.2507211911
+ Hardware UUID: 977FB2EB-3CE3-5973-9C0A-F63172B36495
+
+ Serial Number: C02DR0SFJWDW
+       Country:  C02 - China (Quanta Computer)
+          Year:    D - 2020
+          Week:    R - 48 (25.11.2020-01.12.2020)
+          Line:  0SF - 899 (copy 1)
+         Model: JWDW - iMac19,2
+   SystemModel: iMac (Retina 4K, 21.5-inch, 2019)
+         Valid: Possibly
+
+     System ID: 564DF979-6BC1-2DA9-526F-A4B42E68942C
+           ROM: 48F33EB714C9
+           MLB: C020483004NKGQGJC
+
+    Gq3489ugfi: F50C5390E57DAB58245455E4096C3F1E60
+     Fyp98tpgj: 224869C683CE62A45250D7686EF90A9725
+    kbjfrfpoJU: 86CD846FF168DE2BCC7887A913DF1DB6B6
+  oycqAZloTNDm: 5A7D716E9D2CAED3710B99ECFAE5E0CE96
+  abKPld1EcMni: 4E3C7E00D3EB8A9DA58AD21D79E1E806DF
+
+Version 2.1.8. Use -h argument to see usage options.
+```
 
 ## **Thanks**
 
