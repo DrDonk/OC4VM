@@ -10,7 +10,6 @@ Macports for these dependencies but this has not been tested.
 
 Once brew is installed run the following commands to install the required software:
 ```
-brew install qemu
 brew install p7zip
 brew install pandoc
 ```
