@@ -34,7 +34,6 @@ oc4vm.toml and used in the OpenCore config.plist and VMware VMX template.
 | AMD         | \<0/1\>         | building for AMD                              |
 | BOOTARGS    | \<string\>      | macOS NVRAM boot-args                         |
 | CSRCONFIG   | \<data\>        | base64 encoded macOS CSR SIP value            |
-| CORES       | \<2/4/8/16/32\> | number of cores for AMD guests only           |
 | DEBUG       | \<0/1\>         | enable debug options in OpenCore              |
 | DESCRIPTION | \<string\>      | description of configuration                  |
 | DMG         | <release/debug> | specify release or debug version of OpenCore  |

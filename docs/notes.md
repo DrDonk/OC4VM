@@ -14,7 +14,7 @@ use different methods those of an Intel CPU. To allow VMware to boot macOS on an
 uses OpenCore capabilities to emulate an Intel CPU when using an AMD CPU.
 
 ### 1.1.2 Patch List
-List of AMD patches in config.plist and their current status in OC4VM
+List of AMD patches in AMD_Vanilla and their current status in OC4VM
 
 | Function/Target                             | Patch Name                            | Comment                                     |
 | ------------------------------------------- | --------------------------------------| ------------------------------------------- |
@@ -23,7 +23,7 @@ List of AMD patches in config.plist and their current status in OC4VM
 | _cpuid_set_generic_info                     | Remove wrmsr(0x8B)                    | Not used                                    |
 | _cpuid_set_generic_info                     | Replace rdmsr(0x8B) with constant 186 | Not used                                    |
 | _cpuid_set_generic_info                     | Set flag=1                            | Not used                                    |
-| _cpuid_set_generic_info                     | Disable check for Leaf 7              | Required                                    |
+| _cpuid_set_generic_info                     | Disable check for Leaf 7              | Not used                                    |
 | _cpuid_set_cpufamily                        | Force CPUFAMILY_INTEL_PENRYN          | Not used                                    |
 | _cpuid_set_cache_info                       | CPUID 0x8000001d instead of 4         | Required                                    |
 | _commpage_populate                          | Remove rdmsr                          | Not used                                    |
@@ -116,13 +116,44 @@ cpuid.4.3.ecx        = "0000:0000:0000:0000:0000:1111:1111:1111"
 cpuid.4.3.edx        = "0000:0000:0000:0000:0000:0000:0000:0001"
 
 ```
-Disable a check for CPUID 0x7 leaf
 
 ```
 #                                     Bit Position
 #                        3           2            1           0
 #                       1098:7654:3210:9876:5432:1098:7654:3210
 # EAX/ECX Registers     ---------------------------------------
+
+# Set CPU vendor to Intel (GenuineIntel)
+cpuid.0.eax.amd      = "0000:0000:0000:0000:0000:0000:0000:1101"
+cpuid.0.ebx.amd      = "0111:0101:0110:1110:0110:0101:0100:0111"
+cpuid.0.ecx.amd      = "0110:1100:0110:0101:0111:0100:0110:1110"
+cpuid.0.edx.amd      = "0100:1001:0110:0101:0110:1110:0110:1001"
+
+# Cache info copied from leaf 0x8000001D (AMD) to leaf 4 (Intel)
+cpuid.4.0.eax        = "0000:0000:0000:0000:0100:0001:0010:0001"
+cpuid.4.0.ebx        = "0000:0001:1100:0000:0000:0000:0011:1111"
+cpuid.4.0.ecx        = "0000:0000:0000:0000:0000:0000:0011:1111"
+cpuid.4.0.edx        = "0000:0000:0000:0000:0000:0000:0000:0000"
+cpuid.4.1.eax        = "0000:0000:0000:0000:0100:0001:0010:0010"
+cpuid.4.1.ebx        = "0000:0000:1100:0000:0000:0000:0011:1111"
+cpuid.4.1.ecx        = "0000:0000:0000:0000:0000:0000:1111:1111"
+cpuid.4.1.edx        = "0000:0000:0000:0000:0000:0000:0000:0000"
+cpuid.4.2.eax        = "0000:0000:0000:0000:0100:0001:0100:0011"
+cpuid.4.2.ebx        = "0000:0001:1100:0000:0000:0000:0011:1111"
+cpuid.4.2.ecx        = "0000:0000:0000:0000:0000:0011:1111:1111"
+cpuid.4.2.edx        = "0000:0000:0000:0000:0000:0000:0000:0010"
+cpuid.4.3.eax        = "0000:0000:0000:0001:1100:0001:0110:0011"
+cpuid.4.3.ebx        = "0000:0011:1100:0000:0000:0000:0011:1111"
+cpuid.4.3.ecx        = "0000:0000:0000:0000:0000:1111:1111:1111"
+cpuid.4.3.edx        = "0000:0000:0000:0000:0000:0000:0000:0001"
+
+# Haswell-S (Desktop): Family 6, Model 60 (3C), Stepping 3
+featMask.vm.cpuid.FAMILY = "Val:6"
+featMask.vm.cpuid.MODEL = "Val:60"
+featMask.vm.cpuid.STEPPING = "Val:3"
+
+# Alternative to featMask settings:
+cpuid.1.eax.amd      = "0000:0000:0000:0011:0000:0110:1100:0011"  # 000306C3
 
 ```
 

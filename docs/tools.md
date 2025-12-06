@@ -1,6 +1,6 @@
 # OC4VM Tools
 
-## OC4VM - Guest Tools
+## 1.0 OC4VM - Guest Tools
 The OpenCore boot disk constains some useful tools to modify
 the OpenCore configuration file config.plist.
 
@@ -14,46 +14,33 @@ and the tools are found at:
 /Volumes/OPENCORE/OC4VM/tools/guest
 ```
 
-All these tools depend on the OC4VM boot drive being mounted at that path and
-will raise an error if the config.plist file cannot be found on the boot drive.
+### 1.1 cpuid
 
-
-### amdcpu
-
-This utility alters the AMD cores patch settings that are stored in config.plist.
-
-Note: You must ensure the guest VM cores match the setting when you restart the VM
-or you will likely get a kernel panic.
+This program dumps the guests CPUID data which is used for debugging certain issues
+within the guest. The cpuid utiltiy has many parameters but the recommended options
+are these:
 
 ```
-Usage: amdcpu <cores>
-Valid values: 1, 2, 4, 8, 16, 24, 32, 64
+Usage: cpuid -d -c0
 ```
 
-### bootargs
+### 1.2 sysinfo
 
-This utility alters the macOS kernel boot-args that are stored in config.plist.
-
-Note: OC4VM overrides any values stored in NVRAM. You will need to restart the system
-for the settings to take effect.
+Use this tool if you have spoofed a real Mac and want to check the details in the guest.
+It will show the settings and NVRAM variables that are set when imitation a real Mac such
+as serial number, ROM, MLB etc..
 
 ```
-OC4VM bootargs
---------------
-Usage: bootargs [options] [value]
-Options:
-    -get            Print boot-args variable
-    -set value      Set the boot-args variable
-    -h              Print this help message
+Usage: sysinfo
 ```
 
-## OC4VM - Host Tools
+## 2.0 OC4VM - Host Tools
 There are some tools located in the distribution package which are for use on the host
 machine to modify the VMware VMX file. The host tools are located in the folder:
 ```
 tools/host
 ```
-## macguest
+## 2.1 macguest
 VMware Workstation does not allow the selection of the macOS Guest types in the user interface.
 This small program allows a VMX file to be opened and the version of macOS selected and written
 back to the file.
@@ -75,4 +62,4 @@ Example:
   macguest.sh -f ~/VMs/macos.vmx
 ```
 
-## regen
+## 2.2 regen
