@@ -656,7 +656,7 @@
     <key>PlatformInfo</key>
     <dict>
         <key>Automatic</key>
-        <false/>
+        <true/>
 		<key>CustomMemory</key>
 		<false/>
         <key>Generic</key>
@@ -666,7 +666,7 @@
             <key>MLB</key>
             <string></string>
             <key>MaxBIOSVersion</key>
-            <false/>
+            <true/>
             <key>ProcessorType</key>
             <integer>0</integer>
             <key>ROM</key>
