@@ -66,10 +66,10 @@ OC4VM has 6 sub-folders:
 | disks      | OpenCore boot variants in DMG and VMDK formats        |
 | docs       | Documents in Markdown format                          |
 | iso        | VMware Mac OS X and macOS guest tools iso images      |
-| tools      | OC4VM tools to manage config.plist                    |
+| tools      | OC4VM tools                                           |
 | vmware     | Template VMs for VMware                               |
 
-The most import folder is the 'vmware' folders.
+The most import folder is the 'vmware' folder.
 
 ### 3.3 VMware Templates
 
@@ -96,20 +96,20 @@ ISO or virtual disk to point to the installation media.
 
 Power on and install macOS as normal.
 
-#### 3.3.2 Existing macOS VM
+#### 3.3.2 Upgrading OC4VM 2.0 macOS VM
 Please follow these instructions to add to an existing macOS guest.
 
 1. Make sure the VM is shutdown.
 2. Copy the opencore.iso from the template folder to the existing VMs folder.
-3. Use the guest settings to add the opencore.iso file as a CD drive.
-4. Boot to the firmware and select the OpenCore drive as the boot device.
 
-#### 3.3.3 Upgrading OC4VM VM
-To upgrade the exisitng OC4VM enabled VM you will need to do these steps:
+#### 3.3.3 Upgrading OC4VM 1.x macOS VM
+To upgrade a pre-2.0 VM you will need to do these steps:
 
 1. Make sure the VM is shutdown.
-2. Copy the new opencore.iso from the template folder to VM folder.
-3. (Optionally) There may be changes to the template VMX file you may want to
+2. Take a backup of the VM folder.
+3. Copy a template from the distribution folder.
+4. Copy the old guests macos.vmdk to the new folder.
+5. (Optionally) There may be changes to the template VMX file you may want to
 add to the VM. You will have to check the differences and copy any changed lines you want
 to the existing VMX file.
 
@@ -124,9 +124,7 @@ There are some tools written specially for use in the macOS guest. They are docu
 
 ### 3.6 VMware macOS Guest Setting
 VMware on Linux and Windows cannot edit the guestOS setting to another version of mac OS X/macOS.
-To get around this limitation the VMware template folder has a small Windows program, macguest.exe,
-that can be used to open the guest's VMX file and change the setting. Linux progrm is currently
-under development.
+Please use the macguest program in the [tools](docs/tools.md) folder to manage this setting.  
 
 ## 4. Spoofing the Virtual Apple Mac
 If you want to make the VM look like a specific Mac model the settings can be configued in the
@@ -139,7 +137,6 @@ Building must be done on macOS, either real or virtualized. Details are in the
 
 There are also some [notes](docs/notes.md) I collated when building OCVM which may be useful
 to others who want to better understand the system or modify it.
-
 
 ## 6. Support
 If you are trying a specific combination, hypervisor/CPU/OS, please start a discussion instead
