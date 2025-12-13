@@ -1,8 +1,8 @@
 # OC4VM Tools
 
 ## 1.0 OC4VM - Guest Tools
-The OpenCore boot disk constains some useful tools to modify
-the OpenCore configuration file config.plist.
+The OpenCore boot disk contains some useful tools to  provide information about the macOS guest.
+These tools are rarely needed but can be useful for diagnosing guest issues.
 
 The OC4VM boot drive should be mounted at in the macOS guest:
 ```
@@ -35,21 +35,30 @@ Usage: sysinfo
 ```
 
 ## 2.0 OC4VM - Host Tools
-There are some tools located in the distribution package which are for use on the host
+There are also tools located in the distribution package which are for use on the host
 machine to modify the VMware VMX file. The host tools are located in the folder:
 ```
-tools/host
+<installation_path>/tools/host
 ```
+where there is a folder for each host operating system.
+
 ## 2.1 macguest
 VMware Workstation does not allow the selection of the macOS Guest types in the user interface.
 This small program allows a VMX file to be opened and the version of macOS selected and written
 back to the file.
 
 There are two separate versions one for Windows and another for Linux. This is not needed on
-Vmware Fusion as the product allows selection of macOS guests directly.
+VMware Fusion as the product allows selection of macOS guests directly.
 
 The Windows version is a small executable created in PowerShell. Run macguest.exe program and select
 the VMX file to modify.
+
+The Linux version provides a shell script to update the geustOS setting. It should be run from 
+```
+<installation_path>/tools/host/linux
+```
+
+You can pass in a VMX file via the command parameters or select a file to work on from the menu.
 
 ```
 Usage: macguest.sh [OPTIONS]
@@ -63,3 +72,13 @@ Example:
 ```
 
 ## 2.2 regen
+This tool allows the guest to mimic an iMac 2019 (iMac19,2). There are 2 versions command line tool available which will generate the lines for the VMX file in tools/host/<host_os_name>:
+
+* regen.sh - Linux and macOS
+* regen.ps1 - Windows PowerShell
+
+```
+Usage: regen.sh/regen.ps1 path_to_vmx_file
+```
+The tool will show you the settings being set and write them to the specified VMX file.
+For more details see [spoofing](docs/spoof.md).
