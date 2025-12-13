@@ -10,11 +10,12 @@ Cores for AMD CPUs can now be set in VMware using the UI in the same way as for 
 
 #### 1.1.1 Current Method
 The setting of the number of cores for an AMD processor needs to carefully managed as AMD CPUs
-use different methods those of an Intel CPU. To allow VMware to boot macOS on an AMD CPU OC4VM
+use different methods compared to an Intel CPU. To allow VMware to boot macOS on an AMD CPU OC4VM
 uses OpenCore capabilities to emulate an Intel CPU when using an AMD CPU.
 
 ### 1.1.2 Patch List
-List of AMD patches in AMD_Vanilla and their current status in OC4VM
+List of AMD patches in AMD_Vanilla and their current status in OC4VM. All these patches modify code in
+the XNU kernel and is found in the open source code in the /xnu/osfmk/i386/cpuid.c file.
 
 | Function/Target                             | Patch Name                            | Comment                                     |
 | ------------------------------------------- | --------------------------------------| ------------------------------------------- |
@@ -31,185 +32,42 @@ List of AMD patches in AMD_Vanilla and their current status in OC4VM
 | _lapic_init                                 | Remove version check panic            | Not used                                    |
 | _mtrr_update_action                         | Set PAT MSR to 00070106h              | Not used                                    |
 
-#### 1.2.2 Details
+#### 1.1.3 Set CPU as Haswell
+Older patches used a Penrhyn CPU and constant patching inside the OC boot disk. 
+By setting the CPU type to be Haswell the cpuid.c code reads the MSR 0x35 for the
+core and thread count. VMware will pass through these core counts and OpenCore
+will ensure MSR 0x35 is correctly set in VMs.
 
-OC changes
-
-AuthenticAMD -> GeunuineIntel
+This is configured in the config.plist Kernel->Emulate section Cpuid1Data and Cpuid1Mask
+settings mapped to Haswell CPU.
 ```
-#                                     Bit Position
-#                        3           2            1           0
-#                       1098:7654:3210:9876:5432:1098:7654:3210
-# EAX/ECX Registers     ---------------------------------------
-
-# Set CPU vendor to Intel (GenuineIntel)
-cpuid.0.eax.amd      = "0000:0000:0000:0000:0000:0000:0000:1101"
-cpuid.0.ebx.amd      = "0111:0101:0110:1110:0110:0101:0100:0111"
-cpuid.0.ecx.amd      = "0110:1100:0110:0101:0111:0100:0110:1110"
-cpuid.0.edx.amd      = "0100:1001:0110:0101:0110:1110:0110:1001"
-```
-
-Kernel->Emulate section Cpuid1Data and Cpuid1Mask settings mapped to Haswell CPU.
-Alternative using VMX file but possible will not work on Windows hypervisor active.
-```
-#                                     Bit Position
-#                        3           2            1           0
-#                       1098:7654:3210:9876:5432:1098:7654:3210
-# EAX/ECX Registers     ---------------------------------------
-# Haswell-S (Desktop): Family 6, Model 60 (3C), Stepping 3
-cpuid.1.eax.amd      = "0000:0000:0000:0011:0000:0110:1100:0011"  # 000306C3
-
-or
-
-featMask.vm.cpuid.FAMILY = "Val:6"
-featMask.vm.cpuid.MODEL = "Val:60"
-featMask.vm.cpuid.STEPPING = "Val:3"
-
-Intel Haswell identification:
-cpuid.brandstring = "Intel® Core™ i5-9600K CPU @ 3.70GHz"
-
+		<key>Emulate</key>
+		<dict>
+	    <key>Cpuid1Data</key>
+			<data>wwYDAAAAAAAAAAAAAAAAAA==</data>
+			<key>Cpuid1Mask</key>
+			<data>////AAAAAAAAAAAAAAAAAA==</data>
+			<key>DummyPowerManagement</key>
+			<true/>
+			<key>MaxKernel</key>
+			<string></string>
+			<key>MinKernel</key>
+			<string></string>
+		</dict>
 ```
 
-CPUID leaf 0x4 needs to be replaced by 0x8000001d for cache Details
-This would need to be configured on each host.
-```
-#                                     Bit Position
-#                        3           2            1           0
-#                       1098:7654:3210:9876:5432:1098:7654:3210
-# EAX/ECX Registers     ---------------------------------------
-# Possible leaf 4 override from actual host cpu:
+#### 1.1.4 MSR 0x35
+MSR 0x35 is setup by OpenCore in the config.plist Kernel->Quirks->ProvideCurrentCpuInfo setting.
 
-cpuid.8000001d.0.eax = "0000:0000:0000:0000:0100:0001:0010:0001"
-cpuid.8000001d.0.ebx = "0000:0001:1100:0000:0000:0000:0011:1111"
-cpuid.8000001d.0.ecx = "0000:0000:0000:0000:0000:0000:0011:1111"
-cpuid.8000001d.0.edx = "0000:0000:0000:0000:0000:0000:0000:0000"
-cpuid.8000001d.1.eax = "0000:0000:0000:0000:0100:0001:0010:0010"
-cpuid.8000001d.1.ebx = "0000:0000:1100:0000:0000:0000:0011:1111"
-cpuid.8000001d.1.ecx = "0000:0000:0000:0000:0000:0000:1111:1111"
-cpuid.8000001d.1.edx = "0000:0000:0000:0000:0000:0000:0000:0000"
-cpuid.8000001d.2.eax = "0000:0000:0000:0000:0100:0001:0100:0011"
-cpuid.8000001d.2.ebx = "0000:0001:1100:0000:0000:0000:0011:1111"
-cpuid.8000001d.2.ecx = "0000:0000:0000:0000:0000:0011:1111:1111"
-cpuid.8000001d.2.edx = "0000:0000:0000:0000:0000:0000:0000:0010"
-cpuid.8000001d.3.eax = "0000:0000:0000:0001:1100:0001:0110:0011"
-cpuid.8000001d.3.ebx = "0000:0011:1100:0000:0000:0000:0011:1111"
-cpuid.8000001d.3.ecx = "0000:0000:0000:0000:0000:1111:1111:1111"
-cpuid.8000001d.3.edx = "0000:0000:0000:0000:0000:0000:0000:0001"
+#### 1.1.5 CPU Vendor String
 
-to:
+Modified in the macOS XNU kernel cpuid_set_info code. macOS expects the 'GenuineIntel' string 
+in cpuid 0 leaf. If it is not this string the kernel will panic very early on during boot. 
+This patch switches the comparison string from GeunuineIntel to AuthenticAMD.
 
-cpuid.4.0.eax        = "0000:0000:0000:0000:0100:0001:0010:0001"
-cpuid.4.0.ebx        = "0000:0001:1100:0000:0000:0000:0011:1111"
-cpuid.4.0.ecx        = "0000:0000:0000:0000:0000:0000:0011:1111"
-cpuid.4.0.edx        = "0000:0000:0000:0000:0000:0000:0000:0000"
-cpuid.4.1.eax        = "0000:0000:0000:0000:0100:0001:0010:0010"
-cpuid.4.1.ebx        = "0000:0000:1100:0000:0000:0000:0011:1111"
-cpuid.4.1.ecx        = "0000:0000:0000:0000:0000:0000:1111:1111"
-cpuid.4.1.edx        = "0000:0000:0000:0000:0000:0000:0000:0000"
-cpuid.4.2.eax        = "0000:0000:0000:0000:0100:0001:0100:0011"
-cpuid.4.2.ebx        = "0000:0001:1100:0000:0000:0000:0011:1111"
-cpuid.4.2.ecx        = "0000:0000:0000:0000:0000:0011:1111:1111"
-cpuid.4.2.edx        = "0000:0000:0000:0000:0000:0000:0000:0010"
-cpuid.4.3.eax        = "0000:0000:0000:0001:1100:0001:0110:0011"
-cpuid.4.3.ebx        = "0000:0011:1100:0000:0000:0000:0011:1111"
-cpuid.4.3.ecx        = "0000:0000:0000:0000:0000:1111:1111:1111"
-cpuid.4.3.edx        = "0000:0000:0000:0000:0000:0000:0000:0001"
-
-```
-
-```
-#                                     Bit Position
-#                        3           2            1           0
-#                       1098:7654:3210:9876:5432:1098:7654:3210
-# EAX/ECX Registers     ---------------------------------------
-
-# Set CPU vendor to Intel (GenuineIntel)
-cpuid.0.eax.amd      = "0000:0000:0000:0000:0000:0000:0000:1101"
-cpuid.0.ebx.amd      = "0111:0101:0110:1110:0110:0101:0100:0111"
-cpuid.0.ecx.amd      = "0110:1100:0110:0101:0111:0100:0110:1110"
-cpuid.0.edx.amd      = "0100:1001:0110:0101:0110:1110:0110:1001"
-
-# Cache info copied from leaf 0x8000001D (AMD) to leaf 4 (Intel)
-cpuid.4.0.eax        = "0000:0000:0000:0000:0100:0001:0010:0001"
-cpuid.4.0.ebx        = "0000:0001:1100:0000:0000:0000:0011:1111"
-cpuid.4.0.ecx        = "0000:0000:0000:0000:0000:0000:0011:1111"
-cpuid.4.0.edx        = "0000:0000:0000:0000:0000:0000:0000:0000"
-cpuid.4.1.eax        = "0000:0000:0000:0000:0100:0001:0010:0010"
-cpuid.4.1.ebx        = "0000:0000:1100:0000:0000:0000:0011:1111"
-cpuid.4.1.ecx        = "0000:0000:0000:0000:0000:0000:1111:1111"
-cpuid.4.1.edx        = "0000:0000:0000:0000:0000:0000:0000:0000"
-cpuid.4.2.eax        = "0000:0000:0000:0000:0100:0001:0100:0011"
-cpuid.4.2.ebx        = "0000:0001:1100:0000:0000:0000:0011:1111"
-cpuid.4.2.ecx        = "0000:0000:0000:0000:0000:0011:1111:1111"
-cpuid.4.2.edx        = "0000:0000:0000:0000:0000:0000:0000:0010"
-cpuid.4.3.eax        = "0000:0000:0000:0001:1100:0001:0110:0011"
-cpuid.4.3.ebx        = "0000:0011:1100:0000:0000:0000:0011:1111"
-cpuid.4.3.ecx        = "0000:0000:0000:0000:0000:1111:1111:1111"
-cpuid.4.3.edx        = "0000:0000:0000:0000:0000:0000:0000:0001"
-
-# Haswell-S (Desktop): Family 6, Model 60 (3C), Stepping 3
-featMask.vm.cpuid.FAMILY = "Val:6"
-featMask.vm.cpuid.MODEL = "Val:60"
-featMask.vm.cpuid.STEPPING = "Val:3"
-
-# Alternative to featMask settings:
-cpuid.1.eax.amd      = "0000:0000:0000:0011:0000:0110:1100:0011"  # 000306C3
-
-```
-
-ProvideCurrentInfo MSR 0x35 on all CPUs.
-
-
-
-
-#### 1.2.3 Deprecated Method
-*NOTE: These are no longer used but kept for reference.*
-
-From https://github.com/AMD-OSX/AMD_Vanilla/blob/master/README.md
-
-> The Core Count patch needs to be modified to boot your system. 
-> Find the four `algrey - Force cpuid_cores_per_package` patches and alter the `Replace` value only.
->
-> |   macOS Version      | Replace Value | New Value                   |
-> |----------------------|---------------|-----------------------------|
-> | 10.13.x, 10.14.x     | B8000000 0000 | B8 < Core Count > 0000 0000 |
-> | 10.15.x, 11.x        | BA000000 0000 | BA < Core Count > 0000 0000 |
-> | 12.x, 13.0 to 13.2.1 | BA000000 0090 | BA < Core Count > 0000 0090 |
-> | 13.3 +               | BA000000 00   | BA < Core Count > 0000 00   |
->
-> From the table above substitute `< Core Count >` with the hexadecimal 
-> value matching your physical core count. Do not use your CPU's thread count. 
-> See the table below for the values matching your CPU core count.
->
->
-> | Core Count | Hexadecimal |
-> |------------|-------------|
-> |   4 Core   |     `04`    |
-> |   6 Core   |     `06`    |
-> |   8 Core   |     `08`    |
-> |   12 Core  |     `0C`    |
-> |   16 Core  |     `10`    |
-> |   24 Core  |     `18`    |
-> |   32 Core  |     `20`    |
->
-> So for example, a user with a 6-core processor should use these
->`Replace` values: `B8 06 0000 0000` / `BA 06 0000 0000` / `BA 06 0000 0090` / `BA 06 0000 00`
-
-Which gives these values when correctly base64 encoded:
-
-| Cores | 10.13/10.14 | 10.15/11.0  | 12.0/13.0   | 13.3+       |
-|-------|-------------|-------------|-------------|-------------|
-| 0     | uAAAAAAA    | ugAAAAAA    | ugAAAACQ    | ugAAAAA=    |
-| 1     | uAEAAAAA    | ugEAAAAA    | ugEAAACQ    | ugEAAAA=    |
-| 2     | uAIAAAAA    | ugIAAAAA    | ugIAAACQ    | ugIAAAA=    |
-| 4     | uAQAAAAA    | ugQAAAAA    | ugQAAACQ    | ugQAAAA=    |
-| 8     | uAgAAAAA    | uggAAAAA    | uggAAACQ    | uggAAAA=    |
-| 12    | uAwAAAAA    | ugwAAAAA    | ugwAAACQ    | ugwAAAA=    |
-| 16    | uBAAAAAA    | uhAAAAAA    | uhAAAACQ    | uhAAAAA=    |
-| 24    | uBgAAAAA    | uhgAAAAA    | uhgAAACQ    | uhgAAAA=    |
-| 28    | uBwAAAAA    | uhwAAAAA    | uhwAAACQ    | uhwAAAA=    |
-| 32    | uCAAAAAA    | uiAAAAAA    | uiAAAACQ    | uiAAAAA=    |
-| 64    | uEAAAAAA    | ukAAAAAA    | ukAAAACQ    | ukAAAAA=    |
+#### 1.1.6 Set CPU cache info
+Intel CPUs provide cache information in CPUID leaf 0x4. AMD uses CPUID leaf 0x8000001d 
+and patch cpuid_set_cache_info to use the AMD leaf instead of the Intel leaf.
 
 ## 2.0 macOS
 ### 2.1 Useful boot-args
@@ -321,69 +179,6 @@ Force NUMA node sizing at each boot:
 ```
 numa.autosize.once = "FALSE"            
 ```
-
-### 3.7 New guestOS table patch
-This patch allows all guest OS familes and types to be displayed on Windows and Linux. It's a simpler patch
-than my patcher in the Unlocker. It is not essential but used for testing the OC4VM code.
-
-VMware Workstation 17.6.3 for Windows vmwarebase.dll
-
-```
-Windows unpatched
-                         LAB_103731ad                              XREF[1]:   1037319e(j)
-      103731ad c6 85 e4      MOV       byte ptr [EBP + local_120],0x1
-               fe ff ff
-               01
-      103731b4 eb 07         JMP       LAB_103731bd
-                         LAB_103731b6                              XREF[3]:   1037318b(j), 10373194(j),
-                                                                               103731ab(j)
-      103731b6 c6 85 e4      MOV       byte ptr [EBP + local_120],0x0
-               fe ff ff
-               00
-```
-
-```
-Windows patched
-                         LAB_103731ad                              XREF[1]:   1037319e(j)
-      103731ad c6 85 e4      MOV       byte ptr [EBP + local_120],0x1
-               fe ff ff
-               01
-      103731b4 eb 07         JMP       LAB_103731bd
-                         LAB_103731b6                              XREF[3]:   1037318b(j), 10373194(j),
-                                                                               103731ab(j)
-      103731b6 c6 85 e4      MOV       byte ptr [EBP + local_120],0x1
-               fe ff ff
-               01
-```
-
-Find:    `c6 85 e4 fe ff ff 01 eb 07 c6 85 e4 fe ff ff 00`
-
-Replace: `c6 85 e4 fe ff ff 01 eb 07 c6 85 e4 fe ff ff 01`
-
-VMware Workstation 17.6.3 for Linux libvmwarebase.so
-
-```
-Linux unpatched
-
-      00624224 48 8b 43      MOV       RAX,qword ptr [RBX + 0x40]=>DAT_009aab60   = 0000000F77150690h
-               40
-      00624228 31 d2         XOR       EDX,EDX
-      0062422a a8 01         TEST      AL,0x1
-      0062422c 74 13         JZ        LAB_00624241
-
-Linux patched:
-
-      00624224 c7 c2 01      MOV       EDX,0x1
-               00 00 00
-      0062422a a8 01         TEST      AL,0x1
-      0062422c eb 13         JMP       LAB_00624241
-```
-
-Find:    `48 8b 43 40 31 d2 a8 01 74 13`
-
-Replace: `c7 c2 01 00 00 00 a8 01 eb 13`
-
-
 
 ## 4.0 Random Stuff
 
