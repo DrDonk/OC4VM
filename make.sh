@@ -172,8 +172,8 @@ do
       exit $RETURN
     fi
 
-    # Build the OpenCore DMG/vmdk files
-    msg_status "Step 3. Create disk images DMG/VMDK/QCOW2 for $VARIANT"
+    # Build the OpenCore ISO files
+    msg_status "Step 3. Create ISO image for $VARIANT"
     mkdir -p ./build/disks/$VARIANT
     DMG=$(./utilities/stoml oc4vm.toml $VARIANT.DMG)
     build_dmg ./build/disks/$VARIANT $DMG ./build/config/$VARIANT/config.plist
