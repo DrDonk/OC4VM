@@ -94,9 +94,9 @@ msg_status "Step 1. Compile tools"
 
 # Fixup version/commit in tools scripts
 mkdir -p ./build/tools/guest 2>&1 >/dev/null
-mkdir -p ./build/tools/host/linux 2>&1 >/dev/null
-mkdir -p ./build/tools/host/macos 2>&1 >/dev/null
-mkdir -p ./build/tools/host/windows 2>&1 >/dev/null
+mkdir -p ./build/tools/linux 2>&1 >/dev/null
+mkdir -p ./build/tools/macos 2>&1 >/dev/null
+mkdir -p ./build/tools/windows 2>&1 >/dev/null
 
 # Build guest tools
 run_jinja ./tools/guest/sysinfo ./build/tools/guest/sysinfo
@@ -106,27 +106,27 @@ chmod +x ./build/tools/guest/*
 
 # Build host tools
 # - Linux
-run_jinja ./tools/host/common/macguest.sh ./build/tools/host/linux/macguest.sh
-run_jinja ./tools/host/common/regen.sh ./build/tools/host/linux/regen.sh
-cp -v ./tools/host/linux/cpuid ./build/tools/host/linux/cpuid
-cp -v ./tools/host/linux/macserial ./build/tools/host/linux/macserial
-cp -v ./tools/host/linux/vmxtool ./build/tools/host/linux/vmxtool
-chmod +x ./build/tools/host/linux/*
+run_jinja ./tools/host/common/macguest.sh ./build/tools/linux/macguest.sh
+run_jinja ./tools/host/common/regen.sh ./build/tools/linux/regen.sh
+cp -v ./tools/host/linux/cpuid ./build/tools/linux/cpuid
+cp -v ./tools/host/linux/macserial ./build/tools/linux/macserial
+cp -v ./tools/host/linux/vmxtool ./build/tools/linux/vmxtool
+chmod +x ./build/tools/linux/*
 
 # - macOS
-run_jinja ./tools/host/common/macguest.sh ./build/tools/host/macos/macguest.sh
-run_jinja ./tools/host/common/regen.sh ./build/tools/host/macos/regen.sh
-cp -v ./tools/host/macos/cpuid ./build/tools/host/macos/cpuid
-cp -v ./tools/host/macos/macserial ./build/tools/host/macos/macserial
-cp -v ./tools/host/macos/vmxtool ./build/tools/host/macos/vmxtool
-chmod +x ./build/tools/host/macos/*
+run_jinja ./tools/host/common/macguest.sh ./build/tools/macos/macguest.sh
+run_jinja ./tools/host/common/regen.sh ./build/tools/macos/regen.sh
+cp -v ./tools/host/macos/cpuid ./build/tools/macos/cpuid
+cp -v ./tools/host/macos/macserial ./build/tools/macos/macserial
+cp -v ./tools/host/macos/vmxtool ./build/tools/macos/vmxtool
+chmod +x ./build/tools/macos/*
 
 # - Windows
-run_jinja ./tools/host/windows/regen.ps1 ./build/tools/host/windows/regen.ps1
-cp -v ./tools/host/windows/cpuid.exe ./build/tools/host/windows/cpuid.exe
-cp -v ./tools/host/windows/macguest.exe ./build/tools/host/windows/macguest.exe
-cp -v ./tools/host/windows/macserial.exe ./build/tools/host/windows/macserial.exe
-cp -v ./tools/host/windows/vmxtool.exe ./build/tools/host/windows/vmxtool.exe
+run_jinja ./tools/host/windows/regen.ps1 ./build/tools/windows/regen.ps1
+cp -v ./tools/host/windows/cpuid.exe ./build/tools/windows/cpuid.exe
+cp -v ./tools/host/windows/macguest.exe ./build/tools/windows/macguest.exe
+cp -v ./tools/host/windows/macserial.exe ./build/tools/windows/macserial.exe
+cp -v ./tools/host/windows/vmxtool.exe ./build/tools/windows/vmxtool.exe
 
 # Build OC4VM disk images
 VARIANTS=("${(f)$(./utilities/stoml oc4vm.toml . | tr ' ' '\n')}")

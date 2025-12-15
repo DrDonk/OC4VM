@@ -38,7 +38,7 @@ Usage: sysinfo
 There are also tools located in the distribution package which are for use on the host
 machine to modify the VMware VMX file. The host tools are located in the folder:
 ```
-<installation_path>/tools/host
+<installation_path>/tools/<linux/macos/windows>
 ```
 where there is a folder for each host operating system.
 
@@ -55,7 +55,7 @@ the VMX file to modify.
 
 The Linux version provides a shell script to update the geustOS setting. It should be run from 
 ```
-<installation_path>/tools/host/linux
+<installation_path>/tools/linux
 ```
 
 You can pass in a VMX file via the command parameters or select a file to work on from the menu.
@@ -72,13 +72,14 @@ Example:
 ```
 
 ## 2.2 regen
-This tool allows the guest to mimic an iMac 2019 (iMac19,2). There are 2 versions command line tool available which will generate the lines for the VMX file in tools/host/<host_os_name>:
+This tool allows the guest to mimic an iMac 2019 (iMac19,2). There are 2 versions command line tool available 
+in tools/<host_os_name>:
 
 * regen.sh - Linux and macOS
 * regen.ps1 - Windows PowerShell
 
 ```
-Usage: regen.sh/regen.ps1 path_to_vmx_file
+Usage: regen.sh or regen.ps1 path_to_vmx_file
 ```
 The tool will show you the settings being set and write them to the specified VMX file.
 For more details see [spoofing](docs/spoof.md).
