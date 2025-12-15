@@ -27,7 +27,7 @@ What OC4VM cannot do:
 * Use the Apple para-virtualised GPU on non-Apple hardware
 * Use the Apple para-virtualised GPU on older Macs using OCLP and macOS Sonoma or later
 
-The OC4VM system has been tested on an Intel Mac mini mid-2014 and an AMD Ryzen based HP T740
+The OC4VM system has been tested on an Intel Mac mini (Late 2014) and an AMD Ryzen based HP T740
 with these guest OSes:
 * Big Sur
 * Monterey
