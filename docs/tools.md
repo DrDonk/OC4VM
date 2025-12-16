@@ -14,7 +14,15 @@ and the tools are found at:
 /Volumes/OPENCORE/OC4VM/tools/guest
 ```
 
-### 1.1 cpuid
+### 1.1 shrinkdisk
+The shrinkdisk tool is used to recover unused disk space from the virtual drive. This
+can potentially reduce the amount of space used on the host system.
+
+```
+Usage: shrinkdisk
+```
+
+### 1.2 cpuid
 
 This program dumps the guests CPUID data which is used for debugging certain issues
 within the guest. The cpuid utiltiy has many parameters but the recommended options
@@ -24,7 +32,7 @@ are these:
 Usage: cpuid -d -c0
 ```
 
-### 1.2 sysinfo
+### 1.3 sysinfo
 
 Use this tool if you have spoofed a real Mac and want to check the details in the guest.
 It will show the settings and NVRAM variables that are set when imitation a real Mac such
