@@ -2,13 +2,14 @@
 
 All dates are UK DD/MM/YY format.
 
-## xx/12/25 2.0.0
+## 16/12/25 2.0.0
 **All spoofing of hardware should use iMac 2019 to ensure maximum compatibilty with macOS upgrades
 and avoid models with T1 or T2 security chips. The iMac 2019 supports Catalina to Sequoia, and can also
 run Tahoe in a VM.**
 * Now uses an ISO file to boot using a hidden virtual USB CD drive
 * AMD core patching no longer required use regular VMware CPU settings
 * Support for Tahoe setting in VMX - only supported with new Fusion and Workstation 25H2
+* Added guest tool shrinkdisk to shrink virtual disks from guest
 * Added guest tool sysinfo to see if spoofing values are correctly set in guest
 * Modified regen code to use iMac 2019 (iMac19,2) to remove any possible issues with T2 chip
 * Updated OC to 1.0.6
