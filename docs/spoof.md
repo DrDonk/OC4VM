@@ -1,6 +1,6 @@
 # Spoofing Virtual Apple Mac Model
 
-## _It is recommended that you do not do this unless absolutely neccessary. VMs can be unstable and have kernel panics when setup to mimic an actual piece of Apple hardware. iCloud and Apple AppStore can be problematic in macOS VMs even with spoofing._
+## _It is recommended that you do not do this unless absolutely neccessary. VMs can be unstable and have kernel panics when setup to mimic an actual Apple Mac. iCloud and Apple AppStore can be problematic in macOS VMs even with spoofing._
 
 If you want to make the VM look like a specific Mac model settings can be configured in the
 VMware VMX file to emulate a real Mac. The VMX template file is configured as a regular VMware virtual machine (VMware20,1) which is supported in all recent versions of macOS.
@@ -58,7 +58,7 @@ to
 ```
 hypervisor.cpuid.v0 = "FALSE"
 ```
-*Note: that this is not always reliable in VMware Fusion and can cause macOS to kernel panic.*
+*Note: that this is not always reliable and can cause macOS to kernel panic.*
 
 The sysinfo tool can show you the details of the changes inside the macOS guest.
 
