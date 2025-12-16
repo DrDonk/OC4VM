@@ -64,7 +64,7 @@ OC4VM has 6 sub-folders:
 |:-----------|-------------------------------------------------------|
 | config     | OpenCore config.plist files for reference             |
 | disks      | OpenCore boot variants in DMG and VMDK formats        |
-| docs       | Documents in Markdown format                          |
+| docs       | Documents in HTML format                              |
 | iso        | VMware Mac OS X and macOS guest tools iso images      |
 | tools      | OC4VM tools                                           |
 | vmware     | Template VMs for VMware                               |
@@ -108,7 +108,7 @@ To upgrade a pre-2.0 VM you will need to do these steps:
 1. Make sure the VM is shutdown.
 2. Take a backup of the VM folder.
 3. Copy a template from the distribution folder.
-4. Copy the old guests macos.vmdk to the new folder.
+4. Copy the old guest's macos.vmdk to the new folder.
 5. (Optionally) There may be changes to the template VMX file you may want to
 add to the VM. You will have to check the differences and copy any changed lines you want
 to the existing VMX file.
@@ -119,8 +119,8 @@ images on the OC4VM boot disk. To install mount the file from /Volumes/OPENCORE/
 install the tools.
 
 ### 3.5 OC4VM Guest & Host Tools
-There are some tools written specially for use in the macOS guest. They are documented in the
-[tools](docs/tools.md) help.
+There are tools written specially for use in the macOS guest and on the host machine. 
+They are documented in the [tools](docs/tools.md) help.
 
 ### 3.6 VMware macOS Guest Setting
 VMware on Linux and Windows cannot edit the guestOS setting to another version of mac OS X/macOS.
@@ -135,7 +135,7 @@ VMware VMX file. Details are in the [spoofing](docs/spoof.md) help.
 Building must be done on macOS, either real or virtualized. Details are in the
 [building](docs/build.md) help.
 
-There are also some [notes](docs/notes.md) I collated when building OCVM which may be useful
+There are also some [notes](docs/notes.md) I created when building OCVM which may be useful
 to others who want to better understand the system or modify it.
 
 ## 6. Support
@@ -150,7 +150,13 @@ to help diagnose the issue.
 
 Most importantly let us be supportive of each other with respectful discussions.
 
-## 7. Thanks
+## 7. Other Projects
+
+* recoveryOS - https://github.com/drdonk/recoveryos
+* unlocker - https://github.com/drdonk/unlocker
+* vmxtool - https://github.com/drdonk/vmxtool
+
+## 8. Thanks
 
 Many thanks to the great developers and community around the OpenCore scene. The OC4VM
 package uses the following:
