@@ -120,23 +120,23 @@ install the tools.
 
 ### 3.5 OC4VM Guest & Host Tools
 There are tools written specially for use in the macOS guest and on the host machine. 
-They are documented in the [tools](docs/tools.md) help.
+They are documented in the [tools](https://github.com/DrDonk/OC4VM/wiki/OC4VM-Tools) help.
 
 ### 3.6 VMware macOS Guest Setting
 VMware on Linux and Windows cannot edit the guestOS setting to another version of mac OS X/macOS.
-Please use the macguest program in the [tools](docs/tools.md) folder to manage this setting.  
+Please use the macguest program in the tools/host folder to manage this setting.  
 
 ## 4. Spoofing the Virtual Apple Mac
 If you want to make the VM look like a specific Mac model the settings can be configued in the
-VMware VMX file. Details are in the [spoofing](docs/spoof.md) help.
+VMware VMX file. Details are in the 
+[spoofing](https://github.com/DrDonk/OC4VM/wiki/Spoofing-A-Real-Mac) help.
 
 ## 5. Building OC4VM
 
 Building must be done on macOS, either real or virtualized. Details are in the
-[building](docs/build.md) help.
+[building](https://github.com/DrDonk/OC4VM/wiki/Building-OC4VM) help.
 
-There are also some [notes](docs/notes.md) I created when building OCVM which may be useful
-to others who want to better understand the system or modify it.
+There are also some [notes](https://github.com/DrDonk/OC4VM/wiki/Notes) I created when building OCVM which may be useful to others who want to better understand the system or modify it.
 
 ## 6. Support
 If you are trying a specific combination, hypervisor/CPU/OS, please start a discussion instead
