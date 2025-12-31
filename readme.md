@@ -171,4 +171,4 @@ package uses the following:
 
 Also thanks to the testers who helped me out with the project.
 
-(c) 2023-5 David Parsons
+(c) 2023-2026 David Parsons
