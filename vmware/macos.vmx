@@ -33,11 +33,14 @@ vpmc.enable = "FALSE"                     # Disable virtual performance counters
 vvtd.enable = "FALSE"                     # Disbale virtual VT-D
 
 __Hidden_USB_BOOT_Device__ = ""
-usb_xhci:0.deviceType = "cdrom-image"
-usb_xhci:0.fileName = "opencore.iso"
+usb_xhci:0.deviceType = "disk"
+usb_xhci:0.fileName = "opencore.vmdk"
 usb_xhci:0.mode = "independent-persistent"
+usb_xhci:0.parent = "-1"
+usb_xhci:0.port = "0"
 usb_xhci:0.present = "TRUE"
 usb_xhci:0.readonly = "TRUE"
+usb_xhci:0.speed = "16"
 
 __Serial_Port_Settings__ = ""
 answer.msg.serial.file.open = "Replace"
