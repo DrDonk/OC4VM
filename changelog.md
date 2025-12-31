@@ -1,6 +1,9 @@
 # Changes
 
 All dates are UK DD/MM/YY format.
+## xx/01/26 2.0.x
+* Docs migrated to GitHub wiki
+* Virtual USB drive for opencore.iso defined as disk
 
 ## 16/12/25 2.0.0
 **All spoofing of hardware should use iMac 2019 to ensure maximum compatibilty with macOS upgrades
