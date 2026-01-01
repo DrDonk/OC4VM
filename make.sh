@@ -64,29 +64,6 @@ run_jinja(){
     chmod +x $output_file
 }
 
-pandoc_convert() {
-    local input_file="$1"
-    local output_file="$2"
-    local title="$3"
-
-    # Execute pandoc conversion
-    echo "Converting: $input_file -> $output_file"
-    pandoc -f gfm \
-        -t html5 "$input_file" \
-        -o "$output_file" \
-        --css=style.css \
-        --lua-filter=links-to-html.lua \
-        --embed-resources \
-        --standalone \
-        --metadata title="$title"
-
-    if [[ $? -eq 0 ]]; then
-        msg_status "✓ Successfully converted: $output_file"
-    else
-        msg_error "✗ Failed to convert: $input_file"
-    fi
-}
-
 # Clear previous build
 rm -rfv ./build 2>&1 >/dev/null
 
@@ -214,9 +191,6 @@ cp -v LICENSE ./build/
 cp -vr ./iso ./build/
 
 msg_status "\nStep 6. Creating HTML Documents"
-
-pandoc_convert ./readme.md     ./build/readme.html      "OC4VM ReadMe"
-pandoc_convert ./changelog.md  ./build/changelog.html   "OC4VM Change Log"
 
 msg_status "\nStep 7. Zipping OC4VM Release"
 rm ./dist/oc4vm-$VERSION.* 2>&1 >/dev/null
