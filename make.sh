@@ -190,9 +190,7 @@ msg_status "\nStep 5. Copying misc files"
 cp -v LICENSE ./build/
 cp -vr ./iso ./build/
 
-msg_status "\nStep 6. Creating HTML Documents"
-
-msg_status "\nStep 7. Zipping OC4VM Release"
+msg_status "\nStep 6. Zipping OC4VM Release"
 rm ./dist/oc4vm-$VERSION.* 2>&1 >/dev/null
 7z a ./dist/oc4vm-$VERSION.zip ./build/*
 cd ./dist
