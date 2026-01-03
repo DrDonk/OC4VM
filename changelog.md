@@ -7,6 +7,7 @@ All dates are UK DD/MM/YY format.
 * Docs migrated to GitHub wiki
 * Virtual USB drive for opencore.iso defined as disk
 * Windows regen command now a batch file to avoid Powershell issues
+* VoodooHDA installer package added to packages folder
 
 ## 16/12/25 2.0.0
 **All spoofing of hardware should use iMac 2019 to ensure maximum compatibilty with macOS upgrades
