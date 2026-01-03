@@ -189,6 +189,7 @@ done
 msg_status "\nStep 5. Copying misc files"
 cp -v LICENSE ./build/
 cp -vr ./iso ./build/
+cp -vr ./packages ./build/
 
 msg_status "\nStep 6. Zipping OC4VM Release"
 rm ./dist/oc4vm-$VERSION.* 2>&1 >/dev/null
