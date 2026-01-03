@@ -100,7 +100,7 @@ cp -v ./tools/host/macos/vmxtool ./build/tools/macos/vmxtool
 chmod +x ./build/tools/macos/*
 
 # - Windows
-run_jinja ./tools/host/windows/regen.ps1 ./build/tools/windows/regen.ps1
+run_jinja ./tools/host/windows/regen.cmd ./build/tools/windows/regen.cmd
 cp -v ./tools/host/windows/cpuid.exe ./build/tools/windows/cpuid.exe
 cp -v ./tools/host/windows/macguest.exe ./build/tools/windows/macguest.exe
 cp -v ./tools/host/windows/macserial.exe ./build/tools/windows/macserial.exe
