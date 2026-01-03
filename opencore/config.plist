@@ -678,12 +678,21 @@
             <key>SystemUUID</key>
             <string></string>
         </dict>
+        <key>SMBIOS</key>
+		<dict>
+			<key>BIOSReleaseDate</key>
+			<string>03/03/2025</string>
+			<key>BIOSVendor</key>
+			<string>Apple Inc.</string>
+			<key>BIOSVersion</key>
+			<string>9999.999.999.999.999</string>
+		</dict>        
         <key>UpdateDataHub</key>
         <false/>
         <key>UpdateNVRAM</key>
         <false/>
         <key>UpdateSMBIOS</key>
-        <false/>
+        <true/>
         <key>UpdateSMBIOSMode</key>
         <string>Create</string>
         <key>UseRawUuidEncoding</key>
