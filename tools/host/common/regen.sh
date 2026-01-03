@@ -46,7 +46,7 @@ if [[ ! -f "$VMXFILE" ]]; then
 fi
 
 # Generate serial and MLB
-input=$("$MACSERIAL_PATH" -m iMac19,2 -n 1 $(date +"-w %U -y 2020"))
+input=$("$MACSERIAL_PATH" -m iMac19,2 -n 1 -w $(shuf -i 1-53 -n 1) -y 2020)
 
 # Check if macserial executed successfully
 if [[ $? -ne 0 ]]; then
