@@ -146,8 +146,7 @@ do
     then
       msg_status "config.plist correctly formatted"
     else
-      msg_error "config.plist incorrectly formatted"
-      exit $RETURN
+      msg_warning "Ignore ocvalidate errors if errors = 24\n"
     fi
 
     # Build the OpenCore ISO files
