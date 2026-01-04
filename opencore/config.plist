@@ -686,6 +686,54 @@
 			<string>Apple Inc.</string>
 			<key>BIOSVersion</key>
 			<string>9999.999.999.999.999</string>
+			<key>BoardAssetTag</key>
+			<string></string>
+			<key>BoardLocationInChassis</key>
+			<string></string>
+			<key>BoardManufacturer</key>
+			<string></string>
+			<key>BoardProduct</key>
+			<string></string>
+			<key>BoardSerialNumber</key>
+			<string></string>
+			<key>BoardType</key>
+			<integer>0</integer>
+			<key>BoardVersion</key>
+			<string></string>
+			<key>ChassisAssetTag</key>
+			<string></string>
+			<key>ChassisManufacturer</key>
+			<string></string>
+			<key>ChassisSerialNumber</key>
+			<string></string>
+			<key>ChassisType</key>
+			<integer>0</integer>
+			<key>ChassisVersion</key>
+			<string></string>
+			<key>FirmwareFeatures</key>
+			<data></data>
+			<key>FirmwareFeaturesMask</key>
+			<data></data>
+			<key>PlatformFeature</key>
+			<integer>32</integer>
+			<key>ProcessorType</key>
+			<integer>0</integer>
+			<key>SmcVersion</key>
+			<data></data>
+			<key>SystemFamily</key>
+			<string></string>
+			<key>SystemManufacturer</key>
+			<string></string>
+			<key>SystemProductName</key>
+			<string></string>
+			<key>SystemSKUNumber</key>
+			<string></string>
+			<key>SystemSerialNumber</key>
+			<string></string>
+			<key>SystemUUID</key>
+			<string></string>
+			<key>SystemVersion</key>
+			<string></string>
 		</dict>        
         <key>UpdateDataHub</key>
         <false/>
