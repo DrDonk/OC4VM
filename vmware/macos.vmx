@@ -39,7 +39,7 @@ usb_xhci:0.mode = "independent-persistent"
 usb_xhci:0.parent = "-1"
 usb_xhci:0.port = "0"
 usb_xhci:0.present = "TRUE"
-usb_xhci:0.readonly = "TRUE"
+usb_xhci:0.readonly = "FALSE"
 usb_xhci:0.speed = "16"
 
 __Serial_Port_Settings__ = ""
