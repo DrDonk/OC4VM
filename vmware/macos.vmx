@@ -30,7 +30,7 @@ featMask.vm.cpuid.RDRAND = "Min:1"        # Check RDRAND support in CPU (mix of 
 hypervisor.cpuid.v0 = "TRUE"              # VMM bit is set
 vhv.enable = "FALSE"                      # Disable nested virtualisation
 vpmc.enable = "FALSE"                     # Disable virtual performance counters
-vvtd.enable = "FALSE"                     # Disbale virtual VT-D
+vvtd.enable = "FALSE"                     # Disable virtual VT-D
 
 __Hidden_USB_BOOT_Device__ = ""
 usb_xhci:0.deviceType = "disk"
