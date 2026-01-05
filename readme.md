@@ -38,7 +38,12 @@ with these guest OSes:
 * Sequoia
 * Tahoe
 
+> [!WARNING]
+> Tahoe support is limited. It works but there is no way to have Liquid Glass effects work.
+> Sound support must be added post-installation.
+
 using:
+
 * VMware Fusion Pro 25H2
 * VMware Workstation Pro 25H2 (Windows and Linux)
 
