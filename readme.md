@@ -15,6 +15,8 @@ It is also a replacement for the Unlocker and does not require patching VMware, 
 is not the primary purpose of OC4VM which was originally created to fix issues on VMware
 Fusion when running macOS guests.
 
+### For more information see the [Wiki](https://github.com/DrDonk/OC4VM/wiki/Home)
+
 ## 2. Functionality
 What OC4VM can do?
 * Run macOS on Intel CPUs
@@ -136,7 +138,8 @@ VMware VMX file. Details are in the
 Building must be done on macOS, either real or virtualized. Details are in the
 [building](https://github.com/DrDonk/OC4VM/wiki/Building-OC4VM) help.
 
-There are also some [notes](https://github.com/DrDonk/OC4VM/wiki/Notes) I created when building OCVM which may be useful to others who want to better understand the system or modify it.
+There are also some [notes](https://github.com/DrDonk/OC4VM/wiki/Notes) I created when building OCVM 
+which may be useful to others who want to better understand the system or modify it.
 
 ## 6. Support
 If you are trying a specific combination, hypervisor/CPU/OS, please start a discussion instead
