@@ -39,8 +39,8 @@ with these guest OSes:
 * Tahoe
 
 > [!WARNING]
-> Tahoe support is limited. It works but there is no way to have Liquid Glass effects work.
-> Sound support must be added post-installation.
+> Tahoe support is limited and not recommended. It works but peformance is poor. There is no way to have Liquid Glass effects work and
+> sound support must be added post-installation.
 
 using:
 
