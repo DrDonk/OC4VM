@@ -18,6 +18,17 @@ Fusion when running macOS guests.
 ### For more information see the [Wiki](https://github.com/DrDonk/OC4VM/wiki/Home)
 
 ## 2. Functionality
+
+The OC4VM system has been tested on an Intel Mac mini (Late 2014) and an AMD Ryzen based HP T740
+with these guest OSes:
+
+* Big Sur
+* Monterey
+* Ventura
+* Sonoma
+* Sequoia
+* Tahoe
+
 What OC4VM can do?
 * Run macOS on Intel CPUs
 * Run macOS on AMD CPUs
@@ -28,15 +39,7 @@ What OC4VM cannot do:
 * Boot Intel macOS on an Apple Silicon CPU
 * Use the Apple para-virtualised GPU on non-Apple hardware
 * Use the Apple para-virtualised GPU on older Macs using OCLP and macOS Sonoma or later
-
-The OC4VM system has been tested on an Intel Mac mini (Late 2014) and an AMD Ryzen based HP T740
-with these guest OSes:
-* Big Sur
-* Monterey
-* Ventura
-* Sonoma
-* Sequoia
-* Tahoe
+* Enable Tahoe Liquid Glass
 
 > [!WARNING]
 > Tahoe support is limited and not recommended. It works but peformance is poor. There is no way to have Liquid Glass effects work and
@@ -71,8 +74,8 @@ OC4VM has 6 sub-folders:
 |:-----------|-------------------------------------------------------|
 | config     | OpenCore config.plist files for reference             |
 | disks      | OpenCore boot variants in DMG and VMDK formats        |
-| docs       | Documents in HTML format                              |
 | iso        | VMware Mac OS X and macOS guest tools iso images      |
+| packages   | Post install packages                                 |
 | tools      | OC4VM tools                                           |
 | vmware     | Template VMs for VMware                               |
 
@@ -96,7 +99,7 @@ Each folder contains these files:
 
 #### 3.3.1 New VM
 To create a new virtual machine copy either the Intel or AMD template to a new folder.
-Open the VM in the new folder in VMware. Change any memory settings you may need.
+Open the VM in the new folder in VMware.
 
 You will need to add some installation media to the new VM to install macOS, and set the
 ISO or virtual disk to point to the installation media.
@@ -107,7 +110,7 @@ Power on and install macOS as normal.
 Please follow these instructions to add to an existing macOS guest.
 
 1. Make sure the VM is shutdown.
-2. Copy the opencore.iso from the template folder to the existing VMs folder.
+2. Copy the opencore.iso from the new release template folder to the existing VMs folder.
 
 #### 3.3.3 Upgrading OC4VM 1.x macOS VM
 To upgrade a pre-2.0 VM you will need to do these steps:
@@ -128,10 +131,6 @@ install the tools.
 ### 3.5 OC4VM Guest & Host Tools
 There are tools written specially for use in the macOS guest and on the host machine. 
 They are documented in the [tools](https://github.com/DrDonk/OC4VM/wiki/OC4VM-Tools) help.
-
-### 3.6 VMware macOS Guest Setting
-VMware on Linux and Windows cannot edit the guestOS setting to another version of mac OS X/macOS.
-Please use the macguest program in the tools/host folder to manage this setting.  
 
 ## 4. Spoofing the Virtual Apple Mac
 If you want to make the VM look like a specific Mac model the settings can be configued in the
@@ -160,22 +159,24 @@ Most importantly let us be supportive of each other with respectful discussions.
 
 ## 7. Other Projects
 
-* recoveryOS - https://github.com/drdonk/recoveryos
-* unlocker - https://github.com/drdonk/unlocker
-* vmxtool - https://github.com/drdonk/vmxtool
+* [recoveryOS](https://github.com/drdonk/recoveryos)
+* [unlocker](https://github.com/drdonk/unlocker)
+* [vmxtool](https://github.com/drdonk/vmxtool)
 
 ## 8. Thanks
 
 Many thanks to the great developers and community around the OpenCore scene. The OC4VM
 package uses the following:
 
-* OpenCore - https://github.com/acidanthera/OpenCorePkg
-* Lilu - https://github.com/acidanthera/Lilu
-* DebugEnhancer - https://github.com/acidanthera/DebugEnhancer
-* VirtualSMC - https://github.com/acidanthera/VirtualSMC
-* AMD_Vanilla - https://github.com/AMD-OSX/AMD_Vanilla
-* minijinja - https://github.com/mitsuhiko/minijinja
-* stoml - https://github.com/freshautomations/stoml
+* [OpenCore](https://github.com/acidanthera/OpenCorePkg)
+* [Lilu](https://github.com/acidanthera/Lilu)
+* [DebugEnhancer](https://github.com/acidanthera/DebugEnhancer)
+* [VirtualSMC](https://github.com/acidanthera/VirtualSMC)
+* [AMD_Vanilla](https://github.com/AMD-OSX/AMD_Vanilla)
+* [minijinja](https://github.com/mitsuhiko/minijinja)
+* [stoml](https://github.com/freshautomations/stoml)
+* [VoodooHDA](https://github.com/CloverHackyColor/VoodooHDA)
+* [VoodooHDA](https://github.com/chris1111/VoodooHDA-Tahoe)
 
 Also thanks to the testers who helped me out with the project.
 
