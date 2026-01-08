@@ -5,10 +5,11 @@ Changelogs can also be found online https://github.com/DrDonk/OC4VM/releases
 All dates are UK DD/MM/YY format.
 ## xx/01/26 2.0.x
 * Docs migrated to GitHub wiki
-* Virtual USB drive for opencore.iso defined as disk and writable
+* Virtual USB drive for opencore.iso optionally defined as disk and writable
 * Windows regen command now a batch file to avoid Powershell issues
 * VoodooHDA installer package added to packages folder
 * SMBIOS settings added to OpenCore to present an Apple compatible BIOS version
+* Mouse enabled in boot picker
 
 ## 16/12/25 2.0.0
 **All spoofing of hardware should use iMac 2019 to ensure maximum compatibilty with macOS upgrades
