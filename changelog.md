@@ -9,7 +9,6 @@ All dates are UK DD/MM/YY format.
 * Windows regen command now a batch file to avoid Powershell issues
 * VoodooHDA installer package added to packages folder
 * SMBIOS settings added to OpenCore to present an Apple compatible BIOS version
-* Mouse enabled in boot picker
 
 ## 16/12/25 2.0.0
 **All spoofing of hardware should use iMac 2019 to ensure maximum compatibilty with macOS upgrades
