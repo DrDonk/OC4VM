@@ -114,7 +114,7 @@ Please follow these instructions to add to an existing macOS guest.
 
 #### 3.3.3 Upgrading OC4VM 1.x macOS VM
 To upgrade a pre-2.0 VM you will need to do these steps. There is no simpkle upgrade scriopt available
-to do this as it may be toorisky to automate.
+to do this as it may be too risky to automate.
 
 1. Make sure the VM is shutdown and remove any snapshots.
 2. Take a backup of the VM folder.
