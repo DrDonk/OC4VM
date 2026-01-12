@@ -113,9 +113,10 @@ Please follow these instructions to add to an existing macOS guest.
 2. Copy the opencore.iso from the new release template folder to the existing VMs folder.
 
 #### 3.3.3 Upgrading OC4VM 1.x macOS VM
-To upgrade a pre-2.0 VM you will need to do these steps:
+To upgrade a pre-2.0 VM you will need to do these steps. There is no simpkle upgrade scriopt available
+to do this as it may be toorisky to automate.
 
-1. Make sure the VM is shutdown.
+1. Make sure the VM is shutdown and remove any snapshots.
 2. Take a backup of the VM folder.
 3. Copy a template from the distribution folder.
 4. Copy the old guest's macos.vmdk to the new folder.
