@@ -36,7 +36,6 @@ build_dmg() {
     # Make a copy of base image and ESXi descriptor file
     mkdir -v -p $1
     cp -v ./opencore/dmg/$2/opencore.iso $1/
-    cp -v ./vmware/opencore.vmdk $1
 
     # Attach blank DMG and create OC setup
     hdiutil attach $1/opencore.iso -noverify -nobrowse -noautoopen
@@ -190,7 +189,7 @@ msg_status "\nStep 5. Copying misc files"
 cp -v LICENSE ./build/
 cp -vr ./iso ./build/
 cp -vr ./packages ./build/
-
+cp -v ./vmware/opencore.vmdk ./build/disks/opencore.vmdk
 msg_status "\nStep 6. Zipping OC4VM Release"
 rm ./dist/oc4vm-$VERSION.* 2>&1 >/dev/null
 7z a ./dist/oc4vm-$VERSION.zip ./build/*
