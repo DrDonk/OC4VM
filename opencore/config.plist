@@ -793,46 +793,46 @@
 			<integer>1</integer>
 		</dict>
 		<key>Audio</key>
-		<dict>
-			<key>AudioCodec</key>
-			<integer>0</integer>
-			<key>AudioDevice</key>
-			<string>PciRoot(0x0)/Pci(0x1b,0x0)</string>
-			<key>AudioOutMask</key>
-			<integer>1</integer>
-			<key>AudioSupport</key>
-			<false/>
-			<key>DisconnectHda</key>
-			<false/>
-			<key>MaximumGain</key>
-			<integer>-15</integer>
-			<key>MinimumAssistGain</key>
-			<integer>-30</integer>
-			<key>MinimumAudibleGain</key>
-			<integer>-55</integer>
-			<key>PlayChime</key>
-			<string>Auto</string>
-			<key>ResetTrafficClass</key>
-			<false/>
-			<key>SetupDelay</key>
-			<integer>0</integer>
-		</dict>
+        <dict>
+            <key>AudioCodec</key>
+            <integer>0</integer>
+            <key>AudioDevice</key>
+            <string>PciRoot(0x0)/Pci(0x11,0x0)/Pci(0x1,0x0)</string>
+            <key>AudioOutMask</key>
+            <integer>-1</integer>
+            <key>AudioSupport</key>
+            <true/>
+            <key>DisconnectHda</key>
+            <false/>
+            <key>MaximumGain</key>
+            <integer>-15</integer>
+            <key>MinimumAssistGain</key>
+            <integer>-30</integer>
+            <key>MinimumAudibleGain</key>
+            <integer>-55</integer>
+            <key>PlayChime</key>
+            <string>Auto</string>
+            <key>ResetTrafficClass</key>
+            <false/>
+            <key>SetupDelay</key>
+            <integer>0</integer>
+        </dict>
 		<key>ConnectDrivers</key>
 		<true/>
 		<key>Drivers</key>
 		<array>
-			<dict>
-				<key>Arguments</key>
-				<string></string>
-				<key>Comment</key>
-				<string></string>
-				<key>Enabled</key>
-				<true/>
-				<key>LoadEarly</key>
-				<false/>
-				<key>Path</key>
-				<string>OpenPartitionDxe.efi</string>
-			</dict>
+    		<dict>
+    			<key>Arguments</key>
+    			<string></string>
+    			<key>Comment</key>
+    			<string></string>
+    			<key>Enabled</key>
+    			<true/>
+    			<key>LoadEarly</key>
+    			<false/>
+    			<key>Path</key>
+    			<string>AudioDxe.efi</string>
+    		</dict>
 			<dict>
 				<key>Arguments</key>
 				<string></string>
@@ -855,7 +855,7 @@
 				<key>LoadEarly</key>
 				<false/>
 				<key>Path</key>
-				<string>OpenRuntime.efi</string>
+				<string>OpenCanopy.efi</string>
 			</dict>
 			<dict>
 				<key>Arguments</key>
@@ -867,7 +867,19 @@
 				<key>LoadEarly</key>
 				<false/>
 				<key>Path</key>
-				<string>OpenCanopy.efi</string>
+				<string>OpenPartitionDxe.efi</string>
+			</dict>
+			<dict>
+				<key>Arguments</key>
+				<string></string>
+				<key>Comment</key>
+				<string></string>
+				<key>Enabled</key>
+				<true/>
+				<key>LoadEarly</key>
+				<false/>
+				<key>Path</key>
+				<string>OpenRuntime.efi</string>
 			</dict>
 		</array>
 		<key>Input</key>
