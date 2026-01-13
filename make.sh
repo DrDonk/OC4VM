@@ -36,6 +36,7 @@ build_dmg() {
     # Make a copy of base image and ESXi descriptor file
     mkdir -v -p $1
     cp -v ./opencore/dmg/$2/opencore.iso $1/
+    cp -v ./vmware/opencore.vmdk $1
 
     # Attach blank DMG and create OC setup
     hdiutil attach $1/opencore.iso -noverify -nobrowse -noautoopen
@@ -166,7 +167,6 @@ do
     cp -v ./vmware/macos.plist ./build/vmware/$VARIANT 2>&1 >/dev/null
     cp -v ./vmware/macos.vmdk ./build/vmware/$VARIANT 2>&1 >/dev/null
     cp -v ./vmware/macos.nvram ./build/vmware/$VARIANT 2>&1 >/dev/null
-    cp -v ./vmware/opencore.vmdk ./build/vmware/$VARIANT 2>&1 >/dev/null
     cp -v ./build/disks/$VARIANT/opencore.iso ./build/vmware/$VARIANT
 
     if [[ $VARIANT == 'amd' ]]; then
