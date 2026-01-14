@@ -13,6 +13,7 @@ __macOS_Settings__ = ""
 guestOS = "darwin24-64"                   # Set macOS guest version
 smc.present = "FALSE"                     # SMC is emulated in OpenCore
 system-id.enable = "TRUE"                 # Pass system UUID into guest
+usb.quirks.darwinVendor45 = "FALSE"       # Disable Apple specific USB processing
 
 __CPU_Settings__ = ""
 cpuid.coresPerSocket = "2"
