@@ -172,7 +172,8 @@ do
     cp -v ./vmware/macos.plist ./build/vmware/$VARIANT 2>&1 >/dev/null
     cp -v ./vmware/macos.vmdk ./build/vmware/$VARIANT 2>&1 >/dev/null
     cp -v ./vmware/macos.nvram ./build/vmware/$VARIANT 2>&1 >/dev/null
-    cp -v ./build/disks/$VARIANT/opencore.iso ./build/vmware/$VARIANT
+    cp -v ./vmware/opencore.vmdk ./build/vmware/$VARIANT 2>&1 >/dev/null
+    cp -v ./build/disks/$VARIANT/opencore.iso ./build/vmware/$VARIANT 2>&1 >/dev/null
 
     if [[ $VARIANT == 'amd' ]]; then
         AMD=1
@@ -195,7 +196,7 @@ msg_status "\nStep 5. Copying misc files"
 cp -v LICENSE ./build/
 cp -vr ./iso ./build/
 cp -vr ./packages ./build/
-cp -v ./vmware/opencore.vmdk ./build/disks/opencore.vmdk
+
 msg_status "\nStep 6. Zipping OC4VM Release"
 rm ./dist/oc4vm-$VERSION.* 2>&1 >/dev/null
 7z a ./dist/oc4vm-$VERSION.zip ./build/*
