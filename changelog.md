@@ -4,8 +4,10 @@ Changelogs can also be found online https://github.com/DrDonk/OC4VM/releases
 
 All dates are UK DD/MM/YY format.
 
-## dd/01/26 2.0.2
+## 19/01/26 2.0.2
 * Fix a VMware issue with Nvidia GPUs and 25H2
+* Added kern.hv_vmm_present patches needed for Apple services
+* Added recoveryOS binaries to the release for easier macOS setup
 
 ## 16/01/26 2.0.1
 * Docs migrated to GitHub wiki
