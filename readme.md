@@ -1,5 +1,7 @@
 # OC4VM - OpenCore for VMware
 
+# For more information see the [Wiki](https://github.com/DrDonk/OC4VM/wiki/Home)
+
 ## 1. Introduction
 OpenCore for VMware (OC4VM) has been built to run macOS VMs primarily on Intel
 based Apple Macs. It may also be used on other PC hardware using VMware Workstation. It
@@ -14,8 +16,6 @@ older Apple Mac computers.
 It is also a replacement for the Unlocker and does not require patching VMware, but that
 is not the primary purpose of OC4VM which was originally created to fix issues on VMware
 Fusion when running macOS guests.
-
-### For more information see the [Wiki](https://github.com/DrDonk/OC4VM/wiki/Home)
 
 ## 2. Functionality
 
