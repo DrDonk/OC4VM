@@ -63,12 +63,8 @@ uefi.secureBoot.dbxDefault.present = "FALSE"
 uefi.secureBoot.KEKDefault.present = "FALSE"
 uefi.secureBoot.PKDefault.present = "FALSE"
 
-
 __VMware_Build__ = ""
 vmx.buildType = "release"                # VMware build release/debug/stats
-
-__Fixes__ = ""
-mks.enableVulkanPresentation = "FALSE"   # Host VMware issue in 25H2
 
 __Standard_Fusion_macOS_VMX__ = ""
 config.version = "8"
