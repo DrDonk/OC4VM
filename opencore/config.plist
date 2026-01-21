@@ -641,6 +641,10 @@
 				<string>OC4VM_VERSION</string>
 				<string>OC4VM COMMIT</string>
 			</array>
+			<key>7C436110-AB2A-4BBB-A880-FE41995C9F82</key>
+			<array>
+				<string>boot-args</string>
+			</array>
 		</dict>
 		<key>LegacyOverwrite</key>
 		<false/>
