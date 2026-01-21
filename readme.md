@@ -133,12 +133,7 @@ install the tools.
 There are tools written specially for use in the macOS guest and on the host machine. 
 They are documented in the [tools](https://github.com/DrDonk/OC4VM/wiki/OC4VM-Tools) help.
 
-## 4. Spoofing the Virtual Apple Mac
-If you want to make the VM look like a specific Mac model the settings can be configued in the
-VMware VMX file. Details are in the 
-[spoofing](https://github.com/DrDonk/OC4VM/wiki/Spoofing-A-Real-Mac) help.
-
-## 5. Building OC4VM
+## 4. Building OC4VM
 
 Building must be done on macOS, either real or virtualized. Details are in the
 [building](https://github.com/DrDonk/OC4VM/wiki/Building-OC4VM) help.
@@ -146,7 +141,7 @@ Building must be done on macOS, either real or virtualized. Details are in the
 There are also some [notes](https://github.com/DrDonk/OC4VM/wiki/Notes) I created when building OCVM 
 which may be useful to others who want to better understand the system or modify it.
 
-## 6. Support
+## 5. Support
 If you are trying a specific combination, hypervisor/CPU/OS, please start a discussion instead
 of an issue. It is impossible for us to test all combinations out there and so
 discussions are a better place to help one another. If an actual bug or enhancement
@@ -158,13 +153,13 @@ to help diagnose the issue.
 
 Most importantly let us be supportive of each other with respectful discussions.
 
-## 7. Other Projects
+## 6. Other Projects
 
 * [recoveryOS](https://github.com/drdonk/recoveryos)
 * [unlocker](https://github.com/drdonk/unlocker)
 * [vmxtool](https://github.com/drdonk/vmxtool)
 
-## 8. Thanks
+## 7. Thanks
 
 Many thanks to the great developers and community around the OpenCore scene. The OC4VM
 package uses the following:

@@ -85,9 +85,6 @@ chmod +x ./build/tools/guest/*
 # Build host tools
 # - Linux
 run_jinja ./tools/host/common/macguest.sh ./build/tools/linux/macguest.sh
-run_jinja ./tools/host/common/regen.sh ./build/tools/linux/regen.sh
-run_jinja ./tools/host/common/cloak.sh ./build/tools/linux/cloak.sh
-run_jinja ./tools/host/common/uncloak.sh ./build/tools/linux/uncloak.sh
 cp -v ./tools/host/linux/cpuid ./build/tools/linux/cpuid
 cp -v ./tools/host/linux/macserial ./build/tools/linux/macserial
 cp -v ./tools/host/linux/macrecovery ./build/tools/linux/macrecovery
@@ -97,9 +94,6 @@ chmod +x ./build/tools/linux/*
 
 # - macOS
 run_jinja ./tools/host/common/macguest.sh ./build/tools/macos/macguest.sh
-run_jinja ./tools/host/common/regen.sh ./build/tools/macos/regen.sh
-run_jinja ./tools/host/common/cloak.sh ./build/tools/macos/cloak.sh
-run_jinja ./tools/host/common/uncloak.sh ./build/tools/macos/uncloak.sh
 cp -v ./tools/host/macos/cpuid ./build/tools/macos/cpuid
 cp -v ./tools/host/macos/macserial ./build/tools/macos/macserial
 cp -v ./tools/host/macos/macrecovery ./build/tools/macos/macrecovery
@@ -108,9 +102,6 @@ cp -v ./tools/host/macos/vmxtool ./build/tools/macos/vmxtool
 chmod +x ./build/tools/macos/*
 
 # - Windows
-run_jinja ./tools/host/windows/regen.cmd ./build/tools/windows/regen.cmd
-run_jinja ./tools/host/windows/cloak.cmd ./build/tools/windows/cloak.cmd
-run_jinja ./tools/host/windows/uncloak.cmd ./build/tools/windows/uncloak.cmd
 cp -v ./tools/host/windows/cpuid.exe ./build/tools/windows/cpuid.exe
 cp -v ./tools/host/windows/macguest.exe ./build/tools/windows/macguest.exe
 cp -v ./tools/host/windows/macserial.exe ./build/tools/windows/macserial.exe
