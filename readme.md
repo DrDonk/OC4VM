@@ -48,7 +48,7 @@ What OC4VM cannot do:
 using:
 
 * VMware Fusion Pro 25H2
-* VMware Workstation Pro 25H2 (Windows and Linux)
+* VMware Workstation Pro 17.6 and 25H2 (Windows and Linux)
 
 CPUs will need to support the following instructions:
 
