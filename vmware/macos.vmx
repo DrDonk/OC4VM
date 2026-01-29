@@ -124,7 +124,7 @@ usb_xhci.present = "TRUE"
 usb.present = "TRUE"
 usb.vbluetooth.startConnected = "FALSE"
 virtualHW.productCompatibility = "hosted"
-virtualHW.version = "22"
+virtualHW.version = "21"
 vmci0.present = "TRUE"
 
 __VMware_added_settings__ = ""
