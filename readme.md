@@ -172,7 +172,7 @@ package uses the following:
 * [minijinja](https://github.com/mitsuhiko/minijinja)
 * [stoml](https://github.com/freshautomations/stoml)
 * [VoodooHDA](https://github.com/CloverHackyColor/VoodooHDA)
-* [VoodooHDA](https://github.com/chris1111/VoodooHDA-Tahoe)
+* [VoodooHDA for Tahoe](https://github.com/chris1111/VoodooHDA-Tahoe)
 
 Also thanks to the testers who helped me out with the project.
 
