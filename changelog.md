@@ -4,6 +4,9 @@ Changelogs can also be found online https://github.com/DrDonk/OC4VM/releases
 
 All dates are UK DD/MM/YY format.
 
+## xx/03/26 2.5.1
+* RestrictEvents added for VMM checks
+
 ## 21/01/26 2.5.0
 * Remove all spoofing code and patches
 
