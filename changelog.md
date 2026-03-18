@@ -4,8 +4,9 @@ Changelogs can also be found online https://github.com/DrDonk/OC4VM/releases
 
 All dates are UK DD/MM/YY format.
 
-## xx/03/26 2.5.1
-* RestrictEvents added for VMM checks
+## 18/03/26 2.5.1
+* Fixed recoveryOS not finding macrecovery on Windows
+* Remove hypervisor.cpuid.v0 setting as it is related to VMware on Hyper-V and modifies VM behaviour 
 
 ## 21/01/26 2.5.0
 * Remove all spoofing code and patches
