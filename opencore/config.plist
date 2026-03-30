@@ -643,7 +643,7 @@
 				<key>OC4VM COMMIT</key>
 				<string>{{COMMIT}}</string>
 				<key>revpatch</key>
-				<string>none</string>
+				<string>sbvmm,asset</string>
 			</dict>
 		    <key>AC20C489-DD86-4E99-992C-B7C742C1DDA9</key>
 			<dict>
