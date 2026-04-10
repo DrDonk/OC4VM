@@ -76,8 +76,10 @@ mkdir -p ./build/tools/macos 2>&1 >/dev/null
 mkdir -p ./build/tools/windows 2>&1 >/dev/null
 
 # Build guest tools
-run_jinja ./tools/guest/shrinkdisk ./build/tools/guest/shrinkdisk
+run_jinja ./tools/guest/diskshrink ./build/tools/guest/diskshrink
 run_jinja ./tools/guest/sysinfo ./build/tools/guest/sysinfo
+run_jinja ./tools/guest/cloak.sh ./build/tools/guest/cloak.sh
+run_jinja ./tools/guest/uncloak.sh ./build/tools/guest/uncloak.sh
 cp -v ./tools/guest/macserial ./build/tools/guest/macserial
 cp -v ./tools/guest/cpuid ./build/tools/guest/cpuid
 chmod +x ./build/tools/guest/*
@@ -86,8 +88,6 @@ chmod +x ./build/tools/guest/*
 # - Linux
 run_jinja ./tools/host/common/macguest.sh ./build/tools/linux/macguest.sh
 run_jinja ./tools/host/common/regen.sh ./build/tools/linux/regen.sh
-run_jinja ./tools/host/common/cloak.sh ./build/tools/linux/cloak.sh
-run_jinja ./tools/host/common/uncloak.sh ./build/tools/linux/uncloak.sh
 cp -v ./tools/host/linux/cpuid ./build/tools/linux/cpuid
 cp -v ./tools/host/linux/macserial ./build/tools/linux/macserial
 cp -v ./tools/host/linux/macrecovery ./build/tools/linux/macrecovery
@@ -98,8 +98,6 @@ chmod +x ./build/tools/linux/*
 # - macOS
 run_jinja ./tools/host/common/macguest.sh ./build/tools/macos/macguest.sh
 run_jinja ./tools/host/common/regen.sh ./build/tools/macos/regen.sh
-run_jinja ./tools/host/common/cloak.sh ./build/tools/macos/cloak.sh
-run_jinja ./tools/host/common/uncloak.sh ./build/tools/macos/uncloak.sh
 cp -v ./tools/host/macos/cpuid ./build/tools/macos/cpuid
 cp -v ./tools/host/macos/macserial ./build/tools/macos/macserial
 cp -v ./tools/host/macos/macrecovery ./build/tools/macos/macrecovery
@@ -109,8 +107,6 @@ chmod +x ./build/tools/macos/*
 
 # - Windows
 run_jinja ./tools/host/windows/regen.cmd ./build/tools/windows/regen.cmd
-run_jinja ./tools/host/windows/cloak.cmd ./build/tools/windows/cloak.cmd
-run_jinja ./tools/host/windows/uncloak.cmd ./build/tools/windows/uncloak.cmd
 cp -v ./tools/host/windows/cpuid.exe ./build/tools/windows/cpuid.exe
 cp -v ./tools/host/windows/macguest.exe ./build/tools/windows/macguest.exe
 cp -v ./tools/host/windows/macserial.exe ./build/tools/windows/macserial.exe
