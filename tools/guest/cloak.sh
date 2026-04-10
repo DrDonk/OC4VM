@@ -11,3 +11,5 @@ echo "OC4VM cloak"
 echo "-----------"
 echo "Cloaking the VM..."
 sudo nvram 4D1FDA02-38C7-4A6A-9CC6-4BCCA8B30102:revpatch=sbvmm,asset,novmm
+nvram 4D1FDA02-38C7-4A6A-9CC6-4BCCA8B30102:revpatch
+echo "Now reboot to VM"
