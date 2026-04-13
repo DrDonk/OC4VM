@@ -97,9 +97,9 @@ if "%rom%"=="" (
 )
 
 REM Display the changes
-echo OC4VM regen
+echo OC4VM sppof
 echo -----------
-echo Regenerating Mac identifiers...
+echo Spoofing iMac identifiers...
 echo Adding these settings to VMX file:
 echo.
 echo __Apple_Model_Start__ = "iMac 2019"

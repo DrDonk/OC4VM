@@ -46,6 +46,7 @@ msg_status "Deleting temporary zero filled file"
 rm ~/zerofile
 sync
 sleep 5
+
 msg_warning "VMware disk shrinking started"
 /Library/Application\ Support/VMware\ Tools/vmware-tools-daemon --cmd="disk.shrink"
 msg_status "VMware disk shrinking completed"

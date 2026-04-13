@@ -88,9 +88,9 @@ if [[ -z "$rom" ]]; then
 fi
 
 # Do the change
-echo "OC4VM regen"
+echo "OC4VM spoof"
 echo "-----------"
-echo "Regenerating Mac identifiers..."
+echo "Spoofing iMac identifiers..."
 echo "Adding these settings to VMX file:"
 echo ""
 echo "__Apple_Model_Start__ = \"iMac 2019\""

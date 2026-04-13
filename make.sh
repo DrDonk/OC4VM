@@ -76,8 +76,8 @@ mkdir -p ./build/tools/macos 2>&1 >/dev/null
 mkdir -p ./build/tools/windows 2>&1 >/dev/null
 
 # Build guest tools
-run_jinja ./tools/guest/diskshrink ./build/tools/guest/diskshrink
-run_jinja ./tools/guest/sysinfo ./build/tools/guest/sysinfo
+run_jinja ./tools/guest/diskshrink.sh ./build/tools/guest/diskshrink.sh
+run_jinja ./tools/guest/sysinfo.sh ./build/tools/guest/sysinfo.sh
 run_jinja ./tools/guest/cloak.sh ./build/tools/guest/cloak.sh
 run_jinja ./tools/guest/uncloak.sh ./build/tools/guest/uncloak.sh
 cp -v ./tools/guest/macserial ./build/tools/guest/macserial
@@ -87,7 +87,7 @@ chmod +x ./build/tools/guest/*
 # Build host tools
 # - Linux
 run_jinja ./tools/host/common/macguest.sh ./build/tools/linux/macguest.sh
-run_jinja ./tools/host/common/regen.sh ./build/tools/linux/regen.sh
+run_jinja ./tools/host/common/spoof.sh ./build/tools/linux/spoof.sh
 cp -v ./tools/host/linux/cpuid ./build/tools/linux/cpuid
 cp -v ./tools/host/linux/macserial ./build/tools/linux/macserial
 cp -v ./tools/host/linux/macrecovery ./build/tools/linux/macrecovery
@@ -97,7 +97,7 @@ chmod +x ./build/tools/linux/*
 
 # - macOS
 run_jinja ./tools/host/common/macguest.sh ./build/tools/macos/macguest.sh
-run_jinja ./tools/host/common/regen.sh ./build/tools/macos/regen.sh
+run_jinja ./tools/host/common/spoof.sh ./build/tools/macos/spoof.sh
 cp -v ./tools/host/macos/cpuid ./build/tools/macos/cpuid
 cp -v ./tools/host/macos/macserial ./build/tools/macos/macserial
 cp -v ./tools/host/macos/macrecovery ./build/tools/macos/macrecovery
@@ -106,7 +106,7 @@ cp -v ./tools/host/macos/vmxtool ./build/tools/macos/vmxtool
 chmod +x ./build/tools/macos/*
 
 # - Windows
-run_jinja ./tools/host/windows/regen.cmd ./build/tools/windows/regen.cmd
+run_jinja ./tools/host/windows/spoof.cmd ./build/tools/windows/spoof.cmd
 cp -v ./tools/host/windows/cpuid.exe ./build/tools/windows/cpuid.exe
 cp -v ./tools/host/windows/macguest.exe ./build/tools/windows/macguest.exe
 cp -v ./tools/host/windows/macserial.exe ./build/tools/windows/macserial.exe
