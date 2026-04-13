@@ -77,6 +77,7 @@ mkdir -p ./build/tools/windows 2>&1 >/dev/null
 
 # Build guest tools
 run_jinja ./tools/guest/diskshrink.sh ./build/tools/guest/diskshrink.sh
+run_jinja ./tools/guest/diskshrink.sh ./build/tools/guest/diskzero.sh
 run_jinja ./tools/guest/sysinfo.sh ./build/tools/guest/sysinfo.sh
 run_jinja ./tools/guest/cloak.sh ./build/tools/guest/cloak.sh
 run_jinja ./tools/guest/uncloak.sh ./build/tools/guest/uncloak.sh
