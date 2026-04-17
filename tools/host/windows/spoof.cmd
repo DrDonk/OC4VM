@@ -97,8 +97,8 @@ if "%rom%"=="" (
 )
 
 REM Display the changes
-echo OC4VM sppof
-echo -----------
+echo OC4VM iMactate
+echo --------------
 echo Spoofing iMac identifiers...
 echo Adding these settings to VMX file:
 echo.

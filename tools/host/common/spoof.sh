@@ -88,8 +88,8 @@ if [[ -z "$rom" ]]; then
 fi
 
 # Do the change
-echo "OC4VM spoof"
-echo "-----------"
+echo "OC4VM iMactate"
+echo "--------------"
 echo "Spoofing iMac identifiers..."
 echo "Adding these settings to VMX file:"
 echo ""
