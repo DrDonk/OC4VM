@@ -10,6 +10,7 @@ All dates are UK DD/MM/YY format.
 * Changed tool extensions to show what shell script they use; e.g. .zsh for ZSH scripts on macOS
 * Add ability to cloak VM from macOS using fork of RestrictEvents KEXT and new guest command cload/uncloak
 * Added spoof commands back to system after implementation of cloaking
+* New solarium command to manager visual effects in Liquid Glass.
 
 ## 18/03/26 2.5.1
 * Fixed recoveryOS not finding macrecovery on Windows
