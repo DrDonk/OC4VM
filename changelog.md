@@ -4,6 +4,13 @@ Changelogs can also be found online https://github.com/DrDonk/OC4VM/releases
 
 All dates are UK DD/MM/YY format.
 
+## xx/05/26
+* Updated to OpenCore 1.0.7 and latest KEXTs
+* Split shrinkdisk command into diskzero and diskshrink commands to fix VMware crash
+* Changed tool extensions to show what shell script they use; e.g. .zsh for ZSH scripts on macOS
+* Add ability to cloak VM from macOS using fork of RestrictEvents KEXT and new guest command cload/uncloak
+* Added spoof commands back to system after implementation of cloaking
+
 ## 18/03/26 2.5.1
 * Fixed recoveryOS not finding macrecovery on Windows
 * Remove hypervisor.cpuid.v0 setting as it is related to VMware on Hyper-V and modifies VM behaviour 
