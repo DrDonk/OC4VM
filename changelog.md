@@ -4,7 +4,7 @@ Changelogs can also be found online https://github.com/DrDonk/OC4VM/releases
 
 All dates are UK DD/MM/YY format.
 
-## xx/05/26
+## xx/05/26 3.0.0
 * Updated to OpenCore 1.0.7 and latest KEXTs
 * Split shrinkdisk command into diskzero and diskshrink commands to fix VMware crash
 * Changed tool extensions to show what shell script they use; e.g. .zsh for ZSH scripts on macOS
