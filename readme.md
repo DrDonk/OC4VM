@@ -158,6 +158,7 @@ Most importantly let us be supportive of each other with respectful discussions.
 * [recoveryOS](https://github.com/drdonk/recoveryos)
 * [unlocker](https://github.com/drdonk/unlocker)
 * [vmxtool](https://github.com/drdonk/vmxtool)
+* [restrictevents](https://github.com/drdonk/restrictevents)
 
 ## 7. Thanks
 
@@ -168,6 +169,7 @@ package uses the following:
 * [Lilu](https://github.com/acidanthera/Lilu)
 * [DebugEnhancer](https://github.com/acidanthera/DebugEnhancer)
 * [VirtualSMC](https://github.com/acidanthera/VirtualSMC)
+* [RestrictEvents](https://github.com/acidanthera/RestrictEvents)
 * [AMD_Vanilla](https://github.com/AMD-OSX/AMD_Vanilla)
 * [minijinja](https://github.com/mitsuhiko/minijinja)
 * [stoml](https://github.com/freshautomations/stoml)
