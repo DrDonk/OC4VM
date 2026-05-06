@@ -31,13 +31,11 @@ case "$1" in
         echo "Action: Enabling Liquid Glass (Solarium)..."
         FLAG="true"          # Solarium Enabled = true
         DISABLE_FLAG="false" # DisableSolarium = false
-        REDUCE_FLAG="false"  # Reduce Transparency/Motion = false
         ;;
     off)
         echo "Action: Disabling Liquid Glass (Solarium)..."
         FLAG="false"         # Solarium Enabled = false
         DISABLE_FLAG="true"  # DisableSolarium = true
-        REDUCE_FLAG="true"   # Reduce Transparency/Motion = true
         ;;
     *)
         echo "Usage: $0 {on|off|status}"
@@ -61,8 +59,6 @@ fi
 # 4. Apply Desktop appearance settings
 echo "Configuring Desktop appearance settings..."
 defaults write -g com.apple.SwiftUI.DisableSolarium -bool $DISABLE_FLAG
-defaults write com.apple.universalaccess reduceTransparency -bool $REDUCE_FLAG
-defaults write com.apple.universalaccess reduceMotion -bool $REDUCE_FLAG
 
 # 5. Apply FeatureFlag settings
 echo "Updating SwiftUI Solarium feature flags (root required)..."
