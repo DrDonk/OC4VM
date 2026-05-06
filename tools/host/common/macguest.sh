@@ -116,7 +116,7 @@ show_menu() {
 
     echo
     echo "Available macOS versions:"
-    echo "------------------------"
+    echo "-------------------------"
 
     local i=1
     for key in "${MACOS_KEYS[@]}"; do
