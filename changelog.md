@@ -8,7 +8,7 @@ All dates are UK DD/MM/YY format.
 * Updated to OpenCore 1.0.7 and latest KEXTs
 * Split shrinkdisk command into diskzero and diskshrink commands to fix VMware crash
 * Changed tool extensions to show what shell script they use; e.g. .zsh for ZSH scripts on macOS
-* Add ability to cloak VM from macOS using fork of RestrictEvents KEXT and new guest command cload/uncloak
+* Add ability to cloak VM from macOS using fork of RestrictEvents KEXT and new guest command cloak
 * Added spoof commands back to system after implementation of cloaking
 * New solarium command to manager visual effects in Liquid Glass.
 
