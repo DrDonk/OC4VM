@@ -80,7 +80,6 @@ run_jinja ./tools/guest/diskshrink.zsh ./build/tools/guest/diskshrink.zsh
 run_jinja ./tools/guest/diskzero.zsh ./build/tools/guest/diskzero.zsh
 run_jinja ./tools/guest/sysinfo.zsh ./build/tools/guest/sysinfo.zsh
 run_jinja ./tools/guest/cloak.zsh ./build/tools/guest/cloak.zsh
-run_jinja ./tools/guest/uncloak.zsh ./build/tools/guest/uncloak.zsh
 run_jinja ./tools/guest/solarium.zsh ./build/tools/guest/solarium.zsh
 cp -v ./tools/guest/macserial ./build/tools/guest/macserial
 cp -v ./tools/guest/cpuid ./build/tools/guest/cpuid
