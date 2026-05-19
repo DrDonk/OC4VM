@@ -16,8 +16,8 @@ system-id.enable = "TRUE"                 # Pass system UUID into guest
 usb.quirks.darwinVendor45 = "FALSE"       # Disable Apple specific USB processing
 
 __CPU_Settings__ = ""
-cpuid.coresPerSocket = "2"
-numvcpus = "2"
+cpuid.coresPerSocket = "1"
+numvcpus = "4"
 numa.autosize.once = "FALSE"              # Force NUMA node sizing at each boot
 {% if AMD == '1' -%}
 featMask.vm.cpuid.AMD = "Min:1"           # Check CPU as OC4VM has Intel and AMD variants
