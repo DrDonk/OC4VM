@@ -4,6 +4,11 @@ Changelogs can also be found online https://github.com/DrDonk/OC4VM/releases
 
 All dates are UK DD/MM/YY format.
 
+## xx/05/26 3.0.1
+* Better messages in cloak.zsh
+* Add bootargs.zsh to manage boot-args setting in config.plist
+* Modified config.plist to Update Datahub and NVRAM
+
 ## 06/05/26 3.0.0
 * Updated to OpenCore 1.0.7 and latest KEXTs
 * Split shrinkdisk command into diskzero and diskshrink commands to fix VMware crash
