@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
-# {{VERSION}}-{{COMMIT}}
+# 3.0.0-b85a2d3
 # SPDX-FileCopyrightText: © 2023-2026 David Parsons
 # SPDX-License-Identifier: MIT
 
@@ -29,6 +29,11 @@ case "$1" in
         echo "Checking Cloak status..."
         CURRENT_VAL=$(nvram "$NVRAM_KEY" 2>/dev/null)
         echo "Current NVRAM Value: ${CURRENT_VAL:-"Not Set"}"
+        if [[ "$CURRENT_VAL" =~ "novmm" ]]; then
+            echo "Cloaking is enabled"
+        else
+            echo "Cloaking is disabled"
+        fi
         ;;
     *)
         echo "Usage: $0 {on|off|status}"
