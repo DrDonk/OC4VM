@@ -1,0 +1,164 @@
+#!/usr/bin/env zsh
+# SPDX-FileCopyrightText: © 2026 David Parsons
+# SPDX-License-Identifier: MIT
+
+# tanoe.sh - Manage gdmf.apple.com in /etc/hosts
+# Usage: ./tanoe [on|off|status]
+
+# Enable debug mode if DEBUG environment variable is set to any non-empty value
+[[ -n "$DEBUG" ]] && set -x
+
+HOSTS_FILE="/etc/hosts"
+HOST_ENTRY="127.0.0.1 gdmf.apple.com"
+COMMENT="# Managed by tanoe"
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+# Function to check if entry exists
+check_status() {
+    if grep -q "^127\.0\.0\.1[[:space:]]*gdmf\.apple\.com" "$HOSTS_FILE" 2>/dev/null; then
+        return 0  # Entry exists
+    else
+        return 1  # Entry does not exist
+    fi
+}
+
+# Function to display current status
+show_status() {
+    if check_status; then
+        echo "${GREEN}✓ Status: ENABLED${NC}"
+        echo "  Entry '${HOST_ENTRY}' is present in ${HOSTS_FILE}"
+    else
+        echo "${YELLOW}✗ Status: DISABLED${NC}"
+        echo "  Entry '${HOST_ENTRY}' is not present in ${HOSTS_FILE}"
+    fi
+}
+
+
+# Function to check auto updates
+auto_update_off() {
+    auto=$(defaults read /Library/Preferences/com.apple.SoftwareUpdate AutomaticDownload)
+    if [[ $auto -eq 1 ]]; then
+        echo "${YELLOW}macOS automatic updates are enabled.${NC}"
+        echo -e "${YELLOW}Do you want to disable automatic software updates? (y/n):${NC} \c"
+        read -r response
+        if [[ "$response" =~ ^[Yy]$ ]]; then
+            open "x-apple.systempreferences:com.apple.Software-Update-Settings.extension"
+            exit
+        else
+            echo "${RED}Tanoe will not run until auto updates are disabled${NC}"
+            exit
+        fi
+    else
+        return
+    fi
+}
+
+# Function to add entry
+add_entry() {
+    if check_status; then
+        echo "${YELLOW}Entry already exists in ${HOSTS_FILE}${NC}"
+        return 0
+    fi
+    
+    echo "Adding entry to ${HOSTS_FILE}..."
+    
+    # Create backup in current directory
+    BACKUP_FILE="./hosts.backup.$(date +%Y%m%d_%H%M%S)"
+    sudo cp "$HOSTS_FILE" "$BACKUP_FILE"
+    echo "Backup created: $BACKUP_FILE"
+    
+    # Check if file ends with newline, if not add one
+    if [ -n "$(tail -c 1 "$HOSTS_FILE")" ]; then
+        echo "" | sudo tee -a "$HOSTS_FILE" > /dev/null
+    fi
+    
+    # Add entry with comment on same line to avoid orphaned comments
+    echo "$HOST_ENTRY  $COMMENT" | sudo tee -a "$HOSTS_FILE" > /dev/null
+    
+    if check_status; then
+        echo "${GREEN}✓ Successfully added entry${NC}"
+        # Flush DNS cache
+        echo "Flushing DNS cache..."
+        sudo dscacheutil -flushcache
+        sudo killall -HUP mDNSResponder 2>/dev/null
+        echo "Updating available updates..."
+        softwareupdate --list
+        return 0
+    else
+        echo "${RED}✗ Failed to add entry${NC}"
+        return 1
+    fi
+}
+
+# Function to remove entry
+remove_entry() {
+    if ! check_status; then
+        echo "${YELLOW}Entry does not exist in ${HOSTS_FILE}${NC}"
+        return 0
+    fi
+    
+    echo "Removing entry from ${HOSTS_FILE}..."
+    
+    # Create backup
+    sudo cp "$HOSTS_FILE" "${HOSTS_FILE}.backup.$(date +%Y%m%d_%H%M%S)"
+    
+    # Remove entry (handles both inline comment and separate comment line formats)
+    sudo sed -i.tmp '/^127\.0\.0\.1[[:space:]]*gdmf\.apple\.com/d' "$HOSTS_FILE"
+    # Also remove standalone comment line if it exists
+    sudo sed -i.tmp '/^# Managed by hosts-manager\.zsh$/d' "$HOSTS_FILE"
+    sudo rm -f "${HOSTS_FILE}.tmp"
+    
+    if ! check_status; then
+        echo "${GREEN}✓ Successfully removed entry${NC}"
+        # Flush DNS cache
+        echo "Flushing DNS cache..."
+        sudo dscacheutil -flushcache
+        sudo killall -HUP mDNSResponder 2>/dev/null
+        echo "Updating available updates..."
+        softwareupdate --list
+        return 0
+    else
+        echo "${RED}✗ Failed to remove entry${NC}"
+        return 1
+    fi
+}
+
+# Function to show usage
+show_usage() {
+    echo "Usage: $0 [on|off|status]"
+    echo ""
+    echo "Commands:"
+    echo "  on      - Add '${HOST_ENTRY}' to ${HOSTS_FILE}"
+    echo "  off     - Remove '${HOST_ENTRY}' from ${HOSTS_FILE}"
+    echo "  status  - Show current status of the entry"
+    echo ""
+    echo "Note: This script requires sudo privileges to modify ${HOSTS_FILE}"
+}
+
+# Main script logic
+auto_update_off
+case "${1:-}" in
+    on)
+        add_entry
+        ;;
+    off)
+        remove_entry
+        ;;
+    status)
+        show_status
+        ;;
+    *)
+        show_usage
+        if [[ -n "${1:-}" ]]; then
+            echo ""
+            echo "${RED}Error: Unknown command '${1}'${NC}"
+            exit 1
+        fi
+        exit 0
+        ;;
+esac
