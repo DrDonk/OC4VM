@@ -760,9 +760,9 @@
 			<string></string>
 		</dict>        
         <key>UpdateDataHub</key>
-        <false/>
+        <true/>
         <key>UpdateNVRAM</key>
-        <false/>
+        <true/>
         <key>UpdateSMBIOS</key>
         <true/>
         <key>UpdateSMBIOSMode</key>
