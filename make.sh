@@ -81,6 +81,7 @@ run_jinja ./tools/guest/diskzero.zsh ./build/tools/guest/diskzero.zsh
 run_jinja ./tools/guest/sysinfo.zsh ./build/tools/guest/sysinfo.zsh
 run_jinja ./tools/guest/cloak.zsh ./build/tools/guest/cloak.zsh
 run_jinja ./tools/guest/solarium.zsh ./build/tools/guest/solarium.zsh
+cp -v ./tools/guest/tanoe ./build/tools/guest/tanoe
 cp -v ./tools/guest/macserial ./build/tools/guest/macserial
 cp -v ./tools/guest/cpuid ./build/tools/guest/cpuid
 cp -v ./tools/guest/SwiftUI.plist ./build/tools/guest/SwiftUI.plist
