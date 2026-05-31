@@ -175,6 +175,7 @@ package uses the following:
 * [stoml](https://github.com/freshautomations/stoml)
 * [VoodooHDA](https://github.com/CloverHackyColor/VoodooHDA)
 * [VoodooHDA for Tahoe](https://github.com/chris1111/VoodooHDA-Tahoe)
+* [GlodenGateExt OpenCore Theme](https://github.com/HJebbour/GoldenGateExt-OpenCore-Theme)
 
 Also thanks to the testers who helped me out with the project.
 

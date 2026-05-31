@@ -4,7 +4,8 @@ Changelogs can also be found online https://github.com/DrDonk/OC4VM/releases
 
 All dates are UK DD/MM/YY format.
 
-## xx/05/26 3.0.1
+## xx/06/26 3.0.1
+* Added Tahoe icons to boot menu from https://github.com/HJebbour/GoldenGateExt-OpenCore-Theme
 * Better messages in cloak.zsh
 * Add bootargs.zsh to manage boot-args setting in config.plist
 * Modified config.plist to Update Datahub and NVRAM
