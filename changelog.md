@@ -8,6 +8,7 @@ All dates are UK DD/MM/YY format.
 * Added Tahoe icons to boot menu from https://github.com/HJebbour/GoldenGateExt-OpenCore-Theme
 * Better messages in cloak.zsh
 * Add bootargs.zsh to manage boot-args setting in config.plist
+* Added Tanoe utility to OC4VM tools
 * Modified config.plist to Update Datahub and NVRAM
 
 ## 06/05/26 3.0.0
