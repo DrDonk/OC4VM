@@ -11,6 +11,7 @@ All dates are UK DD/MM/YY format.
 * Added Tanoe utility to OC4VM tools
 * Modified config.plist to Update Datahub and NVRAM
 * Upgraded vmxtool to latest version
+* Disable mouse pointer in Boot Picker as functions badly in VMware
 
 ## 06/05/26 3.0.0
 * Updated to OpenCore 1.0.7 and latest KEXTs
