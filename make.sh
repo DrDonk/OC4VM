@@ -91,6 +91,7 @@ chmod +x ./build/tools/guest/*
 # - Linux
 run_jinja ./tools/host/common/macguest.sh ./build/tools/linux/macguest.sh
 run_jinja ./tools/host/common/spoof.sh ./build/tools/linux/spoof.sh
+run_jinja ./tools/host/common/upgrade.sh ./build/tools/linux/upgrade.sh
 cp -v ./tools/host/linux/cpuid ./build/tools/linux/cpuid
 cp -v ./tools/host/linux/macserial ./build/tools/linux/macserial
 cp -v ./tools/host/linux/macrecovery ./build/tools/linux/macrecovery
@@ -101,6 +102,7 @@ chmod +x ./build/tools/linux/*
 # - macOS
 run_jinja ./tools/host/common/macguest.sh ./build/tools/macos/macguest.sh
 run_jinja ./tools/host/common/spoof.sh ./build/tools/macos/spoof.sh
+run_jinja ./tools/host/common/upgrade.sh ./build/tools/macos/upgrade.sh
 cp -v ./tools/host/macos/cpuid ./build/tools/macos/cpuid
 cp -v ./tools/host/macos/macserial ./build/tools/macos/macserial
 cp -v ./tools/host/macos/macrecovery ./build/tools/macos/macrecovery
@@ -110,6 +112,7 @@ chmod +x ./build/tools/macos/*
 
 # - Windows
 run_jinja ./tools/host/windows/spoof.cmd ./build/tools/windows/spoof.cmd
+run_jinja ./tools/host/windows/upgrade.cmd ./build/tools/windows/upgrade.cmd
 cp -v ./tools/host/windows/cpuid.exe ./build/tools/windows/cpuid.exe
 cp -v ./tools/host/windows/macguest.exe ./build/tools/windows/macguest.exe
 cp -v ./tools/host/windows/macserial.exe ./build/tools/windows/macserial.exe
