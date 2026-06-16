@@ -40,10 +40,7 @@ What OC4VM cannot do:
 * Use the Apple para-virtualised GPU on non-Apple hardware
 * Use the Apple para-virtualised GPU on older Macs using OCLP and macOS Sonoma or later
 * Enable Tahoe Liquid Glass
-
-> [!WARNING]
-> Tahoe support is limited and not recommended. It works but peformance is poor. There is no way to have Liquid Glass effects work and
-> sound support must be added post-installation.
+* Run Apple Silicon only versions of macOS (macOS 27 Golden Gate or later)
 
 using:
 
