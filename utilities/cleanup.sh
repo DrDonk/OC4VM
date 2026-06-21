@@ -1,0 +1,1 @@
+rm -rf /Volumes/OPENCORE/.fseventsd; dot_clean -m /Volumes/OPENCORE; SetFile -a C /Volumes/OPENCORE; hdiutil detach /Volumes/OPENCORE -force
