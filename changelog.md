@@ -4,14 +4,16 @@ Changelogs can also be found online https://github.com/DrDonk/OC4VM/releases
 
 All dates are UK DD/MM/YY format.
 
-## xx/06/26 3.0.1
+## xx/07/26 3.0.1
+* Increased the supplied macOS sparse virtual disk from 128GB to 500GB
+* Added Big Sur icons which match style of macOS 12+ to boot menu
 * Added Tahoe icons to boot menu from https://github.com/HJebbour/GoldenGateExt-OpenCore-Theme
 * Better messages in cloak.zsh
 * Add bootargs.zsh to manage boot-args setting in config.plist
 * Added Tanoe utility to OC4VM tools
 * Modified config.plist to Update Datahub and NVRAM
+* Modified config.plist to use better mouse polling values for Boot Picker
 * Upgraded vmxtool to latest version
-* Disable mouse pointer in Boot Picker as functions badly in VMware
 
 ## 06/05/26 3.0.0
 * Updated to OpenCore 1.0.7 and latest KEXTs
