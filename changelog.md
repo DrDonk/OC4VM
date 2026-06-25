@@ -6,8 +6,10 @@ All dates are UK DD/MM/YY format.
 
 ## xx/07/26 3.0.1
 * Increased the supplied macOS sparse virtual disk from 128GB to 500GB
-* Added Big Sur icons which match style of macOS 12+ to boot menu
-* Added Tahoe icons to boot menu from https://github.com/HJebbour/GoldenGateExt-OpenCore-Theme
+* Increased the opencore.iso/vmdk to 50MB to accomodate new theme
+* Added new theme GoldenGateOC4VM based on GoldenGateExt from https://github.com/HJebbour/GoldenGateExt-OpenCore-Theme
+  * Tahoe icons added
+  * Big Sur icons match icons for macOS 12+ for consistency
 * Better messages in cloak.zsh
 * Add bootargs.zsh to manage boot-args setting in config.plist
 * Added Tanoe utility to OC4VM tools
