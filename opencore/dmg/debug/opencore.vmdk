@@ -7,7 +7,7 @@ isNativeSnapshot="no"
 createType="monolithicFlat"
 
 # Extent description
-RW 102474 FLAT "opencore.iso" 0
+RW 102474 FLAT "./opencore/dmg/debug/opencore.iso" 0
 
 # The Disk Data Base 
 #DDB
