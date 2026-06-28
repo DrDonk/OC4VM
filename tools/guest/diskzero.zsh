@@ -21,28 +21,24 @@ msg_error() {
 
 msg_status "OC4VM VMware Disk Zero Fill"
 
-# Get free space in bytes on /System/Volumes/Data
-free_bytes=$(df -k /System/Volumes/Data | awk 'NR==2 {print $4}')
-free_bytes=$((free_bytes * 1024))
+# Get free space in GB on /System/Volumes/Data
+free_gb=$(df -k /System/Volumes/Data | awk 'NR==2 { print int($4 / 1048576) }')
 
-# Subtract 5GB (5 * 1024^3 bytes) as a safety buffer
-buffer_bytes=$((5 * 1024 * 1024 * 1024))
-target_bytes=$(( free_bytes - buffer_bytes ))
+# Subtract 5GB as a safety buffer
+target_gb=$(( $free_gb - 5 ))
 
 # Bail out if there isn't more than 5GB free
-if (( target_bytes <= 0 )); then
+if (( $target_gb <= 0 )); then
   msg_error "Insufficient free space on /System/Volumes/Data (less than 5GB available)"
   exit 1
 fi
 
-# Convert to MB for mkfile (mkfile uses bytes by default; use 'm' suffix for megabytes)
-target_mb=$(( target_bytes / 1024 / 1024 / 5 ))
-
-msg_status "Free space: writing ${target_mb}MB zero filled file"
+msg_status "Free space: ${free_gb}GB — writing ${target_gb}GB zero filled file"
 msg_warning "Ignore any disk space errors"
-mkfile ${target_mb}m zerofile
+dd if=/dev/zero of=zerofile bs=1g count=${target_gb} #status=progress
 sync
 msg_status "Deleting temporary zero filled file"
 rm ~/zerofile
 sync
 exit 0
+
