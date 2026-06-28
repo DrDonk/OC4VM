@@ -36,9 +36,9 @@ if (( target_bytes <= 0 )); then
 fi
 
 # Convert to MB for mkfile (mkfile uses bytes by default; use 'm' suffix for megabytes)
-target_mb=$(( target_bytes / 1024 / 1024 ))
+target_mb=$(( target_bytes / 1024 / 1024 / 5 ))
 
-msg_status "Free space: $(( free_bytes / 1024 / 1024 ))MB — writing ${target_mb}MB zero filled file"
+msg_status "Free space: writing ${target_mb}MB zero filled file"
 msg_warning "Ignore any disk space errors"
 mkfile ${target_mb}m zerofile
 sync
