@@ -1,0 +1,1302 @@
+<!doctype html>
+<!--# {{VERSION}}-{{COMMIT}}
+# SPDX-FileCopyrightText: © 2023-2026 David Parsons
+# SPDX-License-Identifier: MIT
+-->
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>OC4VM — VMware guestOS Configuration</title>
+        <style>
+            :root {
+                --bg: #101319;
+                --panel: #171b23;
+                --panel-alt: #1d222b;
+                --border: #2a303c;
+                --border-soft: #20252f;
+                --text: #e5e7eb;
+                --text-dim: #8b93a1;
+                --text-faint: #5b6270;
+                --accent: #f2a65a;
+                --accent-dim: #7a5a30;
+                --accent-bg: rgba(242, 166, 90, 0.1);
+                --green: #6ee7b7;
+                --green-bg: rgba(110, 231, 183, 0.08);
+                --red: #ef6b6b;
+                --red-bg: rgba(239, 107, 107, 0.08);
+                --blue: #7dabf8;
+                --blue-bg: rgba(125, 171, 248, 0.08);
+                --mono:
+                    ui-monospace, "JetBrains Mono", "SF Mono", "Cascadia Code",
+                    "Fira Code", Menlo, Consolas, monospace;
+                --radius: 6px;
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
+            html,
+            body {
+                margin: 0;
+                min-height: 100vh;
+                background:
+                    radial-gradient(
+                        circle at 15% 0%,
+                        rgba(242, 166, 90, 0.05),
+                        transparent 45%
+                    ),
+                    radial-gradient(
+                        circle at 85% 100%,
+                        rgba(110, 231, 183, 0.04),
+                        transparent 45%
+                    ),
+                    var(--bg);
+                color: var(--text);
+                font-family: var(--mono);
+                font-size: 14px;
+                line-height: 1.5;
+                display: flex;
+                align-items: flex-start;
+                justify-content: center;
+                padding: 48px 20px;
+            }
+
+            .wrap {
+                width: 100%;
+                max-width: 640px;
+            }
+
+            .eyebrow {
+                color: var(--text-faint);
+                font-size: 12px;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                margin-bottom: 6px;
+            }
+
+            h1 {
+                font-size: 19px;
+                font-weight: 600;
+                margin: 0 0 22px 0;
+                color: var(--text);
+            }
+            h1 .dim {
+                color: var(--text-dim);
+                font-weight: 400;
+            }
+
+            .panel {
+                background: var(--panel);
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                overflow: hidden;
+            }
+
+            .panel + .panel {
+                margin-top: 16px;
+            }
+
+            .titlebar {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 9px 14px;
+                background: var(--panel-alt);
+                border-bottom: 1px solid var(--border-soft);
+                font-size: 12.5px;
+                color: var(--text-dim);
+            }
+            .titlebar .prompt {
+                color: var(--accent);
+            }
+            .titlebar .prompt::before {
+                color: var(--text-faint);
+            }
+
+            .status-pill {
+                font-size: 11px;
+                padding: 2px 9px;
+                border-radius: 999px;
+                border: 1px solid var(--border);
+                color: var(--text-faint);
+                letter-spacing: 0.03em;
+            }
+            .status-pill.ready {
+                color: var(--text-dim);
+            }
+            .status-pill.dirty {
+                color: var(--accent);
+                border-color: var(--accent-dim);
+                background: var(--accent-bg);
+            }
+            .status-pill.saved {
+                color: var(--green);
+                border-color: rgba(110, 231, 183, 0.3);
+                background: var(--green-bg);
+            }
+
+            .body {
+                padding: 18px;
+            }
+
+            .row {
+                display: flex;
+                gap: 10px;
+                align-items: center;
+            }
+
+            .field {
+                margin-bottom: 16px;
+            }
+            .field:last-child {
+                margin-bottom: 0;
+            }
+
+            .label {
+                font-size: 11.5px;
+                color: var(--text-faint);
+                text-transform: uppercase;
+                letter-spacing: 0.06em;
+                margin-bottom: 7px;
+                display: block;
+            }
+            .label .opt {
+                text-transform: none;
+                letter-spacing: 0;
+                color: var(--text-faint);
+                font-size: 11px;
+            }
+
+            .path-box {
+                flex: 1;
+                background: var(--bg);
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                padding: 9px 11px;
+                color: var(--text-dim);
+                font-size: 13px;
+                overflow-x: auto;
+                white-space: nowrap;
+                min-width: 0;
+            }
+            .path-box.empty {
+                color: var(--text-faint);
+                font-style: italic;
+            }
+            .path-box.set {
+                color: var(--text);
+            }
+
+            button {
+                font-family: var(--mono);
+                font-size: 13px;
+                border-radius: var(--radius);
+                border: 1px solid var(--border);
+                background: var(--panel-alt);
+                color: var(--text);
+                padding: 9px 16px;
+                cursor: pointer;
+                transition:
+                    border-color 0.12s ease,
+                    background 0.12s ease,
+                    color 0.12s ease;
+                white-space: nowrap;
+            }
+            button:hover:not(:disabled) {
+                border-color: var(--text-faint);
+            }
+            button:focus-visible {
+                outline: 2px solid var(--accent);
+                outline-offset: 2px;
+            }
+            button:disabled {
+                opacity: 0.4;
+                cursor: not-allowed;
+            }
+
+            button.primary {
+                background: var(--accent);
+                border-color: var(--accent);
+                color: #1a1305;
+                font-weight: 600;
+            }
+            button.primary:hover:not(:disabled) {
+                background: #f5b476;
+                border-color: #f5b476;
+            }
+            button.primary:disabled {
+                background: var(--panel-alt);
+                border-color: var(--border);
+                color: var(--text-faint);
+                opacity: 1;
+            }
+
+            button.small {
+                padding: 7px 12px;
+                font-size: 12px;
+            }
+            button.ghost-blue {
+                color: var(--blue);
+                border-color: rgba(125, 171, 248, 0.3);
+            }
+            button.ghost-blue.active {
+                background: var(--blue-bg);
+            }
+
+            .current-line {
+                font-size: 13px;
+                color: var(--text-dim);
+                padding: 10px 12px;
+                background: var(--bg);
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+            }
+            .current-line .val {
+                color: var(--text);
+            }
+            .current-line.warn {
+                color: var(--red);
+                border-color: rgba(239, 107, 107, 0.25);
+                background: var(--red-bg);
+            }
+            .current-line.warn .val {
+                color: var(--red);
+            }
+
+            select,
+            input[type="text"] {
+                width: 100%;
+                font-family: var(--mono);
+                font-size: 13px;
+                color: var(--text);
+                background: var(--bg);
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                padding: 9px 11px;
+            }
+            select {
+                appearance: none;
+                -webkit-appearance: none;
+                background-image:
+                    linear-gradient(
+                        45deg,
+                        transparent 50%,
+                        var(--text-faint) 50%
+                    ),
+                    linear-gradient(
+                        135deg,
+                        var(--text-faint) 50%,
+                        transparent 50%
+                    );
+                background-position:
+                    calc(100% - 18px) center,
+                    calc(100% - 13px) center;
+                background-size:
+                    5px 5px,
+                    5px 5px;
+                background-repeat: no-repeat;
+            }
+            select:disabled,
+            input[type="text"]:disabled {
+                color: var(--text-faint);
+                cursor: not-allowed;
+            }
+            select:focus-visible,
+            input[type="text"]:focus-visible {
+                outline: 2px solid var(--accent);
+                outline-offset: 1px;
+            }
+            input[type="text"]::placeholder {
+                color: var(--text-faint);
+            }
+
+            .diff {
+                font-size: 13px;
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                overflow: hidden;
+            }
+            .diff-line {
+                padding: 8px 12px;
+                white-space: pre;
+                overflow-x: auto;
+                border-bottom: 1px solid var(--border-soft);
+            }
+            .diff-line:last-child {
+                border-bottom: none;
+            }
+            .diff-line.rm {
+                background: var(--red-bg);
+                color: var(--red);
+            }
+            .diff-line.add {
+                background: var(--green-bg);
+                color: var(--green);
+            }
+
+            .checkbox-row {
+                display: flex;
+                align-items: center;
+                gap: 9px;
+                font-size: 13px;
+                color: var(--text-dim);
+                user-select: none;
+            }
+            .checkbox-row input {
+                width: 15px;
+                height: 15px;
+                accent-color: var(--accent);
+                cursor: pointer;
+            }
+            .checkbox-row label {
+                cursor: pointer;
+            }
+
+            .actions {
+                display: flex;
+                gap: 10px;
+                margin-top: 18px;
+            }
+            .actions button {
+                flex: 1;
+            }
+
+            .log {
+                padding: 11px 14px;
+                font-size: 12.5px;
+                border-top: 1px solid var(--border-soft);
+                color: var(--text-faint);
+                min-height: 16px;
+            }
+            .log.error {
+                color: var(--red);
+            }
+            .log.success {
+                color: var(--green);
+            }
+
+            .footnote {
+                margin-top: 18px;
+                font-size: 12px;
+                color: var(--text-faint);
+                line-height: 1.6;
+            }
+            .footnote strong {
+                color: var(--text-dim);
+                font-weight: 600;
+            }
+            .footnote code {
+                background: var(--panel-alt);
+                border: 1px solid var(--border-soft);
+                border-radius: 3px;
+                padding: 1px 5px;
+                color: var(--text-dim);
+            }
+
+            .info-grid {
+                display: grid;
+                grid-template-columns: auto 1fr;
+                gap: 6px 14px;
+                font-size: 12.5px;
+                padding: 10px 12px;
+                background: var(--bg);
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                margin-bottom: 14px;
+            }
+            .info-grid .k {
+                color: var(--text-faint);
+            }
+            .info-grid .v {
+                color: var(--text-dim);
+            }
+
+            .disclosure {
+                font-size: 12px;
+                color: var(--text-faint);
+                line-height: 1.6;
+                background: var(--bg);
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                padding: 10px 12px;
+                margin-top: 14px;
+            }
+            .disclosure strong {
+                color: var(--text-dim);
+            }
+            .disclosure code {
+                background: var(--panel-alt);
+                border: 1px solid var(--border-soft);
+                border-radius: 3px;
+                padding: 1px 5px;
+                color: var(--text-dim);
+            }
+
+            input[type="file"] {
+                display: none;
+            }
+
+            @media (max-width: 480px) {
+                .row {
+                    flex-wrap: wrap;
+                }
+                .actions {
+                    flex-direction: column;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrap">
+            <div class="eyebrow">VMware · Virtual Machine Configuration</div>
+            <h1>
+                OC4VM
+                <span class="dim">— VMX Configuration</span>
+            </h1>
+
+            <div class="panel">
+                <div class="titlebar">
+                    <span class="prompt">macOS guest version</span>
+                    <span class="status-pill ready" id="statusPill">idle</span>
+                </div>
+
+                <div class="body">
+                    <div class="field">
+                        <span class="label">VMX file</span>
+                        <div class="row">
+                            <div class="path-box empty" id="pathBox">
+                                no file selected
+                            </div>
+                            <button id="openBtn">Open…</button>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <span class="label">Current guestOS</span>
+                        <div class="current-line" id="currentLine">
+                            not available
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <span class="label">New guestOS</span>
+                        <select id="versionSelect" disabled>
+                            <option value="">Select a macOS version…</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="titlebar">
+                    <span class="prompt">Create iMac 2019 identifiers</span>
+                    <span></span>
+                </div>
+                <div class="body">
+                    <div class="label">
+                        Apple hardware identity
+                        <span class="opt">(optional — matches spoof.sh)</span>
+                    </div>
+
+                    <div class="field">
+                        <span class="label"
+                            >Manufacture year / week
+                            <span class="opt"
+                                >(used for serial generation)</span
+                            ></span
+                        >
+                        <div class="row">
+                            <input
+                                type="text"
+                                id="yearInput"
+                                value="2020"
+                                placeholder="Year"
+                                autocomplete="off"
+                                spellcheck="false"
+                                style="max-width: 90px"
+                            />
+                            <input
+                                type="text"
+                                id="weekInput"
+                                value=""
+                                placeholder="Week (1–52, random if blank)"
+                                autocomplete="off"
+                                spellcheck="false"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <span class="label">Serial number</span>
+                        <div class="row">
+                            <input
+                                type="text"
+                                id="serialInput"
+                                placeholder="e.g. C02XXXXXXXXX"
+                                autocomplete="off"
+                                spellcheck="false"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <span class="label">MLB (board serial)</span>
+                        <input
+                            type="text"
+                            id="mlbInput"
+                            placeholder="Generated together with serial, or paste your own"
+                            autocomplete="off"
+                            spellcheck="false"
+                        />
+                        <div
+                            id="mlbCheck"
+                            style="
+                                font-size: 11.5px;
+                                margin-top: 6px;
+                                color: var(--text-faint);
+                            "
+                        ></div>
+                    </div>
+
+                    <div class="field">
+                        <span class="label">ROM (NVRAM)</span>
+                        <div class="row">
+                            <input
+                                type="text"
+                                id="romInput"
+                                placeholder="%XX%XX%XX%XX%XX%XX"
+                                autocomplete="off"
+                                spellcheck="false"
+                            />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <p align="center">
+                            <button class="small" id="serialBtn">
+                                Generate
+                            </button>
+                        </p>
+                    </div>
+                    <div class="field">
+                        <button
+                            id="stageBtn"
+                            class="ghost-blue"
+                            style="width: 100%"
+                        >
+                            Stage identity values for save
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel" id="diffPanel" style="display: none">
+                <div class="titlebar">
+                    <span class="prompt">diff</span>
+                    <span></span>
+                </div>
+                <div class="body">
+                    <div class="diff" id="diffBox"></div>
+                    <div
+                        class="field"
+                        id="backupField"
+                        style="
+                            display: none;
+                            margin-top: 14px;
+                            margin-bottom: 0;
+                        "
+                    >
+                        <div class="checkbox-row">
+                            <input type="checkbox" id="backupCheck" checked />
+                            <label for="backupCheck"
+                                >Create a backup before saving</label
+                            >
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <button id="resetBtn" disabled>Reset</button>
+                        <button class="primary" id="saveBtn" disabled>
+                            Save changes
+                        </button>
+                    </div>
+                </div>
+                <div class="log" id="logLine"></div>
+            </div>
+
+            <div class="footnote" id="modeNote"></div>
+        </div>
+
+        <input type="file" id="hiddenFileInput" accept=".vmx" />
+
+        <script>
+            (function () {
+                const MACOS_VERSIONS = [
+                    ["darwin25-64", "macOS 26.0 (Tahoe)"],
+                    ["darwin24-64", "macOS 15.0 (Sequoia)"],
+                    ["darwin23-64", "macOS 14.0 (Sonoma)"],
+                    ["darwin22-64", "macOS 13.0 (Ventura)"],
+                    ["darwin21-64", "macOS 12.0 (Monterey)"],
+                    ["darwin20-64", "macOS 11.0 (Big Sur)"],
+                    ["darwin19-64", "macOS 10.15 (Catalina)"],
+                    ["darwin18-64", "macOS 10.14 (Mojave)"],
+                    ["darwin17-64", "macOS 10.13 (High Sierra)"],
+                    ["darwin16-64", "MacOS 10.12 (Sierra)"],
+                    ["darwin15-64", "OS X 10.11 (El Capitan)"],
+                    ["darwin14-64", "OS X 10.10 (Yosemite)"],
+                    ["darwin13-64", "OS X 10.9 (Mavericks)"],
+                    ["darwin12-64", "OS X 10.8 (Mountain Lion)"],
+                    ["darwin11-64", "Mac OS X 10.7 (Lion)"],
+                    ["darwin11", "Mac OS X 10.7 (Lion 32-bit)"],
+                    ["darwin10-64", "Mac OS X 10.6 (Snow Leopard)"],
+                    ["darwin10", "Mac OS X 10.6 (Snow Leopard 32-bit)"],
+                    ["darwin-64", "Mac OS X 10.5 (Leopard)"],
+                    ["darwin", "Mac OS X 10.5 (Leopard 32-bit)"],
+                ];
+                const VERSION_MAP = Object.fromEntries(MACOS_VERSIONS);
+
+                // order matches spoof.sh's vmxtool set sequence
+                const SPOOF_KEYS = [
+                    "__Apple_Model_Start__",
+                    "board-id",
+                    "hw.model",
+                    "serialNumber",
+                    "efi.nvram.var.MLB",
+                    "efi.nvram.var.ROM",
+                    "__Apple_Model_End__",
+                ];
+                const SPOOF_STATIC = {
+                    __Apple_Model_Start__: "iMac 2019",
+                    "board-id": "Mac-63001698E7A34814",
+                    "hw.model": "iMac19,2",
+                    __Apple_Model_End__: "iMac 2019",
+                };
+
+                // --- Apple serial/MLB encoding, per acidanthera OpenCorePkg FORMAT.md ---
+                // Base-34 alphabet (no I, no O)
+                const BASE34 = "0123456789ABCDEFGHJKLMNPQRSTUVWXYZ";
+                // Year letters, cycling every 10 years from 2010 (2020 reuses 2010's letters)
+                const YEAR_CHARS = "CDFGHJKLMN";
+                // Generic Apple assembly location codes — narrowed to what's verified for this
+                // specific model (per user-supplied, multi-source-checked reference data)
+                const COUNTRY_CODES = ["C02"];
+                // Real iMac19,2 product codes (cross-checked against public modelinfo tables + user-supplied macserial data)
+                const IMAC19_2_MODEL_CODES = ["JWDW"];
+                // Real iMac19,2 board/EEEE code, confirmed via user-supplied macserial data
+                const IMAC19_2_BOARD_CODE = "KGQG";
+                // iMac19,2 real production years
+                const IMAC19_2_YEAR_RANGE = [2019, 2020];
+
+                // MLB random-block pools (cross-validated reference data)
+                const MLB_BLOCK1 = [
+                    "200",
+                    "600",
+                    "403",
+                    "404",
+                    "405",
+                    "303",
+                    "108",
+                    "207",
+                    "609",
+                    "501",
+                    "306",
+                    "102",
+                    "701",
+                    "301",
+                ];
+                const MLB_BLOCK2 = Array.from(BASE34).map((c) => "Q" + c);
+
+                // Cryptographically secure random helpers (mirrors Python's `secrets` module)
+                function secureRandBelow(n) {
+                    const arr = new Uint32Array(1);
+                    const max = Math.floor(0xffffffff / n) * n;
+                    let x;
+                    do {
+                        crypto.getRandomValues(arr);
+                        x = arr[0];
+                    } while (x >= max);
+                    return x % n;
+                }
+                function randChoice(arr) {
+                    return arr[secureRandBelow(arr.length)];
+                }
+                function randInt(min, max) {
+                    return min + secureRandBelow(max - min + 1);
+                }
+
+                function encodeYearWeek(year, week) {
+                    const decadeOffset = (((year - 2010) % 10) + 10) % 10;
+                    let yearChar, weekIndex;
+                    if (week <= 26) {
+                        yearChar = YEAR_CHARS[decadeOffset];
+                        weekIndex = week;
+                    } else {
+                        yearChar = YEAR_CHARS[(decadeOffset + 1) % 10];
+                        weekIndex = week - 26;
+                    }
+                    return [yearChar, BASE34[weekIndex]];
+                }
+
+                function encodeLine(line) {
+                    const d1 = Math.floor(line / (34 * 34));
+                    const d2 = Math.floor(line / 34) % 34;
+                    const d3 = line % 34;
+                    return BASE34[d1] + BASE34[d2] + BASE34[d3];
+                }
+
+                // Shared manufacturing data so serial + MLB agree on year/week (no half-year ambiguity)
+                function randomManufacturingData(year, week) {
+                    const [yearLo, yearHi] = IMAC19_2_YEAR_RANGE;
+                    return {
+                        country: randChoice(COUNTRY_CODES),
+                        year:
+                            year ||
+                            yearLo + secureRandBelow(yearHi - yearLo + 1),
+                        week: week || 1 + secureRandBelow(52),
+                        line: secureRandBelow(3400),
+                        modelCode: randChoice(IMAC19_2_MODEL_CODES),
+                    };
+                }
+
+                function buildAppleSerial(mfg) {
+                    const [yearChar, weekChar] = encodeYearWeek(
+                        mfg.year,
+                        mfg.week,
+                    );
+                    const lineStr = encodeLine(mfg.line);
+                    return (
+                        mfg.country +
+                        yearChar +
+                        weekChar +
+                        lineStr +
+                        mfg.modelCode
+                    );
+                }
+
+                function buildAppleMlb(mfg, boardCode) {
+                    const yearDec = String(mfg.year % 10);
+                    const weekDec = String(mfg.week).padStart(2, "0");
+                    const block1 = randChoice(MLB_BLOCK1);
+                    const block2 = randChoice(MLB_BLOCK2);
+                    // 15-char prefix (everything except the final checksum block)
+                    const prefix =
+                        mfg.country +
+                        yearDec +
+                        weekDec +
+                        block1 +
+                        block2 +
+                        boardCode;
+                    let prefixSum = 0;
+                    for (let i = 0; i < prefix.length; i++) {
+                        const weight = (i & 1) === (17 & 1) ? 3 : 1;
+                        prefixSum += weight * BASE34.indexOf(prefix[i]);
+                    }
+                    // Block3 = "0{c}": '0' contributes 0 regardless of weight, c solves the checksum
+                    const j16 = ((-prefixSum % 34) + 34) % 34;
+                    return prefix + "0" + BASE34[j16];
+                }
+
+                function generateIdentityPair(year, week) {
+                    const mfg = randomManufacturingData(year, week);
+                    return {
+                        serial: buildAppleSerial(mfg),
+                        mlb: buildAppleMlb(mfg, IMAC19_2_BOARD_CODE),
+                        mfg,
+                    };
+                }
+
+                function mlbChecksumInfo(mlb) {
+                    const clean = mlb.trim().toUpperCase();
+                    if (!clean) return { state: "empty" };
+                    if (clean.length !== 17 && clean.length !== 13) {
+                        return {
+                            state: "warn",
+                            message: `${clean.length} characters — expected 13 or 17`,
+                        };
+                    }
+                    let checksum = 0;
+                    for (let i = 0; i < clean.length; i++) {
+                        const idx = BASE34.indexOf(clean[i]);
+                        if (idx === -1) {
+                            return {
+                                state: "warn",
+                                message: `invalid character "${clean[i]}" (Apple's alphabet excludes I and O)`,
+                            };
+                        }
+                        const weight = (i & 1) === (clean.length & 1) ? 3 : 1;
+                        checksum += weight * idx;
+                    }
+                    return checksum % 34 === 0
+                        ? { state: "ok", message: "checksum valid" }
+                        : {
+                              state: "bad",
+                              message:
+                                  "checksum does not validate — likely not a genuine macserial output",
+                          };
+                }
+
+                const apiSupported = "showOpenFilePicker" in window;
+
+                // state
+                let fileHandle = null;
+                let fileName = "";
+                let originalText = null;
+                let pendingChanges = {}; // vmxKey -> new value string
+
+                // elements
+                const openBtn = document.getElementById("openBtn");
+                const pathBox = document.getElementById("pathBox");
+                const currentLine = document.getElementById("currentLine");
+                const versionSelect = document.getElementById("versionSelect");
+
+                const yearInput = document.getElementById("yearInput");
+                const weekInput = document.getElementById("weekInput");
+                const serialInput = document.getElementById("serialInput");
+                const serialBtn = document.getElementById("serialBtn");
+                const mlbInput = document.getElementById("mlbInput");
+                const mlbCheck = document.getElementById("mlbCheck");
+                const romInput = document.getElementById("romInput");
+                const stageBtn = document.getElementById("stageBtn");
+
+                const diffPanel = document.getElementById("diffPanel");
+                const diffBox = document.getElementById("diffBox");
+                const backupField = document.getElementById("backupField");
+                const backupCheck = document.getElementById("backupCheck");
+                const saveBtn = document.getElementById("saveBtn");
+                const resetBtn = document.getElementById("resetBtn");
+                const logLine = document.getElementById("logLine");
+                const statusPill = document.getElementById("statusPill");
+                const modeNote = document.getElementById("modeNote");
+                const hiddenFileInput =
+                    document.getElementById("hiddenFileInput");
+
+                for (const [key, label] of MACOS_VERSIONS) {
+                    const opt = document.createElement("option");
+                    opt.value = key;
+                    opt.textContent = label;
+                    versionSelect.appendChild(opt);
+                }
+
+                modeNote.innerHTML = apiSupported
+                    ? "<strong>In-place mode.</strong> This browser can read and write the .vmx file directly, and can save a <code>.bak</code> copy alongside it before saving."
+                    : "<strong>Download mode.</strong> This browser can't write files in place. Saving will download an updated .vmx (and optionally a .bak of the original) — move them into place manually. For in-place editing, use Chrome, Edge, or Brave.";
+
+                function setStatus(kind, text) {
+                    statusPill.className = "status-pill " + kind;
+                    statusPill.textContent = text;
+                }
+
+                function log(kind, text) {
+                    logLine.className = "log" + (kind ? " " + kind : "");
+                    logLine.textContent = text || "";
+                }
+
+                function detectLineEnding(text) {
+                    return text.includes("\r\n") ? "\r\n" : "\n";
+                }
+
+                function escapeRegex(s) {
+                    return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+                }
+
+                function getVmxKey(text, key) {
+                    const re = new RegExp(
+                        "^" + escapeRegex(key) + '\\s*=\\s*"([^"]*)"',
+                        "m",
+                    );
+                    const m = text.match(re);
+                    return m ? m[1] : null;
+                }
+
+                function setVmxKey(text, key, value, lineEnding) {
+                    const re = new RegExp(
+                        "^" + escapeRegex(key) + "\\s*=.*$",
+                        "m",
+                    );
+                    const newLine = `${key} = "${value}"`;
+                    if (re.test(text)) {
+                        return text.replace(re, newLine);
+                    }
+                    let t = text;
+                    if (t.length && !t.endsWith(lineEnding)) t += lineEnding;
+                    t += newLine + lineEnding;
+                    return t;
+                }
+
+                function fileLoaded() {
+                    return originalText !== null;
+                }
+
+                function renderCurrent() {
+                    const currentOS = fileLoaded()
+                        ? getVmxKey(originalText, "guestOS")
+                        : null;
+                    if (!fileLoaded()) {
+                        currentLine.className = "current-line";
+                        currentLine.textContent = "not available";
+                        return;
+                    }
+                    if (currentOS === null) {
+                        currentLine.className = "current-line warn";
+                        currentLine.textContent =
+                            "guestOS setting not found in VMX file";
+                        return;
+                    }
+                    const label = VERSION_MAP[currentOS];
+                    if (label) {
+                        currentLine.className = "current-line";
+                        currentLine.innerHTML = `<span class="val">${label}</span> (${currentOS})`;
+                    } else {
+                        currentLine.className = "current-line warn";
+                        currentLine.innerHTML = `<span class="val">${currentOS}</span> — not a recognized macOS guestOS`;
+                    }
+                }
+
+                function renderDiff() {
+                    const keys = Object.keys(pendingChanges);
+                    if (keys.length === 0) {
+                        diffPanel.style.display = "none";
+                        return;
+                    }
+                    diffPanel.style.display = "block";
+                    backupField.style.display = "block";
+
+                    // stable order: guestOS first, then spoof keys in script order, then anything else
+                    const order = ["guestOS", ...SPOOF_KEYS];
+                    const ordered = keys.slice().sort((a, b) => {
+                        const ia = order.indexOf(a),
+                            ib = order.indexOf(b);
+                        return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib);
+                    });
+
+                    let html = "";
+                    for (const key of ordered) {
+                        const oldVal = getVmxKey(originalText, key);
+                        if (oldVal !== null) {
+                            html += `<div class="diff-line rm">- ${key} = "${oldVal}"</div>`;
+                        }
+                        html += `<div class="diff-line add">+ ${key} = "${pendingChanges[key]}"</div>`;
+                    }
+                    diffBox.innerHTML = html;
+                }
+
+                function refreshButtons() {
+                    const dirty = Object.keys(pendingChanges).length > 0;
+                    saveBtn.disabled = !(fileLoaded() && dirty);
+                    resetBtn.disabled = !fileLoaded();
+                    stageBtn.disabled = !fileLoaded();
+                    setStatus(
+                        dirty ? "dirty" : "ready",
+                        dirty
+                            ? "unsaved changes"
+                            : fileLoaded()
+                              ? "ready"
+                              : "idle",
+                    );
+                    renderDiff();
+                }
+
+                function loadIntoUI(name, text) {
+                    originalText = text;
+                    fileName = name;
+                    pendingChanges = {};
+
+                    pathBox.textContent = name;
+                    pathBox.className = "path-box set";
+
+                    versionSelect.disabled = false;
+                    const currentOS = getVmxKey(text, "guestOS");
+                    versionSelect.value =
+                        currentOS && VERSION_MAP[currentOS] ? currentOS : "";
+
+                    renderCurrent();
+                    refreshButtons();
+                    log("", "");
+                }
+
+                async function openFile() {
+                    if (apiSupported) {
+                        try {
+                            const [handle] = await window.showOpenFilePicker({
+                                types: [
+                                    {
+                                        description: "VMX files",
+                                        accept: { "text/plain": [".vmx"] },
+                                    },
+                                ],
+                                excludeAcceptAllOption: false,
+                            });
+                            fileHandle = handle;
+                            const file = await handle.getFile();
+                            const text = await file.text();
+                            loadIntoUI(file.name, text);
+                        } catch (err) {
+                            if (err.name !== "AbortError") {
+                                log(
+                                    "error",
+                                    "Could not open file: " + err.message,
+                                );
+                            }
+                        }
+                    } else {
+                        hiddenFileInput.click();
+                    }
+                }
+
+                hiddenFileInput.addEventListener("change", async (e) => {
+                    const file = e.target.files[0];
+                    if (!file) return;
+                    fileHandle = null;
+                    const text = await file.text();
+                    loadIntoUI(file.name, text);
+                    hiddenFileInput.value = "";
+                });
+
+                openBtn.addEventListener("click", openFile);
+
+                versionSelect.addEventListener("change", () => {
+                    const selected = versionSelect.value || null;
+                    const currentOS = fileLoaded()
+                        ? getVmxKey(originalText, "guestOS")
+                        : null;
+                    if (selected && selected !== currentOS) {
+                        pendingChanges["guestOS"] = selected;
+                    } else {
+                        delete pendingChanges["guestOS"];
+                    }
+                    refreshButtons();
+                });
+
+                function randomRom() {
+                    const bytes = new Uint8Array(6);
+                    crypto.getRandomValues(bytes);
+                    return Array.from(bytes)
+                        .map(
+                            (b) =>
+                                "%" +
+                                b.toString(16).toUpperCase().padStart(2, "0"),
+                        )
+                        .join("");
+                }
+
+                serialBtn.addEventListener("click", () => {
+                    const year = parseInt(yearInput.value, 10) || null;
+                    let week = parseInt(weekInput.value, 10) || null;
+                    const { serial, mlb, mfg } = generateIdentityPair(
+                        year,
+                        week,
+                    );
+                    serialInput.value = serial;
+                    mlbInput.value = mlb;
+                    yearInput.value = String(mfg.year);
+                    weekInput.value = String(mfg.week);
+                    renderMlbCheck();
+                    romInput.value = randomRom();
+                });
+
+                function renderMlbCheck() {
+                    const info = mlbChecksumInfo(mlbInput.value);
+                    mlbCheck.style.color = "var(--text-faint)";
+                    switch (info.state) {
+                        case "empty":
+                            mlbCheck.textContent = "";
+                            break;
+                        case "ok":
+                            mlbCheck.style.color = "var(--green)";
+                            mlbCheck.textContent = "✓ " + info.message;
+                            break;
+                        case "bad":
+                            mlbCheck.style.color = "var(--red)";
+                            mlbCheck.textContent = "✗ " + info.message;
+                            break;
+                        case "warn":
+                            mlbCheck.style.color = "var(--accent)";
+                            mlbCheck.textContent = "⚠ " + info.message;
+                            break;
+                    }
+                }
+                mlbInput.addEventListener("input", renderMlbCheck);
+
+                stageBtn.addEventListener("click", () => {
+                    if (!fileLoaded()) return;
+
+                    const serial = serialInput.value.trim();
+                    const mlb = mlbInput.value.trim();
+                    let rom = romInput.value.trim();
+
+                    if (!serial || !mlb) {
+                        log(
+                            "error",
+                            "Serial number and MLB are required to stage identity values.",
+                        );
+                        return;
+                    }
+                    if (!rom) {
+                        rom = randomRom();
+                        romInput.value = rom;
+                    }
+
+                    const values = {
+                        ...SPOOF_STATIC,
+                        serialNumber: serial,
+                        "efi.nvram.var.MLB": mlb,
+                        "efi.nvram.var.ROM": rom,
+                    };
+
+                    let staged = 0;
+                    for (const key of SPOOF_KEYS) {
+                        const newVal = values[key];
+                        const currentVal = getVmxKey(originalText, key);
+                        if (newVal !== currentVal) {
+                            pendingChanges[key] = newVal;
+                            staged++;
+                        }
+                    }
+
+                    if (staged === 0) {
+                        log(
+                            "",
+                            "Identity values already match the file — nothing to stage.",
+                        );
+                    } else {
+                        log(
+                            "",
+                            `Staged ${staged} identity setting${staged === 1 ? "" : "s"}. Review the diff below, then save.`,
+                        );
+                    }
+                    refreshButtons();
+                });
+
+                resetBtn.addEventListener("click", () => {
+                    fileHandle = null;
+                    originalText = null;
+                    fileName = "";
+                    pendingChanges = {};
+
+                    pathBox.textContent = "no file selected";
+                    pathBox.className = "path-box empty";
+                    versionSelect.value = "";
+                    versionSelect.disabled = true;
+
+                    serialInput.value = "";
+                    mlbInput.value = "";
+                    romInput.value = "";
+
+                    diffPanel.style.display = "none";
+                    backupField.style.display = "none";
+                    log("", "");
+                    renderCurrent();
+                    refreshButtons();
+                    setStatus("ready", "idle");
+                });
+
+                function downloadTextFile(name, text) {
+                    const blob = new Blob([text], { type: "text/plain" });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement("a");
+                    a.href = url;
+                    a.download = name;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                    URL.revokeObjectURL(url);
+                }
+
+                async function saveFile() {
+                    const keys = Object.keys(pendingChanges);
+                    if (keys.length === 0) return;
+
+                    const lineEnding = detectLineEnding(originalText);
+                    let newText = originalText;
+                    for (const key of keys) {
+                        newText = setVmxKey(
+                            newText,
+                            key,
+                            pendingChanges[key],
+                            lineEnding,
+                        );
+                    }
+                    if (lineEnding === "\r\n") {
+                        newText = newText.replace(/\r?\n/g, "\r\n");
+                    }
+
+                    const count = keys.length;
+                    const summary = `${count} setting${count === 1 ? "" : "s"} updated`;
+
+                    if (fileHandle) {
+                        try {
+                            if (backupCheck.checked) {
+                                try {
+                                    const backupHandle =
+                                        await window.showSaveFilePicker({
+                                            suggestedName: fileName + ".bak",
+                                            types: [
+                                                {
+                                                    description: "Backup file",
+                                                    accept: {
+                                                        "text/plain": [".bak"],
+                                                    },
+                                                },
+                                            ],
+                                        });
+                                    const w =
+                                        await backupHandle.createWritable();
+                                    await w.write(originalText);
+                                    await w.close();
+                                } catch (err) {
+                                    if (err.name === "AbortError") {
+                                        log(
+                                            "error",
+                                            "Save cancelled (backup dialog dismissed).",
+                                        );
+                                    } else {
+                                        log(
+                                            "error",
+                                            "Backup failed, save aborted: " +
+                                                err.message,
+                                        );
+                                    }
+                                    return;
+                                }
+                            }
+
+                            const writable = await fileHandle.createWritable();
+                            await writable.write(newText);
+                            await writable.close();
+
+                            originalText = newText;
+                            pendingChanges = {};
+                            renderCurrent();
+                            refreshButtons();
+                            setStatus("saved", "saved");
+                            log("success", summary + ".");
+                        } catch (err) {
+                            log("error", "Failed to save file: " + err.message);
+                        }
+                    } else {
+                        if (backupCheck.checked) {
+                            downloadTextFile(fileName + ".bak", originalText);
+                        }
+                        downloadTextFile(fileName, newText);
+
+                        originalText = newText;
+                        pendingChanges = {};
+                        renderCurrent();
+                        refreshButtons();
+                        setStatus("saved", "downloaded");
+                        log(
+                            "success",
+                            `Downloaded updated ${fileName}${backupCheck.checked ? " and a .bak backup" : ""} (${summary}). Move it into place to apply.`,
+                        );
+                    }
+                }
+
+                saveBtn.addEventListener("click", saveFile);
+
+                // initial state
+                renderCurrent();
+                refreshButtons();
+            })();
+        </script>
+    </body>
+</html>
