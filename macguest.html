@@ -504,7 +504,7 @@
                         <span class="label"
                             >Manufacture year / week
                             <span class="opt"
-                                >(used for serial generation)</span
+                                >(randomized each generate)</span
                             ></span
                         >
                         <div class="row">
@@ -513,6 +513,7 @@
                                 id="yearInput"
                                 value="2020"
                                 placeholder="Year"
+                                readonly
                                 autocomplete="off"
                                 spellcheck="false"
                                 style="max-width: 90px"
@@ -521,7 +522,8 @@
                                 type="text"
                                 id="weekInput"
                                 value=""
-                                placeholder="Week (1–52, random if blank)"
+                                placeholder="Week"
+                                readonly
                                 autocomplete="off"
                                 spellcheck="false"
                             />
@@ -534,7 +536,8 @@
                             <input
                                 type="text"
                                 id="serialInput"
-                                placeholder="e.g. C02XXXXXXXXX"
+                                placeholder="Generated on click"
+                                readonly
                                 autocomplete="off"
                                 spellcheck="false"
                             />
@@ -546,7 +549,8 @@
                         <input
                             type="text"
                             id="mlbInput"
-                            placeholder="Generated together with serial, or paste your own"
+                            placeholder="Generated on click"
+                            readonly
                             autocomplete="off"
                             spellcheck="false"
                         />
@@ -566,7 +570,8 @@
                             <input
                                 type="text"
                                 id="romInput"
-                                placeholder="%XX%XX%XX%XX%XX%XX"
+                                placeholder="Generated on click"
+                                readonly
                                 autocomplete="off"
                                 spellcheck="false"
                             />
@@ -1080,11 +1085,9 @@
                 }
 
                 serialBtn.addEventListener("click", () => {
-                    const year = parseInt(yearInput.value, 10) || null;
-                    let week = parseInt(weekInput.value, 10) || null;
                     const { serial, mlb, mfg } = generateIdentityPair(
-                        year,
-                        week,
+                        null,
+                        null,
                     );
                     serialInput.value = serial;
                     mlbInput.value = mlb;
@@ -1128,6 +1131,14 @@
                         log(
                             "error",
                             "Serial number and MLB are required to stage identity values.",
+                        );
+                        return;
+                    }
+                    const mlbInfo = mlbChecksumInfo(mlb);
+                    if (mlbInfo.state !== "ok") {
+                        log(
+                            "error",
+                            "MLB doesn't pass its checksum — fix or regenerate it before staging.",
                         );
                         return;
                     }
