@@ -172,7 +172,7 @@
 				<string>20.3.0</string>
 				<key>PlistPath</key>
 				<string>Contents/Info.plist</string>
-			</dict>			
+			</dict>
 			<dict>
 				<key>Arch</key>
 				<string>x86_64</string>
@@ -644,6 +644,8 @@
 				<string>{{COMMIT}}</string>
 				<key>revpatch</key>
 				<string>sbvmm,asset</string>
+				<key>revblock</key>
+				<string>pci</string>
 			</dict>
 		    <key>AC20C489-DD86-4E99-992C-B7C742C1DDA9</key>
 			<dict>
@@ -758,7 +760,7 @@
 			<string></string>
 			<key>SystemVersion</key>
 			<string></string>
-		</dict>        
+		</dict>
         <key>UpdateDataHub</key>
         <true/>
         <key>UpdateNVRAM</key>

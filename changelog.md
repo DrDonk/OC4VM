@@ -16,6 +16,7 @@ All dates are UK DD/MM/YY format.
 * Modified config.plist to Update Datahub and NVRAM
 * Modified config.plist to use better mouse polling values for Boot Picker
 * Upgraded vmxtool to latest version
+* Add revblock=pci to stop memory configuration errors if cloaking as a MacPro7,1
 
 ## 06/05/26 3.0.0
 * Updated to OpenCore 1.0.7 and latest KEXTs
