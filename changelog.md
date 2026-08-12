@@ -4,7 +4,7 @@ Changelogs can also be found online https://github.com/DrDonk/OC4VM/releases
 
 All dates are UK DD/MM/YY format.
 
-## xx/07/26 3.0.1
+## xx/08/26 3.0.1
 * Increased the supplied macOS sparse virtual disk from 128GB to 500GB
 * Increased the opencore.iso/vmdk to 50MB to accomodate new theme
 * Added new theme GoldenGateOC4VM based on GoldenGateExt from https://github.com/HJebbour/GoldenGateExt-OpenCore-Theme
@@ -17,6 +17,7 @@ All dates are UK DD/MM/YY format.
 * Modified config.plist to use better mouse polling values for Boot Picker
 * Upgraded vmxtool to latest version
 * Add revblock=pci to stop memory configuration errors if cloaking as a MacPro7,1
+* SIP status (csr-active-config) is now soley manged via boot loader
 
 ## 06/05/26 3.0.0
 * Updated to OpenCore 1.0.7 and latest KEXTs
