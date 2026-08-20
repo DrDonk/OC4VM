@@ -16,8 +16,10 @@ All dates are UK DD/MM/YY format.
 * Modified config.plist to Update Datahub and NVRAM
 * Modified config.plist to use better mouse polling values for Boot Picker
 * Upgraded vmxtool to latest version
+* Upgraded recoveryOS and macrecovery to latest version
 * Add revblock=pci to stop memory configuration errors if cloaking as a MacPro7,1
-
+* Fixed an error in RestrictEvents parameter parsing
+         -+ 
 ## 06/05/26 3.0.0
 * Updated to OpenCore 1.0.7 and latest KEXTs
 * Split shrinkdisk command into diskzero and diskshrink commands to fix VMware crash
