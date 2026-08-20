@@ -4,7 +4,7 @@ Changelogs can also be found online https://github.com/DrDonk/OC4VM/releases
 
 All dates are UK DD/MM/YY format.
 
-## xx/08/26 3.0.1
+## 21/08/26 3.0.1
 * Increased the supplied macOS sparse virtual disk from 128GB to 500GB
 * Increased the opencore.iso/vmdk to 50MB to accomodate new theme
 * Added new theme GoldenGateOC4VM based on GoldenGateExt from https://github.com/HJebbour/GoldenGateExt-OpenCore-Theme
