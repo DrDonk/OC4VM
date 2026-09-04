@@ -30,24 +30,37 @@ VERSION=$(<VERSION)
 COMMIT=$(git rev-parse --short HEAD)
 msg_status "Version: $VERSION Commit: $COMMIT"
 
-# Build the ISO
-build_dmg() {
+# Build the ISO/DMG
+build_opencore() {
 
-    # Make a copy of base image and ESXi descriptor file
-    mkdir -v -p $1
-    cp -v ./opencore/dmg/$2/opencore.iso $1/
+    # Setup local vars
+    ISO=./build/opencore/iso/$VARIANT
+    VMDK=./build/opencore/vmdk/$VARIANT
+    CONFIG=./build/config/$VARIANT/config.plist
+ 
+    # Create needed folders
+    mkdir -v -p $ISO
+    mkdir -v -p $VMDK
+
+    # Copy release or debug base image to build
+    DMG=$(./utilities/stoml oc4vm.toml $VARIANT.DMG)
+    cp -v ./opencore/dmg/$DMG/opencore.iso $ISO
 
     # Attach blank DMG and create OC setup
-    hdiutil attach $1/opencore.iso -noverify -nobrowse -noautoopen
+    hdiutil attach $ISO/opencore.iso -noverify -nobrowse -noautoopen
     touch /Volumes/OPENCORE/oc4vm-$VARIANT-$VERSION-$COMMIT
-    cp -rv $3 /Volumes/OPENCORE/EFI/OC
+    cp -rv $CONFIG /Volumes/OPENCORE/EFI/OC
     mkdir -v -p /Volumes/OPENCORE/OC4VM/tools
     cp -rv ./build/tools/guest/* /Volumes/OPENCORE/OC4VM/tools
-    cp -rv ./tools/vmware /Volumes/OPENCORE/OC4VM
+    mkdir -v -p /Volumes/OPENCORE/OC4VM/vmware
+    cp -rv ./build/tools/vmware/* /Volumes/OPENCORE/OC4VM/vmware
     rm -rf /Volumes/OPENCORE/.fseventsd
     dot_clean -m /Volumes/OPENCORE
     SetFile -a C /Volumes/OPENCORE
     hdiutil detach /Volumes/OPENCORE -force
+
+    # Convert RAW DMG (ISO) to VMDK
+    qemu-img convert -f raw -O vmdk $ISO/opencore.iso $VMDK/opencore.vmdk
 }
 
 run_jinja(){
@@ -74,6 +87,7 @@ mkdir -p ./build/tools/guest 2>&1 >/dev/null
 mkdir -p ./build/tools/linux 2>&1 >/dev/null
 mkdir -p ./build/tools/macos 2>&1 >/dev/null
 mkdir -p ./build/tools/windows 2>&1 >/dev/null
+mkdir -p ./build/tools/vmware 2>&1 >/dev/null
 
 # Build guest tools
 run_jinja ./tools/guest/diskshrink.zsh ./build/tools/guest/diskshrink.zsh
@@ -86,6 +100,9 @@ cp -v ./tools/guest/macserial ./build/tools/guest/macserial
 cp -v ./tools/guest/cpuid ./build/tools/guest/cpuid
 cp -v ./tools/guest/SwiftUI.plist ./build/tools/guest/SwiftUI.plist
 chmod +x ./build/tools/guest/* 
+
+# Copy VMware guest tools ISOs
+cp -v ./tools/vmware/* ./build/tools/vmware
 
 # Build host tools
 # - Linux
@@ -151,21 +168,19 @@ do
     # Tests to ensure valid plist and OC configuration
     plutil -convert xml1 ./build/config/$VARIANT/config.plist
     xmllint ./build/config/$VARIANT/config.plist --valid --noout
-    ./utilities/ocvalidate ./build/config/$VARIANT/config.plist
+    ./utilities/ocvalidate ./build/config/$VARIANT/config.plist 1>/dev/null
     RETURN=$?
     if [ $RETURN -eq 0 ];
     then
-      msg_status "config.plist correctly formatted"
+        msg_status "config.plist correctly formatted"
     else
         msg_error "config.plist incorrectly formatted"
         exit $RETURN
     fi
 
-    # Build the OpenCore ISO files
-    msg_status "Step 3. Create ISO image for $VARIANT"
-    mkdir -p ./build/disks/$VARIANT
-    DMG=$(./utilities/stoml oc4vm.toml $VARIANT.DMG)
-    build_dmg ./build/disks/$VARIANT $DMG ./build/config/$VARIANT/config.plist
+    # Build the OpenCore VMDK/ISO files
+    msg_status "Step 3. Create VMDK/ISO image for $VARIANT"
+    build_opencore
 done
 
 # Build the VMware templates
@@ -174,11 +189,10 @@ for VARIANT in $VARIANTS
 do
     msg_status "Step 4. Create VMware templates for $VARIANT"
     mkdir -p ./build/vmware/$VARIANT 2>&1 >/dev/null
-    cp -v ./vmware/macos.plist ./build/vmware/$VARIANT 2>&1 >/dev/null
-    cp -v ./vmware/macos.vmdk ./build/vmware/$VARIANT 2>&1 >/dev/null
-    cp -v ./vmware/macos.nvram ./build/vmware/$VARIANT 2>&1 >/dev/null
-    cp -v ./vmware/opencore.vmdk ./build/vmware/$VARIANT 2>&1 >/dev/null
-    cp -v ./build/disks/$VARIANT/opencore.iso ./build/vmware/$VARIANT 2>&1 >/dev/null
+    cp -v ./vmware/macos.plist ./build/vmware/$VARIANT
+    cp -v ./vmware/macos.vmdk ./build/vmware/$VARIANT
+    cp -v ./vmware/macos.nvram ./build/vmware/$VARIANT
+    cp -v ./build/opencore/vmdk/$VARIANT/opencore.vmdk ./build/vmware/$VARIANT
 
     if [[ $VARIANT == 'amd' ]]; then
         AMD=1
