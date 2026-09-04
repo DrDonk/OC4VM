@@ -43,7 +43,7 @@ build_dmg() {
     cp -rv $3 /Volumes/OPENCORE/EFI/OC
     mkdir -v -p /Volumes/OPENCORE/OC4VM/tools
     cp -rv ./build/tools/guest/* /Volumes/OPENCORE/OC4VM/tools
-    cp -rv ./iso /Volumes/OPENCORE/OC4VM
+    cp -rv ./tools/vmware /Volumes/OPENCORE/OC4VM
     rm -rf /Volumes/OPENCORE/.fseventsd
     dot_clean -m /Volumes/OPENCORE
     SetFile -a C /Volumes/OPENCORE
@@ -199,7 +199,6 @@ done
 
 msg_status "\nStep 5. Copying misc files"
 cp -v LICENSE ./build/
-cp -vr ./iso ./build/
 cp -vr ./packages ./build/
 
 msg_status "\nStep 6. Zipping OC4VM Release"
