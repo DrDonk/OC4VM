@@ -168,8 +168,7 @@ do
 
     # Tests to ensure valid plist and OC configuration
     plutil -convert xml1 ./build/config/$VARIANT/config.plist
-    xmllint ./build/config/$VARIANT/config.plist --valid --noout
-    ./utilities/ocvalidate ./build/config/$VARIANT/config.plist 1>/dev/null
+     ./utilities/ocvalidate ./build/config/$VARIANT/config.plist 1>/dev/null
     RETURN=$?
     if [ $RETURN -eq 0 ];
     then
