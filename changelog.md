@@ -4,7 +4,7 @@ Changelogs can also be found online https://github.com/DrDonk/OC4VM/releases
 
 All dates are UK DD/MM/YY format.
 
-## dd/09/26
+## 06/09/26
 * Templates have been reverted to use OC4VM sparse VMDK files
 * VMware tools ISOs have been moved to the tools/vmware folder
 * Fixed some missing quotes in the template VMX file
