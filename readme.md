@@ -47,6 +47,9 @@ using:
 * VMware Fusion Pro 25H2
 * VMware Workstation Pro 17.6 and 25H2 (Windows and Linux)
 
+> [!NOTE]  
+> VMware ESXi is not supported so please do not raise issues regarding ESXi.
+
 CPUs will need to support the following instructions:
 
 * AVX
@@ -71,9 +74,8 @@ OC4VM has 6 sub-folders:
 |:-----------|-------------------------------------------------------|
 | config     | OpenCore config.plist files for reference             |
 | disks      | OpenCore boot variants in DMG and VMDK formats        |
-| iso        | VMware Mac OS X and macOS guest tools iso images      |
 | packages   | Post install packages                                 |
-| tools      | OC4VM tools                                           |
+| tools      | OC4VM & VMware Guest tools                            |
 | vmware     | Template VMs for VMware                               |
 
 The most import folder is the 'vmware' folder.

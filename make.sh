@@ -34,8 +34,8 @@ msg_status "Version: $VERSION Commit: $COMMIT"
 build_opencore() {
 
     # Setup local vars
-    ISO=./build/opencore/iso/$VARIANT
-    VMDK=./build/opencore/vmdk/$VARIANT
+    ISO=./build/disks/$VARIANT
+    VMDK=./build/disks/$VARIANT
     CONFIG=./build/config/$VARIANT/config.plist
  
     # Create needed folders
@@ -61,6 +61,7 @@ build_opencore() {
 
     # Convert RAW DMG (ISO) to VMDK
     qemu-img convert -f raw -O vmdk $ISO/opencore.iso $VMDK/opencore.vmdk
+    rm $ISO/opencore.iso
 }
 
 run_jinja(){
@@ -192,7 +193,7 @@ do
     cp -v ./vmware/macos.plist ./build/vmware/$VARIANT
     cp -v ./vmware/macos.vmdk ./build/vmware/$VARIANT
     cp -v ./vmware/macos.nvram ./build/vmware/$VARIANT
-    cp -v ./build/opencore/vmdk/$VARIANT/opencore.vmdk ./build/vmware/$VARIANT
+    cp -v ./build/disks/$VARIANT/opencore.vmdk ./build/vmware/$VARIANT
 
     if [[ $VARIANT == 'amd' ]]; then
         AMD=1

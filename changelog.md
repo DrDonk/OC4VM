@@ -4,6 +4,11 @@ Changelogs can also be found online https://github.com/DrDonk/OC4VM/releases
 
 All dates are UK DD/MM/YY format.
 
+## dd/09/26
+* Templates have been reverted to use OC4VM sparse VMDK files
+* VMware tools ISOs have been moved to the tools/vmware folder
+* Fixed some missing quotes in the template VMX file
+
 ## 21/08/26 3.0.1
 * Increased the supplied macOS sparse virtual disk from 128GB to 500GB
 * Increased the opencore.iso/vmdk to 50MB to accomodate new theme
@@ -19,7 +24,7 @@ All dates are UK DD/MM/YY format.
 * Upgraded recoveryOS and macrecovery to latest version
 * Add revblock=pci to stop memory configuration errors if cloaking as a MacPro7,1
 * Fixed an error in RestrictEvents parameter parsing
-         -+ 
+ 
 ## 06/05/26 3.0.0
 * Updated to OpenCore 1.0.7 and latest KEXTs
 * Split shrinkdisk command into diskzero and diskshrink commands to fix VMware crash
