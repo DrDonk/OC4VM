@@ -47,7 +47,7 @@ build_opencore() {
     cp -v ./opencore/dmg/$DMG/opencore.iso $ISO
 
     # Attach blank DMG and create OC setup
-    hdiutil attach $ISO/opencore.iso -noverify -nobrowse -noautoopen
+    diskutil image attach --mountOptions nobrowse $ISO/opencore.iso
     touch /Volumes/OPENCORE/oc4vm-$VARIANT-$VERSION-$COMMIT
     cp -rv $CONFIG /Volumes/OPENCORE/EFI/OC
     mkdir -v -p /Volumes/OPENCORE/OC4VM/tools
@@ -57,7 +57,7 @@ build_opencore() {
     rm -rf /Volumes/OPENCORE/.fseventsd
     dot_clean -m /Volumes/OPENCORE
     SetFile -a C /Volumes/OPENCORE
-    hdiutil detach /Volumes/OPENCORE -force
+    diskutil eject force /Volumes/OPENCORE
 
     # Convert RAW DMG (ISO) to VMDK
     qemu-img convert -f raw -O vmdk $ISO/opencore.iso $VMDK/opencore.vmdk
