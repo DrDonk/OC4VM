@@ -29,25 +29,26 @@ with these guest OSes:
 * Sequoia
 * Tahoe
 
-What OC4VM can do?
-* Run macOS on Intel CPUs
-* Run macOS on AMD CPUs
-* Boot to macOS Recovery mode which is broken in VMware's EFI implementation
-* Add Intel e1000e virtual NIC compatibility for Ventura and later versions of macOS
+ What OC4VM can do?
+ * Run macOS on Intel CPUs
+ * Run macOS on AMD CPUs
+ * Boot to macOS Recovery mode which is broken in VMware's EFI implementation
+ * Add Intel e1000e virtual NIC compatibility for Ventura and later versions of macOS
 
-What OC4VM cannot do:
-* Boot Intel macOS on an Apple Silicon CPU
-* Use the Apple para-virtualised GPU on non-Apple hardware
-* Use the Apple para-virtualised GPU on older Macs using OCLP and macOS Sonoma or later
-* Enable Tahoe Liquid Glass
-* Run Apple Silicon only versions of macOS (macOS 27 Golden Gate or later)
+> [!WARNING]
+> What OC4VM cannot do:
+> * Boot Intel macOS on an Apple Silicon CPU
+> * Use the Apple para-virtualised GPU on non-Apple hardware
+> * Use the Apple para-virtualised GPU on older Macs using OCLP and macOS Sonoma or later
+> * Enable Tahoe Liquid Glass
+> * Run Apple Silicon only versions of macOS (macOS 27 Golden Gate or later)
 
 using:
 
 * VMware Fusion Pro 25H2
 * VMware Workstation Pro 17.6 and 25H2 (Windows and Linux)
 
-> [!NOTE]  
+> [!WARNING]  
 > VMware ESXi is not supported so please do not raise issues regarding ESXi.
 
 CPUs will need to support the following instructions:
@@ -174,7 +175,7 @@ package uses the following:
 * [stoml](https://github.com/freshautomations/stoml)
 * [VoodooHDA](https://github.com/CloverHackyColor/VoodooHDA)
 * [VoodooHDA for Tahoe](https://github.com/chris1111/VoodooHDA-Tahoe)
-* [GlodenGateExt OpenCore Theme](https://github.com/HJebbour/GoldenGateExt-OpenCore-Theme)
+* [GoldenGateExt OpenCore Theme](https://github.com/HJebbour/GoldenGateExt-OpenCore-Theme)
 
 Also thanks to the testers who helped me out with the project.
 
