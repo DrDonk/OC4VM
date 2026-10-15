@@ -60,8 +60,8 @@ build_opencore() {
     diskutil eject force /Volumes/OPENCORE
 
     # Convert RAW DMG (ISO) to VMDK
-    qemu-img convert -f raw -O vmdk $ISO/opencore.iso $VMDK/opencore.vmdk
-    rm $ISO/opencore.iso
+    # qemu-img convert -f raw -O vmdk $ISO/opencore.iso $VMDK/opencore.vmdk
+    # rm $ISO/opencore.iso
 }
 
 run_jinja(){
@@ -168,7 +168,7 @@ do
 
     # Tests to ensure valid plist and OC configuration
     plutil -convert xml1 ./build/config/$VARIANT/config.plist
-     ./utilities/ocvalidate ./build/config/$VARIANT/config.plist 1>/dev/null
+    ./utilities/ocvalidate ./build/config/$VARIANT/config.plist 1>/dev/null
     RETURN=$?
     if [ $RETURN -eq 0 ];
     then
@@ -192,7 +192,8 @@ do
     cp -v ./vmware/macos.plist ./build/vmware/$VARIANT
     cp -v ./vmware/macos.vmdk ./build/vmware/$VARIANT
     cp -v ./vmware/macos.nvram ./build/vmware/$VARIANT
-    cp -v ./build/disks/$VARIANT/opencore.vmdk ./build/vmware/$VARIANT
+    cp -v ./vmware/opencore.vmdk ./build/vmware/$VARIANT
+    cp -v ./build/disks/$VARIANT/opencore.iso ./build/vmware/$VARIANT
 
     if [[ $VARIANT == 'amd' ]]; then
         AMD=1
