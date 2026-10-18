@@ -9,6 +9,14 @@ __OC4VM_GuestInfo__ = ""
 guestinfo.oc4vm.version = "{{VERSION}}"
 guestinfo.oc4vm.revision = "{{COMMIT}}"
 
+__Apple_Model_Start__="VMware"
+board-id="VMM-X86_64"
+hw.model="VMware20,1"
+serialNumber="W00000000001"
+efi.nvram.var.MLB="M0000000000000001"
+efi.nvram.var.ROM="%11%22%33%44%55%66"
+__Apple_Model_End__="VMware"
+
 __macOS_Settings__ = ""
 guestOS = "darwin24-64"                   # Set macOS guest version
 smc.present = "FALSE"                     # SMC is emulated in OpenCore
