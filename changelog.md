@@ -4,11 +4,18 @@ Changelogs can also be found online https://github.com/DrDonk/OC4VM/releases
 
 All dates are UK DD/MM/YY format.
 
-## dd/mm/yy
-* Templates have been reverted to use OC4VM sparse VMDK files
+## dd/10/26 3.0.2
 * VMware tools ISOs have been moved to the tools/vmware folder
 * Fixed some missing quotes in the template VMX file
-* Add hcalls=0 to boot-args to speed up boot in debug mode
+* Add hcalls=0 to boot-args to skip Apple Hypervisor check which will speed up boot
+* Fixed cwad and added cwae boot-args to skip CPUID checks that are not needed in VM
+* Set Haswell CPU as default generation for CPUID querying in the kernel
+  * Fixes panics with Intel CPUs after Tiger Lake
+  * AMD variant uses this to ensure vaild CPU type is passed to kernel
+* Set a default Model and Board to iMac19,2 as fix for board-id not found errors
+* Set dummy serial number, MLB and ROM in VMX file
+* Set BIOS maker and verison to Apple 9999.999.999.999.999
+* Upgraded vmxtool recoveryOS and macrecovery to universal binaries
 
 ## 21/08/26 3.0.1
 * Increased the supplied macOS sparse virtual disk from 128GB to 500GB
@@ -21,11 +28,11 @@ All dates are UK DD/MM/YY format.
 * Added Tanoe utility to OC4VM tools
 * Modified config.plist to Update Datahub and NVRAM
 * Modified config.plist to use better mouse polling values for Boot Picker
-* Upgraded vmxtool to latest version
+* Modified vmxtool to latest version
 * Upgraded recoveryOS and macrecovery to latest version
 * Add revblock=pci to stop memory configuration errors if cloaking as a MacPro7,1
 * Fixed an error in RestrictEvents parameter parsing
- 
+
 ## 06/05/26 3.0.0
 * Updated to OpenCore 1.0.7 and latest KEXTs
 * Split shrinkdisk command into diskzero and diskshrink commands to fix VMware crash
