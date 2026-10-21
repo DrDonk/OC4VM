@@ -2,9 +2,7 @@
 
 Changelogs can also be found online https://github.com/DrDonk/OC4VM/releases
 
-All dates are UK DD/MM/YY format.
-
-## dd/10/26 3.0.2
+## 2026-10-dd 3.0.2
 * VMware tools ISOs have been moved to the tools/vmware folder
 * Fixed some missing quotes in the template VMX file
 * Add hcalls=0 to boot-args to skip Apple Hypervisor check which will speed up boot
@@ -17,7 +15,7 @@ All dates are UK DD/MM/YY format.
 * Set BIOS maker and verison to Apple 9999.999.999.999.999
 * Upgraded vmxtool recoveryOS and macrecovery to universal binaries
 
-## 21/08/26 3.0.1
+## 2026-08-21 3.0.1
 * Increased the supplied macOS sparse virtual disk from 128GB to 500GB
 * Increased the opencore.iso/vmdk to 50MB to accomodate new theme
 * Added new theme GoldenGateOC4VM based on GoldenGateExt from https://github.com/HJebbour/GoldenGateExt-OpenCore-Theme
@@ -33,7 +31,7 @@ All dates are UK DD/MM/YY format.
 * Add revblock=pci to stop memory configuration errors if cloaking as a MacPro7,1
 * Fixed an error in RestrictEvents parameter parsing
 
-## 06/05/26 3.0.0
+## 2026-05-06 3.0.0
 * Updated to OpenCore 1.0.7 and latest KEXTs
 * Split shrinkdisk command into diskzero and diskshrink commands to fix VMware crash
 * Changed tool extensions to show what shell script they use; e.g. .zsh for ZSH scripts on macOS
@@ -41,19 +39,19 @@ All dates are UK DD/MM/YY format.
 * Added spoof commands back to system after implementation of cloaking
 * New solarium command to manager visual effects in Liquid Glass.
 
-## 18/03/26 2.5.1
+## 2026-03-18 2.5.1
 * Fixed recoveryOS not finding macrecovery on Windows
 * Remove hypervisor.cpuid.v0 setting as it is related to VMware on Hyper-V and modifies VM behaviour 
 
-## 21/01/26 2.5.0
+## 2026-01-26 2.5.0
 * Remove all spoofing code and patches
 
-## 19/01/26 2.0.2
+## 2026-01-19 2.0.2
 * Fix a VMware issue with Nvidia GPUs and 25H2
 * Added kern.hv_vmm_present patches needed for Apple services
 * Added recoveryOS binaries to the release for easier macOS setup
 
-## 16/01/26 2.0.1
+## 2026-01-16 2.0.1
 * Docs migrated to GitHub wiki
 * Windows regen command now a batch file to avoid Powershell issues
 * Fix to regen command to allow for week 0 in a year
@@ -63,7 +61,7 @@ All dates are UK DD/MM/YY format.
 * Mouse enabled in OpenCore boot picker
 * Improve virtual mouse pointer responsiveness in macOS
 
-## 16/12/25 2.0.0
+## 2025-12-16 2.0.0
 **All spoofing of hardware should use iMac 2019 to ensure maximum compatibilty with macOS upgrades
 and avoid models with T1 or T2 security chips. The iMac 2019 supports Catalina to Sequoia, and can also
 run Tahoe in a VM.**
@@ -75,7 +73,7 @@ run Tahoe in a VM.**
 * Modified regen code to use iMac 2019 (iMac19,2) to remove any possible issues with T2 chip
 * Updated OC to 1.0.6
 
-## 18/09/25 1.2.0
+## 2025-09-18 1.2.0
 **Tahoe support is now available but be aware it runs slowly and there are no Liquid Glass effects as 
 there is no guest GPU available to render them**
 * Support for macOS 26 Tahoe
@@ -84,7 +82,7 @@ there is no guest GPU available to render them**
 * Updates in VMX file to spoofing section
 * Documents and notes now delivered as HTML
 
-## 10/07/25 1.1.1
+## 2025-07-10 1.1.1
 * Updated the VMX spoof settings thanks to **tamta0** (see docs/spoof.md)
 * New version of regen tool which is used for VMX spoofing
 * Removed unused KEXTs
@@ -93,7 +91,7 @@ there is no guest GPU available to render them**
 * Disable VM secure boot for macOS VMs
 * Added macguest command for Linux
 
-## 01/07/25 1.1.0
+## 2025-07-01 1.1.0
 **This is a breaking release and should only be used to create new VMs**
 * Re-branded as OpenCore 4 VMware
 * Removed QEMU support as it is problematic and not stable
@@ -106,20 +104,20 @@ there is no guest GPU available to render them**
 * Hiding VM is now done via kernel patches
 * ESXi compatible VMDK now created in disks folder
 
-## 06/05/25 1.0.3
+## 2025-05-06 1.0.3
 * macserial utility was missing from the tools folder on the images
 
-## 22/04/25 1.0.2
+## 2025-04-25 1.0.2
 * Default AMD core patch set to 2 cores
 * New amdcpu tool allows AMD core patch to be modified in the guest
 * Default memory for VMs is now set to 8GB
 * New verbose OC4VM to allow macOS boot process to be viewed
 * Modified debug OC4VM variant with in-depth OpenCore and macOS kernel traces
 
-## 30/03/25 1.0.1
+## 2025-03-30 1.0.1
 * Fixed opencore.vmdk and recovery vmdk not being updateable in VMware
 * Ported siputil from Python 3 to Go
 * New tool to regenerate the spoofed Mac serial, uuid, ROM and MLB.
 
-## 27/03/25 1.0.0
+## 2025-03-27 1.0.0
 * Initial release
