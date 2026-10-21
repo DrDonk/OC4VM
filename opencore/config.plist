@@ -671,7 +671,7 @@
     <key>PlatformInfo</key>
     <dict>
         <key>Automatic</key>
-        <false/>
+        <true/>
 		<key>CustomMemory</key>
 		<false/>
         <key>Generic</key>
