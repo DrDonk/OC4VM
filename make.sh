@@ -223,4 +223,4 @@ cd ./dist
 shasum -a 512 oc4vm-$VERSION.zip > oc4vm-$VERSION.sha512
 cd ..
 
-eza -alT ./build
+# eza -alT ./build
