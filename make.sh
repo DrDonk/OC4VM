@@ -53,7 +53,7 @@ build_opencore() {
     mkdir -v -p /Volumes/OPENCORE/OC4VM/tools
     cp -rv ./build/tools/guest/* /Volumes/OPENCORE/OC4VM/tools
     mkdir -v -p /Volumes/OPENCORE/OC4VM/vmware
-    cp -rv ./build/tools/vmware/* /Volumes/OPENCORE/OC4VM/vmware
+    cp -rv ./build/packages/VMware_Tools.pkg /Volumes/OPENCORE/OC4VM/vmware/VMware_Tools.pkg
     rm -rf /Volumes/OPENCORE/.fseventsd
     dot_clean -m /Volumes/OPENCORE
     SetFile -a C /Volumes/OPENCORE
@@ -88,7 +88,6 @@ mkdir -p ./build/tools/guest 2>&1 >/dev/null
 mkdir -p ./build/tools/linux 2>&1 >/dev/null
 mkdir -p ./build/tools/macos 2>&1 >/dev/null
 mkdir -p ./build/tools/windows 2>&1 >/dev/null
-mkdir -p ./build/tools/vmware 2>&1 >/dev/null
 
 # Build guest tools
 run_jinja ./tools/guest/diskshrink.zsh ./build/tools/guest/diskshrink.zsh
@@ -101,9 +100,6 @@ cp -v ./tools/guest/macserial ./build/tools/guest/macserial
 cp -v ./tools/guest/cpuid ./build/tools/guest/cpuid
 cp -v ./tools/guest/SwiftUI.plist ./build/tools/guest/SwiftUI.plist
 chmod +x ./build/tools/guest/* 
-
-# Copy VMware guest tools ISOs
-cp -v ./tools/vmware/* ./build/tools/vmware
 
 # Build host tools
 # - Linux
@@ -134,6 +130,10 @@ cp -v ./tools/host/windows/macserial.exe ./build/tools/windows/macserial.exe
 cp -v ./tools/host/windows/macrecovery.exe ./build/tools/windows/macrecovery.exe
 cp -v ./tools/host/windows/recoveryOS.exe ./build/tools/windows/recoveryOS.exe
 cp -v ./tools/host/windows/vmxtool.exe ./build/tools/windows/vmxtool.exe
+
+# Copy VMware guest tools package
+mkdir -p ./build/packages 2>&1 >/dev/null
+cp -v ./packages/VMware_Tools.pkg ./build/packages/VMware_Tools.pkg
 
 # Build OC4VM disk images
 VARIANTS=("${(f)$(./utilities/stoml oc4vm.toml . | tr ' ' '\n')}")
@@ -223,4 +223,4 @@ cd ./dist
 shasum -a 512 oc4vm-$VERSION.zip > oc4vm-$VERSION.sha512
 cd ..
 
-# eza -alT ./build
+eza -alT ./build
