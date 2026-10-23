@@ -2,8 +2,10 @@
 
 Changelogs can also be found online https://github.com/DrDonk/OC4VM/releases
 
-## 2026-10-dd 3.0.2
+## 2026-10-dd 3.5.0
+* VMware Guest Tools are now automartically installed during macOS installation
 * VMware tools ISOs have been moved to the tools/vmware folder
+* Reverted the supplied macOS sparse virtual disk from 500GB to 128
 * Fixed some missing quotes in the template VMX file
 * Add hcalls=0 to boot-args to skip Apple Hypervisor check which will speed up boot
 * Fixed cwad and added cwae boot-args to skip CPUID checks that are not needed in VM
