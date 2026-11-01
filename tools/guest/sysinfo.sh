@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 # {{VERSION}}-{{COMMIT}}
 # SPDX-FileCopyrightText: © 2023-2026 David Parsons
 # SPDX-License-Identifier: MIT
