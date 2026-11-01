@@ -90,11 +90,12 @@ mkdir -p ./build/tools/macos 2>&1 >/dev/null
 mkdir -p ./build/tools/windows 2>&1 >/dev/null
 
 # Build guest tools
-run_jinja ./tools/guest/diskshrink.zsh ./build/tools/guest/diskshrink.zsh
-run_jinja ./tools/guest/diskzero.zsh ./build/tools/guest/diskzero.zsh
-run_jinja ./tools/guest/sysinfo.zsh ./build/tools/guest/sysinfo.zsh
 run_jinja ./tools/guest/cloak.zsh ./build/tools/guest/cloak.zsh
+run_jinja ./tools/guest/diskshrink.sh ./build/tools/guest/diskshrink.sh
+run_jinja ./tools/guest/diskzero.sh ./build/tools/guest/diskzero.sh
+run_jinja ./tools/guest/sipflags.zsh ./build/tools/guest/sipflags.zsh
 run_jinja ./tools/guest/solarium.zsh ./build/tools/guest/solarium.zsh
+run_jinja ./tools/guest/sysinfo.zsh ./build/tools/guest/sysinfo.zsh
 cp -v ./tools/guest/tanoe ./build/tools/guest/tanoe
 cp -v ./tools/guest/macserial ./build/tools/guest/macserial
 cp -v ./tools/guest/cpuid ./build/tools/guest/cpuid
