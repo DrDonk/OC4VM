@@ -37,7 +37,7 @@ build_opencore() {
     ISO=./build/disks/$VARIANT
     VMDK=./build/disks/$VARIANT
     CONFIG=./build/config/$VARIANT/config.plist
- 
+
     # Create needed folders
     mkdir -v -p $ISO
     mkdir -v -p $VMDK
@@ -95,15 +95,17 @@ run_jinja ./tools/guest/diskshrink.sh ./build/tools/guest/diskshrink.sh
 run_jinja ./tools/guest/diskzero.sh ./build/tools/guest/diskzero.sh
 run_jinja ./tools/guest/sipflags.zsh ./build/tools/guest/sipflags.zsh
 run_jinja ./tools/guest/solarium.zsh ./build/tools/guest/solarium.zsh
-run_jinja ./tools/guest/sysinfo.zsh ./build/tools/guest/sysinfo.zsh
+run_jinja ./tools/guest/sysinfo.sh ./build/tools/guest/sysinfo.sh
 cp -v ./tools/guest/tanoe ./build/tools/guest/tanoe
 cp -v ./tools/guest/macserial ./build/tools/guest/macserial
 cp -v ./tools/guest/cpuid ./build/tools/guest/cpuid
 cp -v ./tools/guest/SwiftUI.plist ./build/tools/guest/SwiftUI.plist
-chmod +x ./build/tools/guest/* 
+cp -v ./tools/guest/nano ./build/tools/guest/nano
+chmod +x ./build/tools/guest/*
 
 # Build host tools
 # - Linux
+run_jinja ./tools/host/common/diskshrink.sh ./build/tools/linux/diskshrink.sh
 run_jinja ./tools/host/common/macguest.sh ./build/tools/linux/macguest.sh
 run_jinja ./tools/host/common/spoof.sh ./build/tools/linux/spoof.sh
 cp -v ./tools/host/linux/cpuid ./build/tools/linux/cpuid
@@ -114,6 +116,7 @@ cp -v ./tools/host/linux/vmxtool ./build/tools/linux/vmxtool
 chmod +x ./build/tools/linux/*
 
 # - macOS
+run_jinja ./tools/host/common/diskshrink.sh ./build/tools/macos/diskshrink.sh
 run_jinja ./tools/host/common/macguest.sh ./build/tools/macos/macguest.sh
 run_jinja ./tools/host/common/spoof.sh ./build/tools/macos/spoof.sh
 cp -v ./tools/host/macos/cpuid ./build/tools/macos/cpuid
@@ -124,6 +127,7 @@ cp -v ./tools/host/macos/vmxtool ./build/tools/macos/vmxtool
 chmod +x ./build/tools/macos/*
 
 # - Windows
+run_jinja ./tools/host/windows/diskshrink.cmd ./build/tools/windows/diskshrink.cmd
 run_jinja ./tools/host/windows/spoof.cmd ./build/tools/windows/spoof.cmd
 cp -v ./tools/host/windows/cpuid.exe ./build/tools/windows/cpuid.exe
 cp -v ./tools/host/windows/macguest.exe ./build/tools/windows/macguest.exe
